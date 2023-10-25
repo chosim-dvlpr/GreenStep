@@ -1,9 +1,9 @@
 # 프로젝트 구조
 
-프로젝트 - confing
+프로젝트 
 
                   domain - api, dto, entity, repository, service
-
+                  confing
                   util
 
 # EndPoint
