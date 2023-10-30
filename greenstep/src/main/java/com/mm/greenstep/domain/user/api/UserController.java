@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 public class UserController {
 //    private final UserService userService;
 
-      @GetMapping
-      public void test() {
-          System.out.println("되낭");
-      }
+        @GetMapping("/test")
+        public String testEndpoint() {
+            return "Hello from the test endpoint!";
+        }
 
 //    @PostMapping("/signup")
 //    public ResponseEntity<?> signup(@RequestBody UserSignUpRequestDto userSignUpRequestDto) {
