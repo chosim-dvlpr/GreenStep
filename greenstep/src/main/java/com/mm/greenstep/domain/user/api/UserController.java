@@ -1,18 +1,23 @@
-//package com.mm.greenstep.domain.user.api;
-//
-//import lombok.RequiredArgsConstructor;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.web.bind.annotation.*;
-//
-//import javax.servlet.http.HttpServletRequest;
-//
-//@RestController
+package com.mm.greenstep.domain.user.api;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+
+@RestController
 //@RequestMapping("/user")
-//@RequiredArgsConstructor
-//public class UserController {
+@RequiredArgsConstructor
+public class UserController {
 //    private final UserService userService;
-//
+
+      @GetMapping
+      public void test() {
+          System.out.println("되낭");
+      }
+
 //    @PostMapping("/signup")
 //    public ResponseEntity<?> signup(@RequestBody UserSignUpRequestDto userSignUpRequestDto) {
 //        return new ResponseEntity(userService.signup(userSignUpRequestDto), HttpStatus.OK);
@@ -52,4 +57,4 @@
 //    public ResponseEntity<?> getUserList(@PathVariable String userName) {
 //        return new ResponseEntity<>(userService.getUserList(userName), HttpStatus.OK);
 //    }
-//}
+}
