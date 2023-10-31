@@ -10,6 +10,13 @@ import PloggingStart from './src/Page/PloggingStart';
 import PloggingFinish from './src/Page/PloggingFinish';
 import Profile from './src/Page/Profile';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {Image} from 'react-native';
+import ImageStyle from './src/Style/Image';
+import home from '../GreenStep/src/Image/Footer/home.png';
+import profile from '../GreenStep/src/Image/Footer/profile.png';
+import competition from '../GreenStep/src/Image/Footer/competition.png';
+import dataMap from '../GreenStep/src/Image/Footer/dataMap.png';
+import board from '../GreenStep/src/Image/Footer/board.png';
 
 const BottomTabScreen = () => {
   const Tab = createBottomTabNavigator();
@@ -22,12 +29,25 @@ const BottomTabScreen = () => {
         tabBarStyle: {
           height: 70,
         },
+        tabBarIcon(props) {
+          if (route.name === '경쟁') {
+            return <Image source={competition} style={ImageStyle.tinyImage} />;
+          } else if (route.name === '크루 찾기') {
+            return <Image source={board} style={ImageStyle.tinyImage} />;
+          } else if (route.name === '메인 페이지') {
+            return <Image source={home} style={ImageStyle.tinyImage} />;
+          } else if (route.name === '데이터 지도') {
+            return <Image source={dataMap} style={ImageStyle.tinyImage} />;
+          } else if (route.name === '마이 페이지') {
+            return <Image source={profile} style={ImageStyle.tinyImage} />;
+          }
+        },
       })}>
-      <Tab.Screen name="main" component={Main} />
-      <Tab.Screen name="achievement" component={Achievement} />
-      <Tab.Screen name="board" component={Board} />
-      <Tab.Screen name="competition" component={Competition} />
-      <Tab.Screen name="profile" component={Profile} />
+      <Tab.Screen name="경쟁" component={Competition} />
+      <Tab.Screen name="크루 찾기" component={Board} />
+      <Tab.Screen name="메인 페이지" component={Main} />
+      <Tab.Screen name="데이터 지도" component={DataMap} />
+      <Tab.Screen name="마이 페이지" component={Profile} />
     </Tab.Navigator>
   );
 };
