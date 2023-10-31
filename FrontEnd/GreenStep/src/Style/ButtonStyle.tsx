@@ -7,7 +7,7 @@ const ButtonStyle = StyleSheet.create({
    * 업적카테고리 버튼
    */
   smallButton: {
-    width: 100,
+    width: 90,
     height: 45,          
     borderRadius: 15,
     alignItems : 'center',

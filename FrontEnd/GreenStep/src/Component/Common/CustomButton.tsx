@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text} from 'react-native';
 import ButtonStyle from '../../Style/ButtonStyle';
+import { GestureResponderEvent } from 'react-native';
 
 interface CustomButtonType {
     title: string;
@@ -8,11 +9,15 @@ interface CustomButtonType {
     backgroundColor?: string;
     color?: string;
     fontSize?: number;
+    func?: ((event: GestureResponderEvent) => void);
 }
 
-const CustomButton = ({ title, styleType, backgroundColor, color, fontSize }: CustomButtonType) => {
+const CustomButton = ({ title, styleType, backgroundColor, color, fontSize, func}: CustomButtonType) => {
     return (
-        <TouchableOpacity style={[ButtonStyle[styleType], { backgroundColor: backgroundColor }]}>
+        <TouchableOpacity style={[ButtonStyle[styleType],
+                                { backgroundColor: backgroundColor }]}
+                          onPress={func}
+                                >
           <Text style={{ color: color, fontSize: fontSize }}>{title}</Text>
         </TouchableOpacity>
     );
