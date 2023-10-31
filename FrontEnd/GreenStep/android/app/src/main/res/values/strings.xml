@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GreenStep</string>
+    <string name="kakao_app_key">@string/kakaoKey</string>
 </resources>
