@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">GreenStep</string>
-    <!-- 키 값 환경변수로 추가하기 -->
-    <string name="kakao_app_key">123</string>
+    <string name="kakao_app_key">@string/kakaoKey</string>
 </resources>

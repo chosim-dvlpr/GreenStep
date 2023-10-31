@@ -1,6 +1,8 @@
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
-
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def kakaoKey = properties.getProperty('KAKAO_KEY')
 /**
  * This is the configuration block to customize your React Native Android app.
  * By default you don't need to apply any configuration, just uncomment the lines you need.
@@ -80,6 +82,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        manifestPlaceholders = [kakaoKey:kakaoKey]
     }
     signingConfigs {
         debug {
@@ -92,6 +95,7 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+            resValue 'string', 'kakaoKey', kakaoKey
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
