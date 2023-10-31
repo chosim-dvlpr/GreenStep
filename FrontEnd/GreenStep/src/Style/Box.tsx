@@ -17,7 +17,7 @@ const Box = StyleSheet.create({
   },
   /** 업적 리스트, 게시글 리스트 박스 */
   cardBox: {
-    width: '100%',
+    width: '90%',
     padding: 20,
     backgroundColor: 'skyblue',
     borderRadius: 10,
@@ -36,7 +36,23 @@ const Box = StyleSheet.create({
     backgroundColor: 'gray',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-  }
+  },
+  /** 프로필 달력 박스 */
+  calendarBox: {
+    width: '50%',
+    height : 100,
+    padding : 20,
+    backgroundColor: 'pink',
+    borderRadius: 15,
+  },
+    /** 프로필 달력내 주 박스 */
+    weekBox: {
+      width: 12,
+      height : 12,
+      backgroundColor: 'skyblue',
+      borderRadius: 2,
+      marginRight: 4,
+    },
 })
 
 export default Box;
