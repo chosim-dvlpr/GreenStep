@@ -3,9 +3,9 @@
 ### Server : https://k9b303.p.ssafy.io/test
 ### jenkins : http://k9b303.p.ssafy.io:9090/
 
-## Git
+# Git
 
-태그: 📐 컨벤션
+컨벤션
 
 Master → front-release → front-fe-{component(page명 작성)}-{기능}
             → back-release → back-fe-{domain}-{기능}
