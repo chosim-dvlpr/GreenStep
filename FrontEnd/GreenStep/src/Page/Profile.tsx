@@ -1,4 +1,4 @@
-import {View, Text, Image, ScrollView} from 'react-native';
+import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
 import React from 'react';
 import Box from '../Style/Box';
 import ImageStyle from '../Style/Image';
@@ -26,7 +26,7 @@ const getMonthLabel = (index :number) => {
   return monthMappings[index] || '';
 };
 
-const Profile = () => {
+const Profile = ({navigation}:any) => {
   return (
     <ScrollView>
       <Text></Text>
@@ -71,7 +71,10 @@ const Profile = () => {
         </View>
       </View>
 
-      <Text style={{fontSize:30, fontWeight:'bold', paddingLeft: 20}}>업적</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('achievement')}>
+          <Text style={{ fontSize: 30, fontWeight: 'bold', paddingLeft: 20 }}>업적</Text>
+      </TouchableOpacity>      
+      
       <View style={{alignItems:'center'}}>
         <Text></Text>
         <View style={[Box.cardBox,{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems:'center'}]}>
