@@ -13,7 +13,7 @@ interface CarouselCardProps {
 }
 
 const Container = styled.View`
-  height: 80%;
+  height: 100%;
   justify-content: center;
   align-items: center;
 `;
