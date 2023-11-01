@@ -62,9 +62,7 @@ const Login = () => {
 
 
   return (
-    <View>
-      {/* <Text>result : {result}</Text> */}
-      
+    <View style={{width: '80%'}}>      
       {/* 카카오 로그인 버튼 */}
       <TouchableOpacity
         onPress={() => signInWithKakao()}
