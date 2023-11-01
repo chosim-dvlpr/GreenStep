@@ -19,7 +19,6 @@ const MainTextContainer = styled.View`
 const CarouselContainer = styled.View`
   margin-bottom: 20;
   height: 57%;
-  background-color: black;
   `
 
 const LoginContainer = styled.View`
