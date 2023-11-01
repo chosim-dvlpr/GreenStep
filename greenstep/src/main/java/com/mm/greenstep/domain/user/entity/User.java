@@ -24,10 +24,12 @@ public class User {
     private String nickName;
 
     @Column(name = "exp")
-    private Integer exp;
+    private Long exp;
 
 //    @Column(name = "team_color_id", nullable = false)
 //    private Team team;
+    @Column(name = "level")
+    private Integer level;
 
     @Column(name = "is_deleted")
     private Boolean isDeleted;
