@@ -41,6 +41,11 @@ const ButtonStyle = StyleSheet.create({
   /** 카카오 로그인 버튼 */
   kakaoButton: {
     backgroundColor: 'yellow', // 임시 색깔
+    // width: '100%',
+    height: 50,
+    borderRadius: 15,
+    alignItems : 'center',
+    justifyContent: 'center'
   },
   /** 업적 페이지 작은 버튼 */
   achievementButton: {
