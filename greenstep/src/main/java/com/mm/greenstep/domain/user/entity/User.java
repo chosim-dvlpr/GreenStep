@@ -1,18 +1,15 @@
 package com.mm.greenstep.domain.user.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
-//@Builder
-//@RequiredArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "user")
 public class User {
 
@@ -24,7 +21,7 @@ public class User {
     private String nickName;
 
     @Column(name = "exp")
-    private Long exp;
+    private Integer exp;
 
 //    @Column(name = "team_color_id", nullable = false)
 //    private Team team;

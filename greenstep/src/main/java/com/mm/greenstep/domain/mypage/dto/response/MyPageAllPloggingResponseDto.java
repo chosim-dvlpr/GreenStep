@@ -1,4 +1,4 @@
-package com.mm.greenstep.domain.mypage.dto;
+package com.mm.greenstep.domain.mypage.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -7,6 +7,6 @@ import lombok.Getter;
 @Getter
 public class MyPageAllPloggingResponseDto {
     private Double travelRange;
-    private Long travelTime;
-    private Long trashAmount;
+    private Double travelTime;
+    private Integer trashAmount;
 }

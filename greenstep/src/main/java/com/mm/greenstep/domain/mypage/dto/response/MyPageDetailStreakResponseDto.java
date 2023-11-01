@@ -1,4 +1,4 @@
-package com.mm.greenstep.domain.mypage.dto;
+package com.mm.greenstep.domain.mypage.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -8,5 +8,5 @@ import lombok.Getter;
 public class MyPageDetailStreakResponseDto {
     private Integer month;
     private Integer weekly;
-    private Long count;
+    private Integer count;
 }
