@@ -1,8 +1,8 @@
 package com.mm.greenstep.domain.mypage.service;
 
-import com.mm.greenstep.domain.mypage.dto.MyPageAllPloggingResponseDto;
-import com.mm.greenstep.domain.mypage.dto.MyPageDetailHeaderResponseDto;
-import com.mm.greenstep.domain.mypage.dto.MyPageDetailStreakResponseDto;
+import com.mm.greenstep.domain.mypage.dto.response.MyPageAllPloggingResponseDto;
+import com.mm.greenstep.domain.mypage.dto.response.MyPageDetailHeaderResponseDto;
+import com.mm.greenstep.domain.mypage.dto.response.MyPageDetailStreakResponseDto;
 import com.mm.greenstep.domain.user.entity.User;
 import com.mm.greenstep.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,9 +38,9 @@ public class MyPageService {
 
         // 플로깅 도메인 구현 후 진행
         // 나의 모든 플로깅에서 다 뽑고 계산해서 넣어주면 됨
-        Long trashAmount = null; // 나의 총 쓰레기 량
+        Integer trashAmount = null; // 나의 총 쓰레기 량
         Double travelRange = null; // 나의 총 이동거리
-        Long travelTime = null; // 나의 총 이동시간
+        Double travelTime = null; // 나의 총 이동시간
 
         MyPageAllPloggingResponseDto dto = MyPageAllPloggingResponseDto.builder()
                 .trashAmount(trashAmount)

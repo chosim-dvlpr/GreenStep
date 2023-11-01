@@ -1,8 +1,8 @@
 package com.mm.greenstep.domain.mypage.api;
 
-import com.mm.greenstep.domain.mypage.dto.MyPageAllPloggingResponseDto;
-import com.mm.greenstep.domain.mypage.dto.MyPageDetailHeaderResponseDto;
-import com.mm.greenstep.domain.mypage.dto.MyPageDetailStreakResponseDto;
+import com.mm.greenstep.domain.mypage.dto.response.MyPageAllPloggingResponseDto;
+import com.mm.greenstep.domain.mypage.dto.response.MyPageDetailHeaderResponseDto;
+import com.mm.greenstep.domain.mypage.dto.response.MyPageDetailStreakResponseDto;
 import com.mm.greenstep.domain.mypage.service.MyPageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -36,8 +36,7 @@ public class MyPageController {
     // 스트릭 조회
     @GetMapping("/{year}/streak")
     public ResponseEntity<?> getDetailStreak(HttpServletRequest request, @PathVariable Integer year) {
-        List<MyPageDetailStreakResponseDto> dto = myPageService.getDetailStreak(request, year);
-        return new ResponseEntity<>(dto, HttpStatus.OK);
+        List<MyPageDetailStreakResponseDto> dtoList = myPageService.getDetailStreak(request, year);
+        return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }
-
 }
