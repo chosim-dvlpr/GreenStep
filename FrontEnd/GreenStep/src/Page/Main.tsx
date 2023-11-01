@@ -1,8 +1,9 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
 import Login from '../Component/Main/Login';
 import Carousel from '../Component/Main/Carousel';
 import styled from 'styled-components/native';
+import ButtonStyle from '../Style/ButtonStyle';
 
 const MainText = styled.Text`
   font-size: 30;
@@ -22,12 +23,15 @@ const CarouselContainer = styled.View`
   `
 
 const LoginContainer = styled.View`
-  justify-content: center;
-  margin: auto;
-  width: 80%;
+  align-items: center;
 `
 
 const Main = () => {
+  const [isLogin, setIsLogin] = useState<boolean>(false);
+  
+  const goToPlogging = () => {
+    console.log('플로깅 하러 가보자고~!!')
+  };
 
   return (
     <View>
@@ -42,7 +46,16 @@ const Main = () => {
       </CarouselContainer>
 
       <LoginContainer>
-        <Login/>
+      {
+        isLogin ?
+        <TouchableOpacity
+          onPress={() => goToPlogging()}
+          style={[ButtonStyle.largeButton, ButtonStyle.lightGreenColor]}
+        >
+          <Text>플로깅 하러가기</Text>
+        </TouchableOpacity>
+        : <Login/>
+      }
       </LoginContainer>
     </View>
   );
