@@ -1,18 +1,5 @@
-// import {View, Text, Button} from 'react-native';
-// import React from 'react';
-// import { KakaoOAuthToken, login } from '@react-native-seoul/kakao-login';
-import React, { useCallback, useState } from 'react';
-import {
-  Button,
-  Pressable,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import React from 'react';
+import { View } from 'react-native';
 import Login from '../Component/Main/Login';
 import Carousel from '../Component/Main/Carousel';
 import styled from 'styled-components/native';
@@ -29,6 +16,18 @@ const MainTextContainer = styled.View`
   margin-bottom: 25;
 `
 
+const CarouselContainer = styled.View`
+  margin-bottom: 20;
+  height: 57%;
+  background-color: black;
+  `
+
+const LoginContainer = styled.View`
+  justify-content: center;
+  margin: auto;
+  width: 80%;
+`
+
 const Main = () => {
 
   return (
@@ -38,8 +37,14 @@ const Main = () => {
         <MainText>당신과 우리의 발자국</MainText>
         <MainText>그린스텝</MainText>
       </MainTextContainer>
-      <Carousel/>
-      <Login/>
+
+      <CarouselContainer>
+        <Carousel/>
+      </CarouselContainer>
+
+      <LoginContainer>
+        <Login/>
+      </LoginContainer>
     </View>
   );
 };
