@@ -1,5 +1,5 @@
-import { View, Text, Dimensions } from 'react-native';
-import React from 'react';
+import { View, Dimensions } from 'react-native';
+import React, { useState } from 'react';
 import CarouselCard from './CarouselCard'
 
 interface samplePagesObjectType {
@@ -18,7 +18,7 @@ export const pageWidth = screenWidth - (gap + offset) * 2; // 캐러셀 너비
 
 const Carousel = () => {
   // 임시 데이터
-  const samplePages: samplePagesType= [
+  const [samplePages, setSamplePages] = useState<samplePagesType> ([
     {
       key: 1,
       color: '#86E3CE',
@@ -44,7 +44,7 @@ const Carousel = () => {
       color: '#CCABD8',
       imageUrl: 'https://mblogthumb-phinf.pstatic.net/MjAyMTAyMDRfNjIg/MDAxNjEyNDA4OTk5NDQ4.6UGs399-0EXjIUwwWsYg7o66lDb-MPOVQ-zNDy1Wnnkg.m-WZz0IKKnc5OO2mjY5dOD-0VsfpXg7WVGgds6fKwnIg.JPEG.sunny_side_up12/1612312679152%EF%BC%8D2.jpg?type=w800',
     },
-  ];
+  ]);
 
   return (
     <View>
@@ -52,6 +52,7 @@ const Carousel = () => {
         gap={gap}
         offset={offset}
         pages={samplePages}
+        setSamplePages={setSamplePages}
         pageWidth={pageWidth}
       />
     </View>
