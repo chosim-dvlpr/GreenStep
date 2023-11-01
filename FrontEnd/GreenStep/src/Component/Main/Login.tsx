@@ -1,5 +1,5 @@
 
-import { View, Text, Button } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import {
   KakaoOAuthToken,
@@ -12,6 +12,7 @@ import {
   unlink,
   getProfile,
 } from '@react-native-seoul/kakao-login';
+import ButtonStyle from '../../Style/ButtonStyle';
 
 const Login = () => {
   const [result,setResult] = useState<string>('');
@@ -59,31 +60,40 @@ const Login = () => {
 
   return (
     <View>
-      <Text>Login</Text>
+      <Text>Login 컴포넌트</Text>
       <Text>result : {result}</Text>
-        <Button
-          testID="btn-login"
-          onPress={() => signInWithKakao()}
-          title={'카카오 로그인'}
-        />
-        {/* <View style={{marginTop: 12}} />
-        <Button
-          testID="btn-login"
-          onPress={() => getKakaoProfile()}
-          title={'프로필 조회'}
-        />
-        <View style={{marginTop: 12}} />
-        <Button
-          testID="btn-login"
-          onPress={() => unlinkKakao()}
-          title={'링크 해제'}
-        />
-        <View style={{marginTop: 12}} />
-        <Button
-          onPress={() => signOutWithKakao()}
-          title={'카카오 로그아웃'}
-        />
-        <View style={{marginTop: 40}} /> */}
+      
+      {/* 카카오 로그인 버튼 */}
+      <TouchableOpacity
+        onPress={() => signInWithKakao()}
+        style={[ButtonStyle.kakaoButton, ButtonStyle.largeButton]}
+      >
+        <Text>카카오로그인</Text>
+      </TouchableOpacity>
+    
+      {/* <Button
+        testID="btn-login"
+        onPress={() => signInWithKakao()}
+        title={'카카오 로그인'}
+      /> */}
+      {/* <View style={{marginTop: 12}} />
+      <Button
+        testID="btn-login"
+        onPress={() => getKakaoProfile()}
+        title={'프로필 조회'}
+      />
+      <View style={{marginTop: 12}} />
+      <Button
+        testID="btn-login"
+        onPress={() => unlinkKakao()}
+        title={'링크 해제'}
+      />
+      <View style={{marginTop: 12}} />
+      <Button
+        onPress={() => signOutWithKakao()}
+        title={'카카오 로그아웃'}
+      />
+      <View style={{marginTop: 40}} /> */}
     </View>
   )
 }
