@@ -13,7 +13,7 @@ export interface samplePagesType extends Array<samplePagesObjectType> {}
 // Carousel 모양 지정
 const screenWidth = Math.round(Dimensions.get('window').width); // 393
 const gap = 20;    // 캐러셀 사이의 간격
-const offset = 50; // 다음 캐러셀 / 이전 캐러셀이 보여지는 너비
+const offset = 60; // 다음 캐러셀 / 이전 캐러셀이 보여지는 너비
 export const pageWidth = screenWidth - (gap + offset) * 2; // 캐러셀 너비
 
 const Carousel = () => {
@@ -47,7 +47,8 @@ const Carousel = () => {
   ]);
 
   return (
-    <View>
+    <View style={{height: "100%", width: "100%"}}>
+    {/* <View> */}
       <CarouselCard
         gap={gap}
         offset={offset}
