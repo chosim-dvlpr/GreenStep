@@ -17,6 +17,7 @@ import ButtonStyle from '../../Style/ButtonStyle';
 const Login = () => {
   const [result,setResult] = useState<string>('');
 
+  /** 카카오 로그인 */
   const signInWithKakao = async (): Promise<void> => {
     try {
       // const token: KakaoOAuthToken = await login();
@@ -58,15 +59,14 @@ const Login = () => {
     }
   };
 
+
+
   return (
-    <View>
-      <Text>Login 컴포넌트</Text>
-      <Text>result : {result}</Text>
-      
+    <View style={{width: '80%'}}>      
       {/* 카카오 로그인 버튼 */}
       <TouchableOpacity
         onPress={() => signInWithKakao()}
-        style={[ButtonStyle.kakaoButton, ButtonStyle.largeButton]}
+        style={[ButtonStyle.kakaoButton]}
       >
         <Text>카카오로그인</Text>
       </TouchableOpacity>
