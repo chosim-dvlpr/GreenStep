@@ -38,6 +38,10 @@ const ButtonStyle = StyleSheet.create({
     alignItems : 'center',
     justifyContent: 'center'
   },
+  /** 카카오 로그인 버튼 */
+  kakaoButton: {
+    backgroundColor: 'yellow', // 임시 색깔
+  },
 //   flex: {
 //     flexDirection : 'row',
 //     justifyContent: 'space-around'
