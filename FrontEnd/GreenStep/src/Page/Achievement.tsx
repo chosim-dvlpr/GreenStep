@@ -1,10 +1,9 @@
-import {View, Text, Image, ScrollView} from 'react-native';
+import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
 import React, { useState } from 'react';
-import CustomButton from '../Component/Common/CustomButton';
 import Box from '../Style/Box';
 import ImageStyle from '../Style/Image';
 import badge from '../Image/Achievement/badge.png'
-
+import ButtonStyle from '../Style/ButtonStyle';
 const Achievement = () => {
   const list = ['거리', '시간', '쓰레기 수', '경쟁']
   const [number, setNumber] = useState(0);
@@ -34,12 +33,12 @@ const Achievement = () => {
 
   return (
     <ScrollView>
-      <Text>Achievement</Text>
+      <Text></Text>
       <View style={{display:'flex', flexDirection:'row', justifyContent:'space-evenly'}}>
         {list.map((atom, idx) => (
-          <CustomButton title={atom} styleType='smallButton' 
-                        backgroundColor='white' color='#5BB450' 
-                        fontSize={20} func={changeNumber(idx)} ></CustomButton>
+          <TouchableOpacity style={[ButtonStyle.smallButton, ButtonStyle.achievementButton]} onPress={changeNumber(idx)} >
+             <Text style={{fontSize: 20, fontWeight:'bold'}}>{atom}</Text> 
+          </TouchableOpacity>
         ))}
       </View>      
           <Text></Text>

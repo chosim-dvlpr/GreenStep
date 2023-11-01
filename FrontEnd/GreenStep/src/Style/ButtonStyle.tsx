@@ -42,11 +42,10 @@ const ButtonStyle = StyleSheet.create({
   kakaoButton: {
     backgroundColor: 'yellow', // 임시 색깔
   },
-//   flex: {
-//     flexDirection : 'row',
-//     justifyContent: 'space-around'
-//     // textAlign:'auto',
-//   },
+  /** 업적 페이지 작은 버튼 */
+  achievementButton: {
+    backgroundColor: 'green', // 임시 색깔
+  },
 })
 
 export default ButtonStyle;
