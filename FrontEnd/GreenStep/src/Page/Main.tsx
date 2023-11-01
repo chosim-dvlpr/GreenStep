@@ -14,6 +14,7 @@ import {
   View,
 } from 'react-native';
 import Login from '../Component/Main/Login';
+import Carousel from '../Component/Main/Carousel';
 
 
 const Main = () => {
@@ -21,6 +22,7 @@ const Main = () => {
   return (
     <View>
       <Text>Main</Text>
+      <Carousel/>
       <Login/>
     </View>
   );
