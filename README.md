@@ -7,7 +7,6 @@
 
 컨벤션
 
-Master 
 front-release → front-fe-{component(page명 작성)}-{기능}
 
 back-release → back-fe-{domain}-{기능}
