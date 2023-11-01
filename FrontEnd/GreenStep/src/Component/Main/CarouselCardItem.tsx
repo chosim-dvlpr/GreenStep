@@ -1,4 +1,4 @@
-import { View, Text, ViewStyle, Image } from 'react-native';
+import { View, ViewStyle, Image } from 'react-native';
 import React from 'react';
 import styled from 'styled-components/native';
 import { pageWidth } from './Carousel';
