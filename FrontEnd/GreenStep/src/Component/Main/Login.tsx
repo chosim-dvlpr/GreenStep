@@ -14,6 +14,8 @@ import {
 } from '@react-native-seoul/kakao-login';
 import ButtonStyle from '../../Style/ButtonStyle';
 import { LoginAPI } from '../../Api/basicHttp';
+import { getTokens } from '../../Api/tokenHttp';
+import { useNavigation } from '@react-navigation/native';
 
 interface LoginPropsType {
   setIsLogin: Dispatch<SetStateAction<boolean>>;
@@ -21,11 +23,14 @@ interface LoginPropsType {
 
 const Login = ({setIsLogin}: LoginPropsType) => {
   const [result,setResult] = useState<string>('');
-
+  const navigation = useNavigation();
+  
   const getLogin = (token: string) => {
     LoginAPI.getLogin(token)
       .then(res => {
         console.log('axios 성공 : ', res)
+        // 로그인 성공 조건 추가
+        // setIsLogin(true);
       })
       .catch(err => {
         console.log("login axios 에러 발생: ", err);
@@ -36,14 +41,21 @@ const Login = ({setIsLogin}: LoginPropsType) => {
   /** 카카오 로그인 */
   const signInWithKakao = async (): Promise<void> => {
     try {
+      // 로그인 버튼 클릭 -> 로그인 성공 시 카카오에서 토큰 보내줌
+      // -> 카카오 토큰을 백으로 보냄
+      // -> 백에서 반환한 응답이 성공이면 setIsLogin(true)
+      // -> 백에서 반환한 응답이 실패면 alert
+
       // const token: KakaoOAuthToken = await login();
       const token: KakaoOAuthToken = await loginWithKakaoAccount();
       console.log(token);
       setResult(JSON.stringify(token));
-      getLogin(token.accessToken)
+      token && getLogin(token.accessToken) // token이 있다면 axios 요청
+      
 
-      // 로그인 성공 조건 추가
-      setIsLogin(true);
+      // getTokens({kakaoToken: '123', setIsLogin: setIsLogin, navigation: navigation})
+
+
 
     } catch(err) {
       console.log(err);
