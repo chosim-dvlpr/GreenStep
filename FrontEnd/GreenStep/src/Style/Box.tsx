@@ -10,9 +10,14 @@ const Box = StyleSheet.create({
   },
   /** 플로깅 데이터 (세개짜리) 하나하나의 박스 */
   ploggingDataInfoBox: {
-    width: '30%',
+    flex: 1,
+    // width: '32%',
+    // display: 'flex',
+    // height: '80%',
+    aspectRatio: 0.9,
     backgroundColor: 'yellow',
-    padding: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
     borderRadius: 20,
   },
   /** 업적 리스트, 게시글 리스트 박스 */

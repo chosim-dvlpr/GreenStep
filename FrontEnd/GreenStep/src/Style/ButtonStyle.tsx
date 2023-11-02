@@ -38,6 +38,14 @@ const ButtonStyle = StyleSheet.create({
     alignItems : 'center',
     justifyContent: 'center',
   },
+  /** 너비 100%의 꽉차는 버튼 */
+  fullLargeButton: {
+    width: '100%', 
+    height: 60,       
+    borderRadius: 15,
+    alignItems : 'center',
+    justifyContent: 'center',
+  },
   /** 카카오 로그인 버튼 */
   kakaoButton: {
     backgroundColor: 'yellow', // 임시 색깔
@@ -53,6 +61,11 @@ const ButtonStyle = StyleSheet.create({
   /** 버튼 색 - 연초록 */
   lightGreenColor: {
     backgroundColor: '#ACD8A7',
+  },
+  /** 버튼 색 - 흰색 */
+  whiteColor: {
+    backgroundColor: 'white',
+    elevation: 5, // 그림자
   },
 })
 
