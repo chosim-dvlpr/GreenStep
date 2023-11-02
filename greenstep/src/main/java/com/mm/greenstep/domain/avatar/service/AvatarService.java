@@ -1,6 +1,6 @@
 package com.mm.greenstep.domain.avatar.service;
 
-import com.mm.greenstep.domain.avatar.dto.response.AvatarAllResponseDto;
+import com.mm.greenstep.domain.avatar.dto.response.AvatarAllResDto;
 import com.mm.greenstep.domain.avatar.entity.Avatar;
 import com.mm.greenstep.domain.avatar.entity.UserAvatar;
 import com.mm.greenstep.domain.avatar.repository.AvatarRepository;
@@ -33,15 +33,15 @@ public class AvatarService {
         userAvatarRepository.save(userAvatar);
     }
 
-    public List<AvatarAllResponseDto> getAllMyAvatar(HttpServletRequest request) {
+    public List<AvatarAllResDto> getAllMyAvatar(HttpServletRequest request) {
         Long user_pk = 100L;
 
         User user = userRepository.findByUserId(user_pk);
         List<UserAvatar> userAvatarList = userAvatarRepository.findAllByUser(user);
-        List<AvatarAllResponseDto> list = new ArrayList<>();
+        List<AvatarAllResDto> list = new ArrayList<>();
 
         for (UserAvatar userAvatar : userAvatarList) {
-            AvatarAllResponseDto dto = AvatarAllResponseDto.builder()
+            AvatarAllResDto dto = AvatarAllResDto.builder()
                     .boxId(userAvatar.getAvatar().getBoxId())
                     .avatarImg(userAvatar.getAvatar().getAvatarImg())
                     .avatarName(userAvatar.getAvatar().getAvatarName())

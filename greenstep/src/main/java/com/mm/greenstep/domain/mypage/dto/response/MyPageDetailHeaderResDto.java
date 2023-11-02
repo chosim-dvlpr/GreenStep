@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class MyPageDetailHeaderResponseDto {
+public class MyPageDetailHeaderResDto {
     private String nickname;
     private Integer level;
     private Integer exp;

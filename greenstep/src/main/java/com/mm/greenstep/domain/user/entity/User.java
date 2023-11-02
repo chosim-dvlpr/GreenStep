@@ -39,4 +39,9 @@ public class User {
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
+
+    public void levelUp(Integer exp) {
+        this.level++;
+        this.exp = exp;
+    }
 }

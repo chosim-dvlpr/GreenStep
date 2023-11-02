@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Builder
 @Getter
-public class AchieveDetailResponseDto {
+public class AchieveDetailResDto {
     private Long boxId;
     private String achieveName;
     private String achieveImg;
