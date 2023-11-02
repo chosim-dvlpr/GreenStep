@@ -4,33 +4,15 @@ import styled from 'styled-components/native';
 import Calendar from '../Component/Competition/Calendar';
 import LottieView from 'lottie-react-native';
 import * as Progress from 'react-native-progress';
-
+import CompetitionGraphic from '../Component/Competition/CompetitionGraphic';
 const Competition = () => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [progressValue, setProgressValue] = useState(0.5);
 
   const renderTeamCountBox = (title: string, content: string) => (
     <TeamCountBox>
       <TeamText>{title}</TeamText>
       <TeamNum>{content}</TeamNum>
     </TeamCountBox>
-  );
-
-  const renderProgressSection = (bottomOffset: number) => (
-    <ProgressBox bottomOffset={bottomOffset}>
-      <Progress.Bar
-        progress={progressValue}
-        width={290}
-        height={14}
-        color="#34c759"
-      />
-      <LottieView
-        source={require('../Image/Competition/flag.json')}
-        autoPlay
-        loop
-        style={styles.flag}
-      />
-    </ProgressBox>
   );
 
   return (
@@ -40,23 +22,7 @@ const Competition = () => {
           <Title>경쟁</Title>
           <Calendar onSelectDate={setSelectedDate} selected={selectedDate} />
         </CalendarWrap>
-        <Graphic>
-          <LottieView
-            source={require('../Image/Competition/turtle.json')}
-            autoPlay
-            loop
-            style={styles.turtle}
-          />
-          {renderProgressSection(40)}
-          <LottieView
-            source={require('../Image/Competition/rabbit.json')}
-            autoPlay
-            loop
-            style={styles.rabbit}
-          />
-          {renderProgressSection(160)}
-          <Text>팀 토끼의 진행도</Text>
-        </Graphic>
+        <CompetitionGraphic />
         <DashBoard>
           <MyTeamDashBoardTitle>내 팀 현황판 (팀 거북)</MyTeamDashBoardTitle>
           <TeamCountWrap>
@@ -86,20 +52,8 @@ const CalendarWrap = styled.View`
 `;
 
 const Title = styled.Text`
-  font-weight: bold;
+  font-family: 'SUITE-Bold';
   font-size: 25px;
-`;
-
-const Graphic = styled.View`
-  flex: 3;
-  background-color: #f9f9f9;
-  border-radius: 50px 50px 0px 0px;
-`;
-
-const ProgressBox = styled.View<{bottomOffset: number}>`
-  width: 400px;
-  align-items: center;
-  bottom: ${props => props.bottomOffset}px;
 `;
 
 const DashBoard = styled.View`
@@ -109,11 +63,10 @@ const DashBoard = styled.View`
 `;
 
 const MyTeamDashBoardTitle = styled.Text`
-  font-weight: bold;
+  font-family: 'SUITE-Bold';
   font-size: 20px;
   margin-top: 30px;
   margin-left: 30px;
-  font-family: 'SUITE-Bold';
 `;
 
 const TeamCountWrap = styled.View`
@@ -139,30 +92,8 @@ const TeamText = styled.Text`
 `;
 
 const TeamNum = styled.Text`
-  font-weight: bold;
   font-size: 30px;
   font-family: 'SUITE-Bold';
 `;
-
-const styles = StyleSheet.create({
-  turtle: {
-    width: 150,
-    height: 150,
-    marginLeft: 10,
-  },
-  rabbit: {
-    width: 150,
-    height: 150,
-    bottom: 135,
-    marginLeft: 10,
-    transform: [{scaleX: -1}],
-  },
-  flag: {
-    width: 90,
-    height: 80,
-    bottom: 85,
-    left: 140,
-  },
-});
 
 export default Competition;

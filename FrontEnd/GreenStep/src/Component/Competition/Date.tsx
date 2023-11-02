@@ -38,8 +38,8 @@ const DateCard = styled(TouchableOpacity)<{selected: boolean}>`
 `;
 
 const DayText = styled(Text)<{selected: boolean}>`
-  font-weight: bold;
-  font-size: 14px;
+  font-family: 'SUITE-Bold';
+  font-size: 19px;
   color: ${props => (props.selected ? '#fff' : 'black')};
 `;
 
@@ -50,7 +50,7 @@ const Spacer = styled(View).attrs<{height: number}>(props => ({
 `;
 
 const DayNumberText = styled(Text)<{selected: boolean}>`
+  font-family: 'SUITE-Bold';
   font-size: ${props => (props.selected ? 20 : 18)}px;
   color: ${props => (props.selected ? '#fff' : 'black')};
-  font-weight: ${props => (props.selected ? 'bold' : 'normal')};
 `;
