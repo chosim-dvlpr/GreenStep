@@ -1,9 +1,8 @@
-import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
 import React, { useState } from 'react';
-import Box from '../Style/Box';
-import ImageStyle from '../Style/Image';
-import badge from '../Image/Achievement/badge.png'
-import ButtonStyle from '../Style/ButtonStyle';
+import AchievementButton from '../Component/Achievement/AchievementButton';
+import AchievementList from '../Component/Achievement/AcievementList';
+
 const Achievement = () => {
   const list = ['거리', '시간', '쓰레기 수', '경쟁']
   const [number, setNumber] = useState(0);
@@ -36,32 +35,13 @@ const Achievement = () => {
       <Text></Text>
       <View style={{display:'flex', flexDirection:'row', justifyContent:'space-evenly'}}>
         {list.map((atom, idx) => (
-          <TouchableOpacity style={[ButtonStyle.smallButton, ButtonStyle.achievementButton]} onPress={changeNumber(idx)} >
-             <Text style={{fontSize: 20, fontWeight:'bold'}}>{atom}</Text> 
-          </TouchableOpacity>
-        ))}
+          <AchievementButton atom={atom} onPress={changeNumber(idx)} />
+    ))}
       </View>      
           <Text></Text>
       <View style={{alignItems:'center'}}>
         {currentAchievements?.map((achievement, idx) => (
-          <View style={[Box.cardBox,
-                      {display: 'flex', 
-                       flexDirection: 'row',
-                       justifyContent: 'space-between', 
-                       alignItems:'center',
-                       marginBottom: 30,
-                      }]}>
-            <View>
-              <Text style={{fontWeight:'bold', fontSize: 20}}>{list[number]}</Text>
-              <Text></Text>
-              <Text>{list[number]} {achievement} 달성</Text>
-              <Text></Text>
-              <Text>달성 날짜 2035/04/23</Text>
-            </View>
-            <View>
-              <Image source={badge} style={ImageStyle.mediumImage}></Image>
-            </View>
-          </View>
+          <AchievementList atom={achievement} key={idx} />
         ))}
       </View>
     </ScrollView>
