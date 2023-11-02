@@ -1,61 +1,64 @@
+// /calendar
 import {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import {ScrollView} from 'react-native';
 import moment from 'moment';
+import styled from 'styled-components/native';
 import Date from './Date';
 
-const Calendar = ({onSelectDate, selected}) => {
-  const [dates, setDates] = useState([]);
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const [currentMonth, setCurrentMonth] = useState();
+interface CalendarProps {
+  onSelectDate: (date: string) => void;
+  selected: string | null;
+}
 
-  // get the dates from today to 10 days from now, format them as strings and store them in state
-  const getDates = () => {
-    const _dates = [];
+const Calendar: React.FC<CalendarProps> = ({onSelectDate, selected}) => {
+  const [dates, setDates] = useState<moment.Moment[]>([]);
+  const [selectedDate, setSelectedDate] = useState<string>(
+    selected || moment().format('YYYY-MM-DD'),
+  );
+
+  const initializeDates = () => {
+    const upcomingDates: moment.Moment[] = [];
     for (let i = 0; i < 10; i++) {
       const date = moment().add(i, 'days');
-      _dates.push(date);
+      upcomingDates.push(date);
     }
-    setDates(_dates);
+    setDates(upcomingDates);
   };
 
   useEffect(() => {
-    getDates();
+    initializeDates();
+    // 오늘 날짜를 선택된 상태로 초기화
+    onSelectDate(moment().format('YYYY-MM-DD'));
   }, []);
 
   return (
-    <>
-      <View style={styles.centered}></View>
-      <View style={styles.dateSection}>
-        <View style={styles.scroll}>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {dates.map((date, index) => (
-              <Date
-                key={index}
-                date={date}
-                onSelectDate={onSelectDate}
-                selected={selected}
-              />
-            ))}
-          </ScrollView>
-        </View>
-      </View>
-    </>
+    <DateSection>
+      <Scroll>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {dates.map((date, index) => (
+            <Date
+              key={index}
+              date={date}
+              onSelectDate={(date: string) => {
+                onSelectDate(date);
+                setSelectedDate(date);
+              }}
+              selected={selectedDate}
+            />
+          ))}
+        </ScrollView>
+      </Scroll>
+    </DateSection>
   );
 };
 
 export default Calendar;
 
-const styles = StyleSheet.create({
-  centered: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+const DateSection = styled.View`
+  width: 100%;
+  padding: 10px;
+`;
 
-  dateSection: {
-    width: '100%',
-    padding: 10,
-  },
-  scroll: {
-    height: 110,
-  },
-});
+const Scroll = styled.View`
+  height: 110px;
+`;
