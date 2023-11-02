@@ -35,6 +35,7 @@ const ImageContainer = styled.View`
   width: 86%;
   margin: auto;
   margin-top: 30;
+  aspect-ratio: 1;
 `
 
 
