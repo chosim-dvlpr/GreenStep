@@ -1,6 +1,6 @@
 # B303
 
-### Server : https://k9b303.p.ssafy.io/test
+### Server : https://k9b303.p.ssafy.io/api
 ### jenkins : http://k9b303.p.ssafy.io:9090/
 
 # Git
