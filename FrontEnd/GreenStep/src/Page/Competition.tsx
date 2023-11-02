@@ -1,11 +1,20 @@
-import {View, Text} from 'react-native';
-import React from 'react';
-import {useState} from 'react';
+import React, {useState} from 'react';
+import {StyleSheet, Text} from 'react-native';
 import styled from 'styled-components/native';
 import Calendar from '../Component/Competition/Calendar';
-
+import LottieView from 'lottie-react-native';
+import * as Progress from 'react-native-progress';
+import CompetitionGraphic from '../Component/Competition/CompetitionGraphic';
 const Competition = () => {
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+
+  const renderTeamCountBox = (title: string, content: string) => (
+    <TeamCountBox>
+      <TeamText>{title}</TeamText>
+      <TeamNum>{content}</TeamNum>
+    </TeamCountBox>
+  );
+
   return (
     <Container>
       <ContainerBg source={require('../Image/Competition/bg.png')}>
@@ -13,12 +22,12 @@ const Competition = () => {
           <Title>경쟁</Title>
           <Calendar onSelectDate={setSelectedDate} selected={selectedDate} />
         </CalendarWrap>
-        <Graphic></Graphic>
+        <CompetitionGraphic />
         <DashBoard>
           <MyTeamDashBoardTitle>내 팀 현황판 (팀 거북)</MyTeamDashBoardTitle>
           <TeamCountWrap>
-            <TeamMoveCount></TeamMoveCount>
-            <TeamTimeCount></TeamTimeCount>
+            {renderTeamCountBox('팀 거북의 이동거리', '1234km')}
+            {renderTeamCountBox('팀 거북의 소요시간', '124시간')}
           </TeamCountWrap>
         </DashBoard>
       </ContainerBg>
@@ -26,58 +35,65 @@ const Competition = () => {
   );
 };
 
-export default Competition;
+const Container = styled.View`
+  flex: 1;
+`;
 
-export const Container = styled.View``;
-export const ContainerBg = styled.ImageBackground`
+const ContainerBg = styled.ImageBackground`
   width: 100%;
   height: 100%;
 `;
 
-export const CalendarWrap = styled.View`
+const CalendarWrap = styled.View`
   flex: 1.4;
   align-items: center;
   padding-top: 30px;
   justify-content: space-around;
 `;
-export const Title = styled.Text`
-  font-weight: bold;
+
+const Title = styled.Text`
+  font-family: 'SUITE-Bold';
   font-size: 25px;
 `;
 
-export const Graphic = styled.View`
-  flex: 3;
-  background-color: #f9f9f9;
-  border-radius: 50px 50px 0px 0px;
-`;
-export const DashBoard = styled.View`
+const DashBoard = styled.View`
   flex: 2;
   background-color: #cce7c9;
   border-radius: 50px 50px 0px 0px;
 `;
 
-export const MyTeamDashBoardTitle = styled.Text`
-  font-weight: bold;
+const MyTeamDashBoardTitle = styled.Text`
+  font-family: 'SUITE-Bold';
   font-size: 20px;
-  top: 30px;
-  left: 30px;
-  flex: 1;
+  margin-top: 30px;
+  margin-left: 31px;
 `;
 
-export const TeamCountWrap = styled.View`
+const TeamCountWrap = styled.View`
   flex: 2;
   width: 100%;
-  row-direction: row;
-  justify-content: space-between;
+  flex-direction: row;
+  justify-content: space-evenly;
   align-items: center;
 `;
-export const TeamMoveCount = styled.View`
-  width: 100px;
-  height: 80px;
+
+const TeamCountBox = styled.View`
+  width: 160px;
+  height: 120px;
   background-color: white;
+  border-radius: 20px;
+  align-items: center;
+  justify-content: space-evenly;
 `;
-export const TeamTimeCount = styled.View`
-  width: 100px;
-  height: 80px;
-  background-color: pink;
+
+const TeamText = styled.Text`
+  font-size: 15px;
+  font-family: 'SUITE-Bold';
 `;
+
+const TeamNum = styled.Text`
+  font-size: 30px;
+  font-family: 'SUITE-Bold';
+`;
+
+export default Competition;

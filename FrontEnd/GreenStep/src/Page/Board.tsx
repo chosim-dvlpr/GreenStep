@@ -23,7 +23,9 @@ const Board = ({navigation}:any) => {
                                  {position:'absolute', bottom: 20, alignSelf: 'center',
                                   display:'flex', flexDirection: 'row', 
                                   justifyContent: 'space-evenly', alignItems:'center'
-                                 }]}>
+                                 }]}
+                          onPress={()=>navigation.navigate('boardcrud')}       
+                                 >
             <Image source={pencil} style={{width:15, height: 15}}></Image>
             <Text style={{fontSize:16, color:'white', fontWeight:'bold'}}>글 쓰기</Text>
         </TouchableOpacity>
