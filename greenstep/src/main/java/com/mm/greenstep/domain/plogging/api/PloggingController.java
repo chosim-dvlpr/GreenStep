@@ -2,6 +2,7 @@ package com.mm.greenstep.domain.plogging.api;
 
 import com.mm.greenstep.domain.plogging.dto.request.PloggingReqDto;
 import com.mm.greenstep.domain.plogging.dto.response.PloggingAllResDto;
+import com.mm.greenstep.domain.plogging.dto.response.PloggingDetailResDto;
 import com.mm.greenstep.domain.plogging.dto.response.PloggingResDto;
 import com.mm.greenstep.domain.plogging.service.PloggingService;
 import lombok.RequiredArgsConstructor;
@@ -28,19 +29,26 @@ public class PloggingController {
     }
 
     // 플로깅 사진 등록
-    @PostMapping("/upload/img/{ploggingId}")
+    @PostMapping("/{ploggingId}/upload/img")
     public ResponseEntity<?> updatePloggingImg(
             @RequestPart(value = "file", required = false) MultipartFile file,
-            @PathVariable(value = "projectId", required = false) Integer ploggingId
+            @PathVariable(value = "projectId", required = false) Long ploggingId
     ) {
         ploggingService.updatePloggingImg(file, ploggingId);
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     // 내 플로깅 전체 조회
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<?> getAllPlogging(HttpServletRequest request) {
         List<PloggingAllResDto> dtoList = ploggingService.getAllPlogging(request);
         return new ResponseEntity<>(dtoList, HttpStatus.OK);
+    }
+
+    //  플로깅 상세 조회
+    @GetMapping("/{ploggingId}/detail")
+    public ResponseEntity<?> getDetailPlogging(@PathVariable Long ploggingId) {
+        PloggingDetailResDto dto = ploggingService.getDetailPlogging(ploggingId);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 }
