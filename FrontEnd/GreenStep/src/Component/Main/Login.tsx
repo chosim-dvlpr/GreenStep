@@ -1,6 +1,6 @@
 
 import { View, Text, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 import {
   KakaoOAuthToken,
   KakaoProfile,
@@ -13,9 +13,25 @@ import {
   getProfile,
 } from '@react-native-seoul/kakao-login';
 import ButtonStyle from '../../Style/ButtonStyle';
+import { LoginAPI } from '../../Api/basicHttp';
 
-const Login = () => {
+interface LoginPropsType {
+  setIsLogin: Dispatch<SetStateAction<boolean>>;
+}
+
+const Login = ({setIsLogin}: LoginPropsType) => {
   const [result,setResult] = useState<string>('');
+
+  const getLogin = (token: string) => {
+    LoginAPI.getLogin(token)
+      .then(res => {
+        console.log('axios 성공 : ', res)
+      })
+      .catch(err => {
+        console.log("login axios 에러 발생: ", err);
+      });
+  }
+  
 
   /** 카카오 로그인 */
   const signInWithKakao = async (): Promise<void> => {
@@ -24,6 +40,11 @@ const Login = () => {
       const token: KakaoOAuthToken = await loginWithKakaoAccount();
       console.log(token);
       setResult(JSON.stringify(token));
+      getLogin(token.accessToken)
+
+      // 로그인 성공 조건 추가
+      setIsLogin(true);
+
     } catch(err) {
       console.log(err);
     }
