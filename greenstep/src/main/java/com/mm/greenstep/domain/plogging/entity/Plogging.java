@@ -29,8 +29,11 @@ public class Plogging {
     @Column(name = "travel_range")
     private Double travelRange;
 
-    @Column(name = "travel_time", nullable = false)
+    @Column(name = "travel_time")
     private Double travelTime;
+
+    @Column(name = "travel_amount")
+    private Integer trashAmount;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

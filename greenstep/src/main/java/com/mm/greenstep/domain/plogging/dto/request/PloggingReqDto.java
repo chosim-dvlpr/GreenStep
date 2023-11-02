@@ -14,7 +14,7 @@ public class PloggingReqDto {
     private Integer trashAmount; // 일반 쓰레기 봉투수
 
     // 플로깅 종료까지의 이동거리 위도, 경도 리스트
-    private List<PloggingCoorReqDto> coorList;
+    private List<PloggingCoorDto> coorList;
 
     // 플로깅 하며 주운 쓰레기의 타입과 위도, 경도 리스트
     private List<PloggingTrashReqDto> trashList;

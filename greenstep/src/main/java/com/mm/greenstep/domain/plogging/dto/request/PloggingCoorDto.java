@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class PloggingCoorReqDto {
+public class PloggingCoorDto {
     private String longitude; // 경도
     private String latitude; // 위도
 }
