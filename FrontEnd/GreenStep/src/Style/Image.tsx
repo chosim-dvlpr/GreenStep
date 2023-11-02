@@ -4,8 +4,7 @@ const ImageStyle = StyleSheet.create({
   /** 가장 작은 크기의 이미지,
   FooterBar, 게시판 참여 유저 이미지 */
   tinyImage: {
-    width: 60,
-    height: 60,
+    // width: '50%',
     resizeMode: 'contain',
     borderRadius : 3,
 
