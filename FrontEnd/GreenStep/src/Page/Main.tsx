@@ -4,6 +4,7 @@ import Login from '../Component/Main/Login';
 import Carousel from '../Component/Main/Carousel';
 import styled from 'styled-components/native';
 import ButtonStyle from '../Style/ButtonStyle';
+import { useNavigation } from '@react-navigation/native';
 
 const MainText = styled.Text`
   font-size: 30;
@@ -27,12 +28,9 @@ const LoginContainer = styled.View`
 `
 
 const Main = () => {
+  const navigation = useNavigation();
   const [isLogin, setIsLogin] = useState<boolean>(false);
   
-  const goToPlogging = () => {
-    console.log('플로깅 하러 가보자고~!!')
-  };
-
   return (
     <View>
       <MainTextContainer>
@@ -49,12 +47,12 @@ const Main = () => {
       {
         isLogin ?
         <TouchableOpacity
-          onPress={() => goToPlogging()}
+          onPress={() => navigation.navigate('ploggingstart')}
           style={[ButtonStyle.largeButton, ButtonStyle.lightGreenColor]}
         >
           <Text>플로깅 하러가기</Text>
         </TouchableOpacity>
-        : <Login/>
+        : <Login setIsLogin={setIsLogin}/>
       }
       </LoginContainer>
     </View>
