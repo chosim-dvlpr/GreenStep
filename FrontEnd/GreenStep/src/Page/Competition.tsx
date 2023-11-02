@@ -66,7 +66,7 @@ const MyTeamDashBoardTitle = styled.Text`
   font-family: 'SUITE-Bold';
   font-size: 20px;
   margin-top: 30px;
-  margin-left: 30px;
+  margin-left: 31px;
 `;
 
 const TeamCountWrap = styled.View`
