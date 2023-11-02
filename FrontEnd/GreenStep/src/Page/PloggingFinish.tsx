@@ -29,6 +29,12 @@ const UploadPhotoButtonContainer = styled.View`
   margin-top: 30;
 `
 
+const ImageContainer = styled.View`
+  width: 86%;
+  margin: auto;
+  margin-top: 30;
+`
+
 
 
 const PloggingFinish = () => {
@@ -66,9 +72,12 @@ const PloggingFinish = () => {
         </UploadPhotoButtonContainer>
 
         {/* 인증 사진/회색 빈 칸 */}
-        <Image 
-        source={{uri: 'https://mediahub.seoul.go.kr/uploads/mediahub/2022/03/nqIdsTmuNLznSsyBFyENToHLigbKWoLx.png'}} 
-        style={ImageStyle.largeImage} />
+        <ImageContainer>
+          <Image 
+          source={{uri: 'https://mediahub.seoul.go.kr/uploads/mediahub/2022/03/nqIdsTmuNLznSsyBFyENToHLigbKWoLx.png'}} 
+          style={ImageStyle.largeImage} />
+        </ImageContainer>
+
         {/* 지도 */}
 
       </PloggingFinishContainer>
