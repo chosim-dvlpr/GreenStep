@@ -5,7 +5,7 @@ const ImageStyle = StyleSheet.create({
   FooterBar, 게시판 참여 유저 이미지 */
   tinyImage: {
     // width: '50%',
-    resizeMode: 'contain',
+    resizeMode: 'cover',
     borderRadius : 3,
 
   },
@@ -31,7 +31,7 @@ const ImageStyle = StyleSheet.create({
   largeImage: {
     width: '100%',
     aspectRatio: 1,
-    resizeMode: 'contain',
+    resizeMode: 'cover',
     borderRadius : 20,
   },
 })
