@@ -20,6 +20,8 @@ const HeaderTextContainer = styled.View`
 `
 
 const PloggingDataContainer = styled.View`
+  width: 90%;
+  margin: auto;
   margin-top: 30;
 `
 
@@ -63,8 +65,7 @@ const PloggingFinish = () => {
           style={[
             ButtonStyle.whiteColor, 
             ButtonStyle.fullLargeButton
-          ]}
-          >
+          ]}>
             <Text 
             style={{color: '#8BCA84', fontWeight: 'bold', fontSize: 20}}
             >인증하기</Text>
