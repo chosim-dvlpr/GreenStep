@@ -4,7 +4,7 @@ import com.mm.greenstep.domain.achieve.entity.Achieve;
 import com.mm.greenstep.domain.achieve.entity.UserAchieve;
 import com.mm.greenstep.domain.achieve.repository.AchieveRepository;
 import com.mm.greenstep.domain.achieve.repository.UserAchieveRepository;
-import com.mm.greenstep.domain.achieve.dto.response.AchieveDetailResponseDto;
+import com.mm.greenstep.domain.achieve.dto.response.AchieveDetailResDto;
 import com.mm.greenstep.domain.user.entity.User;
 import com.mm.greenstep.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,12 +22,12 @@ public class AchieveService {
     private final UserAchieveRepository userAchieveRepository;
     private final AchieveRepository achieveRepository;
 
-    public List<AchieveDetailResponseDto> getDetailAchieve(HttpServletRequest request, Byte achieveType) {
+    public List<AchieveDetailResDto> getDetailAchieve(HttpServletRequest request, Byte achieveType) {
         Long user_pk = 100L;
 
         User user = userRepository.findByUserId(user_pk);
         List<UserAchieve> userAchieveList = userAchieveRepository.findAllByUser(user);
-        List<AchieveDetailResponseDto> list = new ArrayList<>();
+        List<AchieveDetailResDto> list = new ArrayList<>();
 
         // 타입에 맞는 업적을 가져온다.
         List<Achieve> achieveList = achieveRepository.findAllByAchieveType(achieveType);
@@ -56,7 +56,7 @@ public class AchieveService {
         }
 
         for (UserAchieve userAchieve : userAchieveList) {
-            AchieveDetailResponseDto dto = AchieveDetailResponseDto.builder()
+            AchieveDetailResDto dto = AchieveDetailResDto.builder()
                     .achieveImg(userAchieve.getAchieve().getAchieveImage())
                     .achieveName(userAchieve.getAchieve().getAchieveName())
                     .createdAt(userAchieve.getCreatedAt())
