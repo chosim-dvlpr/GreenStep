@@ -11,14 +11,17 @@ export const LoginAPI = {
   /** 카카오에서 받은 토큰을 백으로 넘겨줌 */
   getLoginAxios: function (token: string) {
     return axiosInstance.request({
-      method: "GET",
-      url: '/login',
+      method: "POST",
+      url: '/user/login',
+      data: token,
     });
   },
+  /** 임시 이메일 로그인 API */
   getEmailLoginAxios: function (data: EmailLoginDataType) {
     return axiosInstance.request({
       method: "POST",
-      url: '/login',
+      url: '/user/login',
+      data: data,
     });
   },
 }
@@ -29,14 +32,14 @@ export const MainAPI = {
   mainDataAxios: function () {
     return axiosInstance.request({
       method: "GET",
-      url: '/',
+      url: '/main',
     });
   },
   /** 메인화면의 플로깅 이미지 조회 */
   mainImageAxios: function () {
     return axiosInstance.request({
       method: "GET",
-      url: '/picture',
+      url: '/main/picture',
     });
   },
 }
