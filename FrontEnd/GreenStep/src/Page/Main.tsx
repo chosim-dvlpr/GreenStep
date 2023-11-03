@@ -112,6 +112,12 @@ const Main = () => {
     .catch(err => console.log('이메일 로그인 실패 : ', err))
   }
 
+    /** 로그아웃 버튼 */
+    const logout = () => {
+    
+    }
+  
+
   return (
     <View>
       {/* 임시 로그인 */}
