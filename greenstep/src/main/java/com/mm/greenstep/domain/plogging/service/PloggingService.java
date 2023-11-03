@@ -6,13 +6,15 @@ import com.mm.greenstep.domain.avatar.repository.AvatarRepository;
 import com.mm.greenstep.domain.avatar.repository.UserAvatarRepository;
 import com.mm.greenstep.domain.plogging.dto.request.PloggingCoorDto;
 import com.mm.greenstep.domain.plogging.dto.request.PloggingReqDto;
+import com.mm.greenstep.domain.plogging.dto.request.PloggingTrashReqDto;
 import com.mm.greenstep.domain.plogging.dto.response.PloggingAllResDto;
 import com.mm.greenstep.domain.plogging.dto.response.PloggingDetailResDto;
 import com.mm.greenstep.domain.plogging.dto.response.PloggingResDto;
+import com.mm.greenstep.domain.plogging.entity.Coordinate;
 import com.mm.greenstep.domain.plogging.entity.Plogging;
-import com.mm.greenstep.domain.plogging.entity.Position;
+import com.mm.greenstep.domain.plogging.entity.Trash;
 import com.mm.greenstep.domain.plogging.repository.PloggingRepository;
-import com.mm.greenstep.domain.plogging.repository.PositionRepository;
+import com.mm.greenstep.domain.plogging.repository.CoordinateRepository;
 import com.mm.greenstep.domain.plogging.repository.TrashRepository;
 import com.mm.greenstep.domain.user.entity.User;
 import com.mm.greenstep.domain.user.repository.UserRepository;
@@ -34,7 +36,7 @@ public class PloggingService {
     private final AvatarRepository avatarRepository;
     private final UserAvatarRepository userAvatarRepository;
     private final AmazonS3Service amazonS3Service;
-    private final PositionRepository positionRepository;
+    private final CoordinateRepository coordinateRepository;
     private final TrashRepository trashRepository;
 
     public PloggingResDto createPlogging(HttpServletRequest request, PloggingReqDto dto) {
@@ -68,7 +70,6 @@ public class PloggingService {
                 .build();
 
         // 쓰레기 량
-        Integer trashAmount = dto.getTrashAmount() + dto.getAITrashAmount();
 
         // 경험치 계산
         Integer exp = user.getExp() + getExp;
@@ -98,7 +99,7 @@ public class PloggingService {
         PloggingResDto responseDto = PloggingResDto.builder()
                 .trashAmount(getExp)
                 .travelRange(dto.getTravelRange())
-                .trashAmount(trashAmount)
+                .trashAmount(dto.getTrashAmount())
                 .travelTime(dto.getTravelTime())
                 .isLevelUp(levelUp)
                 .avatarImg(avatarImg)
@@ -108,23 +109,30 @@ public class PloggingService {
 
         // 플로깅 모든 위도 경도 등록
         for (PloggingCoorDto c : dto.getCoorList()) {
-            Position p = Position.builder()
+            Coordinate p = Coordinate.builder()
                     .latitude(c.getLatitude())
                     .longitude(c.getLongitude())
                     .plogging(plogging)
                     .build();
-            positionRepository.save(p);
+            coordinateRepository.save(p);
         }
 
-        // 플로깅 모든 쓰레기 좌표 등록 // 이부분은 쓰레기등록 api로 뺴야할듯
-//        for (PloggingTrashReqDto tr : dto.getTrashList()) {
-//            Trash t = Trash.builder()
-//                    .plogging(plogging)
-//                    .
-//
-//                    .build();
-//            positionRepository.save(p);
-//        }
+        // 플로깅 모든 쓰레기 좌표 등록
+        for (PloggingTrashReqDto tr : dto.getTrashList()) {
+            Boolean isPicture = false;
+            if(tr.getTrashPicture() != null) {
+                isPicture = true;
+            }
+            Trash t = Trash.builder()
+                    .plogging(plogging)
+                    .trashPicture(tr.getTrashPicture())
+                    .latitude(tr.getLatitude())
+                    .longitude(tr.getLongitude())
+                    .trashType(tr.getTrashType())
+                    .isPicture(isPicture)
+                    .build();
+            trashRepository.save(t);
+        }
 
         return responseDto;
     }
@@ -162,9 +170,9 @@ public class PloggingService {
 
     public PloggingDetailResDto getDetailPlogging(Long ploggingId) {
         Plogging plogging = ploggingRepository.findByPloggingId(ploggingId);
-        List<Position> position = positionRepository.findAllByPlogging(plogging);
+        List<Coordinate> position = coordinateRepository.findAllByPlogging(plogging);
         List<PloggingCoorDto> ploggingCoorDtoList = new ArrayList<>();
-        for (Position p : position) {
+        for (Coordinate p : position) {
             PloggingCoorDto dto = PloggingCoorDto.builder()
                     .latitude(p.getLatitude())
                     .longitude(p.getLongitude())
@@ -183,5 +191,11 @@ public class PloggingService {
                 .build();
 
         return dto;
+    }
+
+
+    public Byte createAiImg(MultipartFile file) {
+        // python ai server webclient 호출해서 type 리턴값 받아오고 return 해주면됨
+        return null;
     }
 }

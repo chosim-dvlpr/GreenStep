@@ -12,5 +12,6 @@ public class PloggingTrashReqDto {
     private String longitude; // 경도
     private String latitude; // 위도
     private Byte trashType; // 쓰레기타입
+    private String trashPicture; // 사진
 
 }

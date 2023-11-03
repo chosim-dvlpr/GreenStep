@@ -51,4 +51,13 @@ public class PloggingController {
         PloggingDetailResDto dto = ploggingService.getDetailPlogging(ploggingId);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
+
+    // 플로깅 AI 등록
+    @PostMapping("/AI")
+    public ResponseEntity<?> createAiImg(
+            @RequestPart(value = "file", required = false) MultipartFile file
+    ) {
+        Byte type = ploggingService.createAiImg(file);
+        return new ResponseEntity<>(type, HttpStatus.OK);
+    }
 }
