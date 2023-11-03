@@ -6,7 +6,6 @@ import lombok.Getter;
 @Builder
 @Getter
 public class MyPageDetailStreakResDto {
-    private Integer month;
     private Integer weekly;
     private Integer count;
 }
