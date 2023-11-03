@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "position")
-public class Position {
+@Table(name = "coordinate")
+public class Coordinate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
