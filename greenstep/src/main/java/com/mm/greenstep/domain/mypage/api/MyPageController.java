@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/my-page")
+@RequestMapping("/mypage")
 @RequiredArgsConstructor
 public class MyPageController {
 

@@ -11,18 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
-@RequestMapping("/avatar")
+@RequestMapping("/achieve")
 @RequiredArgsConstructor
 public class AchieveController {
 
     private final AchieveService achieveService;
-
-//    // 아바타 선택
-//    @PatchMapping("/{boxId}")
-//    public ResponseEntity<?> updateMyAvatar(HttpServletRequest request, @PathVariable Long boxId) {
-//        achieveService.updateAvatar(request, boxId);
-//        return new ResponseEntity<>(boxId, HttpStatus.OK);
-//    }
 
     // 업적 조회
     @GetMapping("/{achieveType}")

@@ -134,6 +134,7 @@ public class PloggingService {
             trashRepository.save(t);
         }
 
+
         return responseDto;
     }
 
