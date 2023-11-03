@@ -1,37 +1,81 @@
 package com.mm.greenstep.domain.user.api;
 
-import com.mm.greenstep.domain.common.jwt.JwtToken;
-import com.mm.greenstep.domain.user.dto.request.SignUpReqDto;
-import com.mm.greenstep.domain.user.dto.request.LoginReqDto;
+import com.mm.greenstep.domain.common.jwt.JwtTokenProvider;
+import com.mm.greenstep.domain.common.lib.Helper;
+import com.mm.greenstep.domain.user.dto.request.UserReqDto;
+import com.mm.greenstep.domain.user.dto.response.Response;
 import com.mm.greenstep.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/user")
+@Slf4j
 @RequiredArgsConstructor
+@RequestMapping("/user")
+@RestController
 public class UserController {
+
+    private final JwtTokenProvider jwtTokenProvider;
     private final UserService userService;
-
-    @GetMapping("/test")
-    public String testEndpoint() {
-            return "Hello from the test endpoint!";
-        }
-
-    @PostMapping("/login")
-    public ResponseEntity<?> loginSuccess(@RequestBody LoginReqDto loginReqDto) {
-        JwtToken token = userService.login(loginReqDto);
-        return ResponseEntity.ok(token);
-    }
+    private final Response response;
 
     @PostMapping("/signup")
-    public Long signup(@RequestBody SignUpReqDto signUpReqDto) {
-        return userService.signup(signUpReqDto);
+    public ResponseEntity<?> signUp(@Validated @RequestBody UserReqDto.SignUp signUp, Errors errors) {
+        // validation check
+        if (errors.hasErrors()) {
+            return response.invalidFields(Helper.refineErrors(errors));
+        }
+        return userService.signUp(signUp);
     }
 
-    @GetMapping("/signup/check/{userId}/exists")
-    public ResponseEntity<?> checkEmailDuplicate(@PathVariable String kakaoId) {
-        return ResponseEntity.ok(userService.checkkakaoIdExists(kakaoId));
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@Validated @RequestBody UserReqDto.Login login, Errors errors) {
+        System.out.println(login);
+
+        // validation check
+        if (errors.hasErrors()) {
+            return response.invalidFields(Helper.refineErrors(errors));
+        }
+        return userService.login(login);
+    }
+
+    // 토큰 재발급
+    @PostMapping("/reissue")
+    public ResponseEntity<?> reissue(@Validated @RequestBody UserReqDto.Reissue reissue, Errors errors) {
+        // validation check
+        if (errors.hasErrors()) {
+            return response.invalidFields(Helper.refineErrors(errors));
+        }
+        return userService.reissue(reissue);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@Validated @RequestBody UserReqDto.Logout logout, Errors errors) {
+        // validation check
+        if (errors.hasErrors()) {
+            return response.invalidFields(Helper.refineErrors(errors));
+        }
+        return userService.logout(logout);
+    }
+
+    @GetMapping("/authority")
+    public ResponseEntity<?> authority() {
+        log.info("ADD ROLE_ADMIN");
+        return userService.authority();
+    }
+
+    @GetMapping("/userTest")
+    public ResponseEntity<?> userTest() {
+        log.info("ROLE_USER TEST");
+        return response.success();
+    }
+
+    @GetMapping("/adminTest")
+    public ResponseEntity<?> adminTest() {
+        log.info("ROLE_ADMIN TEST");
+        return response.success();
     }
 }
