@@ -8,7 +8,7 @@ const axiosInstance = axios.create({
 /** 로그인 관련 API */
 export const LoginAPI = {
   /** 카카오에서 받은 토큰을 백으로 넘겨줌 */
-  getLogin: function (token: string) {
+  getLoginAxios: function (token: string) {
     return axiosInstance.request({
       method: "GET",
       url: '/login',

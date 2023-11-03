@@ -14,7 +14,7 @@ import {
 } from '@react-native-seoul/kakao-login';
 import ButtonStyle from '../../Style/ButtonStyle';
 import { LoginAPI } from '../../Api/basicHttp';
-import { getTokens } from '../../Api/tokenHttp';
+// import { getTokens } from '../../Api/tokenHttp';
 import { useNavigation } from '@react-navigation/native';
 
 interface LoginPropsType {
@@ -26,7 +26,7 @@ const Login = ({setIsLogin}: LoginPropsType) => {
   const navigation = useNavigation();
   
   const getLogin = (token: string) => {
-    LoginAPI.getLogin(token)
+    LoginAPI.getLoginAxios(token)
       .then(res => {
         console.log('axios 성공 : ', res)
         // 로그인 성공 조건 추가
