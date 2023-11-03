@@ -1,60 +1,81 @@
 package com.mm.greenstep.domain.user.api;
 
+import com.mm.greenstep.domain.common.jwt.JwtTokenProvider;
+import com.mm.greenstep.domain.common.lib.Helper;
+import com.mm.greenstep.domain.user.dto.request.UserReqDto;
+import com.mm.greenstep.domain.user.dto.response.Response;
+import com.mm.greenstep.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-
-@RestController
-//@RequestMapping("/user")
+@Slf4j
 @RequiredArgsConstructor
+@RequestMapping("/user")
+@RestController
 public class UserController {
-//    private final UserService userService;
 
-        @GetMapping("/test")
-        public String testEndpoint() {
-            return "Hello from the test endpoint!";
+    private final JwtTokenProvider jwtTokenProvider;
+    private final UserService userService;
+    private final Response response;
+
+    @PostMapping("/signup")
+    public ResponseEntity<?> signUp(@Validated @RequestBody UserReqDto.SignUp signUp, Errors errors) {
+        // validation check
+        if (errors.hasErrors()) {
+            return response.invalidFields(Helper.refineErrors(errors));
         }
+        return userService.signUp(signUp);
+    }
 
-//    @PostMapping("/signup")
-//    public ResponseEntity<?> signup(@RequestBody UserSignUpRequestDto userSignUpRequestDto) {
-//        return new ResponseEntity(userService.signup(userSignUpRequestDto), HttpStatus.OK);
-//    }
-//
-//    @PostMapping("/login")
-//    public ResponseEntity<?> login(@RequestBody UserLoginRequestDto userLoginRequestDto) {
-//        return new ResponseEntity<>(userService.login(userLoginRequestDto), HttpStatus.OK);
-//    }
-//
-//    @GetMapping("/logout")
-//    public ResponseEntity<?> logout(HttpServletRequest request) {
-//        return new ResponseEntity<>(userService.logout(request), HttpStatus.OK);
-//    }
-//
-//    @PatchMapping("/delete")
-//    public ResponseEntity<?> deleteUser(HttpServletRequest request) {
-//        return new ResponseEntity<>(userService.deleteUser(request), HttpStatus.OK);
-//    }
-//
-//    @PatchMapping("/setpassword")
-//    public ResponseEntity<?> modifyUser(HttpServletRequest request, @RequestBody UserSetPasswordRequestDto userSetPasswordRequestDto) {
-//        return new ResponseEntity<>(userService.setPassword(request, userSetPasswordRequestDto), HttpStatus.OK);
-//    }
-//
-//    @GetMapping("/refresh")
-//    public ResponseEntity<?> refreshToken(HttpServletRequest request) {
-//        return new ResponseEntity<>(userService.refreshToken(request), HttpStatus.OK);
-//    }
-//
-//    @GetMapping("/{userCellNo}")
-//    public ResponseEntity<?> getUserInfo(@PathVariable String userCellNo) {
-//        return new ResponseEntity<>(userService.getUserInfo(userCellNo), HttpStatus.OK);
-//    }
-//
-//    @GetMapping("/{userName}/userList")
-//    public ResponseEntity<?> getUserList(@PathVariable String userName) {
-//        return new ResponseEntity<>(userService.getUserList(userName), HttpStatus.OK);
-//    }
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@Validated @RequestBody UserReqDto.Login login, Errors errors) {
+        System.out.println(login);
+
+        // validation check
+        if (errors.hasErrors()) {
+            return response.invalidFields(Helper.refineErrors(errors));
+        }
+        return userService.login(login);
+    }
+
+    // 토큰 재발급
+    @PostMapping("/reissue")
+    public ResponseEntity<?> reissue(@Validated @RequestBody UserReqDto.Reissue reissue, Errors errors) {
+        // validation check
+        if (errors.hasErrors()) {
+            return response.invalidFields(Helper.refineErrors(errors));
+        }
+        return userService.reissue(reissue);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@Validated @RequestBody UserReqDto.Logout logout, Errors errors) {
+        // validation check
+        if (errors.hasErrors()) {
+            return response.invalidFields(Helper.refineErrors(errors));
+        }
+        return userService.logout(logout);
+    }
+
+    @GetMapping("/authority")
+    public ResponseEntity<?> authority() {
+        log.info("ADD ROLE_ADMIN");
+        return userService.authority();
+    }
+
+    @GetMapping("/userTest")
+    public ResponseEntity<?> userTest() {
+        log.info("ROLE_USER TEST");
+        return response.success();
+    }
+
+    @GetMapping("/adminTest")
+    public ResponseEntity<?> adminTest() {
+        log.info("ROLE_ADMIN TEST");
+        return response.success();
+    }
 }
