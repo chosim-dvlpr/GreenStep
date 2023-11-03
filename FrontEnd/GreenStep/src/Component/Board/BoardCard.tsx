@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { View, Text, Image } from "react-native";
 import Box from "../../Style/Box";
 import ImageStyle from "../../Style/Image";
-import character from '../../Image/Character/panda.png';
+import avatar from '../../Image/Avatar/panda.png';
 
 interface detailProps{
     title:string,
@@ -20,7 +20,7 @@ const BoardCard = (detail: detailProps) => {
                 <Text style={{marginBottom: 20}}>날짜 {detail.date}</Text> 
                 </View>
                 <View>
-                <Image source={character} style={ImageStyle.mediumImage}></Image>
+                <Image source={avatar} style={ImageStyle.mediumImage}></Image>
                 </View>
             </View>
         </View>

@@ -1,7 +1,7 @@
 import { View, Text, Image } from "react-native";
 import Box from "../../Style/Box";
 import ImageStyle from "../../Style/Image";
-import character from '../../Image/Character/panda.png';
+import avatar from '../../Image/Avatar/panda.png';
 
 interface PostCardProps{
     title: string;
@@ -19,7 +19,7 @@ const BoardListDetail = (props:PostCardProps) => {
             <Text style={{marginBottom: 20}}>날짜 {props.date}</Text> 
             </View>
             <View>
-            <Image source={character} style={ImageStyle.mediumImage}></Image>
+            <Image source={avatar} style={ImageStyle.mediumImage}></Image>
             </View>
         </View>
         </View>

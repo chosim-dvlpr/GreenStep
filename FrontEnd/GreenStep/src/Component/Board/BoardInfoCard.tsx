@@ -3,7 +3,7 @@ import React, {useState} from 'react'
 import { View, Text, Image } from "react-native";
 import Box from "../../Style/Box";
 import ImageStyle from "../../Style/Image";
-import character from '../../Image/Character/panda.png';
+import avatar from '../../Image/Avatar/panda.png';
 
 const BoardInfoCard = () => {
     const [joinInfo, setJoinInfo] = useState({name: '이대경', date : '2030/04/20', member: 3})
@@ -18,7 +18,7 @@ const BoardInfoCard = () => {
                     <Text style={{marginBottom: 20}}>인원 {joinInfo.member} / 4</Text> 
                 </View>
                 <View>
-                    <Image source={character} style={ImageStyle.mediumImage}></Image>
+                    <Image source={avatar} style={ImageStyle.mediumImage}></Image>
                 </View>
             </View>
         </View>
