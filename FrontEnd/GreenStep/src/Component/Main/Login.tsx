@@ -25,16 +25,15 @@ const Login = ({setIsLogin}: LoginPropsType) => {
   const [result,setResult] = useState<string>('');
   const navigation = useNavigation();
   
-  const getLogin = (token: string) => {
-    LoginAPI.getLoginAxios(token)
-      .then(res => {
-        console.log('axios 성공 : ', res)
-        // 로그인 성공 조건 추가
-        // setIsLogin(true);
-      })
-      .catch(err => {
-        console.log("login axios 에러 발생: ", err);
-      });
+  const getLogin = async () => {
+    console.log('getLogin 함수 실행')
+    try {
+      const token: KakaoOAuthToken = await loginWithKakaoAccount();
+      console.log("token : ", token.accessToken);
+      await setResult(JSON.stringify(token))
+    } catch (err) {
+      console.log("getLogin 함수 에러 발생 : ", err);
+    }
   }
   
 
@@ -45,18 +44,19 @@ const Login = ({setIsLogin}: LoginPropsType) => {
       // -> 카카오 토큰을 백으로 보냄
       // -> 백에서 반환한 응답이 성공이면 setIsLogin(true)
       // -> 백에서 반환한 응답이 실패면 alert
-
-      // const token: KakaoOAuthToken = await login();
-      const token: KakaoOAuthToken = await loginWithKakaoAccount();
-      console.log(token);
-      setResult(JSON.stringify(token));
-      token && getLogin(token.accessToken) // token이 있다면 axios 요청
-      
-
-      // getTokens({kakaoToken: '123', setIsLogin: setIsLogin, navigation: navigation})
-
-
-
+      await getLogin()
+      .then(res => {
+        // console.log(result)
+        LoginAPI.getLoginAxios(result.accessToken)
+        .then(res => {
+          console.log('axios 성공 : ', res)
+          // 로그인 성공 조건 추가
+          setIsLogin(true);
+        })
+        .catch(err => {
+          console.log("login axios 에러 발생: ", err);
+        });
+      })
     } catch(err) {
       console.log(err);
     }
