@@ -33,7 +33,13 @@ const BottomTabScreen = () => {
         // tabBarShowLabel: false,
         headerShown: false,
         tabBarStyle: {
-          height: 70,
+          height: 80,
+          borderRadius: 20,
+          position: 'absolute',
+          width: 380,
+          bottom: 10,
+          left: 6,
+          paddingBottom: 5,
         },
         tabBarIcon(props) {
           if (route.name === '경쟁') {
