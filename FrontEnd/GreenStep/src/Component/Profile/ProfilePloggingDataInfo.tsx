@@ -19,7 +19,8 @@ const ProfilePloggingDataInfo = () => {
     const [distanceInfo, setDistanceInfo] = useState(234)
     const [trashInfo, setTrashInfo] = useState(123)
     return(
-        <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', alignItems:'center'}}>
+        <View style={{display: 'flex', flexDirection: 'row', marginBottom: 20,
+                      justifyContent: 'space-evenly', alignItems:'center'}}>
         <View style={[Box.ploggingDataInfoBox, {alignItems:'center', marginRight: 10, justifyContent: 'center'}]}>
           <ImageContainer>
             <Image source={time} style={ImageStyle.tinyImage}></Image>

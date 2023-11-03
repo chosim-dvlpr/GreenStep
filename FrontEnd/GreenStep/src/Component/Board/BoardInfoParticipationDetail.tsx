@@ -3,13 +3,13 @@
 import { View, Text, Image } from "react-native";
 import Box from "../../Style/Box";
 import ImageStyle from "../../Style/Image";
-import character from '../../Image/Character/panda.png';
+import avatar from '../../Image/Avatar/panda.png';
 
 const BoardInfoParticipationDetail =() => {
     return(
         <View style={{borderWidth: 3, borderColor: 'green', overflow: 'hidden',  
                       borderRadius: 50, marginLeft: 10}}>
-            <Image source={character} style={[ImageStyle.tinyImage, {marginLeft: 5}]}></Image>
+            <Image source={avatar} style={[ImageStyle.tinyImage, {marginLeft: 5}]}></Image>
         </View>
     )
 }
