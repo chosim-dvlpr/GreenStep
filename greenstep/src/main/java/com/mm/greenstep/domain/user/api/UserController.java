@@ -22,7 +22,7 @@ public class UserController {
     private final UserService userService;
     private final Response response;
 
-    @PostMapping("/signup")
+    @PostMapping("/sign-up")
     public ResponseEntity<?> signUp(@Validated @RequestBody UserReqDto.SignUp signUp, Errors errors) {
         // validation check
         if (errors.hasErrors()) {
