@@ -5,7 +5,7 @@ import Carousel from '../Component/Main/Carousel';
 import styled from 'styled-components/native';
 import ButtonStyle from '../Style/ButtonStyle';
 import { useNavigation } from '@react-navigation/native';
-import { LoginAPI, MainAPI } from '../Api/basicHttp';
+import { LoginAPI, MainAPI, TokenAPI } from '../Api/basicHttp';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export interface EmailLoginDataType {
@@ -100,11 +100,12 @@ const Main = () => {
       const response = res.data;
       if (response.state === 200) {
         setIsLogin(true);
+        console.log(response.data.accessToken)
         AsyncStorage.setItem('Tokens', JSON.stringify({
           'accessToken': response.data.accessToken,
           'refreshToken': response.data.refreshToken,
-          // 'refreshTokenExpirationTime': data.data.refreshTokenExpirationTime,
-        }))
+          'refreshTokenExpirationTime': response.data.refreshTokenExpirationTime,
+        }))        
       } else if (response.status === 400) {
         console.log(response.message)
       }
@@ -112,10 +113,13 @@ const Main = () => {
     .catch(err => console.log('이메일 로그인 실패 : ', err))
   }
 
-    /** 로그아웃 버튼 */
-    const logout = () => {
-    
-    }
+  /** 로그아웃 버튼 */
+  const logout = () => {
+    console.log('로그아웃 버튼 클릭')
+    TokenAPI.logoutAxios()
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
+  }
   
 
   return (
@@ -137,12 +141,12 @@ const Main = () => {
       style={[ButtonStyle.largeButton, ButtonStyle.lightGreenColor]}
       onPress={logout}
       ><Text>임시 로그아웃 버튼</Text></TouchableOpacity>
-{/* 
+
       <MainTextContainer>
         <MainText>자연을 지키는</MainText>
         <MainText>당신과 우리의 발자국</MainText>
         <MainText>그린스텝</MainText>
-      </MainTextContainer> */}
+      </MainTextContainer>
 
       <CarouselContainer>
         <CarouselTextContainer>
