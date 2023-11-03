@@ -1,6 +1,6 @@
 
 import { View, Text, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 import {
   KakaoOAuthToken,
   KakaoProfile,
@@ -13,17 +13,54 @@ import {
   getProfile,
 } from '@react-native-seoul/kakao-login';
 import ButtonStyle from '../../Style/ButtonStyle';
+import { LoginAPI } from '../../Api/basicHttp';
+// import { getTokens } from '../../Api/tokenHttp';
+import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Login = () => {
+interface LoginPropsType {
+  setIsLogin: Dispatch<SetStateAction<boolean>>;
+}
+
+const Login = ({setIsLogin}: LoginPropsType) => {
   const [result,setResult] = useState<string>('');
+  const navigation = useNavigation();
+  const [token, setToken] = useState<KakaoOAuthToken | string>('');
+  
+  const getLogin = async () => {
+    console.log('getLogin 함수 실행')
+    try {
+      const newToken: KakaoOAuthToken = await loginWithKakaoAccount();
+      await setToken(JSON.stringify(newToken))
+      // console.log("token : ", newToken?.accessToken);
+    } catch (err) {
+      console.log("getLogin 함수 에러 발생 : ", err);
+    }
+  }
+  
 
   /** 카카오 로그인 */
   const signInWithKakao = async (): Promise<void> => {
     try {
-      // const token: KakaoOAuthToken = await login();
-      const token: KakaoOAuthToken = await loginWithKakaoAccount();
-      console.log(token);
-      setResult(JSON.stringify(token));
+      // 로그인 버튼 클릭 -> 로그인 성공 시 카카오에서 토큰 보내줌
+      // -> 카카오 토큰을 백으로 보냄
+      // -> 백에서 반환한 응답이 성공이면 setIsLogin(true)
+      // -> 백에서 반환한 응답이 실패면 alert
+      await getLogin()
+      .then(res => {
+        LoginAPI.getLoginAxios(token?.accessToken)
+        .then(res => {
+          console.log('axios 성공 : ', res)
+          // 로그인 성공 조건 추가
+          setIsLogin(true);
+          // AsyncStorage.setItem('Tokens', res)
+          AsyncStorage.setItem('Tokens', 'sampleToken')
+          console.log(AsyncStorage.getItem("Tokens"))
+        })
+        .catch(err => {
+          console.log("login axios 에러 발생: ", err);
+        });
+      })
     } catch(err) {
       console.log(err);
     }
