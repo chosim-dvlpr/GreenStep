@@ -65,12 +65,60 @@ const App = () => {
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="bottom" component={BottomTabScreen} />
         <Stack.Screen name="main" component={Main} />
-        <Stack.Screen name="achievement" component={Achievement} options={{headerShown:true, title:'업적', headerTitleAlign:'center'}} />
-        <Stack.Screen name="board" component={Board} options={{headerShown:true, title:'크루 찾기', headerTitleAlign:'center'}} />
-        <Stack.Screen name="boarddetail" component={BoardDetail} options={{headerShown:true, title:'크루 찾기', headerTitleAlign:'center'}} />
-        <Stack.Screen name="boardcrud" component={BoardCRUD} options={{headerShown:true, title:'글 쓰기', headerTitleAlign:'center'}} />
-        <Stack.Screen name="competition" component={Competition} options={{headerShown:true, title:'경쟁', headerTitleAlign:'center'}} />
-        <Stack.Screen name="datamap" component={DataMap} options={{headerShown:true, title:'데이터 지도', headerTitleAlign:'center'}} />
+        <Stack.Screen
+          name="achievement"
+          component={Achievement}
+          options={{
+            headerShown: true,
+            title: '업적',
+            headerTitleAlign: 'center',
+          }}
+        />
+        <Stack.Screen
+          name="board"
+          component={Board}
+          options={{
+            headerShown: true,
+            title: '크루 찾기',
+            headerTitleAlign: 'center',
+          }}
+        />
+        <Stack.Screen
+          name="boarddetail"
+          component={BoardDetail}
+          options={{
+            headerShown: true,
+            title: '크루 찾기',
+            headerTitleAlign: 'center',
+          }}
+        />
+        <Stack.Screen
+          name="boardcrud"
+          component={BoardCRUD}
+          options={{
+            headerShown: true,
+            title: '글 쓰기',
+            headerTitleAlign: 'center',
+          }}
+        />
+        <Stack.Screen
+          name="competition"
+          component={Competition}
+          options={{
+            headerShown: true,
+            title: '경쟁',
+            headerTitleAlign: 'center',
+          }}
+        />
+        <Stack.Screen
+          name="datamap"
+          component={DataMap}
+          options={{
+            headerShown: true,
+            title: '데이터 지도',
+            headerTitleAlign: 'center',
+          }}
+        />
         <Stack.Screen name="ploggingstart" component={PloggingStart} />
         <Stack.Screen name="ploggingfinish" component={PloggingFinish} />
         <Stack.Screen name="profile" component={Profile} />

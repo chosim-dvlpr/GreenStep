@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import styled from 'styled-components/native';
 import LottieView from 'lottie-react-native';
 import * as Progress from 'react-native-progress';
@@ -23,11 +23,17 @@ const CompetitionGraphic = () => {
         loop
         style={styles.flag}
       />
+      <ProgressTextWrap>
+        <ProgressText1>0p</ProgressText1>
+        <ProgressText2>25,000p</ProgressText2>
+        <ProgressText3>50,000p</ProgressText3>
+      </ProgressTextWrap>
     </ProgressBox>
   );
 
   return (
     <Graphic>
+      <GraphicText>나의 팀 : 거북이</GraphicText>
       <LottieView
         source={require('../../Image/Competition/turtle.json')}
         autoPlay
@@ -41,7 +47,7 @@ const CompetitionGraphic = () => {
         loop
         style={styles.rabbit}
       />
-      {renderProgressSection(160)}
+      {renderProgressSection(170)}
     </Graphic>
   );
 };
@@ -59,6 +65,27 @@ const ProgressBox = styled.View<{bottomOffset: number}>`
   bottom: ${props => props.bottomOffset}px;
 `;
 
+const GraphicText = styled.Text`
+  font-family: 'SUITE-Bold';
+  font-size: 17px;
+  text-align: center;
+  background-color: #cce7c9;
+  width: 250px;
+  padding: 5px;
+  border-radius: 15px;
+  margin: 0 auto;
+  top: 20px;
+`;
+
+const ProgressTextWrap = styled.View`
+  flex-direction: row;
+  width: 67%;
+  justify-content: space-between;
+  bottom: 80px;
+`;
+const ProgressText1 = styled.Text``;
+const ProgressText2 = styled.Text``;
+const ProgressText3 = styled.Text``;
 // 그리고 ProgressBox와 관련 스타일...
 // StyleSheet에 해당하는 styles 객체...
 const styles = StyleSheet.create({
@@ -70,7 +97,7 @@ const styles = StyleSheet.create({
   rabbit: {
     width: 150,
     height: 150,
-    bottom: 135,
+    bottom: 155,
     marginLeft: 10,
     transform: [{scaleX: -1}],
   },
