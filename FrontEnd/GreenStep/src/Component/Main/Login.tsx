@@ -32,8 +32,7 @@ const Login = ({setIsLogin}: LoginPropsType) => {
     try {
       const newToken: KakaoOAuthToken = await loginWithKakaoAccount();
       await setToken(JSON.stringify(newToken))
-      console.log("token : ", token?.accessToken);
-      // await setResult(JSON.stringify(token))
+      // console.log("token : ", newToken?.accessToken);
     } catch (err) {
       console.log("getLogin 함수 에러 발생 : ", err);
     }
@@ -49,7 +48,6 @@ const Login = ({setIsLogin}: LoginPropsType) => {
       // -> 백에서 반환한 응답이 실패면 alert
       await getLogin()
       .then(res => {
-        // console.log(result)
         LoginAPI.getLoginAxios(token?.accessToken)
         .then(res => {
           console.log('axios 성공 : ', res)
