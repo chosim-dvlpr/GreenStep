@@ -3,7 +3,7 @@ import React from 'react';
 
 const AchievementHeader = ({navigation}:any) => {
     return(
-        <View>
+        <View style={{marginBottom:20}}>
         <TouchableOpacity onPress={() => navigation.navigate('achievement')}>
             <Text style={{ fontSize: 30, fontWeight: 'bold', paddingLeft: 20 }}>업적</Text>
         </TouchableOpacity> 

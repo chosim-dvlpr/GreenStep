@@ -4,7 +4,7 @@ import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import Box from "../../Style/Box";
 import ImageStyle from "../../Style/Image";
 import ButtonStyle from "../../Style/ButtonStyle";
-import character from '../../Image/Character/panda.png';
+import avatar from '../../Image/Avatar/panda.png';
 
 const DetailBoard = () => {
     const [detail, setDetail] = useState({name : '이대경', create_at: '10/26 16:45',
@@ -14,7 +14,7 @@ const DetailBoard = () => {
         <View>
             <View style={[Box.cardBox, {marginBottom:20}]}>
                     <View style={{display:'flex', flexDirection:'row', marginBottom: 20}}>
-                        <Image source={character} style={ImageStyle.tinyImage}></Image>
+                        <Image source={avatar} style={ImageStyle.tinyImage}></Image>
                         <View>
                             <Text>{detail.name}</Text>
                             <Text>{detail.create_at}</Text>
