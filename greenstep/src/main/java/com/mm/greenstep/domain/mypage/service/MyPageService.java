@@ -3,19 +3,28 @@ package com.mm.greenstep.domain.mypage.service;
 import com.mm.greenstep.domain.mypage.dto.response.MyPageAllPloggingResDto;
 import com.mm.greenstep.domain.mypage.dto.response.MyPageDetailHeaderResDto;
 import com.mm.greenstep.domain.mypage.dto.response.MyPageDetailStreakResDto;
+import com.mm.greenstep.domain.plogging.entity.Plogging;
+import com.mm.greenstep.domain.plogging.repository.PloggingRepository;
 import com.mm.greenstep.domain.user.entity.User;
 import com.mm.greenstep.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
+import java.time.temporal.TemporalField;
+import java.time.temporal.WeekFields;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class MyPageService {
 
     private final UserRepository userRepository;
+    private final PloggingRepository ploggingRepository;
 
     public MyPageDetailHeaderResDto getDetailUserHeader(HttpServletRequest request) {
 //        Long user_pk = jwtUtil.extractUserPkFromToken(request);
@@ -35,12 +44,18 @@ public class MyPageService {
         Long user_pk = 100L;
 
         User user = userRepository.findByUserId(user_pk);
+        List<Plogging> plogging = ploggingRepository.findAllByUser(user);
 
         // 플로깅 도메인 구현 후 진행
-        // 나의 모든 플로깅에서 다 뽑고 계산해서 넣어주면 됨
         Integer trashAmount = null; // 나의 총 쓰레기 량
         Double travelRange = null; // 나의 총 이동거리
         Double travelTime = null; // 나의 총 이동시간
+
+        for (Plogging p : plogging) {
+            trashAmount += p.getTrashAmount();
+            travelRange += p.getTravelRange();
+            travelTime += p.getTravelTime();
+        }
 
         MyPageAllPloggingResDto dto = MyPageAllPloggingResDto.builder()
                 .trashAmount(trashAmount)
@@ -50,26 +65,27 @@ public class MyPageService {
         return dto;
     }
 
-    public List<MyPageDetailStreakResDto> getDetailStreak(HttpServletRequest request, Integer year) {
+    public Map<Integer, Integer> getDetailStreak(HttpServletRequest request, Integer year) {
         Long user_pk = 100L;
 
         User user = userRepository.findByUserId(user_pk);
 
-        // 플로깅 도메인 구현 후 진행
-        // 년도를 받아서 그 년도에 해당하는 플로깅내역을 다 가져와서 몇 월달의 몇주차에 해당하는 쓰레기를 계산해서 넣어주면 됨
-        // 몇월인지
-        Integer month = null;
-        // 몇주차인지
-        Integer weekly = null;
-        // 몇개의 쓰레기를 주웠는지
-        Long count = null;
+        // user의 created_at 이 year에 해당하는 plogging을 다 가져오는 jpa 쿼리짜줘
+        List<Plogging> ploggingList = ploggingRepository.findByYear(year);
 
-        // 년도와 userid로 모든 플로깅내역을 찾아온다
-        //
-//        List<MyPageDetailStreakResponseDto> dto = MyPageDetailStreakResponseDto.builder()
-//                .
-//                .build();
-//        return dto;
-        return null;
+        Map<Integer, Integer> weekOfYearAndTrashCount = new HashMap<>();
+
+        for (Plogging p : ploggingList) {
+            // 해당 날짜 그 해의 및 주차인지 판별하는 알고리즘
+            TemporalField weekOfYearField = WeekFields.of(Locale.getDefault()).weekOfYear();
+            int weekOfYear = p.getCreatedAt().get(weekOfYearField);
+            // 기존에 해당 주차에 대한 값이 없다면 0으로 시작합니다.
+            int currentCount = weekOfYearAndTrashCount.getOrDefault(weekOfYear, 0);
+
+            // 해당 주차의 count를 1 증가시킵니다.
+            weekOfYearAndTrashCount.put(weekOfYear, currentCount + 1);
+        }
+
+        return weekOfYearAndTrashCount;
     }
 }
