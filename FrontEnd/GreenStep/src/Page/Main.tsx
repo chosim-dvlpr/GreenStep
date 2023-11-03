@@ -6,6 +6,7 @@ import styled from 'styled-components/native';
 import ButtonStyle from '../Style/ButtonStyle';
 import { useNavigation } from '@react-navigation/native';
 import { LoginAPI, MainAPI } from '../Api/basicHttp';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export interface EmailLoginDataType {
   'email': string,
@@ -47,9 +48,19 @@ const Main = () => {
 
   
   // 메인 문구 불러오기
+  const [trashAmount, setTrashAmount] = useState<number>(0);
+  const [travelRange, setTravelRange] = useState<number>(0);
+  const [travelTime, setTravelTime] = useState<number>(0);
+
   const getMainData = () => {
     MainAPI.mainDataAxios()
-    .then(res => console.log(res))
+    .then(res => {
+      console.log("메인 문구 axios 성공 : ", res)
+      const data = res.data;
+      setTrashAmount(data.trashAmount);
+      setTravelRange(data.travelRange);
+      setTravelTime(data.travelTime);
+    })
     .catch(err => console.log('메인 데이터 axios 에러 : ', err))
   }
 
@@ -65,30 +76,46 @@ const Main = () => {
     getMainImage();
   }, [])
 
+
   // 임시 로그인
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+
   const onChangeEmail = (e: string) => {
     setEmail(e)
   }
   const onChangePassword = (e: string) => {
     setPassword(e)
   }
+
+  /** 이메일 버튼 클릭 시 axios 요청 */
   const emailLogin = async () => {
     const data: EmailLoginDataType = await {
-      'email': email,
-      'password': password
+      email: email,
+      password: password
     }
-
     LoginAPI.getEmailLoginAxios(data)
-    .then(res => console.log('이메일 로그인 성공 : ', res))
+    .then(res => {
+      console.log('이메일 로그인 axios 성공 : ', res)
+      const response = res.data;
+      if (response.state === 200) {
+        setIsLogin(true);
+        AsyncStorage.setItem('Tokens', JSON.stringify({
+          'accessToken': response.data.accessToken,
+          'refreshToken': response.data.refreshToken,
+          // 'refreshTokenExpirationTime': data.data.refreshTokenExpirationTime,
+        }))
+      } else if (response.status === 400) {
+        console.log(response.message)
+      }
+    })
     .catch(err => console.log('이메일 로그인 실패 : ', err))
   }
 
   return (
     <View>
       {/* 임시 로그인 */}
-      {/* <TextInput
+      <TextInput
       onChangeText={e => onChangeEmail(e)}
       style={{backgroundColor: 'skyblue'}}
       ></TextInput>
@@ -99,21 +126,25 @@ const Main = () => {
       <TouchableOpacity
       style={[ButtonStyle.largeButton, ButtonStyle.lightGreenColor]}
       onPress={emailLogin}
-      ><Text>임시 로그인 버튼</Text></TouchableOpacity> */}
-
+      ><Text>임시 로그인 버튼</Text></TouchableOpacity>
+      <TouchableOpacity
+      style={[ButtonStyle.largeButton, ButtonStyle.lightGreenColor]}
+      onPress={logout}
+      ><Text>임시 로그아웃 버튼</Text></TouchableOpacity>
+{/* 
       <MainTextContainer>
         <MainText>자연을 지키는</MainText>
         <MainText>당신과 우리의 발자국</MainText>
         <MainText>그린스텝</MainText>
-      </MainTextContainer>
+      </MainTextContainer> */}
 
       <CarouselContainer>
         <CarouselTextContainer>
           <Text
           style={{fontSize: 24, fontWeight: 'bold'}}
           >자연을 지킨{'\n'}
-          18734 시간{'\n'}
-          3254988 km
+          {travelTime} 시간{'\n'}
+          {travelRange} km
           </Text>
         </CarouselTextContainer>
         <Carousel/>
