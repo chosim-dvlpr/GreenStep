@@ -1,8 +1,8 @@
 package com.mm.greenstep.domain.mypage.service;
 
-import com.mm.greenstep.domain.mypage.dto.response.MyPageAllPloggingResponseDto;
-import com.mm.greenstep.domain.mypage.dto.response.MyPageDetailHeaderResponseDto;
-import com.mm.greenstep.domain.mypage.dto.response.MyPageDetailStreakResponseDto;
+import com.mm.greenstep.domain.mypage.dto.response.MyPageAllPloggingResDto;
+import com.mm.greenstep.domain.mypage.dto.response.MyPageDetailHeaderResDto;
+import com.mm.greenstep.domain.mypage.dto.response.MyPageDetailStreakResDto;
 import com.mm.greenstep.domain.user.entity.User;
 import com.mm.greenstep.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,13 +17,13 @@ public class MyPageService {
 
     private final UserRepository userRepository;
 
-    public MyPageDetailHeaderResponseDto getDetailUserHeader(HttpServletRequest request) {
+    public MyPageDetailHeaderResDto getDetailUserHeader(HttpServletRequest request) {
 //        Long user_pk = jwtUtil.extractUserPkFromToken(request);
         Long user_pk = 100L;
 
         User user = userRepository.findByUserId(user_pk);
 
-        MyPageDetailHeaderResponseDto dto = MyPageDetailHeaderResponseDto.builder()
+        MyPageDetailHeaderResDto dto = MyPageDetailHeaderResDto.builder()
                 .exp(user.getExp())
                 .nickname(user.getNickName())
                 .level(user.getLevel())
@@ -31,7 +31,7 @@ public class MyPageService {
         return dto;
     }
 
-    public MyPageAllPloggingResponseDto getAllUserPlogging(HttpServletRequest request) {
+    public MyPageAllPloggingResDto getAllUserPlogging(HttpServletRequest request) {
         Long user_pk = 100L;
 
         User user = userRepository.findByUserId(user_pk);
@@ -42,7 +42,7 @@ public class MyPageService {
         Double travelRange = null; // 나의 총 이동거리
         Double travelTime = null; // 나의 총 이동시간
 
-        MyPageAllPloggingResponseDto dto = MyPageAllPloggingResponseDto.builder()
+        MyPageAllPloggingResDto dto = MyPageAllPloggingResDto.builder()
                 .trashAmount(trashAmount)
                 .travelRange(travelRange)
                 .travelTime(travelTime)
@@ -50,7 +50,7 @@ public class MyPageService {
         return dto;
     }
 
-    public List<MyPageDetailStreakResponseDto> getDetailStreak(HttpServletRequest request, Integer year) {
+    public List<MyPageDetailStreakResDto> getDetailStreak(HttpServletRequest request, Integer year) {
         Long user_pk = 100L;
 
         User user = userRepository.findByUserId(user_pk);

@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class MyPageAllPloggingResponseDto {
+public class MyPageAllPloggingResDto {
     private Double travelRange;
     private Double travelTime;
     private Integer trashAmount;

@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class AvatarAllResponseDto {
+public class AvatarAllResDto {
     private Long boxId;
     private String avatarImg;
     private String avatarName;

@@ -94,5 +94,9 @@ public class User implements UserDetails {
         return false;
     }
 
+    public void levelUp(Integer exp) {
+        this.level++;
+        this.exp = exp;
+    }
 
 }

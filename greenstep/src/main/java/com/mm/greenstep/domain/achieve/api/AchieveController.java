@@ -1,6 +1,6 @@
 package com.mm.greenstep.domain.achieve.api;
 
-import com.mm.greenstep.domain.achieve.dto.response.AchieveDetailResponseDto;
+import com.mm.greenstep.domain.achieve.dto.response.AchieveDetailResDto;
 import com.mm.greenstep.domain.achieve.service.AchieveService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,7 +27,7 @@ public class AchieveController {
     // 업적 조회
     @GetMapping("/{achieveType}")
     public ResponseEntity<?> getDetailAchieve(HttpServletRequest request, @PathVariable Byte achieveType) {
-        List<AchieveDetailResponseDto> dtoList = achieveService.getDetailAchieve(request, achieveType);
+        List<AchieveDetailResDto> dtoList = achieveService.getDetailAchieve(request, achieveType);
         return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }
 }

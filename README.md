@@ -31,6 +31,6 @@ endpoint는 → 케밥 → /system-orders
 
 # **Dto**
 
-ex) memberDetailReqDto, memberAllResDto
+ex) UserDetailReqDto, UserAllResDto
 
 #
