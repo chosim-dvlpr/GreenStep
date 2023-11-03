@@ -16,6 +16,7 @@ const gap = 20;    // 캐러셀 사이의 간격
 const offset = 60; // 다음 캐러셀 / 이전 캐러셀이 보여지는 너비
 export const pageWidth = screenWidth - (gap + offset) * 2; // 캐러셀 너비
 
+
 const Carousel = () => {
   // 임시 데이터
   const [samplePages, setSamplePages] = useState<samplePagesType> ([
@@ -48,14 +49,13 @@ const Carousel = () => {
 
   return (
     <View style={{height: "100%", width: "100%"}}>
-    {/* <View> */}
       <CarouselCard
         gap={gap}
         offset={offset}
         pages={samplePages}
         setSamplePages={setSamplePages}
         pageWidth={pageWidth}
-      />
+        />
     </View>
   );
 };
