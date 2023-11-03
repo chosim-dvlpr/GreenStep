@@ -24,12 +24,12 @@ const ProfileHeaderStrick = () => {
       
     return(
         <View style={[Box.calendarBox, {alignItems:'center'}]}>
-          <Text>2023</Text>
+          <Text style={{fontSize: 20}}>2023</Text>
           <Text></Text>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             {Array.from({length:52}).map((_, index) =>(
               <View>
-                <Text style={{fontSize:8, fontWeight:'bold'}}>{getMonthLabel(index)}</Text>
+                <Text style={{fontSize:12, fontWeight:'bold'}}>{getMonthLabel(index)}</Text>
                 <View key={index} style={Box.weekBox}>
                   <Text style={{fontSize:8}}></Text>
                 </View>
