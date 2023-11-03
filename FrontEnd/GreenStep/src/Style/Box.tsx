@@ -45,15 +45,15 @@ const Box = StyleSheet.create({
   /** 프로필 달력 박스 */
   calendarBox: {
     width: '50%',
-    height : 100,
+    height : 120,
     padding : 20,
     backgroundColor: 'pink',
     borderRadius: 15,
   },
     /** 프로필 달력내 주 박스 */
     weekBox: {
-      width: 12,
-      height : 12,
+      width: 20,
+      height : 20,
       backgroundColor: 'skyblue',
       borderRadius: 2,
       marginRight: 4,
