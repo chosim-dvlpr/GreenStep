@@ -1,5 +1,8 @@
 package com.mm.greenstep.domain.plogging.service;
 
+import com.mm.greenstep.domain.achieve.entity.Achieve;
+import com.mm.greenstep.domain.achieve.entity.UserAchieve;
+import com.mm.greenstep.domain.achieve.repository.UserAchieveRepository;
 import com.mm.greenstep.domain.avatar.entity.Avatar;
 import com.mm.greenstep.domain.avatar.entity.UserAvatar;
 import com.mm.greenstep.domain.avatar.repository.AvatarRepository;
@@ -38,6 +41,7 @@ public class PloggingService {
     private final AmazonS3Service amazonS3Service;
     private final CoordinateRepository coordinateRepository;
     private final TrashRepository trashRepository;
+    private final UserAchieveRepository userAchieveRepository; // 내 업적 레포
 
     public PloggingResDto createPlogging(HttpServletRequest request, PloggingReqDto dto) {
         Boolean levelUp = false;
@@ -134,7 +138,57 @@ public class PloggingService {
             trashRepository.save(t);
         }
 
+        // 업적 갱신
+        // 업적들을 돌면서 나의 플로깅 이력을 다가져오기
+        List<Plogging> ploggingList = ploggingRepository.findAllByUser(user);
+        Integer myTrashAmount = 0; // 나의 총 쓰레기 량
+        Double myTravelRange = 0.0; // 나의 총 이동거리
+        Double myTravelTime = 0.0; // 나의 총 이동시간
+        Integer myPloggingCount = ploggingList.size();
 
+        for (Plogging p : ploggingList) {
+            myTrashAmount += p.getTrashAmount();
+            myTravelRange += p.getTravelRange();
+            myTravelTime += p.getTravelTime();
+        }
+
+        // 깨지지 않은 나의 모든 업적 가져온다.
+        List<UserAchieve> achieveList = userAchieveRepository.findAllByUserAndIsBreakedFalse(user);
+
+        for (UserAchieve ua : achieveList) {
+            Byte achieveType = ua.getAchieve().getAchieveType();
+
+            switch (achieveType) {
+            // 거리
+            case 1:
+                if(ua.getAchieve().getAchieveDistance() <= myTravelRange) {
+                    ua.updateisBreaked();
+                    userAchieveRepository.save(ua);
+                }
+                break;
+            // 시간
+            case 2:
+                if(ua.getAchieve().getAchieveTime() <= myTravelTime) {
+                    ua.updateisBreaked();
+                    userAchieveRepository.save(ua);
+                }
+                break;
+            // 쓰레기 수
+            case 3:
+                if(ua.getAchieve().getAchieveTrash() <= myTrashAmount) {
+                    ua.updateisBreaked();
+                    userAchieveRepository.save(ua);
+                }
+                break;
+            // 횟수
+            case 4:
+                if(ua.getAchieve().getAchieveCount() <= myPloggingCount) {
+                    ua.updateisBreaked();
+                    userAchieveRepository.save(ua);
+                }
+                break;
+            }
+        }
         return responseDto;
     }
 
