@@ -45,24 +45,27 @@ export const MainAPI = {
   },
 }
 
-export const TokenAPI = {
-  /** 로그아웃 요청 */
-  logoutAxios: async function() {
-    const tokens = await AsyncStorage.getItem('Tokens')
-    if (tokens) {
-      const parsedTokens = JSON.parse(tokens);
-      const accessToken = parsedTokens.accessToken;
-      const refreshToken = parsedTokens.refreshToken;
-      
-      return axiosInstance.request({
-        method: "POST",
-        url: '/user/logout',
-        data: {
-          'accessToken': accessToken,
-          'refreshToken': refreshToken,
-        }
-      });
-    };
-  },
-  
-}
+// const getTokens = async () => {
+//   const tokens = await AsyncStorage.getItem('Tokens')
+//   if (tokens) {
+//     const parsedTokens = JSON.parse(tokens);
+//     const accessToken = parsedTokens.accessToken;
+//     const refreshToken = parsedTokens.refreshToken;
+//     return {"accessToken": accessToken, "refreshToken": refreshToken}
+//   }
+//   return null
+// }
+
+// export const TokenAPI = {
+//   /** 로그아웃 요청 */
+//   logoutAxios: async function() {
+//     const data = await getTokens();
+//     if (data !== null) {
+//       return axiosInstance.request({
+//         method: "POST",
+//         url: '/user/logout',
+//         data: data
+//       });
+//     }
+//   },
+// }
