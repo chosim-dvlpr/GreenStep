@@ -3,7 +3,8 @@ import React, {useState} from 'react';
 import styled from 'styled-components/native';
 import ImageStyle from '../../Style/Image';
 import PloggingModal from './PloggingModal';
-
+import {useDispatch} from 'react-redux';
+import {incrementCount} from '../../Store/ploggingSlice';
 interface PloggingDivisionProps {
   name: string;
   onPress?: () => void; // Optional, 모든 division에 필요한 것은 아님
@@ -28,22 +29,13 @@ function getImage(name: string): any {
 }
 const PloggingDivision: React.FC<PloggingDivisionProps> = ({name, onPress}) => {
   const imageSource = getImage(name);
-  const [counts, setCounts] = useState({
-    병: 0,
-    캔: 0,
-    페트병: 0,
-    플라스틱: 0,
-    일반쓰레기: 0,
-  });
-  const handlePress = name => {
+  const dispatch = useDispatch();
+
+  const handlePress = (name: string) => {
     if (name === '재활용품' && onPress) {
       onPress();
     } else {
-      setCounts(prevCounts => ({
-        ...prevCounts,
-        [name]: prevCounts[name] + 1,
-      }));
-      console.log(counts);
+      dispatch(incrementCount(name));
     }
   };
 

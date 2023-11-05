@@ -8,13 +8,15 @@ import {
 } from 'react-native';
 import styled from 'styled-components/native';
 import PloggingDivision from './PloggingDivision';
-
+import {useSelector} from 'react-redux';
+import {RootState} from '../../Store/store';
 interface PloggingModalProps {
   onClose: () => void;
   visible: boolean;
 }
 
 const PloggingModal: React.FC<PloggingModalProps> = ({onClose, visible}) => {
+  const counts = useSelector((state: RootState) => state.plogging.counts);
   return (
     <Modal
       visible={visible}
@@ -28,29 +30,31 @@ const PloggingModal: React.FC<PloggingModalProps> = ({onClose, visible}) => {
               <PloggingDivisionContainer>
                 <StyledImageBackground
                   source={require('../../Image/PloggingStart/bgcircle.png')}
-                  resizeMode="contain" // 또는 "contain", "stretch", "repeat", "center" 중 선택
-                >
+                  resizeMode="contain">
                   <PloggingDivision name="페트병" />
+                  <CountText>{counts.페트병}</CountText>
+                  {/* 페트병 카운트를 표시 */}
                 </StyledImageBackground>
                 <StyledImageBackground
                   source={require('../../Image/PloggingStart/bgcircle.png')}
-                  resizeMode="contain" // 또는 "contain", "stretch", "repeat", "center" 중 선택
-                >
+                  resizeMode="contain">
                   <PloggingDivision name="플라스틱" />
+                  <CountText>{counts.플라스틱}</CountText>
+                  {/* 플라스틱 카운트를 표시 */}
                 </StyledImageBackground>
               </PloggingDivisionContainer>
               <PloggingDivisionContainer>
                 <StyledImageBackground
                   source={require('../../Image/PloggingStart/bgcircle.png')}
-                  resizeMode="contain" // 또는 "contain", "stretch", "repeat", "center" 중 선택
-                >
+                  resizeMode="contain">
                   <PloggingDivision name="병" />
+                  <CountText>{counts.병}</CountText>
                 </StyledImageBackground>
                 <StyledImageBackground
                   source={require('../../Image/PloggingStart/bgcircle.png')}
-                  resizeMode="contain" // 또는 "contain", "stretch", "repeat", "center" 중 선택
-                >
+                  resizeMode="contain">
                   <PloggingDivision name="캔" />
+                  <CountText>{counts.캔}</CountText>
                 </StyledImageBackground>
               </PloggingDivisionContainer>
               <CloseButton onPress={onClose}>
@@ -106,4 +110,9 @@ const CloseButton = styled.TouchableOpacity`
 const ButtonText = styled.Text`
   color: white;
   font-weight: bold;
+`;
+const CountText = styled.Text`
+  font-size: 16px;
+  color: #000;
+  margin-top: 8px;
 `;
