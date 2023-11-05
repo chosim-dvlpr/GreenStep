@@ -27,4 +27,9 @@ public class UserAchieve {
 
     @JoinColumn(name = "created_at")
     private LocalDate createdAt;
+
+    public void updateisBreaked() {
+        this.isBreaked = true;
+        this.createdAt = LocalDate.now();
+    }
 }
