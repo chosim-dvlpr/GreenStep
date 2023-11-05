@@ -9,10 +9,7 @@ import java.time.LocalDate;
 @Getter
 public class AchieveDetailResDto {
     private String achieveName;
-    private String achieveImg;
     private LocalDate createdAt;
-    private Byte achieveType;
-    private Integer progresses;
     private Integer achieveTrashAmount; // 해당 업적 쓰레기 량
     private Double achieveTravelRange; // 해당 업적 이동거리
     private Double achieveTravelTime; // 해당 업적 이동시간
