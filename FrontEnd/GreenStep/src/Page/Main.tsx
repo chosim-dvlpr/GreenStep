@@ -5,8 +5,9 @@ import Carousel from '../Component/Main/Carousel';
 import styled from 'styled-components/native';
 import ButtonStyle from '../Style/ButtonStyle';
 import { useNavigation } from '@react-navigation/native';
-import { LoginAPI, MainAPI, TokenAPI } from '../Api/basicHttp';
+import { LoginAPI, MainAPI } from '../Api/basicHttp';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import tokenHttp from '../Api/tokenHttp';
 
 export interface EmailLoginDataType {
   'email': string,
@@ -100,12 +101,9 @@ const Main = () => {
       const response = res.data;
       if (response.state === 200) {
         setIsLogin(true);
-        console.log(response.data.accessToken)
-        AsyncStorage.setItem('Tokens', JSON.stringify({
-          'accessToken': response.data.accessToken,
-          'refreshToken': response.data.refreshToken,
-          'refreshTokenExpirationTime': response.data.refreshTokenExpirationTime,
-        }))        
+        AsyncStorage.setItem('accessToken', response.data.accessToken)
+        AsyncStorage.setItem('refreshToken', response.data.refreshToken)
+        // AsyncStorage.setItem('refreshTokenExpirationTime', response.data.refreshTokenExpirationTime)
       } else if (response.status === 400) {
         console.log(response.message)
       }
@@ -113,13 +111,38 @@ const Main = () => {
     .catch(err => console.log('이메일 로그인 실패 : ', err))
   }
 
-  /** 로그아웃 버튼 */
-  const logout = () => {
-    console.log('로그아웃 버튼 클릭')
-    TokenAPI.logoutAxios()
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
-  }
+  const logout = async () => {
+    try {
+      // AsyncStorage에서 accessToken 및 refreshToken을 가져옵니다.
+      const accessToken = await AsyncStorage.getItem('accessToken');
+      const refreshToken = await AsyncStorage.getItem('refreshToken');
+  
+      if (!accessToken || !refreshToken) {
+        throw new Error('Access token 또는 refresh token이 유효하지 않습니다.');
+      }
+  
+      // 토큰을 문자열 형식으로 확인합니다.
+      if (typeof accessToken !== 'string' || typeof refreshToken !== 'string') {
+        throw new Error('토큰이 올바른 문자열 형식이 아닙니다.');
+      }
+  
+      const data = {
+        accessToken: accessToken,
+        refreshToken: refreshToken
+      };
+  
+      console.log('logout 실행');
+      tokenHttp.post('/user/logout', data)
+        .then(res => {
+          AsyncStorage.removeItem('accessToken');
+          AsyncStorage.removeItem('refreshToken');
+        })
+        .catch(err => console.log('로그아웃 실패 : ', err));
+    } catch (error) {
+      console.error('로그아웃 중 오류 발생:', error);
+    }
+  };
+  
   
 
   return (
