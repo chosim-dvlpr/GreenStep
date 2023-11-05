@@ -38,6 +38,7 @@ public class User implements UserDetails {
 
 //    @Column(name = "team_color_id", nullable = false)
 //    private Team team;
+
     @Column(name = "level")
     private Integer level;
 
@@ -98,5 +99,7 @@ public class User implements UserDetails {
         this.level++;
         this.exp = exp;
     }
+
+
 
 }

@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -61,7 +62,10 @@ public class UserService {
 
         // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
         // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
-        UsernamePasswordAuthenticationToken authenticationToken = login.toAuthentication();
+//        UsernamePasswordAuthenticationToken authenticationToken = login.toAuthentication();
+        User user = userRepository.findByUserName(login.getEmail()).orElseThrow(null);
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(login.getEmail(), login.getPassword());
+
 
         // 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
         // authenticate 매서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드가 실행
@@ -77,6 +81,9 @@ public class UserService {
         return response.success(tokenInfo, "로그인에 성공했습니다.", HttpStatus.OK);
     }
 
+    /**
+     * refresh token을 사용하여 access token 재발급
+     * */
     public ResponseEntity<?> reissue(UserReqDto.Reissue reissue) {
         // 1. Refresh Token 검증
         if (!jwtTokenProvider.validateToken(reissue.getRefreshToken())) {
@@ -112,7 +119,7 @@ public class UserService {
             return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
         }
 
-        // 2. Accesoken 에서s T User email 을 가져옵니다.
+        // 2. Accesoken 에서User email 을 가져옵니다.
         Authentication authentication = jwtTokenProvider.getAuthentication(logout.getAccessToken());
 
         // 3. Redis 에서 해당 User email 로 저장된 Refresh Token 이 있는지 여부를 확인 후 있을 경우 삭제합니다.
@@ -131,10 +138,9 @@ public class UserService {
 
     public ResponseEntity<?> authority() {
         // SecurityContext에 담겨 있는 authentication userEamil 정보
-        String userName = SecurityUtil.getCurrentUserName();
+        Long userId = SecurityUtil.getCurrentUserId();
 
-        User user = userRepository.findByUserName(userName)
-                .orElseThrow(() -> new UsernameNotFoundException("No authentication information."));
+        User user = userRepository.findByUserId(userId);
 
         // add ROLE_ADMIN
         user.getRoles().add(Authority.ROLE_ADMIN.name());
