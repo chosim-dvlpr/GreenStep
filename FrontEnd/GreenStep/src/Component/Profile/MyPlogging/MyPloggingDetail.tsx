@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Modal, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import ImageStyle from '../../../Style/Image';
 import avatar from '../../../Image/Avatar/bird.png';
-import { ProfileAPI } from '../../../Api/ProfileApi';
+import { ProfileAPI } from '../../../Api/profileApi';
 
 const MyPloggingDetail = ({ onClose, index }:any) => {
     const [data, setData] = useState({amount : 10, range:1.5,time : '30:10',

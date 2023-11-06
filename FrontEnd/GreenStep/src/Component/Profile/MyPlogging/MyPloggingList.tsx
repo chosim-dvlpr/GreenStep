@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import avatar from '../../../Image/Avatar/bird.png';
 import ImageStyle from '../../../Style/Image';
 import MyPloggingDetail from './MyPloggingDetail';
-import { ProfileAPI } from '../../../Api/ProfileApi';
+import { ProfileAPI } from '../../../Api/profileApi';
 
 const MyPloggingList = () => {
     const [images, setImages] = useState([avatar, avatar, avatar, avatar, avatar, avatar, avatar, avatar])
