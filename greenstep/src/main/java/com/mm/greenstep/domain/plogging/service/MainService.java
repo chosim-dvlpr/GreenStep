@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -42,13 +43,15 @@ public class MainService {
     public List<String> getAllPloggingImg() {
         // 원하는 개수만큼 랜덤한 레코드를 가져올 페이지 크기를 설정합니다.
         int count = 6;
-        Pageable pageable = PageRequest.of(0, count);
 
         // findAll() 메서드 대신에 custom query를 사용하여 랜덤한 6개의 레코드를 가져옵니다.
-        List<Plogging> ploggingList = ploggingRepository.findRandomVisiblePloggingRecords(pageable);
+        List<Plogging> ploggingList = ploggingRepository.findRandomVisiblePloggingRecords(count);
 
         // 플로깅이 없으면 null
-        if(ploggingList == null) return null;
+        if (ploggingList.isEmpty()) {
+            return Collections.emptyList();
+        }
+
 
         List<String> imgList = new ArrayList<>();
 
