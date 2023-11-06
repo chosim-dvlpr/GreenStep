@@ -52,11 +52,11 @@ public class JwtTokenProvider {
     /**
      * 유저 정보(authentication)를 가지고 AccessToken, RefreshToken 을 생성하는 메서드
      */
-    public UserResDto.TokenInfo generateToken(Authentication authentication) {
+    public UserResDto.TokenInfo generateToken(String name, Collection<? extends GrantedAuthority> inputAuthorities) {
         // 1. 권한 가져오기
         // map함수를 사용하여 각 권한을 문자열로 반환
         // collect를 사용하여 ,로 구분된 단일 문자열로 결합
-        String authorities = authentication.getAuthorities().stream()
+        String authorities = inputAuthorities.stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
@@ -70,11 +70,9 @@ public class JwtTokenProvider {
         Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
         String accessToken = Jwts.builder()
                 // 토큰의 주체 설정-> 일반적으로 사용자의 식별자가 사용됨
-//                .setSubject(userRepository.findUserByUserName(authentication.getName()).getUserId().toString())
-                .setSubject(authentication.getName())
+                .setSubject(name)
                 // 추가적인 클레임 설정
                 .claim(AUTHORITIES_KEY, authorities)
-                .claim(USER_ID, userRepository.findUserByUserName(authentication.getName()).getUserId())
                 // 토큰의 만료 시간 설정
                 .setExpiration(accessTokenExpiresIn)
                 // 토큰을 서명할 때 사용할 알고리즘과 키 설정
@@ -96,6 +94,9 @@ public class JwtTokenProvider {
                 .refreshToken(refreshToken)
                 .refreshTokenExpirationTime(REFRESH_TOKEN_EXPIRE_TIME)
                 .build();
+    }
+    public UserResDto.TokenInfo generateToken(Authentication authentication) {
+        return generateToken(authentication.getName(), authentication.getAuthorities());
     }
 
     // JWT 토큰을 복호화하여 토큰에 들어있는 정보를 꺼내는 메서드
