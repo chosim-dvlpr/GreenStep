@@ -53,9 +53,7 @@ const Login = ({setIsLogin}: LoginPropsType) => {
           console.log('axios 성공 : ', res)
           // 로그인 성공 조건 추가
           setIsLogin(true);
-          // AsyncStorage.setItem('Tokens', res)
-          AsyncStorage.setItem('Tokens', 'sampleToken')
-          console.log(AsyncStorage.getItem("Tokens"))
+          AsyncStorage.setItem('sampleToken', 'sampleToken')
         })
         .catch(err => {
           console.log("login axios 에러 발생: ", err);
