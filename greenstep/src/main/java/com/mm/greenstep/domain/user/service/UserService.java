@@ -148,4 +148,8 @@ public class UserService {
 
         return response.success();
     }
+
+    public Long userId(){
+        return userRepository.findUserByUserName(SecurityUtil.getCurrentUserName()).getUserId();
+    }
 }

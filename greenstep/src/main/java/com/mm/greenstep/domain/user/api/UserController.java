@@ -78,4 +78,11 @@ public class UserController {
         log.info("ROLE_ADMIN TEST");
         return response.success();
     }
+
+    @GetMapping("/idTest")
+    public ResponseEntity<?> idTest() {
+        log.info("id TEST");
+        System.out.println(userService.userId());
+        return response.success();
+    }
 }
