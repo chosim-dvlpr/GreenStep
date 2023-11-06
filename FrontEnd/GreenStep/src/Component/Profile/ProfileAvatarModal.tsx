@@ -1,12 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Modal, Text, TouchableOpacity, StyleSheet, ScrollView, Image } from "react-native";
 import panda from '../../Image/Avatar/panda.png'
 import cow from '../../Image/Avatar/cow.png'
 import crocodile from '../../Image/Avatar/crocodile.png'
 import bird from '../../Image/Avatar/bird.png'
 import ImageStyle from '../../Style/Image';
-const ProfileAvatarModal = ({ onClose, onSelectAvatar }:any) => {
+import { AvatarAPI } from "../../Api/avatarApi";
+
+const ProfileAvatarModal = ({ onSelectAvatar }:any) => {
     const [collection, setCollection] = useState([panda, cow, bird, crocodile])
+    const [avatars, setAvatars] = useState({})
+    // 사용자 캐릭터 불러오기
+    const getAvatarInfo = () => {
+    AvatarAPI.getAvatarAxios()
+    .then((res) =>{
+      console.log(res)
+    //   setAvatars(res.data)
+    } 
+      )
+    .catch(err => console.log('사용자 캐릭터 조회 axios 에러 : ', err))
+  }
+
+  useEffect(() => {
+      getAvatarInfo();
+    }, [])
+
 
     return (
         <Modal

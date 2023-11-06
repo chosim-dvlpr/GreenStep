@@ -1,20 +1,46 @@
 import {View, Text, Image, ScrollView, StyleSheet, TouchableOpacity} from 'react-native'
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import avatar from '../../../Image/Avatar/bird.png';
 import ImageStyle from '../../../Style/Image';
 import MyPloggingDetail from './MyPloggingDetail';
+import { ProfileAPI } from '../../../Api/ProfileApi';
+
 const MyPloggingList = () => {
     const [images, setImages] = useState([avatar, avatar, avatar, avatar, avatar, avatar, avatar, avatar])
+    const [dataList, setDataList] = useState({})
+    const [idx, setIdx] = useState(0)
+    const [dataDetail, setDataDetail] = useState([])
     const [toggle, setToggle] = useState(false)
-    const handleToggle = () => {
-        setToggle(!toggle)
-    }
+
+
+    // 내 플로깅 이력 불러오기
+    const getMyploggingList = () => {
+    ProfileAPI.getMyPloggingAxios()
+    .then((res) =>{
+      console.log(res)
+    //   setDataList(res.data)
+    } 
+      )
+    .catch(err => console.log('내 플로깅 이력 axios 에러 : ', err))
+  }
+  const handleAvatarId = (index : number) =>{
+    setIdx(index)
+    handleToggle()
+  }
+  const handleToggle = () => {
+    setToggle(!toggle)
+}
+
+  useEffect(() => {
+    getMyploggingList();
+  }, [])
+
     return(
         <View>
             <ScrollView horizontal={false}>
                 <View style={styles.wrapRow}>
                     {images.map((image, index) => (
-                        <TouchableOpacity onPress={handleToggle}>
+                        <TouchableOpacity onPress={() => handleAvatarId(index)}>
                             <View>
                                 <Image key={index} source={image} style={ImageStyle.mediumImage} />
                                 <View style={[styles.overlayText, styles.noWrapRow]}>
@@ -27,7 +53,7 @@ const MyPloggingList = () => {
                         ))}
                 </View>
             </ScrollView>
-            {toggle && <MyPloggingDetail onClose={handleToggle} />}
+            {toggle && <MyPloggingDetail onClose={handleToggle} index={idx} />}
         </View>
     )
 }

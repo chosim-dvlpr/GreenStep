@@ -4,19 +4,34 @@ import ImageStyle from "../../Style/Image";
 import {useState} from 'react';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import ProfileAvatarModal from "./ProfileAvatarModal";
+import { AvatarAPI } from "../../Api/avatarApi";
 
-const ProfileHeaderImage = () => {
-    const percentage = 66;
+const ProfileHeaderImage = ({percentage}:any) => {
     const [showAvatar, setShowAvatar] = useState(avatar)
     const [toggle, setToggle] = useState(false)
+    const [boxId, setBoxId] = useState(0)
+
+    // 사용자 캐릭터 변경하기
     const changeAvatar = (avatar:any) =>{
+        handelBoxId(boxId)
+        AvatarAPI.patchAvatarAxios(boxId)
+        .then((res) =>{
+        //  console.log(res)
+        //  console.log(boxId)
         setShowAvatar(avatar)
         handleToggle();
+        } 
+      )
+    .catch(err => console.log('사용자 캐릭터 변경 axios 에러 : ', err))
 
     }
     const handleToggle = () => {
         setToggle(!toggle)
     }
+    const handelBoxId = (boxId :number) =>{
+        setBoxId(boxId+1)
+    }
+
     return(
         <View>
           <AnimatedCircularProgress
@@ -33,7 +48,7 @@ const ProfileHeaderImage = () => {
                     </View>
                 )}
             </AnimatedCircularProgress>
-            {toggle && <ProfileAvatarModal onClose={handleToggle} onSelectAvatar={changeAvatar} />}
+            {toggle && <ProfileAvatarModal onSelectAvatar={changeAvatar} />}
         </View>
     )
 }
