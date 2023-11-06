@@ -18,7 +18,7 @@ public class CompeteController {
     @GetMapping("/")
     public ResponseEntity<?> getDetailCompete(@PathVariable YearMonth yearMonth){
 
-        return return new ResponseEntity<>(responseDto, HttpStatus.OK);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
 }
