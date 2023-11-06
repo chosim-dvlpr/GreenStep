@@ -57,7 +57,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             log.info("jwtToken = {}", token.getAccessToken());
 
             // accessToken을 쿼리스트링에 담는 url을 만들어준다.
-            String targetUrl = UriComponentsBuilder.fromUriString("http://localhost:8080/user")
+            String targetUrl = UriComponentsBuilder.fromUriString("https://k9b303.p.ssafy.io/user")
                     .queryParam("accessToken", token)
                     .build()
                     .encode(StandardCharsets.UTF_8)
@@ -75,7 +75,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             getRedirectStrategy().sendRedirect(request, response, targetUrl);
         } else {
             // 회원이 존재하지 않을경우, 서비스 제공자와 email을 쿼리스트링으로 전달하는 url을 만들어준다.
-            String targetUrl = UriComponentsBuilder.fromUriString("http://localhost:8080/user")
+            String targetUrl = UriComponentsBuilder.fromUriString("https://k9b303.p.ssafy.io/user")
                     .queryParam("userName", userName)
                     .queryParam("provider", provider)
                     .build()
