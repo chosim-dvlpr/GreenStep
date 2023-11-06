@@ -28,8 +28,8 @@ public class JwtTokenProvider {
 
     private static final String USER_ID = "userId";
 
-//    private static final long ACCESS_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L;              // 30분
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 60 * 1000L;              // 60초
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L;              // 30분
+//    private static final long ACCESS_TOKEN_EXPIRE_TIME = 60 * 1000L;              // 60초
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 7 * 24 * 60 * 60 * 1000L;    // 7일
 
 //    @Value("${jwt.access.expiration}")
