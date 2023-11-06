@@ -34,13 +34,22 @@ const ImageStyle = StyleSheet.create({
     resizeMode: 'cover',
     borderRadius: 20,
   },
-    /** 캐릭터 이미지,
-    프로깅 종료시 사진 업로드 이미지 */
-    AvatarImage: {
-      width: 100,
-      height: 100,
-      // resizeMode: 'cover',
-    },
+  /** 캐릭터 이미지,
+  프로깅 종료시 사진 업로드 이미지 */
+  AvatarImage: {
+    width: 100,
+    height: 100,
+    // resizeMode: 'cover',
+  },
+  /** 플로깅 종료 시 나오는 도장 이미지 */
+  StampImage: {
+    position: 'absolute', 
+    top: '20%',
+    right: '16%',
+    width: 100, 
+    height: 100,
+    zIndex: 1,
+  }
 })
 
 export default ImageStyle;
