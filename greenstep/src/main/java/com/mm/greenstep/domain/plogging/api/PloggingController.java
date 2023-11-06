@@ -32,7 +32,7 @@ public class PloggingController {
     @PostMapping("/{ploggingId}/upload/img")
     public ResponseEntity<?> updatePloggingImg(
             @RequestPart(value = "file", required = false) MultipartFile file,
-            @PathVariable(value = "projectId", required = false) Long ploggingId
+            @PathVariable(value = "ploggingId", required = false) Long ploggingId
     ) {
         ploggingService.updatePloggingImg(file, ploggingId);
         return new ResponseEntity<>(null, HttpStatus.OK);
