@@ -65,10 +65,10 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                     .set("RT:" + authentication.getName(),token.getRefreshToken(), token.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
 
             // 로그인 확인 페이지로 리다이렉트 시킨다.
-            getRedirectStrategy().sendRedirect(request, response, "http://localhost:8080/loginSuccess");
+            getRedirectStrategy().sendRedirect(request, response, "https://k9b303.p.ssafy.io/loginSuccess");
         } else {
             // 회원이 존재하지 않을경우, 서비스 제공자와 email을 쿼리스트링으로 전달하는 url을 만들어준다.
-            String targetUrl = UriComponentsBuilder.fromUriString("http://localhost:8080/loginSuccess")
+            String targetUrl = UriComponentsBuilder.fromUriString("https://k9b303.p.ssafy.io/loginSuccess")
                     .queryParam("userName", userName)
                     .queryParam("provider", provider)
                     .build()
