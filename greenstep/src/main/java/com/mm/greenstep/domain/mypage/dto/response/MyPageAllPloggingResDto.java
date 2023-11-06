@@ -9,4 +9,5 @@ public class MyPageAllPloggingResDto {
     private Double travelRange;
     private Double travelTime;
     private Integer trashAmount;
+    private Integer completedAchieveCount;
 }

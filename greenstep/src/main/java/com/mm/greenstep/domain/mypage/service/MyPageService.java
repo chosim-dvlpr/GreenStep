@@ -1,5 +1,7 @@
 package com.mm.greenstep.domain.mypage.service;
 
+import com.mm.greenstep.domain.achieve.entity.UserAchieve;
+import com.mm.greenstep.domain.achieve.repository.UserAchieveRepository;
 import com.mm.greenstep.domain.mypage.dto.response.MyPageAllPloggingResDto;
 import com.mm.greenstep.domain.mypage.dto.response.MyPageDetailHeaderResDto;
 import com.mm.greenstep.domain.mypage.dto.response.MyPageDetailStreakResDto;
@@ -25,6 +27,8 @@ public class MyPageService {
 
     private final UserRepository userRepository;
     private final PloggingRepository ploggingRepository;
+    private final UserAchieveRepository userAchieveRepository;
+
 
     public MyPageDetailHeaderResDto getDetailUserHeader(HttpServletRequest request) {
 //        Long user_pk = jwtUtil.extractUserPkFromToken(request);
@@ -57,10 +61,18 @@ public class MyPageService {
             travelTime += p.getTravelTime();
         }
 
+        // 완료된 업적 리스트
+        List<UserAchieve> list = userAchieveRepository.findAllByUserAndIsBreakedTrue(user);
+        Integer completedAchieveCount = 0;
+        if(list != null) {
+            completedAchieveCount = list.size();
+        }
+
         MyPageAllPloggingResDto dto = MyPageAllPloggingResDto.builder()
                 .trashAmount(trashAmount)
                 .travelRange(travelRange)
                 .travelTime(travelTime)
+                .completedAchieveCount(completedAchieveCount)
                 .build();
         return dto;
     }
