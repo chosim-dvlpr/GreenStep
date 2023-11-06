@@ -48,8 +48,7 @@ const Profile = ({navigation}:any) => {
         <ProfileHeaderStrick/>
       </View>
 
-      <ProfilePloggingDataInfo/>
-      <AchievementHeader navigation={navigation}/>     
+      <ProfilePloggingDataInfo navigation={navigation}/>
       <MyPlogging/>
     </ScrollView>
   );
