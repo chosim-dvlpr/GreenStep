@@ -59,24 +59,28 @@ public class UserService {
         if (userRepository.findByUserName(login.getEmail()).orElse(null) == null) {
             return response.fail("해당하는 유저가 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
         }
-
+//        System.out.println("1");
         // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
         // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
 //        UsernamePasswordAuthenticationToken authenticationToken = login.toAuthentication();
         User user = userRepository.findByUserName(login.getEmail()).orElseThrow(null);
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(login.getEmail(), login.getPassword());
 
-
+//        System.out.println("2");
         // 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
         // authenticate 매서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드가 실행
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
+//        System.out.println("3");
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
         UserResDto.TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
 
+//        System.out.println("4");
         // 4. RefreshToken Redis 저장 (expirationTime 설정을 통해 자동 삭제 처리)
         redisTemplate.opsForValue()
                 .set("RT:" + authentication.getName(), tokenInfo.getRefreshToken(), tokenInfo.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
+
+//        System.out.println(tokenInfo.getAccessToken());
 
         return response.success(tokenInfo, "로그인에 성공했습니다.", HttpStatus.OK);
     }
@@ -152,4 +156,8 @@ public class UserService {
     public Long userId(){
         return userRepository.findUserByUserName(SecurityUtil.getCurrentUserName()).getUserId();
     }
+
+
+
+
 }
