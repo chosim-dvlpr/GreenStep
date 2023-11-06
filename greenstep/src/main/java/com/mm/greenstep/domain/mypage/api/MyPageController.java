@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/my-page")
+@RequestMapping("/mypage")
 @RequiredArgsConstructor
 public class MyPageController {
 
@@ -36,7 +37,7 @@ public class MyPageController {
     // 스트릭 조회
     @GetMapping("/{year}/streak")
     public ResponseEntity<?> getDetailStreak(HttpServletRequest request, @PathVariable Integer year) {
-        List<MyPageDetailStreakResDto> dtoList = myPageService.getDetailStreak(request, year);
-        return new ResponseEntity<>(dtoList, HttpStatus.OK);
+        Map<Integer, Integer> map = myPageService.getDetailStreak(request, year);
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 }

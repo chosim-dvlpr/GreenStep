@@ -1,5 +1,8 @@
 package com.mm.greenstep.domain.plogging.service;
 
+import com.mm.greenstep.domain.achieve.entity.Achieve;
+import com.mm.greenstep.domain.achieve.entity.UserAchieve;
+import com.mm.greenstep.domain.achieve.repository.UserAchieveRepository;
 import com.mm.greenstep.domain.avatar.entity.Avatar;
 import com.mm.greenstep.domain.avatar.entity.UserAvatar;
 import com.mm.greenstep.domain.avatar.repository.AvatarRepository;
@@ -38,13 +41,14 @@ public class PloggingService {
     private final AmazonS3Service amazonS3Service;
     private final CoordinateRepository coordinateRepository;
     private final TrashRepository trashRepository;
+    private final UserAchieveRepository userAchieveRepository; // 내 업적 레포
 
     public PloggingResDto createPlogging(HttpServletRequest request, PloggingReqDto dto) {
         Boolean levelUp = false;
         String avatarImg = "";
         String avatarName = "";
 
-        Long user_pk = 100L;
+        Long user_pk = 4L;
         User user = userRepository.findByUserId(user_pk);
 
         // 종료시간에서 - 전체 이동시간(Double TravelTime) 빼서 시작시간 만들기
@@ -54,11 +58,11 @@ public class PloggingService {
         LocalDateTime startTime = endTime.minusSeconds(travelTimeInSeconds);
 
         // 경험치 계산
-        Integer getExp = null;
-//                dto.getAITrashAmount() +
-//                        dto.getTravelRange() +
-//                        dto.getTravelTime() +
-//                        dto.getTrashAmount();
+        Integer getExp =
+                (int) ((dto.getAITrashAmount() * 0.9) +
+                        (dto.getTravelRange() * 0.7) +
+                        (dto.getTravelTime() * 0.5) +
+                        (dto.getTrashAmount() * 0.5)) ;
 
         Plogging plogging = Plogging.builder()
                 .createdAt(startTime)
@@ -134,6 +138,57 @@ public class PloggingService {
             trashRepository.save(t);
         }
 
+        // 업적 갱신
+        // 업적들을 돌면서 나의 플로깅 이력을 다가져오기
+        List<Plogging> ploggingList = ploggingRepository.findAllByUser(user);
+        Integer myTrashAmount = 0; // 나의 총 쓰레기 량
+        Double myTravelRange = 0.0; // 나의 총 이동거리
+        Double myTravelTime = 0.0; // 나의 총 이동시간
+        Integer myPloggingCount = ploggingList.size();
+
+        for (Plogging p : ploggingList) {
+            myTrashAmount += p.getTrashAmount();
+            myTravelRange += p.getTravelRange();
+            myTravelTime += p.getTravelTime();
+        }
+
+        // 깨지지 않은 나의 모든 업적 가져온다.
+        List<UserAchieve> achieveList = userAchieveRepository.findAllByUserAndIsBreakedFalse(user);
+
+        for (UserAchieve ua : achieveList) {
+            Byte achieveType = ua.getAchieve().getAchieveType();
+
+            switch (achieveType) {
+            // 거리
+            case 1:
+                if(ua.getAchieve().getAchieveDistance() <= myTravelRange) {
+                    ua.updateisBreaked();
+                    userAchieveRepository.save(ua);
+                }
+                break;
+            // 시간
+            case 2:
+                if(ua.getAchieve().getAchieveTime() <= myTravelTime) {
+                    ua.updateisBreaked();
+                    userAchieveRepository.save(ua);
+                }
+                break;
+            // 쓰레기 수
+            case 3:
+                if(ua.getAchieve().getAchieveTrash() <= myTrashAmount) {
+                    ua.updateisBreaked();
+                    userAchieveRepository.save(ua);
+                }
+                break;
+            // 횟수
+            case 4:
+                if(ua.getAchieve().getAchieveCount() <= myPloggingCount) {
+                    ua.updateisBreaked();
+                    userAchieveRepository.save(ua);
+                }
+                break;
+            }
+        }
         return responseDto;
     }
 
@@ -148,7 +203,7 @@ public class PloggingService {
 
     public List<PloggingAllResDto> getAllPlogging(HttpServletRequest request) {
         List<PloggingAllResDto> dtoList = new ArrayList<>();
-        Long user_pk = 100L;
+        Long user_pk = 4L;
         User user = userRepository.findByUserId(user_pk);
         List<Plogging> plogging = ploggingRepository.findAllByUser(user);
 

@@ -7,5 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface UserAchieveRepository extends JpaRepository<UserAchieve, Long> {
-    List<UserAchieve> findAllByUser(User user);
+    List<UserAchieve> findAllByUserAndIsBreakedFalse(User user);
+    List<UserAchieve> findAllByUserAndAchieve_AchieveType(User user, Byte achieveType);
+
+    List<UserAchieve> findAllByUserAndIsBreakedTrue(User user);
 }

@@ -5,6 +5,8 @@ import com.mm.greenstep.domain.achieve.entity.UserAchieve;
 import com.mm.greenstep.domain.achieve.repository.AchieveRepository;
 import com.mm.greenstep.domain.achieve.repository.UserAchieveRepository;
 import com.mm.greenstep.domain.achieve.dto.response.AchieveDetailResDto;
+import com.mm.greenstep.domain.plogging.entity.Plogging;
+import com.mm.greenstep.domain.plogging.repository.PloggingRepository;
 import com.mm.greenstep.domain.user.entity.User;
 import com.mm.greenstep.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,51 +21,89 @@ import java.util.List;
 public class AchieveService {
 
     private final UserRepository userRepository;
-    private final UserAchieveRepository userAchieveRepository;
-    private final AchieveRepository achieveRepository;
+    private final UserAchieveRepository userAchieveRepository; // 내 업적 레포
+    private final PloggingRepository ploggingRepository;
 
     public List<AchieveDetailResDto> getDetailAchieve(HttpServletRequest request, Byte achieveType) {
-        Long user_pk = 100L;
+        Long user_pk = 4L;
 
         User user = userRepository.findByUserId(user_pk);
-        List<UserAchieve> userAchieveList = userAchieveRepository.findAllByUser(user);
+
+        // 해당하는 업적들만 가져오기
+        List<UserAchieve> userAchieveList = userAchieveRepository.findAllByUserAndAchieve_AchieveType(user, achieveType);
+
         List<AchieveDetailResDto> list = new ArrayList<>();
 
-        // 타입에 맞는 업적을 가져온다.
-        List<Achieve> achieveList = achieveRepository.findAllByAchieveType(achieveType);
-
-        Integer progresses = 0;
+        // 업적들을 돌면서 나의 플로깅 이력을 다가져오기
+        List<Plogging> plogging = ploggingRepository.findAllByUser(user);
+        Integer myTrashAmount = 0; // 나의 총 쓰레기 량
+        Double myTravelRange = 0.0; // 나의 총 이동거리
+        Double myTravelTime = 0.0; // 나의 총 이동시간
 
         switch (achieveType) {
-                // 거리
+            // 거리
             case 1:
-                // 나의 모든 플로깅 이동거리를 가져온다
+                for (Plogging p : plogging) {
+                    myTravelRange += p.getTravelRange();
+                }
+                for (UserAchieve a: userAchieveList) {
+                    AchieveDetailResDto dto = AchieveDetailResDto.builder()
+                            .achieveTravelRange(a.getAchieve().getAchieveDistance()) // 업적의 이동거리
+                            .achieveName(a.getAchieve().getAchieveName()) // 업적 이름
+                            .myTravelRange(myTravelRange) // 내 이동 거리
+                            .createdAt(a.getCreatedAt())
+                            .build();
 
-                // 가져온 애들이랑 해당 업적의 이동거리를 비교하고 계산해서 진행률을 넣어준다. 계산해서 100%가 넘어가면 달성 여부와 달성 일자를 업데이트해준다.
+                    list.add(dto);
+                }
                 break;
-                // 시간
+            // 시간
             case 2:
-                // 나의 모든 플로깅 이동시간을 가져온다
+                for (Plogging p : plogging) {
+                    myTravelTime += p.getTravelTime();
+                }
+                for (UserAchieve a: userAchieveList) {
+                    AchieveDetailResDto dto = AchieveDetailResDto.builder()
+                            .achieveTravelTime(a.getAchieve().getAchieveTime()) // 업적의 이동거리
+                            .achieveName(a.getAchieve().getAchieveName()) // 업적 이름
+                            .myTravelTime(myTravelTime) // 내 이동 거리
+                            .createdAt(a.getCreatedAt())
+                            .build();
+
+                    list.add(dto);
+                }
                 break;
-                // 쓰레기 수
+            // 쓰레기 수
             case 3:
-                // 나의 모든 쓰레기수를 가져온다
+                for (Plogging p : plogging) {
+                    myTrashAmount += p.getTrashAmount();
+                }
+                for (UserAchieve a: userAchieveList) {
+                    AchieveDetailResDto dto = AchieveDetailResDto.builder()
+                            .achieveTrashAmount(a.getAchieve().getAchieveTrash()) // 업적의 이동거리
+                            .achieveName(a.getAchieve().getAchieveName()) // 업적 이름
+                            .myTrashAmount(myTrashAmount) // 내 이동 거리
+                            .createdAt(a.getCreatedAt())
+                            .build();
+
+                    list.add(dto);
+                }
                 break;
-                // 횟수
+            // 횟수
             case 4:
-                // 나의 모든 플로깅 횟수를 가져온다
+                for (UserAchieve a: userAchieveList) {
+                    AchieveDetailResDto dto = AchieveDetailResDto.builder()
+                            .achievePloggingCount(a.getAchieve().getAchieveCount()) // 업적의 이동거리
+                            .achieveName(a.getAchieve().getAchieveName()) // 업적 이름
+                            .myPloggingCount(plogging.size()) // 내 이동 거리
+                            .createdAt(a.getCreatedAt())
+                            .build();
+
+                    list.add(dto);
+                }
                 break;
         }
 
-        for (UserAchieve userAchieve : userAchieveList) {
-            AchieveDetailResDto dto = AchieveDetailResDto.builder()
-                    .achieveImg(userAchieve.getAchieve().getAchieveImage())
-                    .achieveName(userAchieve.getAchieve().getAchieveName())
-                    .createdAt(userAchieve.getCreatedAt())
-                    .progresses(progresses)
-                    .build();
-            list.add(dto);
-        }
         return list;
     }
 }
