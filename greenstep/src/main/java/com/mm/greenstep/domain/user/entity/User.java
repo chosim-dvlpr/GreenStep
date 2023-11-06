@@ -36,8 +36,9 @@ public class User implements UserDetails {
     @Column(name = "kakao_id")
     private String userName;
 
-//    @Column(name = "team_color_id", nullable = false)
-//    private Team team;
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    private Team team;
 
     @Column(name = "level")
     private Integer level;

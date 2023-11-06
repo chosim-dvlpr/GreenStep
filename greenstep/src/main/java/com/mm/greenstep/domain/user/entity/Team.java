@@ -20,7 +20,14 @@ public class Team {
     @Column(name = "team")
     private Long teamId;
 
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    private Team team;
+
     @Column(name = "team_avatar")
     private String teamAvatar;
+
+    @Column(name = "score")
+    private Integer score;
 
 }
