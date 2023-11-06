@@ -15,6 +15,7 @@ import PloggingFinish from './src/Page/PloggingFinish';
 import Profile from './src/Page/Profile';
 import BoardDetail from './src/Page/BoardDetail';
 import BoardCRUD from './src/Page/BoardCRUD';
+import MyPlogging from './src/Page/MyPlogging';
 //style
 import ImageStyle from './src/Style/Image';
 //Image
@@ -122,6 +123,15 @@ const App = () => {
           options={{
             headerShown: true,
             title: '데이터 지도',
+            headerTitleAlign: 'center',
+          }}
+        />
+        <Stack.Screen
+          name="myplogging"
+          component={MyPlogging}
+          options={{
+            headerShown: true,
+            title: 'My Plogging',
             headerTitleAlign: 'center',
           }}
         />
