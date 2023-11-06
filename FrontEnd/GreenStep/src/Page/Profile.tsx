@@ -14,7 +14,7 @@ const Profile = ({navigation}:any) => {
   return (
     <ScrollView>
       
-      <ProfileHeader/>      
+      <ProfileHeader navigation={navigation}/>      
       
       <View style={{display: 'flex', flexDirection: 'row', marginBottom: 20,
                     justifyContent: 'space-evenly', alignItems:'center'}}>
