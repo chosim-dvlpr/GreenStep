@@ -4,6 +4,7 @@ import styled from 'styled-components/native';
 import ButtonStyle from '../Style/ButtonStyle';
 import ProfilePloggingDataInfo from '../Component/Profile/ProfilePloggingDataInfo';
 import ImageStyle from '../Style/Image';
+import fileTokenHttp from '../Api/fileTokenHttp';
 
 const PloggingFinishContainer = styled.View`
 `
@@ -12,6 +13,13 @@ const HeaderText = styled.Text`
   font-size: 30;
   font-weight: bold;
   color: black;
+`
+
+const HeaderSubText = styled.Text`
+  font-size: 15;
+  text-align: right;
+  color: black;
+  margin-right: 30;
 `
 
 const HeaderTextContainer = styled.View`
@@ -28,7 +36,7 @@ const PloggingDataContainer = styled.View`
 const UploadPhotoButtonContainer = styled.View`
   width: 86%;
   margin: auto;
-  margin-top: 30;
+  margin-top: 10;
 `
 
 const ImageContainer = styled.View`
@@ -42,8 +50,18 @@ const ImageContainer = styled.View`
 
 const PloggingFinish = () => {
 
+  /** 경험치 얻기 */
+  const getExp = () => {
+    
+  }
+
+  /** 사진 업로드 기능 */
+  const ploggingId = 1;
   const uploadPhoto = () => {
     console.log('사진 업로드 버튼 클릭')
+    // fileTokenHttp.post(`/upload/img/${ploggingId}`, `data`)
+    // .then((res) => console.log('사진 업로드 성공 : ', res))
+    // .catch(err => console.log('사진 업로드 실패 : ', err))
   };
 
   return (
@@ -52,6 +70,7 @@ const PloggingFinish = () => {
         {/* 헤더 */}
         <HeaderTextContainer>
           <HeaderText>오늘도 해냈어요!</HeaderText>
+          <HeaderSubText>+78exp</HeaderSubText>
         </HeaderTextContainer>
   
         {/* 플로깅 데이터 */}
@@ -61,6 +80,7 @@ const PloggingFinish = () => {
 
         {/* 인증하기 버튼 */}
         <UploadPhotoButtonContainer>
+          {/* <input type='file'/> */}
           <TouchableOpacity
           onPress={() => uploadPhoto()}
           style={[
