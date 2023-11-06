@@ -17,20 +17,30 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class AvatarService {
-
     private final UserRepository userRepository;
     private final UserAvatarRepository userAvatarRepository;
     private final AvatarRepository avatarRepository;
 
-
-    public void updateAvatar(HttpServletRequest request, Long boxId) {
+    public String updateAvatar(HttpServletRequest request, Long boxId) {
         Long user_pk = 4L;
 
         User user = userRepository.findByUserId(user_pk);
+        if (user == null) {
+            return "User not found";
+        }
         UserAvatar userAvatar = userAvatarRepository.findByUser(user);
+        if (userAvatar == null) {
+            return "User Avatar not found";
+        }
         Avatar avatar = avatarRepository.findByBoxId(boxId);
+        if (avatar == null) {
+            return "Avatar not found";
+        }
+
         userAvatar.updateAvatar(avatar);
         userAvatarRepository.save(userAvatar);
+
+        return "success";
     }
 
     public List<AvatarAllResDto> getAllMyAvatar(HttpServletRequest request) {
