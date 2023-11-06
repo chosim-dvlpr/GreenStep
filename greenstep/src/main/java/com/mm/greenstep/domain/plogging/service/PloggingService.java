@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -226,6 +227,14 @@ public class PloggingService {
     public PloggingDetailResDto getDetailPlogging(Long ploggingId) {
         Plogging plogging = ploggingRepository.findByPloggingId(ploggingId);
         List<Coordinate> position = coordinateRepository.findAllByPlogging(plogging);
+
+        if(plogging == null)  {
+            return null;
+        }
+        if (position.isEmpty()) {
+            return null;
+        }
+
         List<PloggingCoorDto> ploggingCoorDtoList = new ArrayList<>();
         for (Coordinate p : position) {
             PloggingCoorDto dto = PloggingCoorDto.builder()

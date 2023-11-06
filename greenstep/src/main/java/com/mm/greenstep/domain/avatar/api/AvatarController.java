@@ -20,8 +20,9 @@ public class AvatarController {
     // 아바타 선택
     @PatchMapping("/{boxId}")
     public ResponseEntity<?> updateMyAvatar(HttpServletRequest request, @PathVariable Long boxId) {
-        myPageService.updateAvatar(request, boxId);
-        return new ResponseEntity<>(boxId, HttpStatus.OK);
+        String response = myPageService.updateAvatar(request, boxId);
+        if(response.equals("success")) return new ResponseEntity<>(response, HttpStatus.OK);
+        else return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     // 아바타 전체 조회
