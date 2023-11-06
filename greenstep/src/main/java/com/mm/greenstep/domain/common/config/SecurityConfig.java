@@ -50,18 +50,18 @@ public class SecurityConfig {
                 // 요청에 대한 인증 설정
                 // Spring 설정클래스는 지정된 antMatchers URL순차적 탐색하여 현재 요청과 가장 먼저 매칭되는 규칙 따른다.
                 .authorizeRequests()
-                .antMatchers("/login/**").permitAll() // 토큰 발급을 위한 경로는 모두 허용
+                .antMatchers("/login/**","/OAuth/**").permitAll() // 토큰 발급을 위한 경로는 모두 허용
                 .antMatchers("/", "/css/**","/images/**","/js/**","/favicon.ico","/h2-console/**").permitAll()
                 .antMatchers("/user/**").hasAnyRole("USER","MANAGER") //마이페이지는 권한 있어야함
-                .anyRequest().authenticated() // 그 외의 모든 요청은 인증이 필요하다.
-                .and()
+                .anyRequest().authenticated(); // 그 외의 모든 요청은 인증이 필요하다.
+//                .and()
 
                 // OAuth2 로그인 설정시작
-                .oauth2Login()
-                .userInfoEndpoint().userService(customOAuth2UserService) // OAuth2 로그인시 사용자 정보를 가져오는 엔드포인트와 사용자 서비스를 설정
-                .and()
-                .failureHandler(oAuth2FailureHandler) // OAuth2 로그인 실패시 처리할 핸들러를 지정해준다.
-                .successHandler(oAuth2SuccessHandler); // OAuth2 로그인 성공시 처리할 핸들러를 지정해준다.
+//                .oauth2Login()
+//                .userInfoEndpoint().userService(customOAuth2UserService) // OAuth2 로그인시 사용자 정보를 가져오는 엔드포인트와 사용자 서비스를 설정
+//                .and()
+//                .failureHandler(oAuth2FailureHandler) // OAuth2 로그인 실패시 처리할 핸들러를 지정해준다.
+//                .successHandler(oAuth2SuccessHandler); // OAuth2 로그인 성공시 처리할 핸들러를 지정해준다.
 
         return http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, redisTemplate), UsernamePasswordAuthenticationFilter.class)
                 .build();
