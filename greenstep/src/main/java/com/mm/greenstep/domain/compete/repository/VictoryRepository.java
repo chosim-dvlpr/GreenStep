@@ -1,23 +1,8 @@
 package com.mm.greenstep.domain.compete.repository;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.mm.greenstep.domain.compete.entity.Victory;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import javax.persistence.*;
-
-@Entity
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@Table(name = "victory")
-public class VictoryRepository {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "victory")
-    private Long
+public interface VictoryRepository extends JpaRepository<Victory, Long> {
 
 }
