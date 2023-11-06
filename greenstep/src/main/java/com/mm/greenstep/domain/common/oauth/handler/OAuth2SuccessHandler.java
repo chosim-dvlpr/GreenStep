@@ -57,11 +57,11 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             log.info("jwtToken = {}", token.getAccessToken());
 
             // accessToken을 쿼리스트링에 담는 url을 만들어준다.
-//            String targetUrl = UriComponentsBuilder.fromUriString("https://www.google.co.kr/?hl=ko")
-//                    .queryParam("accessToken", token)
-//                    .build()
-//                    .encode(StandardCharsets.UTF_8)
-//                    .toUriString();
+            String targetUrl = UriComponentsBuilder.fromUriString("http://localhost:8080/user")
+                    .queryParam("accessToken", token)
+                    .build()
+                    .encode(StandardCharsets.UTF_8)
+                    .toUriString();
             log.info("redirect 준비");
 
             response.addHeader("Authorization", "Bearer " + token.getAccessToken());
@@ -72,10 +72,10 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                     .set("RT:" + authentication.getName(),token.getRefreshToken(), token.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
 
             // 로그인 확인 페이지로 리다이렉트 시킨다.
-//            getRedirectStrategy().sendRedirect(request, response, targetUrl);
+            getRedirectStrategy().sendRedirect(request, response, targetUrl);
         } else {
             // 회원이 존재하지 않을경우, 서비스 제공자와 email을 쿼리스트링으로 전달하는 url을 만들어준다.
-            String targetUrl = UriComponentsBuilder.fromUriString("http://localhost:8080/user/loginSuccess")
+            String targetUrl = UriComponentsBuilder.fromUriString("http://localhost:8080/user")
                     .queryParam("userName", userName)
                     .queryParam("provider", provider)
                     .build()

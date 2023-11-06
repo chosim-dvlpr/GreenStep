@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/login/**").permitAll() // 토큰 발급을 위한 경로는 모두 허용
                 .antMatchers("/", "/css/**","/images/**","/js/**","/favicon.ico","/h2-console/**").permitAll()
-                .antMatchers("/mypage/**").hasAnyRole("USER","MANAGER") //마이페이지는 권한 있어야함
+                .antMatchers("/user/**").hasAnyRole("USER","MANAGER") //마이페이지는 권한 있어야함
                 .anyRequest().authenticated() // 그 외의 모든 요청은 인증이 필요하다.
                 .and()
 
