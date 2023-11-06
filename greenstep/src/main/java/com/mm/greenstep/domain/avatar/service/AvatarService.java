@@ -24,7 +24,7 @@ public class AvatarService {
 
 
     public void updateAvatar(HttpServletRequest request, Long boxId) {
-        Long user_pk = 100L;
+        Long user_pk = 4L;
 
         User user = userRepository.findByUserId(user_pk);
         UserAvatar userAvatar = userAvatarRepository.findByUser(user);
@@ -34,7 +34,7 @@ public class AvatarService {
     }
 
     public List<AvatarAllResDto> getAllMyAvatar(HttpServletRequest request) {
-        Long user_pk = 100L;
+        Long user_pk = 4L;
 
         User user = userRepository.findByUserId(user_pk);
         List<UserAvatar> userAvatarList = userAvatarRepository.findAllByUser(user);

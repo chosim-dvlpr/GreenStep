@@ -25,7 +25,7 @@ public class AchieveService {
     private final PloggingRepository ploggingRepository;
 
     public List<AchieveDetailResDto> getDetailAchieve(HttpServletRequest request, Byte achieveType) {
-        Long user_pk = 100L;
+        Long user_pk = 4L;
 
         User user = userRepository.findByUserId(user_pk);
 

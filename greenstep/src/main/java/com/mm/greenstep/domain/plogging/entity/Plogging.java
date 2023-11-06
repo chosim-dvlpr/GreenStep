@@ -56,8 +56,9 @@ public class Plogging {
     @Column(name = "get_exp")
     private Integer getExp;
 
-    @Column(name = "travel_picture")
+    @Column(name = "travel_picture", columnDefinition = "VARCHAR(255) default ''")
     private String travelPicture;
+
 
     @Column(name = "is_visibled")
     private Boolean isVisibled;
