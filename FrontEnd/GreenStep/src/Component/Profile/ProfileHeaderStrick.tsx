@@ -25,6 +25,18 @@ const ProfileHeaderStrick = () => {
         };
         return monthMappings[index] || '';
       };
+      const getWeekBoxStyle = (weekIndex :any) => {
+        const ploggingCount = ploggingWeek[weekIndex] || 0;
+        if (ploggingCount >= 7) {
+          return {...Box.weekBox, backgroundColor: 'darkGreen'};
+        } else if (ploggingCount >= 4) {
+          return {...Box.weekBox, backgroundColor: 'green'};
+        } else if (ploggingCount >= 1) {
+          return {...Box.weekBox, backgroundColor: 'lightGreen'};
+        } else {
+          return {...Box.weekBox, backgroundColor: 'white'};
+        }
+      };
     
   // 플로깅 스트릭 불러오기
   const getStreak = () => {
@@ -66,7 +78,7 @@ const handleYearMinus = () => {
             {Array.from({length:52}).map((_, index) =>(
               <View>
                 <Text style={{fontSize:12, fontWeight:'bold'}}>{getMonthLabel(index)}</Text>
-                <View key={index} style={Box.weekBox}>
+                <View key={index} style={getWeekBoxStyle(index)}>
                   <Text style={{fontSize:8}}></Text>
                 </View>
               </View>

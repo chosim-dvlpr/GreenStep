@@ -1,4 +1,4 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import React, {useState, useEffect} from 'react';
 import ImageStyle from '../../Style/Image';
 import Box from "../../Style/Box";
@@ -15,7 +15,7 @@ const ImageContainer = styled.View`
   align-items: center;
 `
 
-const ProfilePloggingDataInfo = () => {
+const ProfilePloggingDataInfo = ({navigation}:any) => {
     const [timeInfo, setTimeInfo] = useState('00h 00m 00s')
     const [distanceInfo, setDistanceInfo] = useState(234)
     const [trashInfo, setTrashInfo] = useState(123)
@@ -67,13 +67,15 @@ const ProfilePloggingDataInfo = () => {
           <Text style={{fontSize: 13}} numberOfLines={1}>모은 쓰레기</Text>
         </View>
         
-        <View style={[Box.ploggingDataInfoBox, {alignItems:'center', justifyContent: 'center'}]}>
-          <ImageContainer>
-            <Image source={badge} style={ImageStyle.tinyImage}></Image>
-          </ImageContainer>
-          <Text style={{fontSize: 13, fontWeight:'bold', marginTop: 5, marginBottom: 2}} numberOfLines={1}>{acheiveInfo} 개</Text>
-          <Text style={{fontSize: 13}} numberOfLines={1}>달성 업적</Text>
-        </View>
+        <TouchableOpacity onPress={() => navigation.navigate('achievement')}>
+          <View style={[Box.ploggingDataInfoBox, {alignItems:'center', justifyContent: 'center'}]}>
+            <ImageContainer>
+              <Image source={badge} style={ImageStyle.tinyImage}></Image>
+            </ImageContainer>
+            <Text style={{fontSize: 13, fontWeight:'bold', marginTop: 5, marginBottom: 2}} numberOfLines={1}>{acheiveInfo} 개</Text>
+            <Text style={{fontSize: 13}} numberOfLines={1}>달성 업적</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     )
 }
