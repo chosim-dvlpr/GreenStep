@@ -36,23 +36,27 @@ tokenHttp.interceptors.request.use(async (req) => {
 
   // 만료되었다면 refresh-token으로 token 재발급
   console.log("api/tokenHttp.js : access token 만료");
+  const refreshToken = await AsyncStorage.getItem("refreshToken")
+
   await axios
     .post(
       `${baseURL}/user/reissue`,
-      {},
+      {
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      },
       {
         headers: {
-          Authorization: AsyncStorage.getItem("refreshToken"),
+          // Authorization: AsyncStorage.getItem("accessToken"),
         },
-      }
+      },
     )
     .then((response) => {
       console.log(response)
-      if (response.data.message === "success") {
-        // 토큰 업데이트 로직 확인 필요 - response data
-        console.log('토큰 업데이트 중')
-        AsyncStorage.setItem("accessToken", response.data["accessToken"]);
-        AsyncStorage.setItem("refreshToken", response.data["refreshToken"]);
+      if (response.data.status === 200) {
+        console.log('토큰 업데이트 완료')
+        AsyncStorage.setItem("accessToken", response.data.data["accessToken"]);
+        AsyncStorage.setItem("refreshToken", response.data.data["refreshToken"]);
       } else {
         console.log('토큰 업데이트 실패')
         throw new Error("expire token");
