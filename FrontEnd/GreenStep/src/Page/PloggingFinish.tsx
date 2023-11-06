@@ -6,26 +6,9 @@ import ProfilePloggingDataInfo from '../Component/Profile/ProfilePloggingDataInf
 import ImageStyle from '../Style/Image';
 import fileTokenHttp from '../Api/fileTokenHttp';
 import { launchImageLibrary } from 'react-native-image-picker';
+import PloggingFinishHeader from '../Component/PloggingFinish/PloggingFinishHeader';
 
 const PloggingFinishContainer = styled.View`
-`
-
-const HeaderText = styled.Text`
-  font-size: 30;
-  font-weight: bold;
-  color: black;
-`
-
-const HeaderSubText = styled.Text`
-  font-size: 15;
-  text-align: right;
-  color: black;
-  margin-right: 30;
-`
-
-const HeaderTextContainer = styled.View`
-  margin-top: 60;
-  margin-left: 30;
 `
 
 const PloggingDataContainer = styled.View`
@@ -108,10 +91,7 @@ const PloggingFinish = () => {
     <ScrollView>
       <PloggingFinishContainer>
         {/* 헤더 */}
-        <HeaderTextContainer>
-          <HeaderText>오늘도 해냈어요!</HeaderText>
-          <HeaderSubText>+78exp</HeaderSubText>
-        </HeaderTextContainer>
+        <PloggingFinishHeader />
   
         {/* 플로깅 데이터 */}
         <PloggingDataContainer>
