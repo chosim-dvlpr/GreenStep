@@ -87,7 +87,7 @@ public class OAuthService {
 
             User saveUser = User.builder()
                     .userName(kakaoId)
-                    .password("kakao")
+                    .password(passwordEncoder.encode("kakao"))
                     .build();
 
             saveUser.getRoles().add(Authority.ROLE_USER.name());
