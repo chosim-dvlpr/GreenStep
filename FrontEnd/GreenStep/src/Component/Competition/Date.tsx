@@ -34,7 +34,7 @@ const DateCard = styled(TouchableOpacity)<{selected: boolean}>`
   height: 65px;
   width: 60px;
   margin-horizontal: 5px;
-  background-color: ${props => (props.selected ? '#CCE7C9' : 'transparent')};
+  background-color: ${props => (props.selected ? '#99D959' : 'transparent')};
 `;
 
 const DayText = styled(Text)<{selected: boolean}>`
