@@ -9,7 +9,7 @@ import ProfilePloggingDataInfo from '../Component/Profile/ProfilePloggingDataInf
 import AchievementHeader from '../Component/Profile/Achievement/AchievementHeader';
 import MyPlogging from './MyPlogging';
 //API
-import { ProfileAPI } from '../Api/ProfileApi';
+import { ProfileAPI } from '../Api/profileApi';
 
 const Profile = ({navigation}:any) => {
   const [name, SetName] = useState('User')

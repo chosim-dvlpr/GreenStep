@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react';
 import Box from "../../Style/Box";
 import plus from '../../Image/Board/plus.png'
 import minus from '../../Image/Board/minus.png'
-import { ProfileAPI } from "../../Api/ProfileApi";
+import { ProfileAPI } from "../../Api/profileApi";
 
 const ProfileHeaderStrick = () => {
     const [year, setYear] = useState(2023)

@@ -7,7 +7,7 @@ import distance from '../../Image/Data/distance.png';
 import trash from '../../Image/Data/trash.png';
 import badge from '../../Image/Achievement/badge.png'
 import styled from 'styled-components/native';
-import { ProfileAPI } from "../../Api/ProfileApi";
+import { ProfileAPI } from "../../Api/profileApi";
 
 const ImageContainer = styled.View`
   width: 50%;
