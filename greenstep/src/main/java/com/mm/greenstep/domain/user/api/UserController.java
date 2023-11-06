@@ -1,12 +1,13 @@
 package com.mm.greenstep.domain.user.api;
 
-import com.mm.greenstep.domain.common.jwt.JwtTokenProvider;
 import com.mm.greenstep.domain.common.lib.Helper;
+import com.mm.greenstep.domain.common.util.SecurityUtil;
 import com.mm.greenstep.domain.user.dto.request.UserReqDto;
 import com.mm.greenstep.domain.user.dto.response.Response;
 import com.mm.greenstep.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class UserController {
 
-    private final JwtTokenProvider jwtTokenProvider;
     private final UserService userService;
     private final Response response;
 
@@ -33,7 +33,6 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Validated @RequestBody UserReqDto.Login login, Errors errors) {
-        System.out.println(login);
 
         // validation check
         if (errors.hasErrors()) {
@@ -70,12 +69,20 @@ public class UserController {
     @GetMapping("/userTest")
     public ResponseEntity<?> userTest() {
         log.info("ROLE_USER TEST");
+        System.out.println(SecurityUtil.getCurrentUserName());
         return response.success();
     }
 
     @GetMapping("/adminTest")
     public ResponseEntity<?> adminTest() {
         log.info("ROLE_ADMIN TEST");
+        return response.success();
+    }
+
+    @GetMapping("/idTest")
+    public ResponseEntity<?> idTest() {
+        log.info("id TEST");
+        System.out.println(userService.userId());
         return response.success();
     }
 }

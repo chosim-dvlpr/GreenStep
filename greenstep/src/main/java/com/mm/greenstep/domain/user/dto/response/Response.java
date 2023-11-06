@@ -17,19 +17,19 @@ public class Response {
     @Builder
     private static class Body {
 
-        private int state;
+        private int status;
         private String result;
-        private String massage;
+        private String message;
         private Object data;
         private Object error;
     }
 
     public ResponseEntity<?> success(Object data, String msg, HttpStatus status) {
         Body body = Body.builder()
-                .state(status.value())
+                .status(HttpStatus.OK.value())
                 .data(data)
                 .result("success")
-                .massage(msg)
+                .message(msg)
                 .error(Collections.emptyList())
                 .build();
         return ResponseEntity.ok(body);
@@ -93,10 +93,10 @@ public class Response {
 
     public ResponseEntity<?> fail(Object data, String msg, HttpStatus status) {
         Body body = Body.builder()
-                .state(status.value())
+                .status(HttpStatus.FORBIDDEN.value())
                 .data(data)
                 .result("fail")
-                .massage(msg)
+                .message(msg)
                 .error(Collections.emptyList())
                 .build();
         return ResponseEntity.ok(body);
@@ -124,10 +124,10 @@ public class Response {
 
     public ResponseEntity<?> invalidFields(LinkedList<LinkedHashMap<String, String>> errors) {
         Body body = Body.builder()
-                .state(HttpStatus.BAD_REQUEST.value())
+                .status(HttpStatus.BAD_REQUEST.value())
                 .data(Collections.emptyList())
                 .result("fail")
-                .massage("")
+                .message("")
                 .error(errors)
                 .build();
         return ResponseEntity.ok(body);
