@@ -113,18 +113,8 @@ const Main = () => {
 
   const logout = async () => {
     try {
-      // AsyncStorage에서 accessToken 및 refreshToken을 가져옵니다.
       const accessToken = await AsyncStorage.getItem('accessToken');
       const refreshToken = await AsyncStorage.getItem('refreshToken');
-  
-      if (!accessToken || !refreshToken) {
-        throw new Error('Access token 또는 refresh token이 유효하지 않습니다.');
-      }
-  
-      // 토큰을 문자열 형식으로 확인합니다.
-      if (typeof accessToken !== 'string' || typeof refreshToken !== 'string') {
-        throw new Error('토큰이 올바른 문자열 형식이 아닙니다.');
-      }
   
       const data = {
         accessToken: accessToken,
@@ -148,23 +138,30 @@ const Main = () => {
   return (
     <View>
       {/* 임시 로그인 */}
-      <TextInput
-      onChangeText={e => onChangeEmail(e)}
-      style={{backgroundColor: 'skyblue'}}
-      ></TextInput>
-      <TextInput
-      onChangeText={e => onChangePassword(e)}
-      style={{backgroundColor: 'lightgreen'}}
-      ></TextInput>
-      <TouchableOpacity
-      style={[ButtonStyle.largeButton, ButtonStyle.lightGreenColor]}
-      onPress={emailLogin}
-      ><Text>임시 로그인 버튼</Text></TouchableOpacity>
-      <TouchableOpacity
-      style={[ButtonStyle.largeButton, ButtonStyle.lightGreenColor]}
-      onPress={logout}
-      ><Text>임시 로그아웃 버튼</Text></TouchableOpacity>
-
+      {/* <View style={{flexDirection: 'row'}}>
+        <TextInput
+        onChangeText={e => onChangeEmail(e)}
+        style={{backgroundColor: 'skyblue', width: 100}}
+        ></TextInput>
+        <TextInput
+        onChangeText={e => onChangePassword(e)}
+        style={{backgroundColor: 'lightgreen', width: 100}}
+        ></TextInput>
+      </View>
+      <View style={{flexDirection: 'row'}}>
+        <TouchableOpacity
+        style={[ButtonStyle.smallButton, ButtonStyle.lightGreenColor]}
+        onPress={emailLogin}
+        ><Text>임시 로그인 버튼</Text></TouchableOpacity>
+        <TouchableOpacity
+        style={[ButtonStyle.smallButton, ButtonStyle.lightGreenColor]}
+        onPress={logout}
+        ><Text>임시 로그아웃 버튼</Text></TouchableOpacity>
+        <TouchableOpacity
+        style={[ButtonStyle.smallButton, ButtonStyle.lightGreenColor]}
+        // onPress={}
+        ><Text>임시 회원가입 버튼</Text></TouchableOpacity>
+      </View> */}
       <MainTextContainer>
         <MainText>자연을 지키는</MainText>
         <MainText>당신과 우리의 발자국</MainText>

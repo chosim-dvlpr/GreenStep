@@ -13,7 +13,7 @@ export const LoginAPI = {
   getLoginAxios: function (token: string) {
     return axiosInstance.request({
       method: "POST",
-      url: '/user/login',
+      url: '/OAuth/login',
       data: token,
     });
   },
