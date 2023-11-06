@@ -1,12 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Modal, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import ImageStyle from '../../../Style/Image';
 import avatar from '../../../Image/Avatar/bird.png';
+import { ProfileAPI } from '../../../Api/ProfileApi';
 
-const MyPloggingDetail = ({ onClose }:any) => {
+const MyPloggingDetail = ({ onClose, index }:any) => {
     const [data, setData] = useState({amount : 10, range:1.5,time : '30:10',
                                       created_at: '2023-10-23',getExp: 100, picture: avatar})
     const [types, setTypes] = useState(['모은 쓰레기','진행 거리', '진행 시간', '플로깅 날짜', '얻은 경험치'])
+    
+    // 플로깅 상세 이력 불러오기
+    const getMyploggingDetail = () => {
+        ProfileAPI.getPloggingDetailAxios(index)
+        .then((res) =>{
+        console.log(res)
+        // console.log(index)
+        } 
+        )
+        .catch(err => console.log('플로깅 상세 이력 axios 에러 : ', err))
+    }
+
+    useEffect(() => {
+        getMyploggingDetail();
+      }, [index]);
+      
     return(
         <Modal
             transparent={true}
@@ -14,6 +31,7 @@ const MyPloggingDetail = ({ onClose }:any) => {
             visible={true}
             >
             <View style={styles.modalOverlay}>
+                <Text>INDEX : {index}</Text>
                 <TouchableOpacity onPress={onClose}>
                     <View style={styles.modalView}>
                         <View style={[styles.noWrapRow, {marginBottom: 20}]}>
