@@ -1,10 +1,12 @@
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import React, {useState} from 'react';
-const ProfileHeader = () => {
+const ProfileHeader = ({navigation}:any) => {
     const [userName, setUserName] = useState('User')
     return(
         <View>
-            <Text style={{fontSize:45, paddingLeft: 20}}>Hello! {userName}</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('myplogging')}>
+                <Text style={{fontSize:45, paddingLeft: 20}}>Hello! {userName}</Text>
+            </TouchableOpacity>
         </View>
     )
 }
