@@ -148,7 +148,7 @@ const Main = () => {
   return (
     <View>
       {/* 임시 로그인 */}
-      <View style={{flexDirection: 'row'}}>
+      {/* <View style={{flexDirection: 'row'}}>
         <TextInput
         onChangeText={e => onChangeEmail(e)}
         style={{backgroundColor: 'skyblue', width: 100}}
@@ -167,11 +167,11 @@ const Main = () => {
         style={[ButtonStyle.smallButton, ButtonStyle.lightGreenColor]}
         onPress={logout}
         ><Text>임시 로그아웃 버튼</Text></TouchableOpacity>
-        {/* <TouchableOpacity
+        <TouchableOpacity
         style={[ButtonStyle.smallButton, ButtonStyle.lightGreenColor]}
         onPress={}
-        ><Text>임시 회원가입 버튼</Text></TouchableOpacity> */}
-      </View>
+        ><Text>임시 회원가입 버튼</Text></TouchableOpacity>
+      </View> */}
       <MainTextContainer>
         <MainText>자연을 지키는</MainText>
         <MainText>당신과 우리의 발자국</MainText>
