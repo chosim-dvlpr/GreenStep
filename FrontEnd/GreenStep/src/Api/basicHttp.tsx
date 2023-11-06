@@ -13,7 +13,7 @@ export const LoginAPI = {
   getLoginAxios: function (token: string) {
     return axiosInstance.request({
       method: "POST",
-      url: '/oauth2/authorization/kakao',
+      url: '/OAuth/login',
       data: token,
     });
   },
