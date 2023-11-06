@@ -28,7 +28,7 @@ public class MyPageService {
 
     public MyPageDetailHeaderResDto getDetailUserHeader(HttpServletRequest request) {
 //        Long user_pk = jwtUtil.extractUserPkFromToken(request);
-        Long user_pk = 100L;
+        Long user_pk = 4L;
 
         User user = userRepository.findByUserId(user_pk);
 
@@ -41,7 +41,7 @@ public class MyPageService {
     }
 
     public MyPageAllPloggingResDto getAllUserPlogging(HttpServletRequest request) {
-        Long user_pk = 100L;
+        Long user_pk = 4L;
 
         User user = userRepository.findByUserId(user_pk);
         List<Plogging> plogging = ploggingRepository.findAllByUser(user);
@@ -66,12 +66,12 @@ public class MyPageService {
     }
 
     public Map<Integer, Integer> getDetailStreak(HttpServletRequest request, Integer year) {
-        Long user_pk = 100L;
+        Long user_pk = 4L;
 
         User user = userRepository.findByUserId(user_pk);
 
         // user의 created_at 이 year에 해당하는 plogging을 다 가져오는 jpa 쿼리짜줘
-        List<Plogging> ploggingList = ploggingRepository.findByYear(year);
+        List<Plogging> ploggingList = ploggingRepository.findByUserAndYear(user, year);
 
         Map<Integer, Integer> weekOfYearAndTrashCount = new HashMap<>();
 

@@ -48,7 +48,7 @@ public class PloggingService {
         String avatarImg = "";
         String avatarName = "";
 
-        Long user_pk = 100L;
+        Long user_pk = 4L;
         User user = userRepository.findByUserId(user_pk);
 
         // 종료시간에서 - 전체 이동시간(Double TravelTime) 빼서 시작시간 만들기
@@ -58,11 +58,11 @@ public class PloggingService {
         LocalDateTime startTime = endTime.minusSeconds(travelTimeInSeconds);
 
         // 경험치 계산
-        Integer getExp = null;
-//                dto.getAITrashAmount() +
-//                        dto.getTravelRange() +
-//                        dto.getTravelTime() +
-//                        dto.getTrashAmount();
+        Integer getExp =
+                (int) ((dto.getAITrashAmount() * 0.9) +
+                        (dto.getTravelRange() * 0.7) +
+                        (dto.getTravelTime() * 0.5) +
+                        (dto.getTrashAmount() * 0.5)) ;
 
         Plogging plogging = Plogging.builder()
                 .createdAt(startTime)
@@ -203,7 +203,7 @@ public class PloggingService {
 
     public List<PloggingAllResDto> getAllPlogging(HttpServletRequest request) {
         List<PloggingAllResDto> dtoList = new ArrayList<>();
-        Long user_pk = 100L;
+        Long user_pk = 4L;
         User user = userRepository.findByUserId(user_pk);
         List<Plogging> plogging = ploggingRepository.findAllByUser(user);
 

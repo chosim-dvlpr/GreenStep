@@ -19,8 +19,9 @@ public interface PloggingRepository extends JpaRepository<Plogging, Long> {
     @Query(value = "SELECT * FROM plogging_table WHERE is_visibled = true ORDER BY RAND() LIMIT ?1", nativeQuery = true)
     List<Plogging> findRandomVisiblePloggingRecords(Pageable pageable);
 
-    @Query(value = "SELECT * FROM plogging WHERE EXTRACT(YEAR FROM created_at) = :year", nativeQuery = true)
-    List<Plogging> findByYear(@Param("year") int year);
+    @Query("SELECT p FROM Plogging p WHERE FUNCTION('YEAR', p.createdAt) = :year AND p.user = :user")
+    List<Plogging> findByUserAndYear(@Param("user") User user, @Param("year") int year);
+
 
 
 }
