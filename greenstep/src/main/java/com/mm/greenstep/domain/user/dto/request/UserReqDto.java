@@ -55,6 +55,18 @@ public class UserReqDto {
 
     @Getter
     @Setter
+    public static class OAuthLogin {
+        private String email;
+        private String password;
+        private Long userId;
+
+        public UsernamePasswordAuthenticationToken toAuthentication() {
+            return new UsernamePasswordAuthenticationToken(email, password);
+        }
+    }
+
+    @Getter
+    @Setter
     public static class Reissue {
         @NotEmpty(message = "accessToken 을 입력해주세요.")
         private String accessToken;
