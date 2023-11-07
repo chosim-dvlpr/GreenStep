@@ -15,6 +15,7 @@ import PloggingFinish from './src/Page/PloggingFinish';
 import Profile from './src/Page/Profile';
 import BoardDetail from './src/Page/BoardDetail';
 import BoardCRUD from './src/Page/BoardCRUD';
+import MyPlogging from './src/Page/MyPlogging';
 //style
 import ImageStyle from './src/Style/Image';
 //Image
@@ -36,11 +37,14 @@ const BottomTabScreen = () => {
         tabBarStyle: {
           height: 80,
           borderRadius: 20,
-          position: 'absolute',
-          width: 380,
+          width: 360,
           bottom: 10,
-          left: 6,
-          paddingBottom: 5,
+          paddingBottom: 10,
+          backgroundColor: '#F2F2F2',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginLeft: 'auto',
+          marginRight: 'auto',
         },
         tabBarIcon(props) {
           if (route.name === '경쟁') {
@@ -124,6 +128,15 @@ const App = () => {
             options={{
               headerShown: true,
               title: '데이터 지도',
+              headerTitleAlign: 'center',
+            }}
+          />
+          <Stack.Screen
+            name="myplogging"
+            component={MyPlogging}
+            options={{
+              headerShown: true,
+              title: 'My Plogging',
               headerTitleAlign: 'center',
             }}
           />

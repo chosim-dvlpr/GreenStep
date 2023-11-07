@@ -15,7 +15,7 @@ const CompetitionGraphic = () => {
         progress={progressValue}
         width={290}
         height={14}
-        color="#34c759"
+        color="#99D959"
       />
       <LottieView
         source={require('../../Image/Competition/flag.json')}
@@ -33,7 +33,6 @@ const CompetitionGraphic = () => {
 
   return (
     <Graphic>
-      <GraphicText>나의 팀 : 거북이</GraphicText>
       <LottieView
         source={require('../../Image/Competition/turtle.json')}
         autoPlay
@@ -54,27 +53,19 @@ const CompetitionGraphic = () => {
 
 // 여기에 필요한 스타일드 컴포넌트를 옮깁니다.
 const Graphic = styled.View`
-  flex: 3;
-  background-color: #f9f9f9;
-  border-radius: 50px 50px 0px 0px;
+  flex: 2.4;
+  background-color: white;
+  border-radius: 10px;
+  width: 90%;
+  align-items: center;
+  left: 21px;
+  padding-bottom: 50px;
 `;
 
 const ProgressBox = styled.View<{bottomOffset: number}>`
   width: 400px;
   align-items: center;
   bottom: ${props => props.bottomOffset}px;
-`;
-
-const GraphicText = styled.Text`
-  font-family: 'SUITE-Bold';
-  font-size: 17px;
-  text-align: center;
-  background-color: #cce7c9;
-  width: 250px;
-  padding: 5px;
-  border-radius: 15px;
-  margin: 0 auto;
-  top: 20px;
 `;
 
 const ProgressTextWrap = styled.View`
@@ -92,13 +83,11 @@ const styles = StyleSheet.create({
   turtle: {
     width: 150,
     height: 150,
-    marginLeft: 10,
   },
   rabbit: {
     width: 150,
     height: 150,
     bottom: 155,
-    marginLeft: 10,
     transform: [{scaleX: -1}],
   },
   flag: {

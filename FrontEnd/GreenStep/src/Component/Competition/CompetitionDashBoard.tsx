@@ -25,14 +25,12 @@ export default CompetitionDashBoard;
 
 const DashBoard = styled.View`
   flex: 2;
-  background-color: #cce7c9;
-  border-radius: 50px 50px 0px 0px;
 `;
 
 const MyTeamDashBoardTitle = styled.Text`
   font-family: 'SUITE-Bold';
   font-size: 20px;
-  margin-top: 30px;
+  margin-top: 17px;
   margin-left: 30px;
 `;
 
@@ -48,7 +46,7 @@ const TeamCountBox = styled.View`
   width: 160px;
   height: 120px;
   background-color: white;
-  border-radius: 20px;
+  border-radius: 10px;
   align-items: center;
   justify-content: space-evenly;
 `;

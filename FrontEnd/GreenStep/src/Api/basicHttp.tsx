@@ -1,5 +1,6 @@
 import axios from "axios";
 import { EmailLoginDataType } from "../Page/Main";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //기본 axios 인스턴스 생성
 const axiosInstance = axios.create({
@@ -12,7 +13,7 @@ export const LoginAPI = {
   getLoginAxios: function (token: string) {
     return axiosInstance.request({
       method: "POST",
-      url: '/user/login',
+      url: '/OAuth/login',
       data: token,
     });
   },
@@ -43,3 +44,28 @@ export const MainAPI = {
     });
   },
 }
+
+// const getTokens = async () => {
+//   const tokens = await AsyncStorage.getItem('Tokens')
+//   if (tokens) {
+//     const parsedTokens = JSON.parse(tokens);
+//     const accessToken = parsedTokens.accessToken;
+//     const refreshToken = parsedTokens.refreshToken;
+//     return {"accessToken": accessToken, "refreshToken": refreshToken}
+//   }
+//   return null
+// }
+
+// export const TokenAPI = {
+//   /** 로그아웃 요청 */
+//   logoutAxios: async function() {
+//     const data = await getTokens();
+//     if (data !== null) {
+//       return axiosInstance.request({
+//         method: "POST",
+//         url: '/user/logout',
+//         data: data
+//       });
+//     }
+//   },
+// }

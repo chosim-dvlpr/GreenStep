@@ -7,16 +7,16 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // 토큰이 필요한 인증에 사용
 const baseURL = "https://k9b303.p.ssafy.io/api";
 
-const tokenHttp = axios.create({
+const fileTokenHttp = axios.create({
   baseURL,
   headers: {
-    "Content-Type": "application/json",
+    "Content-Type": "multipart/form-data",
   },
 });
 
 
 // 요청 인터셉터 설정 (요청 보내기 전에 수행되는 함수)
-tokenHttp.interceptors.request.use(async (req) => {
+fileTokenHttp.interceptors.request.use(async (req) => {
   const accessToken = await AsyncStorage.getItem("accessToken");
   
   if (!accessToken) {
@@ -35,7 +35,7 @@ tokenHttp.interceptors.request.use(async (req) => {
   }
 
   // 만료되었다면 refresh-token으로 token 재발급
-  console.log("api/tokenHttp.js : access token 만료");
+  console.log("api/fileTokenHttp.js : access token 만료");
   const refreshToken = await AsyncStorage.getItem("refreshToken")
 
   await axios
@@ -71,4 +71,4 @@ tokenHttp.interceptors.request.use(async (req) => {
   return req;
 });
 
-export default tokenHttp;
+export default fileTokenHttp;
