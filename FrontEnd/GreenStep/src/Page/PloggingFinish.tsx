@@ -8,6 +8,10 @@ import fileTokenHttp from '../Api/fileTokenHttp';
 import { launchImageLibrary } from 'react-native-image-picker';
 import PloggingFinishHeader from '../Component/PloggingFinish/PloggingFinishHeader';
 
+interface PloggingFinishType {
+  ploggingId?: number,
+}
+
 const PloggingFinishContainer = styled.View`
 `
 
@@ -40,7 +44,7 @@ const GoToMainContainer = styled.View`
 const ButtonTextColor = '#8BCA84';
 
 
-const PloggingFinish = () => {
+const PloggingFinish = ({ploggingId}: PloggingFinishType) => {
 
   /** 경험치 얻기 */
   const getExp = () => {
@@ -49,12 +53,28 @@ const PloggingFinish = () => {
 
   /** 사진 선택 기능 */
   const [photo, setPhoto] = useState<string>('');
-  const [uploadedPhoto, setUploadedPhoto] = useState();
+  const [uploadedPhoto, setUploadedPhoto] = useState<any>();
 
+  // const pickedPhoto = async () => {
+  //   console.log('사진 인증 버튼 클릭 (미리보기)')
+  //   const result = await launchImageLibrary();
+  //   setUploadedPhoto(result)
+    
+  //   if (result.didCancel){
+  //     return null;
+  //   }
+  //   console.log('이미지 업로드 성공 : ', result)
+  //   const localUri = result.assets[0].uri;
+  //   const uriPath = localUri.split("//").pop();
+  //   const imageName = localUri.split("/").pop();
+  //   setPhoto("file://"+uriPath)    
+  // };
   const pickedPhoto = async () => {
     console.log('사진 인증 버튼 클릭 (미리보기)')
     const result = await launchImageLibrary();
-    setUploadedPhoto(result)
+    const formData = await new FormData()
+
+    // setUploadedPhoto(result)
     
     if (result.didCancel){
       return null;
@@ -63,29 +83,47 @@ const PloggingFinish = () => {
     const localUri = result.assets[0].uri;
     const uriPath = localUri.split("//").pop();
     const imageName = localUri.split("/").pop();
-    setPhoto("file://"+uriPath);    
+    setPhoto("file://"+uriPath)    
+
+    await formData.append('file', {
+      name: result.assets[0].fileName,
+      type: result.assets[0].type,
+      uri: localUri,
+    });
+    console.log(formData)
+
+    fileTokenHttp.post(`/plogging/${ploggingId}/upload/img`, formData)
+    .then((res) => console.log('file 전송 성공 : ', res))
+    .catch(err => console.log('file 전송 실패 : ', err))
   };
   
   /** 사진 서버에 업로드 */
-  const ploggingId = 1;
-  const uploadPhoto = async () => {
-    const formData = await new FormData();
-    console.log('FormData formData : ', formData)
-    console.log('FormData image : ', uploadedPhoto)
+  // const ploggingId = 1;
+  // const uploadPhoto = async () => {
+  //   const formData = await new FormData()
+  //   console.log('formData : ', formData)
+  //   // console.log('result : ', result)
+  //   console.log('FormData image : ', uploadedPhoto)
     
-    const file = {
-      name: uploadedPhoto?.assets?.[0]?.fileName,
-      type: uploadedPhoto?.assets?.[0]?.type,
-      uri: uploadedPhoto?.assets?.[0]?.uri,
-    }
-    formData.append('file', file);
-    // formData.append('service', "profile");
-    // formData.append('serviceId', )
-
-    fileTokenHttp.post(`/upload/img/${ploggingId}`, formData)
-    .then((res) => console.log('이미지 서버 업로드 성공 : ', res))
-    .catch(err => console.log('이미지 서버 업로드 실패 : ', err))
-  };
+  //   // const file = {
+  //   //   name: uploadedPhoto?.assets?.[0]?.fileName,
+  //   //   type: uploadedPhoto?.assets?.[0]?.type,
+  //   //   uri: uploadedPhoto?.assets?.[0]?.uri,
+  //   // }
+  //   formData.append('file', {
+  //     name: uploadedPhoto?.assets?.[0]?.fileName,
+  //     type: uploadedPhoto?.assets?.[0]?.type,
+  //     uri: uploadedPhoto?.assets?.[0]?.uri,
+  //     // uri: 'uploadedPhoto?.assets?.[0]?.uri',
+  //   });
+  //   console.log('===formData : ', formData)
+  //   // formData.append('service', "profile");
+  //   // formData.append('serviceId', )
+    
+  //   fileTokenHttp.post(`/plogging/${ploggingId}/upload/img`, formData)
+  //   .then((res) => console.log('이미지 서버 업로드 성공 : ', res))
+  //   .catch(err => console.log('이미지 서버 업로드 실패 : ', err))
+  // };
 
   return (
     <ScrollView>
