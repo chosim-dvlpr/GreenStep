@@ -42,7 +42,7 @@ const ProfileHeaderStrick = () => {
   const getStreak = () => {
     ProfileAPI.getStreakAxios(year)
     .then((res) =>{
-      console.log(res)
+      console.log('스트릭', res)
       // setPloggingWeek(res.data)
     } 
       )

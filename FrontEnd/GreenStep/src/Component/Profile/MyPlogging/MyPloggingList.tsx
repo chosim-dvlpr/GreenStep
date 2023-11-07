@@ -1,6 +1,5 @@
 import {View, Text, Image, ScrollView, StyleSheet, TouchableOpacity} from 'react-native'
 import React, {useState, useEffect} from 'react';
-import avatar from '../../../Image/Avatar/bird.png';
 import ImageStyle from '../../../Style/Image';
 import MyPloggingDetail from './MyPloggingDetail';
 import { ProfileAPI } from '../../../Api/profileApi';
@@ -20,6 +19,9 @@ const MyPloggingList = () => {
     const [dataList, setDataList] = useState<PloggingData[]>([]);
     const [idx, setIdx] = useState(0)
     const [toggle, setToggle] = useState(false)
+    const [h, setH] = useState(0)
+    const [m, setM] = useState(0)
+    const [s, setS] = useState(0)
 
 
     // 내 플로깅 이력 불러오기
@@ -43,20 +45,35 @@ const MyPloggingList = () => {
 
   useEffect(() => {
     getMyploggingList();
-  }, [])
-  console.log(dataList)
-    return(
+  }, []);
+  
+  const msToTime = (duration: Double): string => {
+    let seconds: string | number = Math.floor((duration / 1000) % 60),
+        minutes: string | number = Math.floor((duration / (1000 * 60)) % 60),
+        hours: string | number = Math.floor((duration / (1000 * 60 * 60)) % 24);
+
+    hours = hours < 10 ? "0" + hours : hours;
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+    return `${hours}:${minutes}:${seconds}`;
+  };
+
+  return(
         <View>
             <ScrollView horizontal={false}>
                 <View style={styles.wrapRow}>
                     {dataList.map((data, index) => (
                         <TouchableOpacity onPress={() => handleAvatarId(data.ploggingId)}>
-                            <View>
-                                <Image key={index} source={avatar} style={ImageStyle.mediumImage} />
+                            <View style={{justifyContent:'center', alignItems:'center'}}>
+                              {data?.travelPicture?( 
+                              <Image source={{uri: data?.travelPicture}} style={ImageStyle.mediumImage} resizeMode="stretch"></Image>
+                              ):(<Text>등록된 사진이 없습니다.</Text>)
+                              }
                                 <View style={[styles.overlayText, styles.noWrapRow]}>
                                     <Text style={styles.textStyle}>{data.trashAmount} 개</Text>
                                     <Text style={styles.textStyle}>{data.travelRange} KM</Text>
-                                    <Text style={styles.textStyle}>{data.travelTime}</Text>
+                                    <Text style={styles.textStyle}>{msToTime(data.travelTime)}</Text>
                             </View>
                             </View>
                         </TouchableOpacity>
@@ -72,7 +89,7 @@ const styles = StyleSheet.create({
     wrapRow: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         
     },
     noWrapRow: {
@@ -89,8 +106,9 @@ const styles = StyleSheet.create({
         padding: 5,
     },
     textStyle: {
-        color: 'black',
+        color: 'white',
         textAlign: 'center',
+        fontWeight: 'bold',
         fontSize: 10
     },
 });
