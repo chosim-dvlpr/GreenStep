@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Table(name = "user_avatar")
 public class UserAvatar {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "avatar_id")
     private Long avatarId;
 
@@ -21,7 +22,10 @@ public class UserAvatar {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public void updateAvatar(Avatar avatar) {
-        this.avatar = avatar;
+    @Column(name = "is_selected", columnDefinition = "BOOLEAN DEFAULT false")
+    private Boolean isSelected;
+
+    public void updateAvatar(Boolean tf) {
+        this.isSelected = tf;
     }
 }

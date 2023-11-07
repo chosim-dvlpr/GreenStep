@@ -46,6 +46,9 @@ public class MainService {
 
         // findAll() 메서드 대신에 custom query를 사용하여 랜덤한 6개의 레코드를 가져옵니다.
         List<Plogging> ploggingList = ploggingRepository.findRandomVisiblePloggingRecords(count);
+        for (Plogging p : ploggingList) {
+            System.out.println(p.getTravelPicture());
+        }
 
         // 플로깅이 없으면 null
         if (ploggingList.isEmpty()) {

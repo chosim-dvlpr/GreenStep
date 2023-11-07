@@ -10,4 +10,8 @@ public interface UserAvatarRepository extends JpaRepository<UserAvatar, Long> {
     UserAvatar findByUser(User user);
 
     List<UserAvatar> findAllByUser(User user);
+
+    UserAvatar findByUserAndAvatarId(User user, Long avatarId);
+
+    UserAvatar findByUserAndIsSelected(User user, boolean b);
 }

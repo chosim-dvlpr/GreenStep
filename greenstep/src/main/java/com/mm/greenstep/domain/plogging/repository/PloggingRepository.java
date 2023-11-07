@@ -14,7 +14,7 @@ public interface PloggingRepository extends JpaRepository<Plogging, Long> {
 
     List<Plogging> findAllByUser(User user);
 
-    // 데이터베이스에서 랜덤으로 pageable개의 Plogging 레코드를 가져온 후 랜덤한 순서로 정렬하고 LIMIT를 사용하여 결과를 제한
+
     @Query(value = "SELECT * FROM plogging WHERE is_visibled = true ORDER BY RAND() LIMIT :count", nativeQuery = true)
     List<Plogging> findRandomVisiblePloggingRecords(@Param("count") int count);
 
