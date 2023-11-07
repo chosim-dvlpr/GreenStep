@@ -111,7 +111,7 @@ const PloggingFinish = ({ ploggingId, getExp }: PloggingFinishType) => {
         <ImageContainer>
           <Image 
           source={photo ? {uri: photo} : PloggingFinishNoImage} 
-          style={{width: '100%', height: '100%', borderRadius: 20}} />
+          style={[ButtonStyle.whiteColor, {width: '100%', height: '100%', borderRadius: 20}]} />
         </ImageContainer>
         
 
