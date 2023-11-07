@@ -80,15 +80,15 @@ const ProfilePloggingDataInfo = ({navigation}:any) => {
           <Text style={{fontSize: 13}} numberOfLines={1}>모은 쓰레기</Text>
         </View>
         
-        <TouchableOpacity onPress={() => navigation.navigate('achievement')}>
-          <View style={[Box.ploggingDataInfoBox, {alignItems:'center', justifyContent: 'center'}]}>
+        <View style={[Box.ploggingDataInfoBox, {alignItems:'center', justifyContent: 'center'}]}>
+          <TouchableOpacity onPress={() => navigation.navigate('achievement')}>
             <ImageContainer>
               <Image source={badge} style={ImageStyle.tinyImage}></Image>
             </ImageContainer>
-            <Text style={{fontSize: 13, fontWeight:'bold', marginTop: 5, marginBottom: 2}} numberOfLines={1}>{acheiveInfo} 개</Text>
+            <Text style={{fontSize: 13, fontWeight:'bold', alignSelf: 'center', marginTop: 5, marginBottom: 2}} numberOfLines={1}>{acheiveInfo} 개</Text>
             <Text style={{fontSize: 13}} numberOfLines={1}>달성 업적</Text>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
       </View>
     )
 }
