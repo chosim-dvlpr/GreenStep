@@ -57,7 +57,7 @@ public class PloggingController {
     public ResponseEntity<?> createAiImg(
             @RequestPart(value = "file", required = false) MultipartFile file
     ) {
-        Byte type = ploggingService.createAiImg(file);
+        String type = ploggingService.createAiImg(file);
         return new ResponseEntity<>(type, HttpStatus.OK);
     }
 }
