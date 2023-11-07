@@ -8,6 +8,7 @@ import trash from '../../Image/Data/trash.png';
 import badge from '../../Image/Achievement/badge.png'
 import styled from 'styled-components/native';
 import { ProfileAPI } from "../../Api/profileApi";
+import { Double } from 'react-native/Libraries/Types/CodegenTypes';
 
 const ImageContainer = styled.View`
   width: 50%;
@@ -16,7 +17,7 @@ const ImageContainer = styled.View`
 `
 
 const ProfilePloggingDataInfo = ({navigation}:any) => {
-    const [timeInfo, setTimeInfo] = useState('00h 00m 00s')
+    const [timeInfo, setTimeInfo] = useState(0)
     const [distanceInfo, setDistanceInfo] = useState(234)
     const [trashInfo, setTrashInfo] = useState(123)
     const [acheiveInfo, setAchieveInfo] = useState(10)
@@ -36,9 +37,21 @@ const ProfilePloggingDataInfo = ({navigation}:any) => {
       .catch(err => console.log('사용자 정보 조회 axios 에러 : ', err))
     }
 
+    const msToTime = (duration: Double): string => {
+      let seconds: string | number = Math.floor((duration / 1000) % 60),
+          minutes: string | number = Math.floor((duration / (1000 * 60)) % 60),
+          hours: string | number = Math.floor((duration / (1000 * 60 * 60)) % 24);
+  
+      hours = hours < 10 ? "0" + hours : hours;
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+  
+      return `${hours}H ${minutes}M`;
+    };
+
   useEffect(() => {
       getUserInfo();
-    }, [])
+    }, [timeInfo])
 
     return(
         <View style={{display: 'flex', flexDirection: 'row', marginBottom: 20,
@@ -47,7 +60,7 @@ const ProfilePloggingDataInfo = ({navigation}:any) => {
           <ImageContainer>
             <Image source={time} style={ImageStyle.tinyImage}></Image>
           </ImageContainer>
-          <Text style={{fontSize: 13, fontWeight:'bold', marginTop: 5, marginBottom: 2}} numberOfLines={1}>{timeInfo}</Text>
+          <Text style={{fontSize: 13, fontWeight:'bold', marginTop: 5, marginBottom: 2}} numberOfLines={1}>{timeInfo ? msToTime(timeInfo) : "00:00:00"}</Text>
           <Text style={{fontSize: 13}} numberOfLines={1}>함께한 시간</Text>
         </View>
         

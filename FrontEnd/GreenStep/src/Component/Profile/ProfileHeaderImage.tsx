@@ -31,7 +31,7 @@ const ProfileHeaderImage = ({percentage}:any) => {
     const handelBoxId = (boxId :number) =>{
         setBoxId(boxId+1)
     }
-
+    console.log('exp',percentage)
     return(
         <View>
           <AnimatedCircularProgress
