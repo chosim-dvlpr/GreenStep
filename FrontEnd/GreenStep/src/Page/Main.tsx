@@ -23,7 +23,7 @@ const MainText = styled.Text`
 `
 
 const MainTextContainer = styled.View`
-  margin-top: 75;
+  margin-top: 15%;
   margin-left: 30;
   margin-bottom: 25;
 `
@@ -55,6 +55,7 @@ const Main = () => {
 
   useEffect(() => {
     if (AsyncStorage.getItem('accessToken')) {
+      console.log('토큰을 갖고 있습니다.')
       setIsLogin(true)
     }
   }, [])
