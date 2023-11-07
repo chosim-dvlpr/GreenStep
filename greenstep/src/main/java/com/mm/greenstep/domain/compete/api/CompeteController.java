@@ -15,10 +15,10 @@ import java.time.YearMonth;
 @RequiredArgsConstructor
 public class CompeteController {
 
-    @GetMapping("/")
-    public ResponseEntity<?> getDetailCompete(@PathVariable YearMonth yearMonth){
-
-        return new ResponseEntity<>(responseDto, HttpStatus.OK);
-    }
+//    @GetMapping("/")
+//    public ResponseEntity<?> getDetailCompete(@PathVariable YearMonth yearMonth){
+//
+//        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+//    }
 
 }
