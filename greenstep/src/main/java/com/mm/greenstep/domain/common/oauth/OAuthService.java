@@ -1,5 +1,6 @@
 package com.mm.greenstep.domain.common.oauth;
 
+import com.mm.greenstep.domain.achieve.service.AchieveService;
 import com.mm.greenstep.domain.common.jwt.JwtTokenProvider;
 import com.mm.greenstep.domain.user.dto.request.UserReqDto;
 import com.mm.greenstep.domain.user.dto.response.Response;
@@ -39,6 +40,7 @@ public class OAuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final TeamRepository teamRepository;
+    private final AchieveService achieveService;
 
     public String findKakaoId(String token) {
 
@@ -109,6 +111,10 @@ public class OAuthService {
 
             userId = saveUser.getUserId();
             log.info("createUser-userId : "+userId);
+
+            // 업적 등록
+            achieveService.createUserAchieve(saveUser);
+
         }
         else{
             log.info(user.get().getUsername()+"회원 있음");
