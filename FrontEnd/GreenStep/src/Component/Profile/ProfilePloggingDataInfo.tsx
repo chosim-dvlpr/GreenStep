@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import ImageStyle from '../../Style/Image';
 import Box from "../../Style/Box";
 import time from '../../Image/Data/time.png';
@@ -7,7 +7,6 @@ import distance from '../../Image/Data/distance.png';
 import trash from '../../Image/Data/trash.png';
 import badge from '../../Image/Achievement/badge.png'
 import styled from 'styled-components/native';
-import { ProfileAPI } from "../../Api/profileApi";
 import { Double } from 'react-native/Libraries/Types/CodegenTypes';
 
 const ImageContainer = styled.View`
@@ -16,26 +15,7 @@ const ImageContainer = styled.View`
   align-items: center;
 `
 
-const ProfilePloggingDataInfo = ({navigation}:any) => {
-    const [timeInfo, setTimeInfo] = useState(0)
-    const [distanceInfo, setDistanceInfo] = useState(234)
-    const [trashInfo, setTrashInfo] = useState(123)
-    const [acheiveInfo, setAchieveInfo] = useState(10)
-
-    // 사용자 정보(이름, 경험치, 레벨) 불러오기
-    const getUserInfo = () => {
-      ProfileAPI.getMyPloggingAxios()
-      .then((res) =>{
-        console.log(res)
-        // console.log(res.data),
-        setTimeInfo(res.data.travelTime)
-        setDistanceInfo(res.data.travelRange)
-        setTrashInfo(res.data.trashAmount)
-        setAchieveInfo(res.data.completedAchieveCount)
-      } 
-        )
-      .catch(err => console.log('사용자 정보 조회 axios 에러 : ', err))
-    }
+const ProfilePloggingDataInfo = ({navigation, timeInfo, distanceInfo, trashInfo, acheiveInfo}:any) => {
 
     const msToTime = (duration: Double): string => {
       let seconds: string | number = Math.floor((duration / 1000) % 60),
@@ -48,10 +28,6 @@ const ProfilePloggingDataInfo = ({navigation}:any) => {
   
       return `${hours}H ${minutes}M`;
     };
-
-  useEffect(() => {
-      getUserInfo();
-    }, [timeInfo])
 
     return(
         <View style={{display: 'flex', flexDirection: 'row', marginBottom: 20,
