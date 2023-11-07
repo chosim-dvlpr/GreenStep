@@ -1,7 +1,6 @@
 package com.mm.greenstep.domain.common.util;
 
 import com.mm.greenstep.domain.user.entity.User;
-import com.mm.greenstep.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;

@@ -2,6 +2,7 @@ package com.mm.greenstep.domain.mypage.service;
 
 import com.mm.greenstep.domain.achieve.entity.UserAchieve;
 import com.mm.greenstep.domain.achieve.repository.UserAchieveRepository;
+import com.mm.greenstep.domain.common.util.SecurityUtil;
 import com.mm.greenstep.domain.mypage.dto.response.MyPageAllPloggingResDto;
 import com.mm.greenstep.domain.mypage.dto.response.MyPageDetailHeaderResDto;
 import com.mm.greenstep.domain.mypage.dto.response.MyPageDetailStreakResDto;
@@ -31,8 +32,7 @@ public class MyPageService {
 
 
     public MyPageDetailHeaderResDto getDetailUserHeader(HttpServletRequest request) {
-//        Long user_pk = jwtUtil.extractUserPkFromToken(request);
-        Long user_pk = 4L;
+        Long user_pk = SecurityUtil.getCurrentUserId();
 
         User user = userRepository.findByUserId(user_pk);
 
@@ -45,8 +45,7 @@ public class MyPageService {
     }
 
     public MyPageAllPloggingResDto getAllUserPlogging(HttpServletRequest request) {
-        Long user_pk = 4L;
-
+        Long user_pk = SecurityUtil.getCurrentUserId();
         User user = userRepository.findByUserId(user_pk);
         List<Plogging> plogging = ploggingRepository.findAllByUser(user);
 
@@ -78,7 +77,7 @@ public class MyPageService {
     }
 
     public Map<Integer, Integer> getDetailStreak(HttpServletRequest request, Integer year) {
-        Long user_pk = 4L;
+        Long user_pk = SecurityUtil.getCurrentUserId();
 
         User user = userRepository.findByUserId(user_pk);
 
