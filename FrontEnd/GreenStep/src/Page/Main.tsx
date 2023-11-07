@@ -47,17 +47,15 @@ const CarouselTextContainer = styled.View`
 
 const Main = () => {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [isLogin, setIsLogin] = useState<boolean>(false);
-
+  
   // 토큰 확인
-  const { stateAccessToken, stateRefreshToken } = useSelector((state: RootState) => state.user);
+  // const { stateAccessToken, stateRefreshToken } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
-    if (stateAccessToken && stateRefreshToken) {
+    if (AsyncStorage.getItem('accessToken')) {
       setIsLogin(true)
-      AsyncStorage.setItem('accessToken', stateAccessToken)
-      AsyncStorage.setItem('refreshToken', stateRefreshToken)
     }
   }, [])
   
