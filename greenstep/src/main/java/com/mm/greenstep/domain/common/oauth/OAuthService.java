@@ -112,12 +112,13 @@ public class OAuthService {
             log.info(user.get().getUsername()+"회원 있음");
         }
 
-        UserReqDto.Login login = new UserReqDto.Login();
+        UserReqDto.OAuthLogin login = new UserReqDto.OAuthLogin();
 
         login.setEmail(kakaoId);
         login.setPassword("kakao");
+        login.setUserId(user.get().getUserId());
 
-        return userService.login(login);
+        return userService.oAuthLogin(login);
     }
 
 

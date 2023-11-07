@@ -2,6 +2,7 @@ package com.mm.greenstep.domain.mypage.service;
 
 import com.mm.greenstep.domain.achieve.entity.UserAchieve;
 import com.mm.greenstep.domain.achieve.repository.UserAchieveRepository;
+import com.mm.greenstep.domain.common.util.SecurityUtil;
 import com.mm.greenstep.domain.mypage.dto.response.MyPageAllPloggingResDto;
 import com.mm.greenstep.domain.mypage.dto.response.MyPageDetailHeaderResDto;
 import com.mm.greenstep.domain.mypage.dto.response.MyPageDetailStreakResDto;
@@ -31,8 +32,7 @@ public class MyPageService {
 
 
     public MyPageDetailHeaderResDto getDetailUserHeader(HttpServletRequest request) {
-//        Long user_pk = jwtUtil.extractUserPkFromToken(request);
-        Long user_pk = 4L;
+        Long user_pk = SecurityUtil.getCurrentUserId();
 
         User user = userRepository.findByUserId(user_pk);
 
@@ -45,15 +45,14 @@ public class MyPageService {
     }
 
     public MyPageAllPloggingResDto getAllUserPlogging(HttpServletRequest request) {
-        Long user_pk = 4L;
-
+        Long user_pk = SecurityUtil.getCurrentUserId();
         User user = userRepository.findByUserId(user_pk);
         List<Plogging> plogging = ploggingRepository.findAllByUser(user);
 
         // 플로깅 도메인 구현 후 진행
-        Integer trashAmount = null; // 나의 총 쓰레기 량
-        Double travelRange = null; // 나의 총 이동거리
-        Double travelTime = null; // 나의 총 이동시간
+        Integer trashAmount = 0; // 나의 총 쓰레기 량
+        Double travelRange = 0.0; // 나의 총 이동거리
+        Double travelTime = 0.0; // 나의 총 이동시간
 
         for (Plogging p : plogging) {
             trashAmount += p.getTrashAmount();
@@ -64,7 +63,7 @@ public class MyPageService {
         // 완료된 업적 리스트
         List<UserAchieve> list = userAchieveRepository.findAllByUserAndIsBreakedTrue(user);
         Integer completedAchieveCount = 0;
-        if(list != null) {
+        if(!list.isEmpty()) {
             completedAchieveCount = list.size();
         }
 
@@ -78,7 +77,7 @@ public class MyPageService {
     }
 
     public Map<Integer, Integer> getDetailStreak(HttpServletRequest request, Integer year) {
-        Long user_pk = 4L;
+        Long user_pk = SecurityUtil.getCurrentUserId();
 
         User user = userRepository.findByUserId(user_pk);
 

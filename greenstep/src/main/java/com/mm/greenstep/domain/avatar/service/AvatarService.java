@@ -5,6 +5,7 @@ import com.mm.greenstep.domain.avatar.entity.Avatar;
 import com.mm.greenstep.domain.avatar.entity.UserAvatar;
 import com.mm.greenstep.domain.avatar.repository.AvatarRepository;
 import com.mm.greenstep.domain.avatar.repository.UserAvatarRepository;
+import com.mm.greenstep.domain.common.util.SecurityUtil;
 import com.mm.greenstep.domain.user.entity.User;
 import com.mm.greenstep.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ public class AvatarService {
     private final AvatarRepository avatarRepository;
 
     public String updateAvatar(HttpServletRequest request, Long boxId) {
-        Long user_pk = 4L;
+        Long user_pk = SecurityUtil.getCurrentUserId();
 
         User user = userRepository.findByUserId(user_pk);
         if (user == null) {
@@ -44,7 +45,7 @@ public class AvatarService {
     }
 
     public List<AvatarAllResDto> getAllMyAvatar(HttpServletRequest request) {
-        Long user_pk = 4L;
+        Long user_pk = SecurityUtil.getCurrentUserId();
 
         User user = userRepository.findByUserId(user_pk);
         List<UserAvatar> userAvatarList = userAvatarRepository.findAllByUser(user);

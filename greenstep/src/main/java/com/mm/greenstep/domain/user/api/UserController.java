@@ -81,7 +81,9 @@ public class UserController {
     @GetMapping("/idTest")
     public ResponseEntity<?> idTest() {
         log.info("id TEST");
-        System.out.println(userService.userId());
+        System.out.println(SecurityUtil.getCurrentUserName());
+        System.out.println(SecurityUtil.getCurrentUserId());
+        System.out.println(SecurityUtil.getCurrentUser());
         return response.success();
     }
 }

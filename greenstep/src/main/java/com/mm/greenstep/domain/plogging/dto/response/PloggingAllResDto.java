@@ -15,4 +15,5 @@ public class PloggingAllResDto {
     private Integer trashAmount;
     private Long ploggingId;
     private LocalDateTime createdAt;
+    private String travelPicture;
 }

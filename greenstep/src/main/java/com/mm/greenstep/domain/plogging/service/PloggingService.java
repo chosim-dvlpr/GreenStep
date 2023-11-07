@@ -7,6 +7,7 @@ import com.mm.greenstep.domain.avatar.entity.Avatar;
 import com.mm.greenstep.domain.avatar.entity.UserAvatar;
 import com.mm.greenstep.domain.avatar.repository.AvatarRepository;
 import com.mm.greenstep.domain.avatar.repository.UserAvatarRepository;
+import com.mm.greenstep.domain.common.util.SecurityUtil;
 import com.mm.greenstep.domain.plogging.dto.request.PloggingCoorDto;
 import com.mm.greenstep.domain.plogging.dto.request.PloggingReqDto;
 import com.mm.greenstep.domain.plogging.dto.request.PloggingTrashReqDto;
@@ -43,13 +44,14 @@ public class PloggingService {
     private final CoordinateRepository coordinateRepository;
     private final TrashRepository trashRepository;
     private final UserAchieveRepository userAchieveRepository; // 내 업적 레포
+    private final TensorFlowService tensorFlowService;
 
     public PloggingResDto createPlogging(HttpServletRequest request, PloggingReqDto dto) {
         Boolean levelUp = false;
         String avatarImg = "";
         String avatarName = "";
 
-        Long user_pk = 4L;
+        Long user_pk = SecurityUtil.getCurrentUserId();
         User user = userRepository.findByUserId(user_pk);
 
         // 종료시간에서 - 전체 이동시간(Double TravelTime) 빼서 시작시간 만들기
@@ -204,7 +206,7 @@ public class PloggingService {
 
     public List<PloggingAllResDto> getAllPlogging(HttpServletRequest request) {
         List<PloggingAllResDto> dtoList = new ArrayList<>();
-        Long user_pk = 4L;
+        Long user_pk = SecurityUtil.getCurrentUserId();
         User user = userRepository.findByUserId(user_pk);
         List<Plogging> plogging = ploggingRepository.findAllByUser(user);
 
@@ -216,6 +218,7 @@ public class PloggingService {
                     .travelRange(p.getTravelRange())
                     .trashAmount(p.getTrashAmount())
                     .travelTime(p.getTravelTime())
+                    .travelPicture(p.getTravelPicture())
                     .build();
             dtoList.add(dto);
         }
