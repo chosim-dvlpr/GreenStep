@@ -1,10 +1,12 @@
 // store.ts
 import {configureStore} from '@reduxjs/toolkit';
 import ploggingReducer from './ploggingSlice';
+import userReducer from './userSlice';
 
 export const store = configureStore({
   reducer: {
     plogging: ploggingReducer,
+    user: userReducer,
   },
 });
 // RootState 타입을 추출합니다.
