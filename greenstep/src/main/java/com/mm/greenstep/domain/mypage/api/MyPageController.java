@@ -29,8 +29,8 @@ public class MyPageController {
 
     // 플로깅 내역 조회
     @GetMapping("/my-plogging")
-    public ResponseEntity<?> getAllUserPlogging(HttpServletRequest request) {
-        MyPageAllPloggingResDto dto = myPageService.getAllUserPlogging(request);
+    public ResponseEntity<?> getAllUserPlogging() {
+        MyPageAllPloggingResDto dto = myPageService.getAllUserPlogging();
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 

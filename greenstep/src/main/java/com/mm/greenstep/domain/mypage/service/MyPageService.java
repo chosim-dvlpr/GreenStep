@@ -44,7 +44,7 @@ public class MyPageService {
         return dto;
     }
 
-    public MyPageAllPloggingResDto getAllUserPlogging(HttpServletRequest request) {
+    public MyPageAllPloggingResDto getAllUserPlogging() {
         Long user_pk = SecurityUtil.getCurrentUserId();
         User user = userRepository.findByUserId(user_pk);
         List<Plogging> plogging = ploggingRepository.findAllByUser(user);
