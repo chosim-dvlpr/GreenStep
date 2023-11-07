@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -20,14 +21,14 @@ public class Victory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "victory_id")
-    private Long victoryId;
+    private Integer victoryId;
 
     @ManyToOne
     @JoinColumn(name = "team_id")
     private Team team;
 
     @Column(name = "victory_month", nullable = false)
-    private YearMonth victoryMonth;
+    private LocalDateTime victoryMonth;
 
     @Column(name = "goal_score", nullable = false)
     private Integer goalScore;
@@ -38,7 +39,7 @@ public class Victory {
 
     @PrePersist
     public void prePersist() {
-        this.victoryMonth = YearMonth.from(LocalDateTime.now());
+        this.victoryMonth = LocalDateTime.now();
         this.isComplete = false;
         this.goalScore = 10000;
     }
