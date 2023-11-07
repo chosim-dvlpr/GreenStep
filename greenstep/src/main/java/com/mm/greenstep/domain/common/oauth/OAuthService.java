@@ -83,6 +83,7 @@ public class OAuthService {
     public ResponseEntity<?> findUserByKakaoId(String kakaoId){
         // 회원가입
         Optional<User> user = userRepository.findByUserName(kakaoId);
+        Long userId = Long.valueOf(0);
 
         if (user.isEmpty()) {
             log.info("회원 없음");
@@ -94,7 +95,7 @@ public class OAuthService {
             }
 
             int teamId = randomTeam();
-            log.info("createUser - team" + teamId);
+            log.info("createUser - team : " + teamId);
 
             User saveUser = User.builder()
                     .userName(kakaoId)
@@ -106,17 +107,19 @@ public class OAuthService {
             saveUser.getRoles().add(Authority.ROLE_USER.name());
             userRepository.save(saveUser);
 
-
+            userId = saveUser.getUserId();
+            log.info("createUser-userId : "+userId);
         }
         else{
             log.info(user.get().getUsername()+"회원 있음");
+            userId = user.get().getUserId();
         }
 
         UserReqDto.OAuthLogin login = new UserReqDto.OAuthLogin();
 
         login.setEmail(kakaoId);
         login.setPassword("kakao");
-        login.setUserId(user.get().getUserId());
+        login.setUserId(userId);
 
         return userService.oAuthLogin(login);
     }
