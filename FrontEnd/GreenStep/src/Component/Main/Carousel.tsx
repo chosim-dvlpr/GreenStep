@@ -1,6 +1,7 @@
 import { View, Dimensions } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CarouselCard from './CarouselCard'
+import { MainAPI } from '../../Api/basicHttp';
 
 interface samplePagesObjectType {
   key: number;
@@ -18,6 +19,24 @@ export const pageWidth = screenWidth - (gap + offset) * 2; // 캐러셀 너비
 
 
 const Carousel = () => {
+  
+  /** 플로깅 이미지 불러오기 */
+  const [pages, setPages] = useState<string[]>([]);
+
+   useEffect(() => {
+    getMainImage();
+   }, [])
+   
+   const getMainImage = () => {
+    MainAPI.mainImageAxios()
+    .then(res => {
+      if (res.status === 200) {
+        setPages(res.data)
+      }
+    })
+    .catch(err => console.log('캐러셀 이미지 axios 에러 : ', err))
+  }
+
   // 임시 데이터
   const [samplePages, setSamplePages] = useState<samplePagesType> ([
     {
@@ -53,7 +72,7 @@ const Carousel = () => {
         gap={gap}
         offset={offset}
         pages={samplePages}
-        setSamplePages={setSamplePages}
+        setPages={setSamplePages}
         pageWidth={pageWidth}
         />
     </View>

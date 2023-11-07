@@ -77,16 +77,21 @@ const Main = () => {
     .catch(err => console.log('메인 데이터 axios 에러 : ', err))
   }
 
-  // 플로깅 이미지 불러오기
-  const getMainImage = () => {
-    MainAPI.mainImageAxios()
-    .then(res => console.log(res))
-    .catch(err => console.log('메인 이미지 axios 에러 : ', err))
-  }
+  // // 플로깅 이미지 불러오기
+  // const getMainImage = () => {
+  //   MainAPI.mainImageAxios()
+  //   .then(res => {
+  //     console.log(res)
+  //     if (res.status === 200) {
+
+  //     }
+  //   })
+  //   .catch(err => console.log('메인 이미지 axios 에러 : ', err))
+  // }
 
   useEffect(() => {
     getMainData();
-    getMainImage();
+    // getMainImage();
   }, [])
 
 
