@@ -1,9 +1,7 @@
 package com.mm.greenstep.domain.avatar.service;
 
 import com.mm.greenstep.domain.avatar.dto.response.AvatarAllResDto;
-import com.mm.greenstep.domain.avatar.entity.Avatar;
 import com.mm.greenstep.domain.avatar.entity.UserAvatar;
-import com.mm.greenstep.domain.avatar.repository.AvatarRepository;
 import com.mm.greenstep.domain.avatar.repository.UserAvatarRepository;
 import com.mm.greenstep.domain.common.util.SecurityUtil;
 import com.mm.greenstep.domain.user.entity.User;
@@ -11,7 +9,6 @@ import com.mm.greenstep.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,31 +17,33 @@ import java.util.List;
 public class AvatarService {
     private final UserRepository userRepository;
     private final UserAvatarRepository userAvatarRepository;
-    private final AvatarRepository avatarRepository;
 
-    public String updateAvatar(HttpServletRequest request, Long boxId) {
+    public String updateAvatar(Long avatarId) {
         Long user_pk = SecurityUtil.getCurrentUserId();
 
         User user = userRepository.findByUserId(user_pk);
         if (user == null) {
             return "User not found";
         }
-        UserAvatar userAvatar = userAvatarRepository.findByUser(user);
+        UserAvatar userAvatar = userAvatarRepository.findByUserAndAvatarId(user, avatarId);
         if (userAvatar == null) {
             return "User Avatar not found";
         }
-        Avatar avatar = avatarRepository.findByBoxId(boxId);
-        if (avatar == null) {
-            return "Avatar not found";
+
+        UserAvatar selectedUserAvatar = userAvatarRepository.findByUserAndIsSelected(user, true);
+
+        if(selectedUserAvatar != null) {
+            selectedUserAvatar.updateAvatar(false);
+            userAvatarRepository.save(selectedUserAvatar);
         }
 
-        userAvatar.updateAvatar(avatar);
+        userAvatar.updateAvatar(true);
         userAvatarRepository.save(userAvatar);
 
         return "success";
     }
 
-    public List<AvatarAllResDto> getAllMyAvatar(HttpServletRequest request) {
+    public List<AvatarAllResDto> getAllMyAvatar() {
         Long user_pk = SecurityUtil.getCurrentUserId();
 
         User user = userRepository.findByUserId(user_pk);

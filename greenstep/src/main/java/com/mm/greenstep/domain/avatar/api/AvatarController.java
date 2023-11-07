@@ -19,16 +19,23 @@ public class AvatarController {
 
     // 아바타 선택
     @PatchMapping("/{boxId}")
-    public ResponseEntity<?> updateMyAvatar(HttpServletRequest request, @PathVariable Long boxId) {
-        String response = myPageService.updateAvatar(request, boxId);
+    public ResponseEntity<?> updateMyAvatar(@PathVariable Long boxId) {
+        String response = myPageService.updateAvatar(boxId);
         if(response.equals("success")) return new ResponseEntity<>(response, HttpStatus.OK);
         else return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     // 아바타 전체 조회
     @GetMapping
-    public ResponseEntity<?> getAllMyAvatar(HttpServletRequest request) {
-        List<AvatarAllResDto> dtoList = myPageService.getAllMyAvatar(request);
+    public ResponseEntity<?> getAllMyAvatar() {
+        List<AvatarAllResDto> dtoList = myPageService.getAllMyAvatar();
         return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }
+
+//    // 아바타 랜덤 뽑기
+//    @GetMapping
+//    public ResponseEntity<?> getAllMyAvatar() {
+//        List<AvatarAllResDto> dtoList = myPageService.getAllMyAvatar();
+//        return new ResponseEntity<>(dtoList, HttpStatus.OK);
+//    }
 }

@@ -23,17 +23,13 @@ import com.mm.greenstep.domain.plogging.repository.TrashRepository;
 import com.mm.greenstep.domain.user.entity.User;
 import com.mm.greenstep.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -90,17 +86,17 @@ public class PloggingService {
             user.levelUp(curExp);
             levelUp = true;
 
-            // 랜덤 아바타 선택을 위한 쿼리
-            Avatar randomAvatar = avatarRepository.findRandomAvatar();
-            // 선택된 랜덤 아바타를 `user_avatar` 테이블에 추가
-            UserAvatar userAvatar = userAvatarRepository.findByUser(user);
-            // 유저의 아바타 새로 뽑은거로 업데이트해주고
-            userAvatar.updateAvatar(randomAvatar);
-            // 저장
-            userAvatarRepository.save(userAvatar);
-            // dto에 넣어서 보내주기 위한 아바타 사진 주소와 아바타 이름
-            avatarImg = randomAvatar.getAvatarImg();
-            avatarName = randomAvatar.getAvatarName();
+//            // 랜덤 아바타 선택을 위한 쿼리
+//            Avatar randomAvatar = avatarRepository.findRandomAvatar();
+//            // 선택된 랜덤 아바타를 `user_avatar` 테이블에 추가
+//            UserAvatar userAvatar = userAvatarRepository.findByUser(user);
+//            // 유저의 아바타 새로 뽑은거로 업데이트해주고
+//            userAvatar.updateAvatar(randomAvatar);
+//            // 저장
+//            userAvatarRepository.save(userAvatar);
+//            // dto에 넣어서 보내주기 위한 아바타 사진 주소와 아바타 이름
+//            avatarImg = randomAvatar.getAvatarImg();
+//            avatarName = randomAvatar.getAvatarName();
         }
 
         userRepository.save(user);
