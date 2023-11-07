@@ -60,7 +60,7 @@ public class Plogging {
     private String travelPicture;
 
 
-    @Column(name = "is_visibled")
+    @Column(name = "is_visibled", columnDefinition = "BOOLEAN DEFAULT false")
     private Boolean isVisibled;
 
     public void updatePloggingImg(String s3Url) {

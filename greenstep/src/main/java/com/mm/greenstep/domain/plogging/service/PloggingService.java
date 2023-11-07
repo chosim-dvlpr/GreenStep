@@ -48,7 +48,6 @@ public class PloggingService {
     private final CoordinateRepository coordinateRepository;
     private final TrashRepository trashRepository;
     private final UserAchieveRepository userAchieveRepository; // 내 업적 레포
-    private final TensorFlowService tensorFlowService;
 
     public PloggingResDto createPlogging(HttpServletRequest request, PloggingReqDto dto) {
         Boolean levelUp = false;
@@ -265,16 +264,16 @@ public class PloggingService {
 
 
     public String createAiImg(MultipartFile file) {
-        // python ai server webclient 호출해서 type 리턴값 받아오고 return 해주면됨
-        try {
-            // 이미지를 byte array로 변환
-            byte[] imageBytes = file.getBytes();
-            // TensorFlow 서비스를 이용하여 이미지 분류
-            String result = tensorFlowService.classifyImage(imageBytes);
-            return result;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        // python ai server webclient 호출해서 type 리턴값 받아오고 return 해주면됨
+//        try {
+//            // 이미지를 byte array로 변환
+//            byte[] imageBytes = file.getBytes();
+//            // TensorFlow 서비스를 이용하여 이미지 분류
+//            String result = tensorFlowService.classifyImage(imageBytes);
+//            return result;
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         return null;
     }
 }

@@ -56,6 +56,7 @@ public class AvatarService {
                     .boxId(userAvatar.getAvatar().getBoxId())
                     .avatarImg(userAvatar.getAvatar().getAvatarImg())
                     .avatarName(userAvatar.getAvatar().getAvatarName())
+                    .isSelected(userAvatar.getIsSelected())
                     .build();
             list.add(dto);
         }
