@@ -53,8 +53,6 @@ public class CompeteService {
                 .build();
     }
 
-
-
     public CompeteResDto getCompete(YearMonth insert){
         // 해당 년도 경쟁 기록 가져오기
         YearMonth current = YearMonth.now();
