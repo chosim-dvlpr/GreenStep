@@ -10,4 +10,5 @@ public class AvatarAllResDto {
     private String avatarImg;
     private String avatarName;
     private Boolean isSelected;
+    private Long avatarId;
 }
