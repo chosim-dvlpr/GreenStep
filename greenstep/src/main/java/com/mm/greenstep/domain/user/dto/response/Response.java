@@ -128,7 +128,6 @@ public class Response {
                 .data(Collections.emptyList())
                 .result("fail")
                 .message("")
-                .
                 .error(errors)
                 .build();
         return ResponseEntity.ok(body);
