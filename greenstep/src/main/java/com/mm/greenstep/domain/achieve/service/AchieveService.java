@@ -1,6 +1,8 @@
 package com.mm.greenstep.domain.achieve.service;
 
+import com.mm.greenstep.domain.achieve.entity.Achieve;
 import com.mm.greenstep.domain.achieve.entity.UserAchieve;
+import com.mm.greenstep.domain.achieve.repository.AchieveRepository;
 import com.mm.greenstep.domain.achieve.repository.UserAchieveRepository;
 import com.mm.greenstep.domain.achieve.dto.response.AchieveDetailResDto;
 import com.mm.greenstep.domain.common.util.SecurityUtil;
@@ -22,6 +24,7 @@ public class AchieveService {
     private final UserRepository userRepository;
     private final UserAchieveRepository userAchieveRepository; // 내 업적 레포
     private final PloggingRepository ploggingRepository;
+    private final AchieveRepository achieveRepository;
 
 
     public List<AchieveDetailResDto> getDetailAchieve(HttpServletRequest request, Byte achieveType) {
@@ -105,5 +108,18 @@ public class AchieveService {
         }
 
         return list;
+    }
+
+    public boolean createUserAchieve(User user){
+        List<Achieve> achieveList = achieveRepository.findAll();
+        for(Achieve achieve : achieveList){
+            UserAchieve userAchieve = UserAchieve.builder()
+                    .achieve(achieve)
+                    .user(user)
+                    .build();
+
+            userAchieveRepository.save(userAchieve);
+        }
+        return true;
     }
 }

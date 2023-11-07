@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,7 +48,7 @@ public class User implements UserDetails {
     private Boolean isDeleted;
 
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
@@ -57,7 +58,7 @@ public class User implements UserDetails {
 
     @PrePersist
     public void prePersist() {
-        this.createdAt = LocalDateTime.now(); // 저장하기 전에 현재 시간으로 초기화
+        this.createdAt = LocalDate.now(); // 저장하기 전에 현재 시간으로 초기화
         this.exp = 0;
         this.isDeleted = false;
         this.level = 1;
