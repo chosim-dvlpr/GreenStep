@@ -1,5 +1,7 @@
 package com.mm.greenstep.domain.compete.api;
 
+import com.mm.greenstep.domain.compete.dto.response.CompeteResDto;
+import com.mm.greenstep.domain.compete.service.CompeteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,14 +13,23 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.YearMonth;
 
 @RestController
-@RequestMapping
+@RequestMapping("/compete")
 @RequiredArgsConstructor
 public class CompeteController {
 
-//    @GetMapping("/")
-//    public ResponseEntity<?> getDetailCompete(@PathVariable YearMonth yearMonth){
-//
-//        return new ResponseEntity<>(responseDto, HttpStatus.OK);
-//    }
+    private final CompeteService competeService;
+
+    // 양팀 진척도 조회
+    @GetMapping("/")
+    public ResponseEntity<?> getCompete(){
+        CompeteResDto responseDto = competeService.getCurrentCompete();
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/history/{victoryMonth}")
+    public ResponseEntity<?> getCompete(@PathVariable YearMonth yearMonth){
+        CompeteResDto responseDto = competeService.getCurrentCompete();
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+    }
 
 }
