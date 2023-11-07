@@ -18,14 +18,8 @@ const UserSlice = createSlice({
       state.accessToken = accessToken;
       state.refreshToken = refreshToken;
     },
-    getUserToken: (state) => {
-      return {
-        accessToken: state.accessToken,
-        refreshToken: state.refreshToken,
-      };
-    }
   },
 });
 
-export const { updateUserToken, getUserToken } = UserSlice.actions;
+export const { updateUserToken } = UserSlice.actions;
 export default UserSlice.reducer;
