@@ -52,13 +52,14 @@ const Login = ({setIsLogin}: LoginPropsType) => {
 
         LoginAPI.getLoginAxios(response?.accessToken)
         .then(res => {
+          const data = res.data.data
           console.log('storage에 토큰 저장 성공 : ', res)
           setIsLogin(true);
-          AsyncStorage.setItem('accessToken', res.data.data.accessToken);
-          AsyncStorage.setItem('refreshToken', res.data.data.refreshToken);
+          AsyncStorage.setItem('accessToken', data.accessToken);
+          AsyncStorage.setItem('refreshToken', data.refreshToken);
           dispatch(updateUserToken({
-            accessToken: res.data.data.accessToken,
-            refreshToken: res.data.data.refreshToken,
+            accessToken: data.accessToken,
+            refreshToken: data.refreshToken,
           }))          
         })
         .catch(err => {
