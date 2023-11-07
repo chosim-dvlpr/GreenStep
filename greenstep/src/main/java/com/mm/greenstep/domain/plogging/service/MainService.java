@@ -1,5 +1,6 @@
 package com.mm.greenstep.domain.plogging.service;
 
+import com.mm.greenstep.domain.plogging.dto.response.PloggingAllImgResDto;
 import com.mm.greenstep.domain.plogging.dto.response.PloggingAllLogResDto;
 import com.mm.greenstep.domain.plogging.entity.Plogging;
 import com.mm.greenstep.domain.plogging.repository.PloggingRepository;
@@ -38,23 +39,20 @@ public class MainService {
         return dto;
     }
 
-    public Map<Integer, String> getAllPloggingImg() {
+    public List<PloggingAllImgResDto> getAllPloggingImg() {
         // 원하는 개수만큼 랜덤한 레코드를 가져올 페이지 크기를 설정합니다.
         int count = 6;
 
         // findAll() 메서드 대신에 custom query를 사용하여 랜덤한 6개의 레코드를 가져옵니다.
         List<Plogging> ploggingList = ploggingRepository.findRandomVisiblePloggingRecords(count);
 
-        // 플로깅이 없으면 null
-        if (ploggingList.isEmpty()) {
-            return null;
-        }
+        List<PloggingAllImgResDto> imgList = new ArrayList<>();
 
-        Map<Integer, String> imgList = new HashMap<>();
-
-        for (int i = 0; i < ploggingList.size(); i++) {
-            String ImgUrl = ploggingList.get(i).getTravelPicture();
-            imgList.put(i, ImgUrl);
+        for (Plogging p : ploggingList) {
+            PloggingAllImgResDto dto = PloggingAllImgResDto.builder()
+                    .imageUrl(p.getTravelPicture())
+                    .build();
+            imgList.add(dto);
         }
 
         return imgList;

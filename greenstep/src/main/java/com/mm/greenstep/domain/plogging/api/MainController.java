@@ -1,5 +1,6 @@
 package com.mm.greenstep.domain.plogging.api;
 
+import com.mm.greenstep.domain.plogging.dto.response.PloggingAllImgResDto;
 import com.mm.greenstep.domain.plogging.dto.response.PloggingAllLogResDto;
 import com.mm.greenstep.domain.plogging.dto.response.PloggingAllResDto;
 import com.mm.greenstep.domain.plogging.service.MainService;
@@ -29,7 +30,7 @@ public class MainController {
     // 플로깅 이미지 조회(피드)
     @GetMapping("/picture")
     public ResponseEntity<?> getAllPloggingImg() {
-        Map<Integer, String> ploggingImgList = mainService.getAllPloggingImg();
+        List<PloggingAllImgResDto> ploggingImgList = mainService.getAllPloggingImg();
         return new ResponseEntity<>(ploggingImgList, HttpStatus.OK);
     }
 }
