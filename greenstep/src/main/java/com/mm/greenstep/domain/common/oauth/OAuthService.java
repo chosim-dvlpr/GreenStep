@@ -55,7 +55,7 @@ public class OAuthService {
 
             //결과 코드가 200이라면 성공
             int responseCode = conn.getResponseCode();
-            System.out.println("responseCode : " + responseCode);
+            log.info(String.valueOf(responseCode));
 
             //요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -65,14 +65,12 @@ public class OAuthService {
             while ((line = br.readLine()) != null) {
                 result += line;
             }
-            log.info("response body : " + result);
 
             //Gson 라이브러리로 JSON파싱
             JsonParser parser = new JsonParser();
             JsonElement element = parser.parse(result);
 
             String kakaoId = element.getAsJsonObject().get("id").toString();
-            log.info("id : " + kakaoId);
             br.close();
 
             return kakaoId;
@@ -95,11 +93,13 @@ public class OAuthService {
                 randomNick = randomNickname();
             }
 
+            int teamId = randomTeam();
+            log.info("createUser - team" + teamId);
 
             User saveUser = User.builder()
                     .userName(kakaoId)
                     .password(passwordEncoder.encode("kakao"))
-                    .team(teamRepository.findById(randomTeam()).orElseThrow())  //랜덤 팀
+                    .team(teamRepository.findById(teamId).orElseThrow())  //랜덤 팀
                     .nickName(randomNick)   //랜덤 닉네임
                     .build();
 

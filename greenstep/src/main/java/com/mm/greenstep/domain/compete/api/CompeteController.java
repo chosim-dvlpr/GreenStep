@@ -32,4 +32,9 @@ public class CompeteController {
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
+
+    // test
+//    @GetMapping("/test")
+//    public
+
 }
