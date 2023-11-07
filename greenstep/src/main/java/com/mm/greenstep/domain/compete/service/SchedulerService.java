@@ -51,7 +51,7 @@ public class SchedulerService {
 
     // 요일 상관 없이, 매월, 1일, 00시, 1분, 0초 실행
     // cron = 초 분 시간 일 월 요일(0:일, 1:월, --- , 6:토), 연도 설정 안됨
-//    @Scheduled(cron= "0 * 17 7 11 *",zone = "Asia/Seoul")
+//    @Scheduled(cron= "0 * 0 8 11 *",zone = "Asia/Seoul")
 //    public void test(){
 //        log.info("create victory");
 //        Victory victory = new Victory();

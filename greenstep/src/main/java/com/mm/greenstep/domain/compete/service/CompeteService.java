@@ -10,6 +10,7 @@ import com.mm.greenstep.domain.user.entity.Team;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class CompeteService {
 
     public CompeteResDto getCurrentCompete() {
         // 현재의 경쟁 기록 가져오기
-        YearMonth current = YearMonth.now();
+        LocalDate current = LocalDate.now();
         Victory currentVictory = victoryRepository.findByVictoryMonth(current).orElseThrow();
 
         List<Compete> competeList = competeRepository.findAllByVictory(currentVictory);
@@ -53,9 +54,9 @@ public class CompeteService {
                 .build();
     }
 
-    public CompeteResDto getCompete(YearMonth insert){
+    public CompeteResDto getCompete(LocalDate insert){
         // 해당 년도 경쟁 기록 가져오기
-        YearMonth current = YearMonth.now();
+        LocalDate current = LocalDate.now();
         Victory currentVictory = victoryRepository.findByVictoryMonth(insert).orElseThrow();
 
         List<Compete> competeList = competeRepository.findAllByVictory(currentVictory);
@@ -85,4 +86,11 @@ public class CompeteService {
                 .build();
     }
 
+//    public void updateCompete(int AITrashAmount, int TravelRange, int TravelTime, int TrashAmount){
+//        // 내팀 조회
+//        Team team = SecurityUtil.getCurrentUser().getTeam();
+//
+//        // 현재 진행중인 경쟁 확인
+//        LocalDate.now()
+//    }
 }

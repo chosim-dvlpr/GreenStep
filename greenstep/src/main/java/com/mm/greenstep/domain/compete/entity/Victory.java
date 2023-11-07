@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.Date;
@@ -28,7 +29,7 @@ public class Victory {
     private Team team;
 
     @Column(name = "victory_month", nullable = false)
-    private LocalDateTime victoryMonth;
+    private LocalDate victoryMonth;
 
     @Column(name = "goal_score", nullable = false)
     private Integer goalScore;
@@ -39,7 +40,7 @@ public class Victory {
 
     @PrePersist
     public void prePersist() {
-        this.victoryMonth = LocalDateTime.now();
+        this.victoryMonth = LocalDate.now();
         this.isComplete = false;
         this.goalScore = 10000;
     }

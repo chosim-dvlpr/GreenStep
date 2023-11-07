@@ -9,5 +9,4 @@ import java.util.List;
 public interface CompeteRepository extends JpaRepository<Compete, Long> {
 
     List<Compete> findAllByVictory(Victory currentVictory);
-
 }
