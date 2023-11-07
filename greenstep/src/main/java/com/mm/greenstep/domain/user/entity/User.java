@@ -115,6 +115,10 @@ public class User implements UserDetails {
         this.exp = exp;
     }
 
+    public void updateNickName(String nickName){
+        this.nickName = nickName;
+    }
+
 
 
 }

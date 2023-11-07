@@ -191,4 +191,21 @@ public class UserService {
         return response.success();
     }
 
+    public ResponseEntity<?> updateNickName(String nickName){
+        if(isExistNickName(nickName)){
+            SecurityUtil.getCurrentUser().updateNickName(nickName);
+            return new ResponseEntity<>(true,HttpStatus.OK);
+        } else{
+            return new ResponseEntity<>(false,HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public Boolean isExistNickName(String nickName){
+        if (userRepository.findByNickName(nickName).isEmpty()){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
 }
