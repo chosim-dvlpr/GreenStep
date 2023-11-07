@@ -44,6 +44,7 @@ public class PloggingService {
     private final CoordinateRepository coordinateRepository;
     private final TrashRepository trashRepository;
     private final UserAchieveRepository userAchieveRepository; // 내 업적 레포
+    private final TensorFlowService tensorFlowService;
 
     public PloggingResDto createPlogging(HttpServletRequest request, PloggingReqDto dto) {
         Boolean levelUp = false;
@@ -217,6 +218,7 @@ public class PloggingService {
                     .travelRange(p.getTravelRange())
                     .trashAmount(p.getTrashAmount())
                     .travelTime(p.getTravelTime())
+                    .travelPicture(p.getTravelPicture())
                     .build();
             dtoList.add(dto);
         }
