@@ -27,10 +27,10 @@ const ProfilePloggingDataInfo = ({navigation}:any) => {
       .then((res) =>{
         console.log(res)
         // console.log(res.data),
-        // setTimeInfo(res.data.travelTime)
-        // setDistanceInfo(res.data.travelRange)
-        // setTrashInfo(res.data.trashAmount)
-        // setAchieveInfo(res.data.completedAchieveCount)
+        setTimeInfo(res.data.travelTime)
+        setDistanceInfo(res.data.travelRange)
+        setTrashInfo(res.data.trashAmount)
+        setAchieveInfo(res.data.completedAchieveCount)
       } 
         )
       .catch(err => console.log('사용자 정보 조회 axios 에러 : ', err))

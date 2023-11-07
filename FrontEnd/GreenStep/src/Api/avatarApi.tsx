@@ -1,10 +1,4 @@
-import axios from "axios";
 import tokenHttp from "./tokenHttp";
-
-//기본 axios 인스턴스 생성
-const axiosInstance = axios.create({
-    baseURL: 'https://k9b303.p.ssafy.io/api',
-  });
 
 /** AVATAR API */
 export const AvatarAPI = {

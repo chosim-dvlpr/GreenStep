@@ -4,21 +4,31 @@ import avatar from '../../../Image/Avatar/bird.png';
 import ImageStyle from '../../../Style/Image';
 import MyPloggingDetail from './MyPloggingDetail';
 import { ProfileAPI } from '../../../Api/profileApi';
+import { Double } from 'react-native/Libraries/Types/CodegenTypes';
+
+interface PloggingData {
+    createdAt: string | null;
+    getExp: number;
+    ploggingId: number;
+    trashAmount: number;
+    travelRange: Double;
+    travelTime: Double;
+    travelPicture : string | null;
+  }
 
 const MyPloggingList = () => {
-    const [images, setImages] = useState([avatar, avatar, avatar, avatar, avatar, avatar, avatar, avatar])
-    const [dataList, setDataList] = useState({})
+    const [dataList, setDataList] = useState<PloggingData[]>([]);
     const [idx, setIdx] = useState(0)
-    const [dataDetail, setDataDetail] = useState([])
     const [toggle, setToggle] = useState(false)
 
 
     // 내 플로깅 이력 불러오기
     const getMyploggingList = () => {
-    ProfileAPI.getMyPloggingAxios()
+    ProfileAPI.getPloggingListAxios()
     .then((res) =>{
+      console.log('내 플로깅 리스트 조회/plogging')
       console.log(res)
-    //   setDataList(res.data)
+      setDataList(res.data)
     } 
       )
     .catch(err => console.log('내 플로깅 이력 axios 에러 : ', err))
@@ -34,26 +44,26 @@ const MyPloggingList = () => {
   useEffect(() => {
     getMyploggingList();
   }, [])
-
+  console.log(dataList)
     return(
         <View>
             <ScrollView horizontal={false}>
                 <View style={styles.wrapRow}>
-                    {images.map((image, index) => (
-                        <TouchableOpacity onPress={() => handleAvatarId(index)}>
+                    {dataList.map((data, index) => (
+                        <TouchableOpacity onPress={() => handleAvatarId(data.ploggingId)}>
                             <View>
-                                <Image key={index} source={image} style={ImageStyle.mediumImage} />
+                                <Image key={index} source={avatar} style={ImageStyle.mediumImage} />
                                 <View style={[styles.overlayText, styles.noWrapRow]}>
-                                    <Text style={styles.textStyle}>28:57</Text>
-                                    <Text style={styles.textStyle}>5.06 KM</Text>
-                                    <Text style={styles.textStyle}>5'43"</Text>
+                                    <Text style={styles.textStyle}>{data.trashAmount} 개</Text>
+                                    <Text style={styles.textStyle}>{data.travelRange} KM</Text>
+                                    <Text style={styles.textStyle}>{data.travelTime}</Text>
                             </View>
                             </View>
                         </TouchableOpacity>
                         ))}
                 </View>
             </ScrollView>
-            {toggle && <MyPloggingDetail onClose={handleToggle} index={idx} />}
+        {toggle && <MyPloggingDetail onClose={handleToggle} index={idx} />}
         </View>
     )
 }

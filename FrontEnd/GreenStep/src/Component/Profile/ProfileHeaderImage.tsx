@@ -48,7 +48,7 @@ const ProfileHeaderImage = ({percentage}:any) => {
                     </View>
                 )}
             </AnimatedCircularProgress>
-            {toggle && <ProfileAvatarModal onSelectAvatar={changeAvatar} />}
+            {toggle && <ProfileAvatarModal onSelectAvatar={changeAvatar} onClose={handleToggle} visible={toggle} />}
         </View>
     )
 }
