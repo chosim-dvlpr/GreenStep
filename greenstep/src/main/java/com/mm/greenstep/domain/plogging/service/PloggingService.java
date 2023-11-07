@@ -23,10 +23,14 @@ import com.mm.greenstep.domain.plogging.repository.TrashRepository;
 import com.mm.greenstep.domain.user.entity.User;
 import com.mm.greenstep.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -229,16 +233,15 @@ public class PloggingService {
 
     public PloggingDetailResDto getDetailPlogging(Long ploggingId) {
         Plogging plogging = ploggingRepository.findByPloggingId(ploggingId);
+
+        if (plogging == null) {
+            throw new EntityNotFoundException("Plogging with id " + ploggingId + " not found.");
+        }
+
         List<Coordinate> position = coordinateRepository.findAllByPlogging(plogging);
 
-        if(plogging == null)  {
-            return null;
-        }
-        if (position.isEmpty()) {
-            return null;
-        }
-
         List<PloggingCoorDto> ploggingCoorDtoList = new ArrayList<>();
+
         for (Coordinate p : position) {
             PloggingCoorDto dto = PloggingCoorDto.builder()
                     .latitude(p.getLatitude())
@@ -261,8 +264,17 @@ public class PloggingService {
     }
 
 
-    public Byte createAiImg(MultipartFile file) {
+    public String createAiImg(MultipartFile file) {
         // python ai server webclient 호출해서 type 리턴값 받아오고 return 해주면됨
+        try {
+            // 이미지를 byte array로 변환
+            byte[] imageBytes = file.getBytes();
+            // TensorFlow 서비스를 이용하여 이미지 분류
+            String result = tensorFlowService.classifyImage(imageBytes);
+            return result;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }
