@@ -25,7 +25,7 @@ public class UserAvatar {
     @Column(name = "is_selected", columnDefinition = "BOOLEAN DEFAULT false")
     private Boolean isSelected;
 
-    public void updateAvatar(Avatar avatar) {
-        this.isSelected = true;
+    public void updateAvatar(Boolean tf) {
+        this.isSelected = tf;
     }
 }
