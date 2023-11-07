@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Modal, Text, TouchableOpacity, StyleSheet, ScrollView, Image } from "react-native";
+import { View, Modal, Text, TouchableWithoutFeedback,
+         TouchableOpacity, StyleSheet, ScrollView, Image } from "react-native";
 import panda from '../../Image/Avatar/panda.png'
 import cow from '../../Image/Avatar/cow.png'
 import crocodile from '../../Image/Avatar/crocodile.png'
@@ -7,7 +8,13 @@ import bird from '../../Image/Avatar/bird.png'
 import ImageStyle from '../../Style/Image';
 import { AvatarAPI } from "../../Api/avatarApi";
 
-const ProfileAvatarModal = ({ onSelectAvatar }:any) => {
+interface ModalProps {
+    onClose: () => void;
+    onSelectAvatar: (avatar: any) => void;
+    visible: boolean;
+}
+
+const ProfileAvatarModal : React.FC<ModalProps> = ({ onSelectAvatar, onClose}) => {
     const [collection, setCollection] = useState([panda, cow, bird, crocodile])
     const [avatars, setAvatars] = useState({})
     // 사용자 캐릭터 불러오기
@@ -29,10 +36,12 @@ const ProfileAvatarModal = ({ onSelectAvatar }:any) => {
     return (
         <Modal
             transparent={true}
-            animationType="slide"
+            animationType="fade"
             visible={true}
-        >
+            onRequestClose={onClose}>
+        <TouchableWithoutFeedback onPress={onClose}>
             <View style={styles.modalOverlay}>
+           <TouchableWithoutFeedback>
                 <View style={[styles.modalView, {justifyContent:'center', alignItems:'center'}]}>
                     <Text style={{marginBottom: 10, fontWeight:'bold', fontSize: 20}}> 캐릭터 선택</Text>
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -42,11 +51,11 @@ const ProfileAvatarModal = ({ onSelectAvatar }:any) => {
                             </TouchableOpacity>
                         ))}
                     </ScrollView>
-                    {/* <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-                        <Text>선택하기</Text>
-                    </TouchableOpacity> */}
+
                 </View>
+            </TouchableWithoutFeedback>
             </View>
+            </TouchableWithoutFeedback>
         </Modal>
     );
 };
@@ -60,8 +69,8 @@ const styles = StyleSheet.create({
         // backgroundColor: 'rgba(0, 0, 0, 0.5)', // 반투명 배경
     },
     modalView: {
-        width: 300, // 모달 창의 너비
-        height: 200, // 모달 창의 높이
+        width: 300,
+        height: 200, 
         backgroundColor: 'white',
         borderRadius: 20,
         padding: 20,
