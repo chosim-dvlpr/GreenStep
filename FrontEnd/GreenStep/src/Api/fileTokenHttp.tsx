@@ -29,7 +29,7 @@ fileTokenHttp.interceptors.request.use(async (req) => {
 
   // access token 이 만료되지 않았다면 access-token 을 넣어 요청 실행
   if (isExpired) {
-    req.headers['Authorization'] = accessToken;
+    req.headers['Authorization'] = `Bearer ${accessToken}`;
     
     return req;
   }
