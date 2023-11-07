@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, Modal} from 'react-native';
 import React, {useState, useRef, useEffect, useReducer} from 'react';
 import Geolocation from 'react-native-geolocation-service';
 import {Marker, Polyline} from 'react-native-maps';
@@ -13,6 +13,7 @@ import MapView from 'react-native-map-clustering';
 import PloggingInfo from '../Component/PloggingStart/PloggingInfo';
 import PloggingFooter from '../Component/PloggingStart/PloggingFooter';
 import PloggingMap from '../Component/Common/PloggingMap';
+import PloggingModal from '../Component/PloggingStart/PloggingModal';
 //안드로이드에서 권한 갖고오기
 async function requestPermission() {
   try {
@@ -41,6 +42,7 @@ const PloggingStart = () => {
         watchId.current = Geolocation.watchPosition(
           position => {
             const {latitude, longitude} = position.coords;
+            console.log(position.coords);
             dispatch({type: 'ADD_LOCATION', payload: {latitude, longitude}});
           },
           error => {
@@ -70,6 +72,15 @@ const PloggingStart = () => {
     };
   }, []);
 
+  // 모달
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const openModal = () => {
+    setIsModalVisible(true);
+  };
+  const closeModal = () => {
+    setIsModalVisible(false);
+  };
+
   return (
     <View style={styles.container}>
       <PloggingInfo
@@ -80,7 +91,15 @@ const PloggingStart = () => {
       {state.locations.length > 0 && (
         <PloggingMap locations={state.locations} isTracking={isTracking} />
       )}
-      <PloggingFooter />
+
+      <PloggingFooter openModal={openModal} />
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={closeModal}>
+        <PloggingModal onClose={closeModal} />
+      </Modal>
     </View>
   );
 };

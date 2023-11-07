@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import StopWatch from './StopWatch';
-// import PloggingDivision from './PloggingDivision';
+import styled from 'styled-components/native';
 type PloggingInfoProps = {
   isTracking: boolean;
   setIsTracking: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,11 +18,27 @@ const PloggingInfo: React.FC<PloggingInfoProps> = ({
   };
   return (
     <View>
-      <View style={{flexDirection: 'row'}}>
-        <Text>{distance} m</Text>
-        <Text>
-          <StopWatch isRunning={isTracking} />
-        </Text>
+      <View>
+        <View>
+          <Text>{distance} m</Text>
+          <Text>거리</Text>
+          <Text>거리</Text>
+          <Text>거리</Text>
+          <Text>거리</Text>
+        </View>
+        <View>
+          <Text>{distance} m</Text>
+          <Text>거리</Text>
+          <Text>거리</Text>
+          <Text>거리</Text>
+          <Text>거리</Text>
+        </View>
+        <View>
+          <Text>
+            <StopWatch isRunning={isTracking} />
+          </Text>
+          <Text>거리</Text>
+        </View>
       </View>
 
       <TouchableOpacity onPress={handleToggleTracking}>
@@ -33,3 +49,6 @@ const PloggingInfo: React.FC<PloggingInfoProps> = ({
 };
 
 export default PloggingInfo;
+const ImageContainer = styled.View`
+  alignitems: center;
+`;
