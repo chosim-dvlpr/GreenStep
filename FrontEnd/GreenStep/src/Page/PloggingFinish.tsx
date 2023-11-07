@@ -7,6 +7,7 @@ import ImageStyle from '../Style/Image';
 import fileTokenHttp from '../Api/fileTokenHttp';
 import { launchImageLibrary } from 'react-native-image-picker';
 import PloggingFinishHeader from '../Component/PloggingFinish/PloggingFinishHeader';
+import { useNavigation } from '@react-navigation/native';
 
 interface PloggingFinishType {
   ploggingId?: number,
@@ -45,6 +46,7 @@ const ButtonTextColor = '#8BCA84';
 
 
 const PloggingFinish = ({ploggingId}: PloggingFinishType) => {
+  const navigation = useNavigation();
 
   /** 경험치 얻기 */
   const getExp = () => {
@@ -167,7 +169,7 @@ const PloggingFinish = ({ploggingId}: PloggingFinishType) => {
         {/* 메인 버튼 */}
         <GoToMainContainer>
           <TouchableOpacity
-            onPress={() => uploadPhoto()}
+            onPress={() => navigation.navigate('main')}
             style={[
               ButtonStyle.whiteColor, 
               ButtonStyle.fullLargeButton
