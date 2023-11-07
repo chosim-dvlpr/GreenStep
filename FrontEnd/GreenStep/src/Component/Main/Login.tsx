@@ -14,17 +14,18 @@ import {
 } from '@react-native-seoul/kakao-login';
 import ButtonStyle from '../../Style/ButtonStyle';
 import { LoginAPI } from '../../Api/basicHttp';
-// import { getTokens } from '../../Api/tokenHttp';
-import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch } from 'react-redux';
+import { updateUserToken } from '../../Store/userSlice';
 
 interface LoginPropsType {
   setIsLogin: Dispatch<SetStateAction<boolean>>;
 }
 
 const Login = ({setIsLogin}: LoginPropsType) => {
-  const [result,setResult] = useState<string>('');
-  const navigation = useNavigation();
+  const dispatch = useDispatch();
+  
+  const [result,setResult] = useState<string>('123');
   const [token, setToken] = useState<KakaoOAuthToken | string>('');
   
   const getLogin = async () => {
@@ -55,6 +56,10 @@ const Login = ({setIsLogin}: LoginPropsType) => {
           setIsLogin(true);
           AsyncStorage.setItem('accessToken', res.data.data.accessToken);
           AsyncStorage.setItem('refreshToken', res.data.data.refreshToken);
+          dispatch(updateUserToken({
+            accessToken: res.data.data.accessToken,
+            refreshToken: res.data.data.refreshToken,
+          }))          
         })
         .catch(err => {
           console.log("login axios 에러 발생: ", err);
@@ -65,35 +70,35 @@ const Login = ({setIsLogin}: LoginPropsType) => {
     }
   };
   
-  const signOutWithKakao = async (): Promise<void> => {
-    try {
-      const message = await logout();
-      console.log(message);
-      setResult(message);
-    } catch(err) {
-      console.log(err);
-    }
-  };
+  // const signOutWithKakao = async (): Promise<void> => {
+  //   try {
+  //     const message = await logout();
+  //     console.log(message);
+  //     setResult(message);
+  //   } catch(err) {
+  //     console.log(err);
+  //   }
+  // };
   
-  const getKakaoProfile = async (): Promise<void> => {
-    try {
-      const profile: KakaoProfile|KakaoProfileNoneAgreement = await getProfile();
-      console.log(profile);
-      setResult(JSON.stringify(profile));
-    } catch(err) {
-      console.log(err);
-    }
-  };
+  // const getKakaoProfile = async (): Promise<void> => {
+  //   try {
+  //     const profile: KakaoProfile|KakaoProfileNoneAgreement = await getProfile();
+  //     console.log(profile);
+  //     setResult(JSON.stringify(profile));
+  //   } catch(err) {
+  //     console.log(err);
+  //   }
+  // };
   
-  const unlinkKakao = async (): Promise<void> => {
-    try {
-      const message = await unlink();
-      console.log(message);
-      setResult(message);
-    } catch(err) {
-      console.log(err);
-    }
-  };
+  // const unlinkKakao = async (): Promise<void> => {
+  //   try {
+  //     const message = await unlink();
+  //     console.log(message);
+  //     setResult(message);
+  //   } catch(err) {
+  //     console.log(err);
+  //   }
+  // };
 
 
 
