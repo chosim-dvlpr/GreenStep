@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/main")
@@ -28,7 +29,7 @@ public class MainController {
     // 플로깅 이미지 조회(피드)
     @GetMapping("/picture")
     public ResponseEntity<?> getAllPloggingImg() {
-        List<String> ploggingImgList = mainService.getAllPloggingImg();
+        Map<Integer, String> ploggingImgList = mainService.getAllPloggingImg();
         return new ResponseEntity<>(ploggingImgList, HttpStatus.OK);
     }
 }

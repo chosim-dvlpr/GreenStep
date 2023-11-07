@@ -53,6 +53,7 @@ public class AvatarService {
         for (UserAvatar userAvatar : userAvatarList) {
             AvatarAllResDto dto = AvatarAllResDto.builder()
                     .boxId(userAvatar.getAvatar().getBoxId())
+                    .avatarId(userAvatar.getAvatarId())
                     .avatarImg(userAvatar.getAvatar().getAvatarImg())
                     .avatarName(userAvatar.getAvatar().getAvatarName())
                     .isSelected(userAvatar.getIsSelected())

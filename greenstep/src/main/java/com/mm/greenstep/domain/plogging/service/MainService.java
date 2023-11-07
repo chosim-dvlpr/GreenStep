@@ -8,9 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -40,28 +38,23 @@ public class MainService {
         return dto;
     }
 
-    public List<String> getAllPloggingImg() {
+    public Map<Integer, String> getAllPloggingImg() {
         // 원하는 개수만큼 랜덤한 레코드를 가져올 페이지 크기를 설정합니다.
         int count = 6;
 
         // findAll() 메서드 대신에 custom query를 사용하여 랜덤한 6개의 레코드를 가져옵니다.
         List<Plogging> ploggingList = ploggingRepository.findRandomVisiblePloggingRecords(count);
-        for (Plogging p : ploggingList) {
-            System.out.println(p.getTravelPicture());
-        }
 
         // 플로깅이 없으면 null
         if (ploggingList.isEmpty()) {
-            return Collections.emptyList();
+            return null;
         }
 
+        Map<Integer, String> imgList = new HashMap<>();
 
-        List<String> imgList = new ArrayList<>();
-
-
-        for (Plogging p : ploggingList) {
-            String Img = p.getTravelPicture();
-            imgList.add(Img);
+        for (int i = 0; i < ploggingList.size(); i++) {
+            String ImgUrl = ploggingList.get(i).getTravelPicture();
+            imgList.put(i, ImgUrl);
         }
 
         return imgList;
