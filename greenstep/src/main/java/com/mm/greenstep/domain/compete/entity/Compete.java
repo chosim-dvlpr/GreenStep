@@ -26,20 +26,30 @@ public class Compete {
     @JoinColumn(name = "team_id")
     private Team team;
 
-    @Column(name = "compete_month")
-    private YearMonth competeMonth;
+    @ManyToOne
+    @JoinColumn(name = "victory_id")
+    private Victory victory;
 
     @Column(name = "compete_score", nullable = false)
     private Integer competeScore;
 
-    @Column(name = "is_victory", nullable = false)
-    private Boolean isVictory;
+    @Column(name = "compete_time", nullable = false)
+    private Double competeTime;
+
+    @Column(name = "compete_range", nullable = false)
+    private Double competeRange;
+
+    @Column(name = "compete_amount", nullable = false)
+    private Double competeAmount;
+
+
 
     @PrePersist
     public void prePersist() {
-        this.competeMonth = YearMonth.from(LocalDateTime.now());
-        this.isVictory = false;
         this.competeScore = 0;
+        this.competeTime = 0.0;
+        this.competeRange = 0.0;
+        this.competeAmount = 0.0;
     }
 
 }
