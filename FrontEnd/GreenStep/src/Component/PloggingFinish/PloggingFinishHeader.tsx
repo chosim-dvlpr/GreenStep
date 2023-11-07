@@ -1,8 +1,12 @@
 import { View, Text, Image } from 'react-native'
 import React from 'react'
 import styled from 'styled-components/native'
-import PloggingFinishStamp from '../../Image/Plogging/PloggingFinishStamp.png'
+import PloggingFinishStamp from '../../Image/PloggingFinish/PloggingFinishStamp.png'
 import ImageStyle from '../../Style/Image'
+
+interface PloggingFinishHeaderType {
+  getExp?: number,
+}
 
 const HeaderText = styled.Text`
   font-size: 30;
@@ -20,7 +24,7 @@ const HeaderSubText = styled.Text`
   margin-right: 30;
 `
 
-const PloggingFinishHeader = () => {
+const PloggingFinishHeader = ({getExp}: PloggingFinishHeaderType) => {
   return (
     <View>
       <Image
@@ -29,7 +33,7 @@ const PloggingFinishHeader = () => {
       />
       <HeaderTextContainer>
         <HeaderText>오늘도 해냈어요!</HeaderText>
-        <HeaderSubText>+78exp</HeaderSubText>
+        <HeaderSubText>+{getExp}exp</HeaderSubText>
       </HeaderTextContainer>
     </View>
   )

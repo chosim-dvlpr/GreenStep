@@ -8,6 +8,8 @@ import { useNavigation } from '@react-navigation/native';
 import { LoginAPI, MainAPI } from '../Api/basicHttp';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import tokenHttp from '../Api/tokenHttp';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../Store/store';
 
 export interface EmailLoginDataType {
   'email': string,
@@ -21,7 +23,7 @@ const MainText = styled.Text`
 `
 
 const MainTextContainer = styled.View`
-  margin-top: 75;
+  margin-top: 15%;
   margin-left: 30;
   margin-bottom: 25;
 `
@@ -45,8 +47,18 @@ const CarouselTextContainer = styled.View`
 
 const Main = () => {
   const navigation = useNavigation();
+  // const dispatch = useDispatch();
   const [isLogin, setIsLogin] = useState<boolean>(false);
+  
+  // 토큰 확인
+  // const { stateAccessToken, stateRefreshToken } = useSelector((state: RootState) => state.user);
 
+  useEffect(() => {
+    if (AsyncStorage.getItem('accessToken')) {
+      console.log('토큰을 갖고 있습니다.')
+      setIsLogin(true)
+    }
+  }, [])
   
   // 메인 문구 불러오기
   const [trashAmount, setTrashAmount] = useState<number>(0);
@@ -78,60 +90,60 @@ const Main = () => {
   }, [])
 
 
-  // 임시 로그인
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  // // 임시 로그인
+  // const [email, setEmail] = useState<string>('');
+  // const [password, setPassword] = useState<string>('');
 
-  const onChangeEmail = (e: string) => {
-    setEmail(e)
-  }
-  const onChangePassword = (e: string) => {
-    setPassword(e)
-  }
+  // const onChangeEmail = (e: string) => {
+  //   setEmail(e)
+  // }
+  // const onChangePassword = (e: string) => {
+  //   setPassword(e)
+  // }
 
   /** 이메일 버튼 클릭 시 axios 요청 */
-  const emailLogin = async () => {
-    const data: EmailLoginDataType = await {
-      email: email,
-      password: password
-    }
-    LoginAPI.getEmailLoginAxios(data)
-    .then(res => {
-      console.log('이메일 로그인 axios 성공 : ', res)
-      const response = res.data;
-      if (response.state === 200) {
-        setIsLogin(true);
-        AsyncStorage.setItem('accessToken', response.data.accessToken)
-        AsyncStorage.setItem('refreshToken', response.data.refreshToken)
-        // AsyncStorage.setItem('refreshTokenExpirationTime', response.data.refreshTokenExpirationTime)
-      } else if (response.status === 400) {
-        console.log(response.message)
-      }
-    })
-    .catch(err => console.log('이메일 로그인 실패 : ', err))
-  }
+  // const emailLogin = async () => {
+  //   const data: EmailLoginDataType = await {
+  //     email: email,
+  //     password: password
+  //   }
+  //   LoginAPI.getEmailLoginAxios(data)
+  //   .then(res => {
+  //     console.log('이메일 로그인 axios 성공 : ', res)
+  //     const response = res.data;
+  //     if (response.state === 200) {
+  //       setIsLogin(true);
+  //       AsyncStorage.setItem('accessToken', response.data.accessToken)
+  //       AsyncStorage.setItem('refreshToken', response.data.refreshToken)
+  //       // AsyncStorage.setItem('refreshTokenExpirationTime', response.data.refreshTokenExpirationTime)
+  //     } else if (response.status === 400) {
+  //       console.log(response.message)
+  //     }
+  //   })
+  //   .catch(err => console.log('이메일 로그인 실패 : ', err))
+  // }
 
-  const logout = async () => {
-    try {
-      const accessToken = await AsyncStorage.getItem('accessToken');
-      const refreshToken = await AsyncStorage.getItem('refreshToken');
+  // const logout = async () => {
+  //   try {
+  //     const accessToken = await AsyncStorage.getItem('accessToken');
+  //     const refreshToken = await AsyncStorage.getItem('refreshToken');
   
-      const data = {
-        accessToken: accessToken,
-        refreshToken: refreshToken
-      };
+  //     const data = {
+  //       accessToken: accessToken,
+  //       refreshToken: refreshToken
+  //     };
   
-      console.log('logout 실행');
-      tokenHttp.post('/user/logout', data)
-        .then(res => {
-          AsyncStorage.removeItem('accessToken');
-          AsyncStorage.removeItem('refreshToken');
-        })
-        .catch(err => console.log('로그아웃 실패 : ', err));
-    } catch (error) {
-      console.error('로그아웃 중 오류 발생:', error);
-    }
-  };
+  //     console.log('logout 실행');
+  //     tokenHttp.post('/user/logout', data)
+  //       .then(res => {
+  //         AsyncStorage.removeItem('accessToken');
+  //         AsyncStorage.removeItem('refreshToken');
+  //       })
+  //       .catch(err => console.log('로그아웃 실패 : ', err));
+  //   } catch (error) {
+  //     console.error('로그아웃 중 오류 발생:', error);
+  //   }
+  // };
   
   
 
