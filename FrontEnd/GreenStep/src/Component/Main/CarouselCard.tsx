@@ -8,7 +8,9 @@ interface CarouselCardProps {
   gap: number;
   offset: number;
   pages: samplePagesType;
-  setSamplePages: Dispatch<SetStateAction<samplePagesType>>;
+  // pages: string[];
+  setPages: Dispatch<SetStateAction<samplePagesType>>;
+  // setPages: Dispatch<SetStateAction<string[]>>;
   pageWidth: number;
 }
 
@@ -18,7 +20,7 @@ const Container = styled.View`
   align-items: center;
 `;
 
-const CarouselCard = ({pages, setSamplePages, pageWidth, gap, offset}: CarouselCardProps) => {
+const CarouselCard = ({pages, setPages, pageWidth, gap, offset}: CarouselCardProps) => {
   
   function renderItem({item}: any) {
     return (
@@ -37,7 +39,7 @@ const CarouselCard = ({pages, setSamplePages, pageWidth, gap, offset}: CarouselC
   // 끝에 도달하면 리스트 반복해서 보여줌
   const onDataFetch = () => {
     console.log('업데이트')
-    setSamplePages([...pages, ...pages]);
+    setPages([...pages, ...pages]);
   }
 
   return (
