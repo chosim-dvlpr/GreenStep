@@ -22,10 +22,7 @@ interface LoginPropsType {
   setIsLogin: Dispatch<SetStateAction<boolean>>;
 }
 
-const Login = ({setIsLogin}: LoginPropsType) => {
-  const dispatch = useDispatch();
-  
-  const [result,setResult] = useState<string>('123');
+const Login = ({setIsLogin}: LoginPropsType) => {  
   const [token, setToken] = useState<KakaoOAuthToken | string>('');
   
   const getLogin = async () => {
@@ -57,10 +54,10 @@ const Login = ({setIsLogin}: LoginPropsType) => {
           setIsLogin(true);
           AsyncStorage.setItem('accessToken', data.accessToken);
           AsyncStorage.setItem('refreshToken', data.refreshToken);
-          dispatch(updateUserToken({
-            accessToken: data.accessToken,
-            refreshToken: data.refreshToken,
-          }))          
+          // dispatch(updateUserToken({
+          //   accessToken: data.accessToken,
+          //   refreshToken: data.refreshToken,
+          // }))          
         })
         .catch(err => {
           console.log("login axios 에러 발생: ", err);
