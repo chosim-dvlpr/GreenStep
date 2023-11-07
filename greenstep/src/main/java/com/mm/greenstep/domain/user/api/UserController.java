@@ -7,6 +7,7 @@ import com.mm.greenstep.domain.user.dto.response.Response;
 import com.mm.greenstep.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
@@ -65,12 +66,26 @@ public class UserController {
         return userService.authority();
     }
 
+    @PatchMapping("/{nickName}/update")
+    public ResponseEntity<?> updateNickName(@PathVariable String nickName){
+        log.info("UPDATE USER NICKNAME");
+        return userService.updateNickName(nickName);
+    }
+
+    @GetMapping("/{nickName}/exists")
+    public ResponseEntity<?> isExistsNickName(@PathVariable String nickName){
+        log.info("nickName Duplicate test");
+        return new ResponseEntity<>(userService.isExistNickName(nickName), HttpStatus.OK);
+    }
+
+
     @GetMapping("/userTest")
     public ResponseEntity<?> userTest() {
         log.info("ROLE_USER TEST");
         System.out.println(SecurityUtil.getCurrentUserName());
         return response.success();
     }
+
 
     @GetMapping("/adminTest")
     public ResponseEntity<?> adminTest() {
