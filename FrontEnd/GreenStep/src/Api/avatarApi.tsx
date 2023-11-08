@@ -13,7 +13,7 @@ export const AvatarAPI = {
     patchAvatarAxios: function (boxId: number) {
       return tokenHttp.request({
         method: "PATCH",
-        url: `/${boxId}/avatar`,
+        url: `/avatar/${boxId}`,
       });
     }
   }

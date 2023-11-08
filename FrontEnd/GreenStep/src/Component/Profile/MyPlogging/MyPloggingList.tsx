@@ -19,33 +19,28 @@ const MyPloggingList = () => {
     const [dataList, setDataList] = useState<PloggingData[]>([]);
     const [idx, setIdx] = useState(0)
     const [toggle, setToggle] = useState(false)
-    const [h, setH] = useState(0)
-    const [m, setM] = useState(0)
-    const [s, setS] = useState(0)
-
 
     // 내 플로깅 이력 불러오기
-    const getMyploggingList = () => {
-    ProfileAPI.getPloggingListAxios()
-    .then((res) =>{
-      console.log('내 플로깅 리스트 조회/plogging')
-      console.log(res)
-      setDataList(res.data)
-    } 
-      )
-    .catch(err => console.log('내 플로깅 이력 axios 에러 : ', err))
+    const getMyploggingList = async () => {
+      try{
+        const res = await ProfileAPI.getPloggingListAxios()
+        console.log(res);
+        setDataList(res.data)
+      } catch(err){
+        console.log('사용자 플로깅 List 조회 error', err)
+      } 
   }
-  const handleAvatarId = (index : number) =>{
-    setIdx(index)
-    handleToggle()
-  }
-  const handleToggle = () => {
-    setToggle(!toggle)
-}
+    const handleAvatarId = (index : number) =>{
+      setIdx(index)
+      handleToggle()
+    }
+    const handleToggle = () => {
+      setToggle(!toggle)
+    }
 
-  useEffect(() => {
-    getMyploggingList();
-  }, []);
+    useEffect(() => {
+      getMyploggingList();
+    }, []);
   
   const msToTime = (duration: Double): string => {
     let seconds: string | number = Math.floor((duration / 1000) % 60),
@@ -64,7 +59,7 @@ const MyPloggingList = () => {
             <ScrollView horizontal={false}>
                 <View style={styles.wrapRow}>
                     {dataList.map((data, index) => (
-                        <TouchableOpacity onPress={() => handleAvatarId(data.ploggingId)}>
+                        <TouchableOpacity key={index} onPress={() => handleAvatarId(data.ploggingId)}>
                             <View style={{justifyContent:'center', alignItems:'center'}}>
                               {data?.travelPicture?( 
                               <Image source={{uri: data?.travelPicture}} style={ImageStyle.mediumImage} resizeMode="stretch"></Image>
