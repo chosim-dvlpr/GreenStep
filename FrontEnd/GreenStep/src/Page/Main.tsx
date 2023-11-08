@@ -89,6 +89,12 @@ const Main = () => {
     getMainImage();
   }, [])
 
+  /** 임시 로그아웃 */
+  const sampleLogout = () => {
+    AsyncStorage.removeItem('accessToken')
+    AsyncStorage.removeItem('refreshToken')
+  }
+
 
   // // 임시 로그인
   // const [email, setEmail] = useState<string>('');
@@ -195,12 +201,19 @@ const Main = () => {
       <LoginContainer>
       {
         isLogin ?
-        <TouchableOpacity
-          onPress={() => navigation.navigate('ploggingstart')}
-          style={[ButtonStyle.largeButton, ButtonStyle.lightGreenColor]}
-        >
-          <Text>플로깅 하러가기</Text>
-        </TouchableOpacity>
+        <View>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ploggingstart')}
+            style={[ButtonStyle.largeButton, ButtonStyle.lightGreenColor]}
+          >
+            <Text>플로깅 하러가기</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={sampleLogout}
+          > 
+            <Text>임시 로그아웃 버튼</Text>
+          </TouchableOpacity>
+        </View>
         : <Login setIsLogin={setIsLogin}/>
       }
       </LoginContainer>
