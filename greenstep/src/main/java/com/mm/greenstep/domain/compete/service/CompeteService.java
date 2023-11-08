@@ -25,41 +25,20 @@ public class CompeteService {
     public CompeteResDto getCurrentCompete() {
         // 현재의 경쟁 기록 가져오기
         LocalDate current = LocalDate.now();
-        Victory currentVictory = victoryRepository.findByVictoryMonth(current).orElseThrow();
+        Victory currentVictory = victoryRepository.findByYearAndMonth(current.getYear(),current.getMonthValue()).orElseThrow();
 
-        List<Compete> competeList = competeRepository.findAllByVictory(currentVictory);
-
-        Compete compete1Team = competeList.get(0);
-        Compete compete2Team = competeList.get(1);
-
-        Team myTeam = SecurityUtil.getCurrentUser().getTeam();
-
-        Compete myTeamCompete, otherTeamCompete;
-
-        if (compete1Team.getTeam() == myTeam) {
-            myTeamCompete = compete1Team;
-            otherTeamCompete = compete2Team;
-        } else {
-            myTeamCompete = compete2Team;
-            otherTeamCompete = compete1Team;
-        }
-
-        return CompeteResDto.builder()
-                .goalScore(currentVictory.getGoalScore())
-                .myTeamScore(myTeamCompete.getCompeteScore())
-                .otherTeamScore(otherTeamCompete.getCompeteScore())
-                .myTeamCompeteTime(myTeamCompete.getCompeteTime())
-                .myTeamCompeteRange(myTeamCompete.getCompeteRange())
-                .myTeamCompeteAmount(myTeamCompete.getCompeteAmount())
-                .build();
+        return getCompeteResDto(currentVictory);
     }
 
     public CompeteResDto getCompete(LocalDate insert){
         // 해당 년도 경쟁 기록 가져오기
-        LocalDate current = LocalDate.now();
-        Victory currentVictory = victoryRepository.findByVictoryMonth(insert).orElseThrow();
+        Victory insertVictory = victoryRepository.findByYearAndMonth(insert.getYear(),insert.getMonthValue()).orElseThrow();
 
-        List<Compete> competeList = competeRepository.findAllByVictory(currentVictory);
+        return getCompeteResDto(insertVictory);
+    }
+
+    public CompeteResDto getCompeteResDto(Victory victory){
+        List<Compete> competeList = competeRepository.findAllByVictory(victory);
 
         Compete compete1Team = competeList.get(0);
         Compete compete2Team = competeList.get(1);
@@ -77,7 +56,7 @@ public class CompeteService {
         }
 
         return CompeteResDto.builder()
-                .goalScore(currentVictory.getGoalScore())
+                .goalScore(victory.getGoalScore())
                 .myTeamScore(myTeamCompete.getCompeteScore())
                 .otherTeamScore(otherTeamCompete.getCompeteScore())
                 .myTeamCompeteTime(myTeamCompete.getCompeteTime())
@@ -86,11 +65,15 @@ public class CompeteService {
                 .build();
     }
 
-//    public void updateCompete(int AITrashAmount, int TravelRange, int TravelTime, int TrashAmount){
-//        // 내팀 조회
-//        Team team = SecurityUtil.getCurrentUser().getTeam();
-//
-//        // 현재 진행중인 경쟁 확인
-//        LocalDate.now()
-//    }
+
+
+    public void updateCompete(int AITrashAmount, int TravelRange, int TravelTime, int TrashAmount, int exp){
+        // 내팀 조회
+        Team team = SecurityUtil.getCurrentUser().getTeam();
+
+        // 현재 진행중인 경쟁 확인
+        // 해당 년도 경쟁 기록 가져오기
+        LocalDate current = LocalDate.now();
+        Victory currentVictory = victoryRepository.findByYearAndMonth(current.getYear(),current.getMonthValue()).orElseThrow();
+    }
 }
