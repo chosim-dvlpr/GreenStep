@@ -2,15 +2,13 @@ import { FlatList } from 'react-native';
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import CarouselCardItem from './CarouselCardItem';
 import styled from 'styled-components/native';
-import { samplePagesType } from './Carousel';
+import { PagesObjectType, PagesType } from './Carousel';
 
 interface CarouselCardProps {
   gap: number;
   offset: number;
-  pages: samplePagesType;
-  // pages: string[];
-  setPages: Dispatch<SetStateAction<samplePagesType>>;
-  // setPages: Dispatch<SetStateAction<string[]>>;
+  pages: PagesType;
+  setPages: Dispatch<SetStateAction<PagesType>>;
   pageWidth: number;
 }
 
@@ -22,7 +20,7 @@ const Container = styled.View`
 
 const CarouselCard = ({pages, setPages, pageWidth, gap, offset}: CarouselCardProps) => {
   
-  function renderItem({item}: any) {
+  function renderItem({item}: { item: PagesObjectType }) {
     return (
       <CarouselCardItem item={item} style={{width: pageWidth, marginHorizontal: gap / 2}} />
     );
@@ -31,10 +29,13 @@ const CarouselCard = ({pages, setPages, pageWidth, gap, offset}: CarouselCardPro
   // 시작 인덱스
   const flatListRef = useRef<FlatList>(null);
   useEffect( () => {
-    if (flatListRef.current){
-      flatListRef.current.scrollToIndex({animated: true, index: 2});
+    if (pages.length > 0 && flatListRef.current) {
+      flatListRef.current.scrollToIndex({ animated: true, index: 1 });
     }
-  },[])
+    // if (flatListRef.current){
+    //   flatListRef.current.scrollToIndex({animated: true, index: 0});
+    // }
+  },[pages])
 
   // 끝에 도달하면 리스트 반복해서 보여줌
   const onDataFetch = () => {
@@ -56,7 +57,7 @@ const CarouselCard = ({pages, setPages, pageWidth, gap, offset}: CarouselCardPro
         data={pages}
         decelerationRate="fast"
         horizontal
-        keyExtractor={(item: any) => `page__${item.color}`}
+        keyExtractor={(item: any) => `page__${item.imageUrl}`}
         pagingEnabled
         renderItem={renderItem}
         snapToInterval={pageWidth + gap}
