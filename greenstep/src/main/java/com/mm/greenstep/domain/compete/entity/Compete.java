@@ -34,7 +34,7 @@ public class Compete {
     private Integer competeScore;
 
     @Column(name = "compete_time", nullable = false)
-    private Double competeTime;
+    private Long competeTime;
 
     @Column(name = "compete_range", nullable = false)
     private Double competeRange;
@@ -47,7 +47,7 @@ public class Compete {
     @PrePersist
     public void prePersist() {
         this.competeScore = 0;
-        this.competeTime = 0.0;
+        this.competeTime = 0L;
         this.competeRange = 0.0;
         this.competeAmount = 0.0;
     }

@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 public class PloggingResDto {
     private Integer getExp;
-    private Double travelTime;
+    private Long travelTime;
     private Double travelRange;
     private Integer trashAmount;
     private Boolean isLevelUp; // true면 레벨업

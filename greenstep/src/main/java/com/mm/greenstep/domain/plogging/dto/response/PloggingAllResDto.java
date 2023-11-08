@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 public class PloggingAllResDto {
     private Integer getExp;
-    private Double travelTime;
+    private Long travelTime;
     private Double travelRange;
     private Integer trashAmount;
     private Long ploggingId;
