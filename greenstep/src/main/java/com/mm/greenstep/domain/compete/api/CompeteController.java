@@ -28,13 +28,8 @@ public class CompeteController {
 
     @GetMapping("/history/{victoryMonth}")
     public ResponseEntity<?> getCompete(@PathVariable YearMonth yearMonth){
-        CompeteResDto responseDto = competeService.getCurrentCompete();
+        CompeteResDto responseDto = competeService.getCompete(yearMonth);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
-
-
-    // test
-//    @GetMapping("/test")
-//    public
 
 }

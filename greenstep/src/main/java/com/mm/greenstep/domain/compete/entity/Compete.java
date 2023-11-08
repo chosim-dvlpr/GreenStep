@@ -52,4 +52,12 @@ public class Compete {
         this.competeAmount = 0.0;
     }
 
+    public void updateCompete(int travelRange, int travelTime, int trashAmount, int score){
+        this.competeTime += travelTime;
+        this.competeRange += travelRange;
+        this.competeAmount += trashAmount;
+        // 한번의 플로깅으로 얻을 수 있는 점수 제한
+        this.competeScore += score;
+    }
+
 }

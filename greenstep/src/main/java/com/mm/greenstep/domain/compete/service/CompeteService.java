@@ -30,7 +30,7 @@ public class CompeteService {
         return getCompeteResDto(currentVictory);
     }
 
-    public CompeteResDto getCompete(LocalDate insert){
+    public CompeteResDto getCompete(YearMonth insert){
         // 해당 년도 경쟁 기록 가져오기
         Victory insertVictory = victoryRepository.findByYearAndMonth(insert.getYear(),insert.getMonthValue()).orElseThrow();
 
@@ -67,7 +67,7 @@ public class CompeteService {
 
 
 
-    public void updateCompete(int AITrashAmount, int TravelRange, int TravelTime, int TrashAmount, int exp){
+    public void updateCompete(int AITrashAmount, int TravelRange, int TravelTime, int TrashAmount){
         // 내팀 조회
         Team team = SecurityUtil.getCurrentUser().getTeam();
 
@@ -75,5 +75,20 @@ public class CompeteService {
         // 해당 년도 경쟁 기록 가져오기
         LocalDate current = LocalDate.now();
         Victory currentVictory = victoryRepository.findByYearAndMonth(current.getYear(),current.getMonthValue()).orElseThrow();
+
+        Compete currentCompete = competeRepository.findByVictoryAndTeam(currentVictory,team);
+
+        // Score갱신
+        Integer score = (int) ((AITrashAmount * 2)
+                + (TravelRange * 5)
+                + (TravelTime * 5)
+                // 쓰레기로 주울 수 있는 최대값 제한
+                + (Math.min((TrashAmount * 0.5) , 20)));
+
+        // 한번의 플로깅으로 얻을 수 있는 score 최대 200점 제한
+        Integer updateScore = Math.min(score, 200);
+
+        currentCompete.updateCompete(TravelRange,TravelTime,TrashAmount,updateScore);
+        competeRepository.save(currentCompete);
     }
 }
