@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import Login from '../Component/Main/Login';
 import Carousel from '../Component/Main/Carousel';
 import styled from 'styled-components/native';
 import ButtonStyle from '../Style/ButtonStyle';
 import { useNavigation } from '@react-navigation/native';
-import { LoginAPI, MainAPI } from '../Api/basicHttp';
+import { MainAPI } from '../Api/basicHttp';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import tokenHttp from '../Api/tokenHttp';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../Store/store';
 
 export interface EmailLoginDataType {
   'email': string,
@@ -47,12 +44,8 @@ const CarouselTextContainer = styled.View`
 
 const Main = () => {
   const navigation = useNavigation();
-  // const dispatch = useDispatch();
   const [isLogin, setIsLogin] = useState<boolean>(false);
   
-  // 토큰 확인
-  // const { stateAccessToken, stateRefreshToken } = useSelector((state: RootState) => state.user);
-
   useEffect(() => {
     if (AsyncStorage.getItem('accessToken')) {
       console.log('토큰을 갖고 있습니다.')
@@ -77,16 +70,8 @@ const Main = () => {
     .catch(err => console.log('메인 데이터 axios 에러 : ', err))
   }
 
-  // 플로깅 이미지 불러오기
-  const getMainImage = () => {
-    MainAPI.mainImageAxios()
-    .then(res => console.log(res))
-    .catch(err => console.log('메인 이미지 axios 에러 : ', err))
-  }
-
   useEffect(() => {
     getMainData();
-    getMainImage();
   }, [])
 
 

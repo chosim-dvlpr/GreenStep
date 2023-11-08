@@ -1,9 +1,8 @@
 import {View, Text, TouchableOpacity, ScrollView, Image, PermissionsAndroid } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components/native';
 import ButtonStyle from '../Style/ButtonStyle';
 import ProfilePloggingDataInfo from '../Component/Profile/ProfilePloggingDataInfo';
-import ImageStyle from '../Style/Image';
 import fileTokenHttp from '../Api/fileTokenHttp';
 import { launchImageLibrary } from 'react-native-image-picker';
 import PloggingFinishHeader from '../Component/PloggingFinish/PloggingFinishHeader';
@@ -74,8 +73,6 @@ const PloggingFinish = ({ ploggingId, getExp }: PloggingFinishType) => {
       type: result.assets[0].type,
       uri: localUri,
     });
-    console.log(formData)
-    console.log(photo)
 
     fileTokenHttp.post(`/plogging/${ploggingId}/upload/img`, formData)
     .then((res) => console.log('file 전송 성공 : ', res))
@@ -109,9 +106,11 @@ const PloggingFinish = ({ ploggingId, getExp }: PloggingFinishType) => {
 
         {/* 인증 사진/회색 빈 칸 */}
         <ImageContainer>
-          <Image 
-          source={photo ? {uri: photo} : PloggingFinishNoImage} 
-          style={[ButtonStyle.whiteColor, {width: '100%', height: '100%', borderRadius: 20}]} />
+          <TouchableOpacity onPress={pickedPhoto}>
+            <Image 
+            source={photo ? {uri: photo} : PloggingFinishNoImage} 
+            style={[ButtonStyle.whiteColor, {width: '100%', height: '100%', borderRadius: 20}]} />
+          </TouchableOpacity>
         </ImageContainer>
         
 

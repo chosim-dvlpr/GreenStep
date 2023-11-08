@@ -1,14 +1,14 @@
 import { FlatList } from 'react-native';
-import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import CarouselCardItem from './CarouselCardItem';
 import styled from 'styled-components/native';
-import { samplePagesType } from './Carousel';
+import { PagesObjectType, PagesType } from './Carousel';
 
 interface CarouselCardProps {
   gap: number;
   offset: number;
-  pages: samplePagesType;
-  setSamplePages: Dispatch<SetStateAction<samplePagesType>>;
+  pages: PagesType;
+  setPages: Dispatch<SetStateAction<PagesType>>;
   pageWidth: number;
 }
 
@@ -18,26 +18,34 @@ const Container = styled.View`
   align-items: center;
 `;
 
-const CarouselCard = ({pages, setSamplePages, pageWidth, gap, offset}: CarouselCardProps) => {
+const CarouselCard = ({
+  pages, 
+  setPages, 
+  pageWidth, 
+  gap, 
+  offset}: CarouselCardProps) => {
   
-  function renderItem({item}: any) {
+  function renderItem({item}: { item: PagesObjectType }) {
     return (
-      <CarouselCardItem item={item} style={{width: pageWidth, marginHorizontal: gap / 2}} />
+      <CarouselCardItem 
+      item={item} 
+      style={{width: pageWidth, marginHorizontal: gap / 2}} 
+      />
     );
   }
 
   // 시작 인덱스
   const flatListRef = useRef<FlatList>(null);
   useEffect( () => {
-    if (flatListRef.current){
-      flatListRef.current.scrollToIndex({animated: true, index: 2});
+    if (pages.length > 0 && flatListRef.current) {
+      flatListRef.current.scrollToIndex({ animated: true, index: 1 });
     }
-  },[])
+  },[pages])
 
   // 끝에 도달하면 리스트 반복해서 보여줌
   const onDataFetch = () => {
     console.log('업데이트')
-    setSamplePages([...pages, ...pages]);
+    setPages([...pages, ...pages]);
   }
 
   return (
@@ -54,7 +62,7 @@ const CarouselCard = ({pages, setSamplePages, pageWidth, gap, offset}: CarouselC
         data={pages}
         decelerationRate="fast"
         horizontal
-        keyExtractor={(item: any) => `page__${item.color}`}
+        keyExtractor={(item: any, idx) => `page__${item.imageUrl}_${idx}`}
         pagingEnabled
         renderItem={renderItem}
         snapToInterval={pageWidth + gap}
