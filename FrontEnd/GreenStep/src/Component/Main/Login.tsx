@@ -23,12 +23,12 @@ interface LoginPropsType {
 }
 
 const Login = ({setIsLogin}: LoginPropsType) => {  
-  const [token, setToken] = useState<KakaoOAuthToken | string>('');
+  // const [token, setToken] = useState<KakaoOAuthToken | string>('');
   
   const getLogin = async () => {
     try {
       const newToken: KakaoOAuthToken = await loginWithKakaoAccount();
-      await setToken(newToken);
+      // await setToken(newToken);
       return newToken
     } catch (err) {
       console.log("getLogin 함수 에러 발생 : ", err);
