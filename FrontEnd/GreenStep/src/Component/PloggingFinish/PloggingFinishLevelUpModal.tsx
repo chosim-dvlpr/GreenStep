@@ -7,6 +7,7 @@ import cow from '../../Image/Avatar/cow.png'
 import crocodile from '../../Image/Avatar/crocodile.png'
 import LottieView from 'lottie-react-native';
 import treasureBox from '../../Image/PloggingFinish/treasureBox.json'
+import confetti from '../../Image/PloggingFinish/confetti.json'
 
 interface ModalProps {
   onClose: () => void;
@@ -57,6 +58,12 @@ const PloggingFinishLevelUpModal : React.FC<ModalProps> = ({ onClose, avatarName
                 isOpened
                 ? <View style={styles.avatarContainer}>
                     <Text style={styles.levelUpText}>{avatarName}</Text>
+                    <LottieView
+                    source={confetti}
+                    autoPlay
+                    loop
+                    style={styles.confettiImage}
+                    />
                     <Image
                     source={getAvatarImage()}
                     style={styles.avatarImage}
@@ -136,6 +143,12 @@ const styles = StyleSheet.create({
   treasureBoxText: {
     fontSize: 18,
     alignSelf: 'center',
+  },
+  confettiImage: {
+    position: 'absolute',
+    width: 250,
+    height: 250,
+    zIndex: -1,
   },
 });
 
