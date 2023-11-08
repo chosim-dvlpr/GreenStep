@@ -29,7 +29,7 @@ const ProfileAvatarModal : React.FC<ModalProps> = ({ onSelectAvatar, onClose, av
             <View style={styles.modalOverlay}>
            <TouchableWithoutFeedback>
                 <View style={[styles.modalView, {justifyContent:'center', alignItems:'center'}]}>
-                    <Text style={{marginBottom: 10, fontWeight:'bold', fontSize: 20}}> 캐릭터 선택</Text>
+                    <Text style={{marginBottom: 10, fontWeight:'bold', fontSize: 20}}>캐릭터 선택</Text>
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                         {avatars?.map((char, idx) => (
                             <TouchableOpacity key={idx} onPress={() => onSelectAvatar(char.avatarId)}>
