@@ -43,10 +43,17 @@ const CarouselCard = ({
   },[pages])
 
   // 끝에 도달하면 리스트 반복해서 보여줌
-  const onDataFetch = () => {
+  const onDataFetchEnd = () => {
     console.log('업데이트')
     setPages([...pages, ...pages]);
   }
+  // const onDataFetchStart = async () => {
+  //   console.log('업데이트')
+  //   const newData: PagesType = [...pages]; // 기존 데이터를 복사하여 새로운 배열 생성
+  //   newData.unshift(...pages); // 기존 데이터를 배열의 앞에 추가
+  //   console.log(newData);
+  //   setPages(newData);
+  // }
 
   return (
     <Container>
@@ -68,7 +75,8 @@ const CarouselCard = ({
         snapToInterval={pageWidth + gap}
         snapToAlignment="start"
         showsHorizontalScrollIndicator={false}
-        onEndReached={onDataFetch} // scroll 위치가 onEndReachedThreshold 범위에 들어오면 함수를 실행 (무한 스크롤)
+        // onStartReached={onDataFetchStart}
+        onEndReached={onDataFetchEnd} // scroll 위치가 onEndReachedThreshold 범위에 들어오면 함수를 실행 (무한 스크롤)
         onEndReachedThreshold={1}
         // ListEmptyComponent : List가 비어 있을 때 rendering (로딩 시 스켈레톤을 넣을 때 사용 가능)
       />

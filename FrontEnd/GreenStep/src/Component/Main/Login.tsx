@@ -21,7 +21,7 @@ interface LoginPropsType {
 }
 
 const Login = ({setIsLogin}: LoginPropsType) => {  
-  const [token, setToken] = useState<KakaoOAuthToken | string>('');
+  // const [token, setToken] = useState<KakaoOAuthToken | string>('');
   
   const getLogin = async () => {
     try {

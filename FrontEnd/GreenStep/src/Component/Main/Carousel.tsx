@@ -2,6 +2,7 @@ import { View, Dimensions } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import CarouselCard from './CarouselCard'
 import { MainAPI } from '../../Api/basicHttp';
+import { useIsFocused } from '@react-navigation/native';
 
 export interface PagesObjectType {
   imageUrl: string;
@@ -17,9 +18,16 @@ export const pageWidth = screenWidth - (gap + offset) * 2; // 캐러셀 너비
 
 
 const Carousel = () => {
-  
+  const isFocused = useIsFocused();
+
   /** 플로깅 이미지 불러오기 */
   const [pages, setPages] = useState<PagesType>([]);
+
+   useEffect(() => {
+    return() => {
+      getMainImage();
+    }
+   }, [isFocused])
 
    useEffect(() => {
     getMainImage();

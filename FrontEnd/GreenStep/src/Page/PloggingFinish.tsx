@@ -8,10 +8,17 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import PloggingFinishHeader from '../Component/PloggingFinish/PloggingFinishHeader';
 import { useNavigation } from '@react-navigation/native';
 import PloggingFinishNoImage from '../Image/PloggingFinish/PloggingFinishNoImage.png';
+import PloggingFinishLevelUpModal from '../Component/PloggingFinish/PloggingFinishLevelUpModal';
 
 interface PloggingFinishType {
+  // props로 반드시 넘겨줘야 할 항목 (추후 ? 지우기)
   ploggingId?: number,
   getExp?: number,
+  isLevelUp?: boolean, 
+  
+  // 선택 항목
+  avartarName?: string, 
+  avatarImage?: string,
 }
 
 const PloggingFinishContainer = styled.View`
@@ -46,7 +53,7 @@ const GoToMainContainer = styled.View`
 const ButtonTextColor = '#8BCA84';
 
 
-const PloggingFinish = ({ ploggingId, getExp }: PloggingFinishType) => {
+const PloggingFinish = ({ ploggingId, getExp, isLevelUp, avartarName, avatarImage }: PloggingFinishType) => {
   const navigation = useNavigation();
 
   /** 사진 선택 기능 */
@@ -56,8 +63,6 @@ const PloggingFinish = ({ ploggingId, getExp }: PloggingFinishType) => {
     console.log('사진 인증 버튼 클릭 (미리보기)')
     const result = await launchImageLibrary();
     const formData = await new FormData()
-
-    // setUploadedPhoto(result)
     
     if (result.didCancel){
       return null;
@@ -79,9 +84,34 @@ const PloggingFinish = ({ ploggingId, getExp }: PloggingFinishType) => {
     .catch(err => console.log('file 전송 실패 : ', err))
   };
 
+  /** 레벨업 토글 */
+  const [levelUpToggle, setLevelUpToggle] = useState(false);
+  const handleLevelUpToggle = () => {
+    setLevelUpToggle(!levelUpToggle);
+  };
+
+  useEffect(() => {
+    if (isLevelUp) {
+      setLevelUpToggle(true);
+    }
+  }, [])
+
   return (
     <ScrollView>
+      {levelUpToggle && 
+      <PloggingFinishLevelUpModal 
+      onClose={handleLevelUpToggle} 
+      visible={levelUpToggle} 
+      // avatarName={avatarName} 
+      // avatarImage={avatarImage} 
+      
+      // 데이터 props로 받은 뒤 삭제하기
+      avatarName={'cow'}
+      avatarImage={'cow'} 
+      />}
+
       <PloggingFinishContainer>
+
         {/* 헤더 */}
         <PloggingFinishHeader getExp={getExp} />
   
