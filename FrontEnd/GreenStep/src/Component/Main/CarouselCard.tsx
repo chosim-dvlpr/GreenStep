@@ -62,7 +62,7 @@ const CarouselCard = ({
         data={pages}
         decelerationRate="fast"
         horizontal
-        keyExtractor={(item: any) => `page__${item.imageUrl}`}
+        keyExtractor={(item: any, idx) => `page__${item.imageUrl}_${idx}`}
         pagingEnabled
         renderItem={renderItem}
         snapToInterval={pageWidth + gap}
