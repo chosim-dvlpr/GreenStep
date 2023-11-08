@@ -54,12 +54,19 @@ const Main = () => {
   // const { stateAccessToken, stateRefreshToken } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
-    if (AsyncStorage.getItem('accessToken')) {
-      console.log('토큰을 갖고 있습니다.')
-      setIsLogin(true)
-    }
-  }, [])
+    const checkToken = async () => {
+      const token = await AsyncStorage.getItem('accessToken');
+      if (token) {
+        console.log('토큰을 갖고 있습니다.', token);
+        setIsLogin(true);
+      } else {
+        console.log('토큰이 없습니다.');
+      }
+    };
   
+    checkToken();
+  }, [isLogin]);
+
   // 메인 문구 불러오기
   const [trashAmount, setTrashAmount] = useState<number>(0);
   const [travelRange, setTravelRange] = useState<number>(0);
@@ -123,27 +130,28 @@ const Main = () => {
   //   .catch(err => console.log('이메일 로그인 실패 : ', err))
   // }
 
-  // const logout = async () => {
-  //   try {
-  //     const accessToken = await AsyncStorage.getItem('accessToken');
-  //     const refreshToken = await AsyncStorage.getItem('refreshToken');
+  const logout = async () => {
+    try {
+      const accessToken = await AsyncStorage.getItem('accessToken');
+      const refreshToken = await AsyncStorage.getItem('refreshToken');
   
-  //     const data = {
-  //       accessToken: accessToken,
-  //       refreshToken: refreshToken
-  //     };
+      const data = {
+        accessToken: accessToken,
+        refreshToken: refreshToken
+      };
   
-  //     console.log('logout 실행');
-  //     tokenHttp.post('/user/logout', data)
-  //       .then(res => {
-  //         AsyncStorage.removeItem('accessToken');
-  //         AsyncStorage.removeItem('refreshToken');
-  //       })
-  //       .catch(err => console.log('로그아웃 실패 : ', err));
-  //   } catch (error) {
-  //     console.error('로그아웃 중 오류 발생:', error);
-  //   }
-  // };
+      console.log('logout 실행');
+      tokenHttp.post('/user/logout', data)
+        .then(res => {
+          AsyncStorage.removeItem('accessToken');
+          AsyncStorage.removeItem('refreshToken');
+          setIsLogin(false);
+        })
+        .catch(err => console.log('로그아웃 실패 : ', err));
+    } catch (error) {
+      console.error('로그아웃 중 오류 발생:', error);
+    }
+  };
   
   
 
@@ -195,12 +203,17 @@ const Main = () => {
       <LoginContainer>
       {
         isLogin ?
-        <TouchableOpacity
-          onPress={() => navigation.navigate('ploggingstart')}
-          style={[ButtonStyle.largeButton, ButtonStyle.lightGreenColor]}
-        >
-          <Text>플로깅 하러가기</Text>
-        </TouchableOpacity>
+        <View>
+          <TouchableOpacity onPress={logout}>
+            <Text>로그아웃</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ploggingstart')}
+            style={[ButtonStyle.largeButton, ButtonStyle.lightGreenColor]}
+            >
+            <Text>플로깅 하러가기</Text>
+          </TouchableOpacity>
+          </View>
         : <Login setIsLogin={setIsLogin}/>
       }
       </LoginContainer>
