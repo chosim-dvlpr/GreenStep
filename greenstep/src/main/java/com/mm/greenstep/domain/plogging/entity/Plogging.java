@@ -30,7 +30,7 @@ public class Plogging {
     private Double travelRange;
 
     @Column(name = "travel_time")
-    private Double travelTime;
+    private Long travelTime;
 
     @Column(name = "travel_amount")
     private Integer trashAmount;

@@ -29,7 +29,7 @@ public class Achieve {
     private Integer achieveTrash;
 
     @Column(name = "achieve_time")
-    private Double achieveTime;
+    private Long achieveTime;
 
     @Column(name = "achieve_count")
     private Integer achieveCount;

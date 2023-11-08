@@ -8,7 +8,7 @@ import java.util.List;
 @Builder
 @Getter
 public class PloggingReqDto {
-    private Double travelTime;
+    private Long travelTime;
     private Double travelRange;
     private Integer AITrashAmount; // AI 찍은 쓰레기 수
     private Integer trashAmount; // 쓰레기수

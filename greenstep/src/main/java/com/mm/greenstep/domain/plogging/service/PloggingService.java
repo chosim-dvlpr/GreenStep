@@ -56,7 +56,7 @@ public class PloggingService {
         // 종료시간에서 - 전체 이동시간(Double TravelTime) 빼서 시작시간 만들기
         LocalDateTime endTime = LocalDateTime.now();
         // travelTime은 분 단위입니다. 이를 초 단위로 변환합니다.
-        long travelTimeInSeconds = (long) (dto.getTravelTime() * 60);
+        Long travelTimeInSeconds = (long) (dto.getTravelTime() * 60);
         LocalDateTime startTime = endTime.minusSeconds(travelTimeInSeconds);
 
         // 경험치 계산
@@ -75,8 +75,6 @@ public class PloggingService {
                 .getExp(getExp)
                 .build();
 
-        // 쓰레기 량
-
         // 경험치 계산
         Integer exp = user.getExp() + getExp;
 
@@ -86,17 +84,20 @@ public class PloggingService {
             user.levelUp(curExp);
             levelUp = true;
 
-//            // 랜덤 아바타 선택을 위한 쿼리
-//            Avatar randomAvatar = avatarRepository.findRandomAvatar();
-//            // 선택된 랜덤 아바타를 `user_avatar` 테이블에 추가
-//            UserAvatar userAvatar = userAvatarRepository.findByUser(user);
-//            // 유저의 아바타 새로 뽑은거로 업데이트해주고
-//            userAvatar.updateAvatar(randomAvatar);
-//            // 저장
-//            userAvatarRepository.save(userAvatar);
-//            // dto에 넣어서 보내주기 위한 아바타 사진 주소와 아바타 이름
-//            avatarImg = randomAvatar.getAvatarImg();
-//            avatarName = randomAvatar.getAvatarName();
+            // 랜덤 아바타 선택을 위한 쿼리
+            Avatar randomAvatar = avatarRepository.findRandomAvatar();
+            // 선택된 랜덤 아바타를 `user_avatar` 테이블에 추가
+            UserAvatar userAvatar = UserAvatar.builder()
+                    .user(user)
+                    .avatar(randomAvatar)
+                    .isSelected(false)
+                    .build();
+
+            userAvatarRepository.save(userAvatar);
+
+            // dto에 넣어서 보내주기 위한 아바타 사진 주소와 아바타 이름
+            avatarImg = randomAvatar.getAvatarImg();
+            avatarName = randomAvatar.getAvatarName();
         }
 
         userRepository.save(user);
