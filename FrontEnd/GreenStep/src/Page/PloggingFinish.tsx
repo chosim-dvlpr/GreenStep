@@ -63,8 +63,6 @@ const PloggingFinish = ({ ploggingId, getExp, isLevelUp, avartarName, avatarImag
     console.log('사진 인증 버튼 클릭 (미리보기)')
     const result = await launchImageLibrary();
     const formData = await new FormData()
-
-    // setUploadedPhoto(result)
     
     if (result.didCancel){
       return null;
@@ -93,7 +91,7 @@ const PloggingFinish = ({ ploggingId, getExp, isLevelUp, avartarName, avatarImag
   };
 
   useEffect(() => {
-    if (!isLevelUp) {
+    if (isLevelUp) {
       setLevelUpToggle(true);
     }
   }, [])
