@@ -6,8 +6,21 @@ import minus from '../../Image/Board/minus.png'
 import { ProfileAPI } from "../../Api/profileApi";
 
 const ProfileHeaderStrick = () => {
-    const [year, setYear] = useState(2023)
-    const [ploggingWeek, setPloggingWeek] = useState([])    
+    const date = new Date();
+    const nowYear = date.getFullYear();
+    const [year, setYear] = useState(nowYear)
+    const [ploggingWeek, setPloggingWeek] = useState([])
+    const [selectedBoxIndex, setSelectedBoxIndex] = useState<number|null>(null);  
+    const [selected, setSelected] = useState(false)
+
+    const handleBoxPress = (index: number) => {
+      if (selectedBoxIndex === index) {
+        setSelectedBoxIndex(null);
+      } else {
+        setSelectedBoxIndex(index);
+      }    
+    }
+    
     const getMonthLabel = (index :number) => {
         const monthMappings = {
           0: 'Jan',
@@ -39,18 +52,24 @@ const ProfileHeaderStrick = () => {
       };
     
   // 플로깅 스트릭 불러오기
-  const getStreak = () => {
-    ProfileAPI.getStreakAxios(year)
-    .then((res) =>{
-      console.log('스트릭', res)
+  const getStreak = async (year:number) => {
+    try{
+      const res = await ProfileAPI.getStreakAxios(year);
+      console.log(res)
       // setPloggingWeek(res.data)
-    } 
-      )
-    .catch(err => console.log('스트릭 조회 axios 에러 : ', err, year))
+    }catch(err){
+      console.log('스트릭 조회 error', err)
+    }
+    // ProfileAPI.getStreakAxios(year)
+    // .then((res) =>{
+    //   console.log('스트릭', res)
+    // } 
+    //   )
+    // .catch(err => console.log('스트릭 조회 axios 에러 : ', err, year))
   }
 
   useEffect(() => {
-    getStreak();
+    getStreak(year);
     console.log(year)
   }, [year])
 
@@ -76,12 +95,18 @@ const handleYearMinus = () => {
           </View>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             {Array.from({length:52}).map((_, index) =>(
-              <View>
-                <Text style={{fontSize:12, fontWeight:'bold'}}>{getMonthLabel(index)}</Text>
-                <View key={index} style={getWeekBoxStyle(index)}>
-                  <Text style={{fontSize:8}}></Text>
-                </View>
-              </View>
+                <TouchableOpacity key={index} onPress={() => handleBoxPress(index)}>
+                  <View>
+                    <Text style={{fontSize:12, fontWeight:'bold'}}>{getMonthLabel(index)}</Text>
+                      {selectedBoxIndex === index && (
+                        <View style={{alignItems:'center'}}>
+                          <Text style={{fontSize:8}}>{index}</Text>
+                        </View>)}
+                    <View key={index} style={getWeekBoxStyle(index)}>
+                      <Text style={{fontSize:8}}></Text>
+                    </View>
+                  </View>
+              </TouchableOpacity>
             ))}
           </ScrollView>
         </View>

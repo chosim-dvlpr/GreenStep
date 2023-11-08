@@ -17,18 +17,18 @@ const Achievement = () => {
   const competitions = ['10Wins','20Wins','30Wins','40Wins']
   
   // 업적 타입별 리스트 불러오기
-  const getAchievementList = () => {
-    AchievementAPI.getAchievementAxios(achieveType)
-    .then((res) =>{
+  const getAchievementList = async (achieveType :number) => {
+    try{
+      const res = await AchievementAPI.getAchievementAxios(achieveType);
       console.log(res)
       // setAchieveList(res.data)
-    } 
-      )
-    .catch(err => console.log('업적 페이지 axios 에러 : ', err, achieveType))
+    }catch(err){
+      console.log('업적 조회 error', err)
+    }
   }
 
   useEffect(() => {
-    getAchievementList();
+    getAchievementList(achieveType);
     // console.log(achieveList)
   }, [achieveType])
 
