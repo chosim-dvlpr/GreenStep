@@ -89,7 +89,7 @@ public class MyPageService {
         for (Plogging p : ploggingList) {
             // 해당 날짜 그 해의 및 주차인지 판별하는 알고리즘
             TemporalField weekOfYearField = WeekFields.of(Locale.getDefault()).weekOfYear();
-            int weekOfYear = p.getCreatedAt().get(weekOfYearField);
+            int weekOfYear = p.getCreatedAt().get(weekOfYearField) - 1;
             // 기존에 해당 주차에 대한 값이 없다면 0으로 시작합니다.
             int currentCount = weekOfYearAndTrashCount.getOrDefault(weekOfYear, 0);
 
