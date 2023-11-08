@@ -1,4 +1,5 @@
 import React from 'react';
+import {FlatList, Dimensions} from 'react-native';
 import styled from 'styled-components/native';
 
 const CompetitionDashBoard = () => {
@@ -9,14 +10,24 @@ const CompetitionDashBoard = () => {
       <TeamNum>{content}</TeamNum>
     </TeamCountBox>
   );
+  const teamData = [
+    {key: '1', title: '팀 거북의 이동거리', content: '1234km'},
+    {key: '2', title: '팀 거북의 소요시간', content: '124시간'},
+    {key: '3', title: '팀 거북의 총 쓰레기', content: '124개'},
+    // 여기에 추가 데이터를 키와 함께 추가할 수 있습니다.
+  ];
 
   return (
     <DashBoard>
       <MyTeamDashBoardTitle>현황판</MyTeamDashBoardTitle>
-      <TeamCountWrap>
-        {renderTeamCountBox('팀 거북의 이동거리', '1234km')}
-        {renderTeamCountBox('팀 거북의 소요시간', '124시간')}
-      </TeamCountWrap>
+      <FlatList
+        data={teamData}
+        renderItem={({item}) => renderTeamCountBox(item.title, item.content)}
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        snapToAlignment={'center'}
+        decelerationRate={'fast'}
+      />
     </DashBoard>
   );
 };
@@ -25,6 +36,8 @@ export default CompetitionDashBoard;
 
 const DashBoard = styled.View`
   flex: 2;
+  margin-top: 10px;
+  margin-right: 22px;
 `;
 
 const MyTeamDashBoardTitle = styled.Text`
@@ -34,14 +47,6 @@ const MyTeamDashBoardTitle = styled.Text`
   margin-left: 30px;
 `;
 
-const TeamCountWrap = styled.View`
-  flex: 2;
-  width: 100%;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-`;
-
 const TeamCountBox = styled.View`
   width: 160px;
   height: 120px;
@@ -49,6 +54,8 @@ const TeamCountBox = styled.View`
   border-radius: 10px;
   align-items: center;
   justify-content: space-evenly;
+  margin-top: 15px;
+  margin-left: 23px;
 `;
 
 const TeamText = styled.Text`

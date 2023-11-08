@@ -41,10 +41,10 @@ const CompetitionGraphic = () => {
       />
       {renderProgressSection(40)}
       <LottieView
-        source={require('../../Image/Competition/rabbit.json')}
+        source={require('../../Image/Competition/dolphin.json')}
         autoPlay
         loop
-        style={styles.rabbit}
+        style={styles.dolphin}
       />
       {renderProgressSection(170)}
     </Graphic>
@@ -84,11 +84,10 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
   },
-  rabbit: {
-    width: 150,
-    height: 150,
-    bottom: 155,
-    transform: [{scaleX: -1}],
+  dolphin: {
+    width: 140,
+    height: 140,
+    bottom: 135,
   },
   flag: {
     width: 90,
