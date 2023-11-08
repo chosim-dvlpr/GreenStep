@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, ScrollView, Image, PermissionsAndroid } from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Image, Switch } from 'react-native';
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components/native';
 import ButtonStyle from '../Style/ButtonStyle';
@@ -9,6 +9,7 @@ import PloggingFinishHeader from '../Component/PloggingFinish/PloggingFinishHead
 import { useNavigation } from '@react-navigation/native';
 import PloggingFinishNoImage from '../Image/PloggingFinish/PloggingFinishNoImage.png';
 import PloggingFinishLevelUpModal from '../Component/PloggingFinish/PloggingFinishLevelUpModal';
+import lock from '../Image/PloggingFinish/lock.png'
 
 interface PloggingFinishType {
   // props로 반드시 넘겨줘야 할 항목 (추후 ? 지우기)
@@ -48,6 +49,10 @@ const GoToMainContainer = styled.View`
   margin: auto;
   margin-top: 30;
   margin-bottom: 110;
+`
+
+const IsVisibledContainer = styled.View`
+  background-color: beige;
 `
 
 const ButtonTextColor = '#8BCA84';
@@ -96,6 +101,13 @@ const PloggingFinish = ({ ploggingId, getExp, isLevelUp, avartarName, avatarImag
     }
   }, [])
 
+  /** 비공개로 설정 토글 */
+  const [isToggled, setIsToggled] = useState<boolean>(false);
+
+  const toggleSwitch = () => {
+    setIsToggled(!isToggled);
+  };
+  
   return (
     <ScrollView>
       {levelUpToggle && 
@@ -114,11 +126,13 @@ const PloggingFinish = ({ ploggingId, getExp, isLevelUp, avartarName, avatarImag
 
         {/* 헤더 */}
         <PloggingFinishHeader getExp={getExp} />
+
   
         {/* 플로깅 데이터 */}
         <PloggingDataContainer>
           <ProfilePloggingDataInfo/>
         </PloggingDataContainer>
+
 
         {/* 인증하기 버튼 */}
         <UploadPhotoButtonContainer>
@@ -133,6 +147,22 @@ const PloggingFinish = ({ ploggingId, getExp, isLevelUp, avartarName, avatarImag
             >인증하기</Text>
           </TouchableOpacity>
         </UploadPhotoButtonContainer>
+
+
+        {/* 비공개로 설정 */}
+        <IsVisibledContainer>
+          <Image
+          source={lock}
+          />
+          <Text>비공개로 설정</Text>
+          <Switch
+          value={isToggled}
+          onValueChange={toggleSwitch}
+          trackColor={{ false: '#FFFFFF', true: '#ACD8A7' }}
+          thumbColor={isToggled ? 'rgba(255, 255, 255, 1)' : '#ACD8A7'}
+          />
+        </IsVisibledContainer>
+
 
         {/* 인증 사진/회색 빈 칸 */}
         <ImageContainer>
