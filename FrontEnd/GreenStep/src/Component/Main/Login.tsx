@@ -15,8 +15,6 @@ import {
 import ButtonStyle from '../../Style/ButtonStyle';
 import { LoginAPI } from '../../Api/basicHttp';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useDispatch } from 'react-redux';
-import { updateUserToken } from '../../Store/userSlice';
 
 interface LoginPropsType {
   setIsLogin: Dispatch<SetStateAction<boolean>>;
@@ -28,7 +26,7 @@ const Login = ({setIsLogin}: LoginPropsType) => {
   const getLogin = async () => {
     try {
       const newToken: KakaoOAuthToken = await loginWithKakaoAccount();
-      await setToken(newToken);
+      // await setToken(newToken);
       return newToken
     } catch (err) {
       console.log("getLogin 함수 에러 발생 : ", err);
@@ -53,11 +51,7 @@ const Login = ({setIsLogin}: LoginPropsType) => {
           console.log('storage에 토큰 저장 성공 : ', res)
           setIsLogin(true);
           AsyncStorage.setItem('accessToken', data.accessToken);
-          AsyncStorage.setItem('refreshToken', data.refreshToken);
-          // dispatch(updateUserToken({
-          //   accessToken: data.accessToken,
-          //   refreshToken: data.refreshToken,
-          // }))          
+          AsyncStorage.setItem('refreshToken', data.refreshToken); 
         })
         .catch(err => {
           console.log("login axios 에러 발생: ", err);
