@@ -11,6 +11,7 @@ import com.mm.greenstep.domain.common.util.SecurityUtil;
 import com.mm.greenstep.domain.plogging.dto.request.PloggingCoorDto;
 import com.mm.greenstep.domain.plogging.dto.request.PloggingReqDto;
 import com.mm.greenstep.domain.plogging.dto.request.PloggingTrashReqDto;
+import com.mm.greenstep.domain.plogging.dto.request.PloggingUpdateImgReqDto;
 import com.mm.greenstep.domain.plogging.dto.response.PloggingAllResDto;
 import com.mm.greenstep.domain.plogging.dto.response.PloggingDetailResDto;
 import com.mm.greenstep.domain.plogging.dto.response.PloggingResDto;
@@ -23,11 +24,21 @@ import com.mm.greenstep.domain.plogging.repository.TrashRepository;
 import com.mm.greenstep.domain.user.entity.User;
 import com.mm.greenstep.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -195,12 +206,12 @@ public class PloggingService {
         return responseDto;
     }
 
-    public void updatePloggingImg(MultipartFile file, Long ploggingId) {
-        Plogging plogging = ploggingRepository.findByPloggingId(ploggingId);
+    public void updatePloggingImg(MultipartFile file, PloggingUpdateImgReqDto dto) {
+        Plogging plogging = ploggingRepository.findByPloggingId(dto.getPloggingId());
 
         String s3Url = amazonS3Service.uploadFile(file);
 
-        plogging.updatePloggingImg(s3Url);
+        plogging.updatePloggingImg(s3Url, dto.getIsVisible());
         ploggingRepository.save(plogging);
     }
 
@@ -259,18 +270,39 @@ public class PloggingService {
         return dto;
     }
 
-
     public String createAiImg(MultipartFile file) {
-//        // python ai server webclient 호출해서 type 리턴값 받아오고 return 해주면됨
-//        try {
-//            // 이미지를 byte array로 변환
-//            byte[] imageBytes = file.getBytes();
-//            // TensorFlow 서비스를 이용하여 이미지 분류
-//            String result = tensorFlowService.classifyImage(imageBytes);
-//            return result;
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-        return null;
+        WebClient webClient = WebClient.builder()
+                .baseUrl("http://localhost:8000") // FastAPI 서버 URL
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.MULTIPART_FORM_DATA_VALUE)
+                .build();
+
+        MultiValueMap<String, Object> formData = new LinkedMultiValueMap<>();
+
+        try {
+            formData.add("file", new ByteArrayResource(file.getBytes()) {
+                @Override
+                public String getFilename() {
+                    return file.getOriginalFilename();
+                }
+            });
+        } catch (IOException e) {
+            // IOException 처리
+            e.printStackTrace();
+            System.out.println("여기문제야?");
+            // 에러 처리 로직 구현, 예를 들면 에러 메시지를 반환할 수 있습니다.
+            return "File processing error: " + e.getMessage();
+        }
+
+        // POST 요청을 보내고 응답을 String으로 받음
+        String response = webClient.post()
+                .uri("/predict-image/")
+                .bodyValue(formData)
+                .retrieve() // 서버로부터의 응답을 가져옴
+                .bodyToMono(String.class) // 응답을 String 형태로 변환
+                .block(); // 비동기 실행을 동기화하고 결과를 가져옴
+
+        return response;
     }
+
+
 }

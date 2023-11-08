@@ -1,6 +1,7 @@
 package com.mm.greenstep.domain.plogging.api;
 
 import com.mm.greenstep.domain.plogging.dto.request.PloggingReqDto;
+import com.mm.greenstep.domain.plogging.dto.request.PloggingUpdateImgReqDto;
 import com.mm.greenstep.domain.plogging.dto.response.PloggingAllResDto;
 import com.mm.greenstep.domain.plogging.dto.response.PloggingDetailResDto;
 import com.mm.greenstep.domain.plogging.dto.response.PloggingResDto;
@@ -29,12 +30,12 @@ public class PloggingController {
     }
 
     // 플로깅 사진 등록
-    @PostMapping("/{ploggingId}/upload/img")
+    @PostMapping("/upload/img")
     public ResponseEntity<?> updatePloggingImg(
             @RequestPart(value = "file", required = false) MultipartFile file,
-            @PathVariable(value = "ploggingId", required = false) Long ploggingId
+            @RequestPart(value = "dto", required = false) PloggingUpdateImgReqDto dto
     ) {
-        ploggingService.updatePloggingImg(file, ploggingId);
+        ploggingService.updatePloggingImg(file, dto);
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
