@@ -1,14 +1,13 @@
 import { View, Dimensions } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CarouselCard from './CarouselCard'
+import { MainAPI } from '../../Api/basicHttp';
 
-interface samplePagesObjectType {
-  key: number;
-  color?: string;
+export interface PagesObjectType {
   imageUrl: string;
 };
 
-export interface samplePagesType extends Array<samplePagesObjectType> {}
+export interface PagesType extends Array<PagesObjectType> {}
 
 // Carousel 모양 지정
 const screenWidth = Math.round(Dimensions.get('window').width); // 393
@@ -18,42 +17,32 @@ export const pageWidth = screenWidth - (gap + offset) * 2; // 캐러셀 너비
 
 
 const Carousel = () => {
-  // 임시 데이터
-  const [samplePages, setSamplePages] = useState<samplePagesType> ([
-    {
-      key: 1,
-      color: '#86E3CE',
-      imageUrl: 'https://mblogthumb-phinf.pstatic.net/MjAyMTAyMDRfNjIg/MDAxNjEyNDA4OTk5NDQ4.6UGs399-0EXjIUwwWsYg7o66lDb-MPOVQ-zNDy1Wnnkg.m-WZz0IKKnc5OO2mjY5dOD-0VsfpXg7WVGgds6fKwnIg.JPEG.sunny_side_up12/1612312679152%EF%BC%8D2.jpg?type=w800',
-    },
-    {
-      key: 2,
-      color: '#D0E6A5',
-      imageUrl: 'https://mblogthumb-phinf.pstatic.net/MjAyMTAyMDRfNjIg/MDAxNjEyNDA4OTk5NDQ4.6UGs399-0EXjIUwwWsYg7o66lDb-MPOVQ-zNDy1Wnnkg.m-WZz0IKKnc5OO2mjY5dOD-0VsfpXg7WVGgds6fKwnIg.JPEG.sunny_side_up12/1612312679152%EF%BC%8D2.jpg?type=w800',
-    },
-    {
-      key: 3,
-      color: '#FFDD94',
-      imageUrl: 'https://mblogthumb-phinf.pstatic.net/MjAyMTAyMDRfNjIg/MDAxNjEyNDA4OTk5NDQ4.6UGs399-0EXjIUwwWsYg7o66lDb-MPOVQ-zNDy1Wnnkg.m-WZz0IKKnc5OO2mjY5dOD-0VsfpXg7WVGgds6fKwnIg.JPEG.sunny_side_up12/1612312679152%EF%BC%8D2.jpg?type=w800',
-    },
-    {
-      key: 4,
-      color: '#FA897B',
-      imageUrl: 'https://mblogthumb-phinf.pstatic.net/MjAyMTAyMDRfNjIg/MDAxNjEyNDA4OTk5NDQ4.6UGs399-0EXjIUwwWsYg7o66lDb-MPOVQ-zNDy1Wnnkg.m-WZz0IKKnc5OO2mjY5dOD-0VsfpXg7WVGgds6fKwnIg.JPEG.sunny_side_up12/1612312679152%EF%BC%8D2.jpg?type=w800',
-    },
-    {
-      key: 5,
-      color: '#CCABD8',
-      imageUrl: 'https://mblogthumb-phinf.pstatic.net/MjAyMTAyMDRfNjIg/MDAxNjEyNDA4OTk5NDQ4.6UGs399-0EXjIUwwWsYg7o66lDb-MPOVQ-zNDy1Wnnkg.m-WZz0IKKnc5OO2mjY5dOD-0VsfpXg7WVGgds6fKwnIg.JPEG.sunny_side_up12/1612312679152%EF%BC%8D2.jpg?type=w800',
-    },
-  ]);
+  
+  /** 플로깅 이미지 불러오기 */
+  const [pages, setPages] = useState<PagesType>([]);
+
+   useEffect(() => {
+    getMainImage();
+   }, [])
+   
+   const getMainImage = () => {
+    MainAPI.mainImageAxios()
+    .then(res => {
+      if (res.status === 200) {
+        setPages(res.data)
+      }
+    })
+    .catch(err => console.log('캐러셀 이미지 axios 에러 : ', err))
+  }
+
 
   return (
     <View style={{height: "100%", width: "100%"}}>
       <CarouselCard
         gap={gap}
         offset={offset}
-        pages={samplePages}
-        setSamplePages={setSamplePages}
+        pages={pages}
+        setPages={setPages}
         pageWidth={pageWidth}
         />
     </View>
