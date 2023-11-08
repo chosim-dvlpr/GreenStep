@@ -1,6 +1,5 @@
 package com.mm.greenstep.domain.plogging.service;
 
-import com.mm.greenstep.domain.achieve.entity.Achieve;
 import com.mm.greenstep.domain.achieve.entity.UserAchieve;
 import com.mm.greenstep.domain.achieve.repository.UserAchieveRepository;
 import com.mm.greenstep.domain.avatar.entity.Avatar;
@@ -31,10 +30,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
@@ -67,10 +63,19 @@ public class PloggingService {
         // 종료시간에서 - 전체 이동시간(Double TravelTime) 빼서 시작시간 만들기
         LocalDateTime endTime = LocalDateTime.now();
         // travelTime은 분 단위입니다. 이를 초 단위로 변환합니다.
+        try {
+        System.out.println("getTrashAmount " + dto.getTrashList().get(0).getLongitude());
+        System.out.println("getTrashAmount " + dto.getCoorList().get(0).getLatitude());
 
-        System.out.println("getTravelRange " + dto.getTravelRange());
-        System.out.println("getTravelTime " + dto.getTravelTime());
-        System.out.println("getTrashAmount " + dto.getTrashAmount());
+
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+//            System.out.println("getTravelRange " + dto.getTravelRange());
+//            System.out.println("getTravelTime " + dto.getTravelTime());
+//            System.out.println("getTrashAmount " + dto.getTrashAmount());
 
         Long travelTimeInSeconds = 0L;
         LocalDateTime startTime = null;
@@ -135,6 +140,7 @@ public class PloggingService {
                 .isLevelUp(levelUp)
                 .avatarImg(avatarImg)
                 .avatarName(avatarName)
+                .ploggingId(plogging.getPloggingId())
                 .getExp(getExp)
                 .build();
 
@@ -167,55 +173,55 @@ public class PloggingService {
 
         // 업적 갱신
         // 업적들을 돌면서 나의 플로깅 이력을 다가져오기
-        List<Plogging> ploggingList = ploggingRepository.findAllByUser(user);
-        Integer myTrashAmount = 0; // 나의 총 쓰레기 량
-        Double myTravelRange = 0.0; // 나의 총 이동거리
-        Double myTravelTime = 0.0; // 나의 총 이동시간
-        Integer myPloggingCount = ploggingList.size();
-
-        for (Plogging p : ploggingList) {
-            myTrashAmount += p.getTrashAmount();
-            myTravelRange += p.getTravelRange();
-            myTravelTime += p.getTravelTime();
-        }
-
-        // 깨지지 않은 나의 모든 업적 가져온다.
-        List<UserAchieve> achieveList = userAchieveRepository.findAllByUserAndIsBreakedFalse(user);
-
-        for (UserAchieve ua : achieveList) {
-            Byte achieveType = ua.getAchieve().getAchieveType();
-
-            switch (achieveType) {
-            // 거리
-            case 1:
-                if(ua.getAchieve().getAchieveDistance() <= myTravelRange) {
-                    ua.updateisBreaked();
-                    userAchieveRepository.save(ua);
-                }
-                break;
-            // 시간
-            case 2:
-                if(ua.getAchieve().getAchieveTime() <= myTravelTime) {
-                    ua.updateisBreaked();
-                    userAchieveRepository.save(ua);
-                }
-                break;
-            // 쓰레기 수
-            case 3:
-                if(ua.getAchieve().getAchieveTrash() <= myTrashAmount) {
-                    ua.updateisBreaked();
-                    userAchieveRepository.save(ua);
-                }
-                break;
-            // 횟수
-            case 4:
-                if(ua.getAchieve().getAchieveCount() <= myPloggingCount) {
-                    ua.updateisBreaked();
-                    userAchieveRepository.save(ua);
-                }
-                break;
-            }
-        }
+//        List<Plogging> ploggingList = ploggingRepository.findAllByUser(user);
+//        Integer myTrashAmount = 0; // 나의 총 쓰레기 량
+//        Double myTravelRange = 0.0; // 나의 총 이동거리
+//        Double myTravelTime = 0.0; // 나의 총 이동시간
+//        Integer myPloggingCount = ploggingList.size();
+//
+//        for (Plogging p : ploggingList) {
+//            myTrashAmount += p.getTrashAmount();
+//            myTravelRange += p.getTravelRange();
+//            myTravelTime += p.getTravelTime();
+//        }
+//
+//        // 깨지지 않은 나의 모든 업적 가져온다.
+//        List<UserAchieve> achieveList = userAchieveRepository.findAllByUserAndIsBreakedFalse(user);
+//
+//        for (UserAchieve ua : achieveList) {
+//            Byte achieveType = ua.getAchieve().getAchieveType();
+//
+//            switch (achieveType) {
+//            // 거리
+//            case 1:
+//                if(ua.getAchieve().getAchieveDistance() <= myTravelRange) {
+//                    ua.updateisBreaked();
+//                    userAchieveRepository.save(ua);
+//                }
+//                break;
+//            // 시간
+//            case 2:
+//                if(ua.getAchieve().getAchieveTime() <= myTravelTime) {
+//                    ua.updateisBreaked();
+//                    userAchieveRepository.save(ua);
+//                }
+//                break;
+//            // 쓰레기 수
+//            case 3:
+//                if(ua.getAchieve().getAchieveTrash() <= myTrashAmount) {
+//                    ua.updateisBreaked();
+//                    userAchieveRepository.save(ua);
+//                }
+//                break;
+//            // 횟수
+//            case 4:
+//                if(ua.getAchieve().getAchieveCount() <= myPloggingCount) {
+//                    ua.updateisBreaked();
+//                    userAchieveRepository.save(ua);
+//                }
+//                break;
+//            }
+//        }
         return responseDto;
     }
 

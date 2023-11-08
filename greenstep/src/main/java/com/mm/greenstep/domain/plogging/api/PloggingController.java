@@ -24,7 +24,7 @@ public class PloggingController {
 
     // 플로깅 종료
     @PostMapping("/end")
-    public ResponseEntity<?> createPlogging(PloggingReqDto dto) {
+    public ResponseEntity<?> createPlogging(@RequestBody PloggingReqDto dto) {
         PloggingResDto responseDto = ploggingService.createPlogging(dto);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
