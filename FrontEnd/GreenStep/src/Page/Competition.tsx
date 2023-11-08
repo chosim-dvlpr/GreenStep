@@ -14,8 +14,8 @@ const Competition = () => {
           <Title>경쟁</Title>
           <Calendar onSelectDate={setSelectedDate} selected={selectedDate} />
         </CalendarWrap>
+        <GraphicText>내 팀 : 꼬북꼬북</GraphicText>
         <CompetitionGraphic />
-
         <CompetitionDashBoard />
       </ContainerBg>
     </Container>
@@ -27,6 +27,12 @@ const Container = styled.View`
   flex: 1;
 `;
 
+const GraphicText = styled.Text`
+  font-family: 'SUITE-Bold';
+  font-size: 20px;
+  margin-left: 30px;
+  margin-bottom: 15px;
+`;
 const ContainerBg = styled.ImageBackground`
   width: 100%;
   height: 100%;
