@@ -67,7 +67,7 @@ public class CompeteService {
 
 
 
-    public void updateCompete(int AITrashAmount, int TravelRange, int TravelTime, int TrashAmount){
+    public void updateCompete(int AITrashAmount, double TravelRange, long TravelTime, int TrashAmount){
         // 내팀 조회
         Team team = SecurityUtil.getCurrentUser().getTeam();
 

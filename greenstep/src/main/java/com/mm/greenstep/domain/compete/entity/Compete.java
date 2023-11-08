@@ -52,7 +52,7 @@ public class Compete {
         this.competeAmount = 0.0;
     }
 
-    public void updateCompete(int travelRange, int travelTime, int trashAmount, int score){
+    public void updateCompete(double travelRange, long travelTime, int trashAmount, int score){
         this.competeTime += travelTime;
         this.competeRange += travelRange;
         this.competeAmount += trashAmount;
