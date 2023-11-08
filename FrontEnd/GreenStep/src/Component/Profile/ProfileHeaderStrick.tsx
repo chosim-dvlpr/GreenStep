@@ -11,7 +11,6 @@ const ProfileHeaderStrick = () => {
     const [year, setYear] = useState(nowYear)
     const [ploggingWeek, setPloggingWeek] = useState([])
     const [selectedBoxIndex, setSelectedBoxIndex] = useState<number|null>(null);  
-    const [selected, setSelected] = useState(false)
 
     const handleBoxPress = (index: number) => {
       if (selectedBoxIndex === index) {
@@ -45,7 +44,7 @@ const ProfileHeaderStrick = () => {
         } else if (ploggingCount >= 4) {
           return {...Box.weekBox, backgroundColor: 'green'};
         } else if (ploggingCount >= 1) {
-          return {...Box.weekBox, backgroundColor: 'lightGreen'};
+          return {...Box.weekBox, backgroundColor: 'yellow'};
         } else {
           return {...Box.weekBox, backgroundColor: 'white'};
         }
@@ -56,7 +55,7 @@ const ProfileHeaderStrick = () => {
     try{
       const res = await ProfileAPI.getStreakAxios(year);
       console.log(res)
-      // setPloggingWeek(res.data)
+      setPloggingWeek(res.data)
     }catch(err){
       console.log('스트릭 조회 error', err)
     }
@@ -73,15 +72,14 @@ const ProfileHeaderStrick = () => {
     console.log(year)
   }, [year])
 
-  const handleYearPlus = () => {
-    setYear(year+1)
-}
-const handleYearMinus = () => {
-    if (year > 0) {
-        setYear(year-1)
-    }
-}
-    
+    const handleYearPlus = () => {
+      setYear(year+1)
+  }
+  const handleYearMinus = () => {
+      if (year > 0) {
+          setYear(year-1)
+      }
+  }
     return(
         <View style={[Box.calendarBox, {alignItems:'center'}]}>
             <View style={{display: 'flex', flexDirection:'row', justifyContent:'space-around'}}>
@@ -93,22 +91,38 @@ const handleYearMinus = () => {
                     <Image source={plus}></Image>
                 </TouchableOpacity>
           </View>
+
+
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             {Array.from({length:52}).map((_, index) =>(
                 <TouchableOpacity key={index} onPress={() => handleBoxPress(index)}>
+
                   <View>
                     <Text style={{fontSize:12, fontWeight:'bold'}}>{getMonthLabel(index)}</Text>
+
                       {selectedBoxIndex === index && (
                         <View style={{alignItems:'center'}}>
-                          <Text style={{fontSize:8}}>{index}</Text>
-                        </View>)}
+                          <Text style={{fontSize:10, fontWeight:'bold'}}>{index+1}주</Text>
+                        </View>
+                          )}
+
                     <View key={index} style={getWeekBoxStyle(index)}>
                       <Text style={{fontSize:8}}></Text>
                     </View>
+                    {selectedBoxIndex === index && (
+                        <View style={{alignItems:'center'}}>
+                          <Text style={{fontSize:10, fontWeight:'bold'}}>{ploggingWeek[index]}회</Text>
+                        </View>
+                          )}
                   </View>
+
+
               </TouchableOpacity>
             ))}
           </ScrollView>
+
+
+
         </View>
     )
 }
