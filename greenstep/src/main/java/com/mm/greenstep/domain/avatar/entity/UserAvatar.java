@@ -1,12 +1,15 @@
 package com.mm.greenstep.domain.avatar.entity;
 
 import com.mm.greenstep.domain.user.entity.User;
-import lombok.Getter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "user_avatar")
 public class UserAvatar {
     @Id

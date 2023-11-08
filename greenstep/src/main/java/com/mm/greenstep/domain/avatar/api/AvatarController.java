@@ -31,11 +31,4 @@ public class AvatarController {
         List<AvatarAllResDto> dtoList = myPageService.getAllMyAvatar();
         return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }
-
-//    // 아바타 랜덤 뽑기
-//    @GetMapping
-//    public ResponseEntity<?> getAllMyAvatar() {
-//        List<AvatarAllResDto> dtoList = myPageService.getAllMyAvatar();
-//        return new ResponseEntity<>(dtoList, HttpStatus.OK);
-//    }
 }

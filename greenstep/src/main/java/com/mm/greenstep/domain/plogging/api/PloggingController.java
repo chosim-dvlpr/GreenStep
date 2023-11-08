@@ -1,9 +1,11 @@
 package com.mm.greenstep.domain.plogging.api;
 
 import com.mm.greenstep.domain.plogging.dto.request.PloggingReqDto;
+import com.mm.greenstep.domain.plogging.dto.request.PloggingUpdateImgReqDto;
 import com.mm.greenstep.domain.plogging.dto.response.PloggingAllResDto;
 import com.mm.greenstep.domain.plogging.dto.response.PloggingDetailResDto;
 import com.mm.greenstep.domain.plogging.dto.response.PloggingResDto;
+import com.mm.greenstep.domain.plogging.dto.response.TrashBoxAllResDto;
 import com.mm.greenstep.domain.plogging.service.PloggingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,18 +25,18 @@ public class PloggingController {
 
     // 플로깅 종료
     @PostMapping("/end")
-    public ResponseEntity<?> createPlogging(HttpServletRequest request, PloggingReqDto dto) {
-        PloggingResDto responseDto = ploggingService.createPlogging(request, dto);
+    public ResponseEntity<?> createPlogging(@RequestBody PloggingReqDto dto) {
+        PloggingResDto responseDto = ploggingService.createPlogging(dto);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
     // 플로깅 사진 등록
-    @PostMapping("/{ploggingId}/upload/img")
+    @PostMapping("/upload/img")
     public ResponseEntity<?> updatePloggingImg(
             @RequestPart(value = "file", required = false) MultipartFile file,
-            @PathVariable(value = "ploggingId", required = false) Long ploggingId
+            @RequestPart(value = "dto", required = false) PloggingUpdateImgReqDto dto
     ) {
-        ploggingService.updatePloggingImg(file, ploggingId);
+        ploggingService.updatePloggingImg(file, dto);
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
@@ -59,5 +61,12 @@ public class PloggingController {
     ) {
         String type = ploggingService.createAiImg(file);
         return new ResponseEntity<>(type, HttpStatus.OK);
+    }
+
+    // 내 플로깅 전체 조회
+    @GetMapping("/trashBox")
+    public ResponseEntity<?> getAllTrashBox() {
+        List<TrashBoxAllResDto> dtoList = ploggingService.getAllTrashBox();
+        return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }
 }

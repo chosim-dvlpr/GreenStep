@@ -30,7 +30,7 @@ public class Plogging {
     private Double travelRange;
 
     @Column(name = "travel_time")
-    private Double travelTime;
+    private Long travelTime;
 
     @Column(name = "travel_amount")
     private Integer trashAmount;
@@ -63,7 +63,8 @@ public class Plogging {
     @Column(name = "is_visibled", columnDefinition = "BOOLEAN DEFAULT false")
     private Boolean isVisibled;
 
-    public void updatePloggingImg(String s3Url) {
+    public void updatePloggingImg(String s3Url, Boolean tf) {
         this.travelPicture = s3Url;
+        this.isVisibled = tf;
     }
 }

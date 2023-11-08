@@ -51,13 +51,12 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 
-
 	// amazon s3
 	implementation 'software.amazon.awssdk:s3:2.17.93' // 최신 버전 사용
 	implementation 'commons-fileupload:commons-fileupload:1.4' // 버전은 최신 버전으로 수정
 
-	// tensorflow java api
-	implementation group: 'org.tensorflow', name: 'tensorflow-core-platform', version: '0.3.3'
+	// 외부 API 호출을 위한 WebFlux 모듈
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 }
 
 repositories {

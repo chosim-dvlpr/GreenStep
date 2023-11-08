@@ -24,7 +24,7 @@ public class Trash {
     @JoinColumn(name = "plogging_id")
     private Plogging plogging;
 
-    @Column(name = "trash_count", nullable = false)
+    @Column(name = "trash_count")
     private Long trashCount;
 
     @Column(name = "latitude", nullable = false)
