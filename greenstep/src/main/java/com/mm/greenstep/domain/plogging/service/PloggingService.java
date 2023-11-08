@@ -14,11 +14,14 @@ import com.mm.greenstep.domain.plogging.dto.request.PloggingUpdateImgReqDto;
 import com.mm.greenstep.domain.plogging.dto.response.PloggingAllResDto;
 import com.mm.greenstep.domain.plogging.dto.response.PloggingDetailResDto;
 import com.mm.greenstep.domain.plogging.dto.response.PloggingResDto;
+import com.mm.greenstep.domain.plogging.dto.response.TrashBoxAllResDto;
 import com.mm.greenstep.domain.plogging.entity.Coordinate;
 import com.mm.greenstep.domain.plogging.entity.Plogging;
 import com.mm.greenstep.domain.plogging.entity.Trash;
+import com.mm.greenstep.domain.plogging.entity.TrashBox;
 import com.mm.greenstep.domain.plogging.repository.PloggingRepository;
 import com.mm.greenstep.domain.plogging.repository.CoordinateRepository;
+import com.mm.greenstep.domain.plogging.repository.TrashBoxRepository;
 import com.mm.greenstep.domain.plogging.repository.TrashRepository;
 import com.mm.greenstep.domain.user.entity.User;
 import com.mm.greenstep.domain.user.repository.UserRepository;
@@ -51,6 +54,7 @@ public class PloggingService {
     private final CoordinateRepository coordinateRepository;
     private final TrashRepository trashRepository;
     private final UserAchieveRepository userAchieveRepository; // 내 업적 레포
+    private final TrashBoxRepository trashBoxRepository;
 
     public PloggingResDto createPlogging(PloggingReqDto dto) {
         Boolean levelUp = false;
@@ -323,4 +327,20 @@ public class PloggingService {
     }
 
 
+    public List<TrashBoxAllResDto> getAllTrashBox() {
+        List<TrashBoxAllResDto> dtoList = new ArrayList<>();
+        List<TrashBox> trashBoxList = trashBoxRepository.findAll();
+
+        for (TrashBox t : trashBoxList) {
+            TrashBoxAllResDto dto = TrashBoxAllResDto.builder()
+                    .latitude(t.getLatitude())
+                    .longitude(t.getLongitude())
+                    .type(t.getType())
+                    .build();
+
+            dtoList.add(dto);
+        }
+
+        return dtoList;
+    }
 }
