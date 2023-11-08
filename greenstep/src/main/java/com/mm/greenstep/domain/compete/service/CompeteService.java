@@ -25,9 +25,20 @@ public class CompeteService {
     public CompeteResDto getCurrentCompete() {
         // 현재의 경쟁 기록 가져오기
         LocalDate current = LocalDate.now();
-        Victory currentVictory = victoryRepository.findByVictoryMonth(current).orElseThrow();
+        Victory currentVictory = victoryRepository.findByYearAndMonth(current.getYear(),current.getMonthValue()).orElseThrow();
 
-        List<Compete> competeList = competeRepository.findAllByVictory(currentVictory);
+        return getCompeteResDto(currentVictory);
+    }
+
+    public CompeteResDto getCompete(YearMonth insert){
+        // 해당 년도 경쟁 기록 가져오기
+        Victory insertVictory = victoryRepository.findByYearAndMonth(insert.getYear(),insert.getMonthValue()).orElseThrow();
+
+        return getCompeteResDto(insertVictory);
+    }
+
+    public CompeteResDto getCompeteResDto(Victory victory){
+        List<Compete> competeList = competeRepository.findAllByVictory(victory);
 
         Compete compete1Team = competeList.get(0);
         Compete compete2Team = competeList.get(1);
@@ -45,7 +56,7 @@ public class CompeteService {
         }
 
         return CompeteResDto.builder()
-                .goalScore(currentVictory.getGoalScore())
+                .goalScore(victory.getGoalScore())
                 .myTeamScore(myTeamCompete.getCompeteScore())
                 .otherTeamScore(otherTeamCompete.getCompeteScore())
                 .myTeamCompeteTime(myTeamCompete.getCompeteTime())
@@ -54,43 +65,30 @@ public class CompeteService {
                 .build();
     }
 
-    public CompeteResDto getCompete(LocalDate insert){
+
+
+    public void updateCompete(int AITrashAmount, double TravelRange, long TravelTime, int TrashAmount){
+        // 내팀 조회
+        Team team = SecurityUtil.getCurrentUser().getTeam();
+
+        // 현재 진행중인 경쟁 확인
         // 해당 년도 경쟁 기록 가져오기
         LocalDate current = LocalDate.now();
-        Victory currentVictory = victoryRepository.findByVictoryMonth(insert).orElseThrow();
+        Victory currentVictory = victoryRepository.findByYearAndMonth(current.getYear(),current.getMonthValue()).orElseThrow();
 
-        List<Compete> competeList = competeRepository.findAllByVictory(currentVictory);
+        Compete currentCompete = competeRepository.findByVictoryAndTeam(currentVictory,team);
 
-        Compete compete1Team = competeList.get(0);
-        Compete compete2Team = competeList.get(1);
+        // Score갱신
+        Integer score = (int) ((AITrashAmount * 2)
+                + (TravelRange * 5)
+                + (TravelTime * 5)
+                // 쓰레기로 주울 수 있는 최대값 제한
+                + (Math.min((TrashAmount * 0.5) , 20)));
 
-        Team myTeam = SecurityUtil.getCurrentUser().getTeam();
+        // 한번의 플로깅으로 얻을 수 있는 score 최대 200점 제한
+        Integer updateScore = Math.min(score, 200);
 
-        Compete myTeamCompete, otherTeamCompete;
-
-        if (compete1Team.getTeam() == myTeam) {
-            myTeamCompete = compete1Team;
-            otherTeamCompete = compete2Team;
-        } else {
-            myTeamCompete = compete2Team;
-            otherTeamCompete = compete1Team;
-        }
-
-        return CompeteResDto.builder()
-                .goalScore(currentVictory.getGoalScore())
-                .myTeamScore(myTeamCompete.getCompeteScore())
-                .otherTeamScore(otherTeamCompete.getCompeteScore())
-                .myTeamCompeteTime(myTeamCompete.getCompeteTime())
-                .myTeamCompeteRange(myTeamCompete.getCompeteRange())
-                .myTeamCompeteAmount(myTeamCompete.getCompeteAmount())
-                .build();
+        currentCompete.updateCompete(TravelRange,TravelTime,TrashAmount,updateScore);
+        competeRepository.save(currentCompete);
     }
-
-//    public void updateCompete(int AITrashAmount, int TravelRange, int TravelTime, int TrashAmount){
-//        // 내팀 조회
-//        Team team = SecurityUtil.getCurrentUser().getTeam();
-//
-//        // 현재 진행중인 경쟁 확인
-//        LocalDate.now()
-//    }
 }

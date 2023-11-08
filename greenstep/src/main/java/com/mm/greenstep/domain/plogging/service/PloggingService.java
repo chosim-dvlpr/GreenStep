@@ -7,6 +7,7 @@ import com.mm.greenstep.domain.avatar.entity.UserAvatar;
 import com.mm.greenstep.domain.avatar.repository.AvatarRepository;
 import com.mm.greenstep.domain.avatar.repository.UserAvatarRepository;
 import com.mm.greenstep.domain.common.util.SecurityUtil;
+import com.mm.greenstep.domain.compete.service.CompeteService;
 import com.mm.greenstep.domain.plogging.dto.request.PloggingCoorDto;
 import com.mm.greenstep.domain.plogging.dto.request.PloggingReqDto;
 import com.mm.greenstep.domain.plogging.dto.request.PloggingTrashReqDto;
@@ -55,6 +56,7 @@ public class PloggingService {
     private final TrashRepository trashRepository;
     private final UserAchieveRepository userAchieveRepository; // 내 업적 레포
     private final TrashBoxRepository trashBoxRepository;
+    private final CompeteService competeService;
 
     public PloggingResDto createPlogging(PloggingReqDto dto) {
         Boolean levelUp = false;
@@ -90,6 +92,9 @@ public class PloggingService {
         }catch (Exception e) {
             e.printStackTrace();
         }
+
+        // 경쟁 score 갱신
+        competeService.updateCompete(dto.getAITrashAmount(),dto.getTravelRange(),dto.getTravelTime(), dto.getTrashAmount());
 
 
         // 경험치 계산
