@@ -4,7 +4,7 @@ import Login from '../Component/Main/Login';
 import Carousel from '../Component/Main/Carousel';
 import styled from 'styled-components/native';
 import ButtonStyle from '../Style/ButtonStyle';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { MainAPI } from '../Api/basicHttp';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -44,6 +44,8 @@ const CarouselTextContainer = styled.View`
 
 const Main = () => {
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
+
   const [isLogin, setIsLogin] = useState<boolean>(false);
   
   useEffect(() => {
@@ -71,13 +73,17 @@ const Main = () => {
   }
 
   useEffect(() => {
-    getMainData();
-  }, [])
+    return() => {
+      getMainData();
+    }
+  }, [isFocused, ])
 
   /** 임시 로그아웃 */
   const sampleLogout = () => {
+    console.log('로그아웃 되었습니다.')
     AsyncStorage.removeItem('accessToken')
     AsyncStorage.removeItem('refreshToken')
+    
   }
 
 
@@ -186,7 +192,7 @@ const Main = () => {
       <LoginContainer>
       {
         isLogin ?
-        <View>
+        <View style={{flexDirection: 'row'}}>
           <TouchableOpacity
             onPress={() => navigation.navigate('ploggingstart')}
             style={[ButtonStyle.largeButton, ButtonStyle.lightGreenColor]}
