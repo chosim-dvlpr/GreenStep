@@ -7,6 +7,7 @@ import ButtonStyle from '../Style/ButtonStyle';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { MainAPI } from '../Api/basicHttp';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import tokenHttp from '../Api/tokenHttp';
 
 export interface EmailLoginDataType {
   'email': string,

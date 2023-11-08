@@ -8,10 +8,17 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import PloggingFinishHeader from '../Component/PloggingFinish/PloggingFinishHeader';
 import { useNavigation } from '@react-navigation/native';
 import PloggingFinishNoImage from '../Image/PloggingFinish/PloggingFinishNoImage.png';
+import PloggingFinishLevelUpModal from '../Component/PloggingFinish/PloggingFinishLevelUpModal';
 
 interface PloggingFinishType {
+  // props로 반드시 넘겨줘야 할 항목 (추후 ? 지우기)
   ploggingId?: number,
   getExp?: number,
+  isLevelUp?: boolean, 
+  
+  // 선택 항목
+  avartarName?: string, 
+  avatarImg?: string,
 }
 
 const PloggingFinishContainer = styled.View`
@@ -46,7 +53,7 @@ const GoToMainContainer = styled.View`
 const ButtonTextColor = '#8BCA84';
 
 
-const PloggingFinish = ({ ploggingId, getExp }: PloggingFinishType) => {
+const PloggingFinish = ({ ploggingId, getExp, isLevelUp, avartarName, avatarImg }: PloggingFinishType) => {
   const navigation = useNavigation();
 
   /** 사진 선택 기능 */
@@ -79,8 +86,28 @@ const PloggingFinish = ({ ploggingId, getExp }: PloggingFinishType) => {
     .catch(err => console.log('file 전송 실패 : ', err))
   };
 
+  /** 레벨업 토글 */
+  const [levelUpToggle, setLevelUpToggle] = useState(false);
+  const handleLevelUpToggle = () => {
+    setLevelUpToggle(!levelUpToggle);
+  };
+
+  useEffect(() => {
+    if (!isLevelUp) {
+      setLevelUpToggle(true);
+    }
+  }, [])
+
   return (
     <ScrollView>
+      {levelUpToggle && 
+      <PloggingFinishLevelUpModal 
+      // onSelectAvatar={changeAvatar} 
+      onClose={handleLevelUpToggle} 
+      visible={levelUpToggle} 
+      // avatars={avatars} 
+      />}
+
       <PloggingFinishContainer>
         {/* 헤더 */}
         <PloggingFinishHeader getExp={getExp} />
