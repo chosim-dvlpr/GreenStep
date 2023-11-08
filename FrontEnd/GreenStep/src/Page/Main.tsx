@@ -124,15 +124,17 @@ const Main = () => {
         accessToken: accessToken,
         refreshToken: refreshToken
       };
-  
+      AsyncStorage.removeItem('accessToken');
+      AsyncStorage.removeItem('refreshToken');
       console.log('logout 실행');
-      tokenHttp.post('/user/logout', data)
-        .then(res => {
-          AsyncStorage.removeItem('accessToken');
-          AsyncStorage.removeItem('refreshToken');
-          setIsLogin(false);
-        })
-        .catch(err => console.log('로그아웃 실패 : ', err));
+      setIsLogin(false)
+    //   tokenHttp.post('/user/logout', data)
+    //     .then(res => {
+    //       AsyncStorage.removeItem('accessToken');
+    //       AsyncStorage.removeItem('refreshToken');
+    //       setIsLogin(false);
+    //     })
+    //     .catch(err => console.log('로그아웃 실패 : ', err));
     } catch (error) {
       console.error('로그아웃 중 오류 발생:', error);
     }
