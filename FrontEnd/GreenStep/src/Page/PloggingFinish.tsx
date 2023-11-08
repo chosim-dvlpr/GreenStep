@@ -18,7 +18,7 @@ interface PloggingFinishType {
   
   // 선택 항목
   avartarName?: string, 
-  avatarImg?: string,
+  avatarImage?: string,
 }
 
 const PloggingFinishContainer = styled.View`
@@ -53,7 +53,7 @@ const GoToMainContainer = styled.View`
 const ButtonTextColor = '#8BCA84';
 
 
-const PloggingFinish = ({ ploggingId, getExp, isLevelUp, avartarName, avatarImg }: PloggingFinishType) => {
+const PloggingFinish = ({ ploggingId, getExp, isLevelUp, avartarName, avatarImage }: PloggingFinishType) => {
   const navigation = useNavigation();
 
   /** 사진 선택 기능 */
@@ -102,13 +102,18 @@ const PloggingFinish = ({ ploggingId, getExp, isLevelUp, avartarName, avatarImg 
     <ScrollView>
       {levelUpToggle && 
       <PloggingFinishLevelUpModal 
-      // onSelectAvatar={changeAvatar} 
       onClose={handleLevelUpToggle} 
       visible={levelUpToggle} 
-      // avatars={avatars} 
+      // avatarName={avatarName} 
+      // avatarImage={avatarImage} 
+      
+      // 데이터 props로 받은 뒤 삭제하기
+      avatarName={'cow'}
+      avatarImage={'cow'} 
       />}
 
       <PloggingFinishContainer>
+
         {/* 헤더 */}
         <PloggingFinishHeader getExp={getExp} />
   

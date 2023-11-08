@@ -5,20 +5,38 @@ import panda from '../../Image/Avatar/panda.png'
 import bird from '../../Image/Avatar/bird.png'
 import cow from '../../Image/Avatar/cow.png'
 import crocodile from '../../Image/Avatar/crocodile.png'
+import LottieView from 'lottie-react-native';
+import treasureBox from '../../Image/PloggingFinish/treasureBox.json'
 
 interface ModalProps {
   onClose: () => void;
-  // onSelectAvatar: (boxId:number) => void;
-  // avatars : AvatarProps[];
   visible: boolean;
+  avatarName: string,
+  avatarImage: string,
 }
 
 
-const PloggingFinishLevelUpModal : React.FC<ModalProps> = ({ onClose }) => {
+const PloggingFinishLevelUpModal : React.FC<ModalProps> = ({ onClose, avatarName, avatarImage }) => {
   /** 상자 오픈했는지 여부 */
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const handleIsOpened = () => {
     setIsOpened(true);
+  };
+
+  // 이미지 불러오기
+  const getAvatarImage = () => {
+    switch (avatarName) {
+      case 'panda':
+        return panda;
+      case 'bird':
+        return bird;
+      case 'cow':
+        return cow;
+      case 'crocodile':
+        return crocodile;
+      default:
+        return null; // 혹은 기본 이미지 설정
+    }
   };
 
   return (
@@ -31,7 +49,6 @@ const PloggingFinishLevelUpModal : React.FC<ModalProps> = ({ onClose }) => {
       <View style={styles.modalOverlay}>
         <TouchableWithoutFeedback>
           <View style={[styles.modalView]}>
-            <Text style={styles.levelUpText}>레벨 업!</Text>
             <TouchableOpacity
             onPress={handleIsOpened}
             disabled={isOpened}
@@ -39,13 +56,24 @@ const PloggingFinishLevelUpModal : React.FC<ModalProps> = ({ onClose }) => {
               {
                 isOpened
                 ? <View style={styles.avatarContainer}>
+                    <Text style={styles.levelUpText}>{avatarName}</Text>
                     <Image
-                    source={panda}
+                    source={getAvatarImage()}
                     style={styles.avatarImage}
                     />
-                    <Text style={styles.bottomText}>OO을 획득했습니다.</Text>
+                    <Text style={styles.bottomText}>{avatarName} 획득!</Text>
                   </View>
-                : <Text>상자 이미지</Text>
+                : <View style={styles.treasureBoxContainer}>
+                    <Text style={styles.levelUpText}>레벨 업!</Text>
+                    <LottieView 
+                    source={treasureBox}
+                    autoPlay
+                    loop
+                    style={styles.treasureBoxImage}
+                    />
+                    <Text style={styles.treasureBoxText}>상자를 획득했습니다.</Text>
+                    <Text style={styles.treasureBoxText}>상자를 눌러 열어주세요.</Text>
+                  </View>
               }
             </TouchableOpacity>
           </View>
@@ -81,17 +109,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   levelUpText: {
-    fontWeight:'bold', 
+    fontWeight: '900', 
     fontSize: 30,
   },
   bottomText: {
-    fontSize: 18,
+    fontSize: 20,
     marginBottom: 20,
   },
   avatarContainer: {
     width: '100%',
-    height: '90%',
-    paddingTop: '10%',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
@@ -99,6 +125,17 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     marginBottom: 20,
+  },
+  treasureBoxContainer: {
+    alignItems: 'center',
+  },
+  treasureBoxImage: {
+    width: 200,
+    height: 200,
+  },
+  treasureBoxText: {
+    fontSize: 18,
+    alignSelf: 'center',
   },
 });
 
