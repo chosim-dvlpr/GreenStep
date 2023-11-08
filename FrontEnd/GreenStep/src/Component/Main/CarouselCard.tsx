@@ -1,5 +1,5 @@
 import { FlatList } from 'react-native';
-import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import CarouselCardItem from './CarouselCardItem';
 import styled from 'styled-components/native';
 import { PagesObjectType, PagesType } from './Carousel';
@@ -18,11 +18,19 @@ const Container = styled.View`
   align-items: center;
 `;
 
-const CarouselCard = ({pages, setPages, pageWidth, gap, offset}: CarouselCardProps) => {
+const CarouselCard = ({
+  pages, 
+  setPages, 
+  pageWidth, 
+  gap, 
+  offset}: CarouselCardProps) => {
   
   function renderItem({item}: { item: PagesObjectType }) {
     return (
-      <CarouselCardItem item={item} style={{width: pageWidth, marginHorizontal: gap / 2}} />
+      <CarouselCardItem 
+      item={item} 
+      style={{width: pageWidth, marginHorizontal: gap / 2}} 
+      />
     );
   }
 
@@ -32,9 +40,6 @@ const CarouselCard = ({pages, setPages, pageWidth, gap, offset}: CarouselCardPro
     if (pages.length > 0 && flatListRef.current) {
       flatListRef.current.scrollToIndex({ animated: true, index: 1 });
     }
-    // if (flatListRef.current){
-    //   flatListRef.current.scrollToIndex({animated: true, index: 0});
-    // }
   },[pages])
 
   // 끝에 도달하면 리스트 반복해서 보여줌

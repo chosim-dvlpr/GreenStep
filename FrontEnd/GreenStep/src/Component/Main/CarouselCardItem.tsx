@@ -4,16 +4,10 @@ import styled from 'styled-components/native';
 import { pageWidth, PagesObjectType } from './Carousel';
 
 interface CarouselCardItemProps {
-  // item: {
-  //   key: number; 
-  //   // color: string;
-  //   imageUrl: string;
-  // };
   item: PagesObjectType;
   style: ViewStyle;
 }
 
-// const PageItem = styled.View<{color: string}>`
 const PageItem = styled.View`
   justify-content: center;
   align-items: center;
