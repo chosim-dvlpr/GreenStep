@@ -56,7 +56,7 @@ public class PloggingService {
     private final TrashRepository trashRepository;
     private final UserAchieveRepository userAchieveRepository; // 내 업적 레포
 
-    public PloggingResDto createPlogging(HttpServletRequest request, PloggingReqDto dto) {
+    public PloggingResDto createPlogging(PloggingReqDto dto) {
         Boolean levelUp = false;
         String avatarImg = "";
         String avatarName = "";
@@ -67,8 +67,21 @@ public class PloggingService {
         // 종료시간에서 - 전체 이동시간(Double TravelTime) 빼서 시작시간 만들기
         LocalDateTime endTime = LocalDateTime.now();
         // travelTime은 분 단위입니다. 이를 초 단위로 변환합니다.
-        Long travelTimeInSeconds = (long) (dto.getTravelTime() * 60);
-        LocalDateTime startTime = endTime.minusSeconds(travelTimeInSeconds);
+
+        System.out.println("getTravelRange " + dto.getTravelRange());
+        System.out.println("getTravelTime " + dto.getTravelTime());
+        System.out.println("getTrashAmount " + dto.getTrashAmount());
+
+        Long travelTimeInSeconds = 0L;
+        LocalDateTime startTime = null;
+        try {
+
+        travelTimeInSeconds = (long) (dto.getTravelTime() * 60);
+        startTime = endTime.minusSeconds(travelTimeInSeconds);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         // 경험치 계산
         Integer getExp =
@@ -288,7 +301,6 @@ public class PloggingService {
         } catch (IOException e) {
             // IOException 처리
             e.printStackTrace();
-            System.out.println("여기문제야?");
             // 에러 처리 로직 구현, 예를 들면 에러 메시지를 반환할 수 있습니다.
             return "File processing error: " + e.getMessage();
         }
