@@ -57,7 +57,9 @@ const MyPloggingDetail = ({ onClose, index }:any) => {
                         <View style={{marginBottom: 30}}>
                             <View style={[styles.noWrapRow, {marginBottom: 20}]}>
                                 <View style={styles.center}>
-                                    <Text style={{fontWeight:'bold', fontSize: 20}}>{detail?.createdAt}</Text>
+                                    <Text style={{fontWeight:'bold', fontSize: 20}}>
+                                      {detail?.createdAt ? detail.createdAt.replace('T', ' ') : null}
+                                    </Text>
                                     <Text style={{fontSize: 20}}>{types[3]}</Text>
                                 </View>
                                 <View style={styles.center}>
