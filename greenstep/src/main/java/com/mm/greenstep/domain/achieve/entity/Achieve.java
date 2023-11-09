@@ -34,9 +34,6 @@ public class Achieve {
     @Column(name = "achieve_count")
     private Integer achieveCount;
 
-    @Column(name = "achieve_image", length = 255)
-    private String achieveImage;
-
     @Column(name = "achieve_type", nullable = false)
     private Byte achieveType;
 }

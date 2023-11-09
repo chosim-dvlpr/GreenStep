@@ -7,7 +7,9 @@ import lombok.Getter;
 @Getter
 public class CompeteResDto {
     private Integer myTeamScore;
+    private String myTeamName;
     private Integer otherTeamScore;
+    private String otherTeamName;
     private Integer goalScore;
     private Long myTeamCompeteTime;
     private Double myTeamCompeteRange;
