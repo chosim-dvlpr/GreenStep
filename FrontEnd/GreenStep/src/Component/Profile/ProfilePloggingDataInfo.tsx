@@ -9,6 +9,7 @@ import badge from '../../Image/Achievement/badge.png'
 import styled from 'styled-components/native';
 import { Double } from 'react-native/Libraries/Types/CodegenTypes';
 import { useNavigation } from "@react-navigation/native";
+import { roundedTravelRange, msToHM } from "../../Function/Plogging/funcPlogging";
 
 const ImageContainer = styled.View`
   width: 50%;
@@ -38,7 +39,7 @@ const ProfilePloggingDataInfo = ({timeInfo, distanceInfo, trashInfo, acheiveInfo
           <ImageContainer>
             <Image source={time} style={ImageStyle.tinyImage}></Image>
           </ImageContainer>
-          <Text style={{fontSize: 13, fontWeight:'bold', marginTop: 5, marginBottom: 2}} numberOfLines={1}>{timeInfo ? msToTime(timeInfo) : "00:00:00"}</Text>
+          <Text style={{fontSize: 13, fontWeight:'bold', marginTop: 5, marginBottom: 2}} numberOfLines={1}>{timeInfo ? msToHM(timeInfo) : "00:00:00"}</Text>
           <Text style={{fontSize: 13}} numberOfLines={1}>함께한 시간</Text>
         </View>
         
@@ -46,7 +47,7 @@ const ProfilePloggingDataInfo = ({timeInfo, distanceInfo, trashInfo, acheiveInfo
           <ImageContainer>
             <Image source={distance} style={ImageStyle.tinyImage}></Image>
           </ImageContainer>
-          <Text style={{fontSize: 13, fontWeight:'bold', marginTop: 5, marginBottom: 2}} numberOfLines={1}>{distanceInfo ? distanceInfo : 0} KM</Text>
+          <Text style={{fontSize: 13, fontWeight:'bold', marginTop: 5, marginBottom: 2}} numberOfLines={1}>{roundedTravelRange(distanceInfo)} KM</Text>
           <Text style={{fontSize: 13}} numberOfLines={1}>깨끗해진 거리</Text>
         </View>
         

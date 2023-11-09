@@ -66,7 +66,7 @@ const ProfileHeaderImage = ({percentage}:any) => {
     return(
         <View>
           <AnimatedCircularProgress
-                size={130}
+                size={150}
                 width={5}
                 fill={percentage}
                 tintColor="#00e0ff"
