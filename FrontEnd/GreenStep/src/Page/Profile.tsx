@@ -18,6 +18,7 @@ const Profile = ({navigation}:any) => {
   const [distanceInfo, setDistanceInfo] = useState(0)
   const [trashInfo, setTrashInfo] = useState(0)
   const [acheiveInfo, setAchieveInfo] = useState(0)
+  const [isProfile, setIsProfile] = useState(true)
   // 사용자 정보(이름, 경험치, 레벨) 불러오기
   const getUserInfo = async () => {
     try{
@@ -65,7 +66,7 @@ const Profile = ({navigation}:any) => {
         <ProfileHeaderStrick/>
       </View>
 
-      <ProfilePloggingDataInfo navigation={navigation} timeInfo={timeInfo} distanceInfo={distanceInfo} trashInfo={trashInfo} acheiveInfo={acheiveInfo} />
+      <ProfilePloggingDataInfo navigation={navigation} timeInfo={timeInfo} distanceInfo={distanceInfo} trashInfo={trashInfo} acheiveInfo={acheiveInfo} isProfile={isProfile} />
       <MyPlogging/>
     </ScrollView>
   );

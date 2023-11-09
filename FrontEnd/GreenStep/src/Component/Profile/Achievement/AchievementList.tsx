@@ -9,7 +9,7 @@ const AchievementList = () => {
     return(
         <View style={{alignItems:'center'}}>
         {achievementList.map((achievement, index) =>(
-            <AchievementCategory {...achievement}/>
+            <AchievementCategory key={index} {...achievement}/>
         ))}
       </View>
     )
