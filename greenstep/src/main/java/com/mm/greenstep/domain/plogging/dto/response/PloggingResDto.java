@@ -3,6 +3,8 @@ package com.mm.greenstep.domain.plogging.dto.response;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.List;
+
 
 @Builder
 @Getter
@@ -15,4 +17,5 @@ public class PloggingResDto {
     private String avatarName;
     private String avatarImg;
     private Long ploggingId;
+    private List<getAvatar> getAvatarList;
 }
