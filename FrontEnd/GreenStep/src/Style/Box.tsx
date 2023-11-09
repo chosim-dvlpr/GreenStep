@@ -45,7 +45,7 @@ const Box = StyleSheet.create({
   /** 프로필 달력 박스 */
   calendarBox: {
     width: '50%',
-    height : 140,
+    height : 160,
     padding : 20,
     backgroundColor: 'pink',
     borderRadius: 15,

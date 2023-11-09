@@ -8,7 +8,7 @@ import trash from '../../Image/Data/trash.png';
 import badge from '../../Image/Achievement/badge.png'
 import styled from 'styled-components/native';
 import { Double } from 'react-native/Libraries/Types/CodegenTypes';
-
+import { roundedTravelRange, msToHM } from "../../Function/Plogging/funcPlogging";
 const ImageContainer = styled.View`
   width: 50%;
   /* aspect-ratio: ; */
@@ -17,18 +17,6 @@ const ImageContainer = styled.View`
 
 const ProfilePloggingDataInfo = ({navigation, timeInfo, distanceInfo, trashInfo, acheiveInfo}:any) => {
 
-    const msToTime = (duration: Double): string => {
-      let seconds: string | number = Math.floor((duration / 1000) % 60),
-          minutes: string | number = Math.floor((duration / (1000 * 60)) % 60),
-          hours: string | number = Math.floor((duration / (1000 * 60 * 60)) % 24);
-  
-      hours = hours < 10 ? "0" + hours : hours;
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      seconds = seconds < 10 ? "0" + seconds : seconds;
-  
-      return `${hours}H ${minutes}M`;
-    };
-
     return(
         <View style={{display: 'flex', flexDirection: 'row', marginBottom: 20,
                       justifyContent: 'space-evenly', alignItems:'center'}}>
@@ -36,7 +24,7 @@ const ProfilePloggingDataInfo = ({navigation, timeInfo, distanceInfo, trashInfo,
           <ImageContainer>
             <Image source={time} style={ImageStyle.tinyImage}></Image>
           </ImageContainer>
-          <Text style={{fontSize: 13, fontWeight:'bold', marginTop: 5, marginBottom: 2}} numberOfLines={1}>{timeInfo ? msToTime(timeInfo) : "00:00:00"}</Text>
+          <Text style={{fontSize: 13, fontWeight:'bold', marginTop: 5, marginBottom: 2}} numberOfLines={1}>{timeInfo ? msToHM(timeInfo) : "00:00:00"}</Text>
           <Text style={{fontSize: 13}} numberOfLines={1}>함께한 시간</Text>
         </View>
         
@@ -44,7 +32,7 @@ const ProfilePloggingDataInfo = ({navigation, timeInfo, distanceInfo, trashInfo,
           <ImageContainer>
             <Image source={distance} style={ImageStyle.tinyImage}></Image>
           </ImageContainer>
-          <Text style={{fontSize: 13, fontWeight:'bold', marginTop: 5, marginBottom: 2}} numberOfLines={1}>{distanceInfo} KM</Text>
+          <Text style={{fontSize: 13, fontWeight:'bold', marginTop: 5, marginBottom: 2}} numberOfLines={1}>{roundedTravelRange(distanceInfo)} KM</Text>
           <Text style={{fontSize: 13}} numberOfLines={1}>깨끗해진 거리</Text>
         </View>
         

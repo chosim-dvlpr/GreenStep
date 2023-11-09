@@ -1,8 +1,8 @@
 import { View, Text, ScrollView, Image, TouchableOpacity} from "react-native";
 import {useState, useEffect} from 'react';
 import Box from "../../Style/Box";
-import plus from '../../Image/Board/plus.png'
-import minus from '../../Image/Board/minus.png'
+import right from '../../Image/Profile/right.png'
+import left from '../../Image/Profile/left.png'
 import { ProfileAPI } from "../../Api/profileApi";
 
 const ProfileHeaderStrick = () => {
@@ -40,11 +40,11 @@ const ProfileHeaderStrick = () => {
       const getWeekBoxStyle = (weekIndex :any) => {
         const ploggingCount = ploggingWeek[weekIndex] || 0;
         if (ploggingCount >= 7) {
-          return {...Box.weekBox, backgroundColor: 'darkGreen'};
+          return {...Box.weekBox, backgroundColor: '#276221'};
         } else if (ploggingCount >= 4) {
-          return {...Box.weekBox, backgroundColor: 'green'};
+          return {...Box.weekBox, backgroundColor: '#52A447'};
         } else if (ploggingCount >= 1) {
-          return {...Box.weekBox, backgroundColor: 'yellow'};
+          return {...Box.weekBox, backgroundColor: '#ACD8A7'};
         } else {
           return {...Box.weekBox, backgroundColor: 'white'};
         }
@@ -59,12 +59,6 @@ const ProfileHeaderStrick = () => {
     }catch(err){
       console.log('스트릭 조회 error', err)
     }
-    // ProfileAPI.getStreakAxios(year)
-    // .then((res) =>{
-    //   console.log('스트릭', res)
-    // } 
-    //   )
-    // .catch(err => console.log('스트릭 조회 axios 에러 : ', err, year))
   }
 
   useEffect(() => {
@@ -84,11 +78,11 @@ const ProfileHeaderStrick = () => {
         <View style={[Box.calendarBox, {alignItems:'center'}]}>
             <View style={{display: 'flex', flexDirection:'row', justifyContent:'space-around'}}>
             <TouchableOpacity onPress={handleYearMinus}>
-                    <Image source={minus}></Image>
+                    <Image source={left} style={{marginTop:10}}></Image>
                 </TouchableOpacity>
-            <Text style={{fontSize: 22, marginHorizontal: 20}}>{year}</Text>
+            <Text style={{fontSize: 20, marginHorizontal: 30}}>{year}</Text>
             <TouchableOpacity onPress={handleYearPlus}>
-                    <Image source={plus}></Image>
+                    <Image source={right} style={{marginTop:10}}></Image>
                 </TouchableOpacity>
           </View>
 
@@ -114,15 +108,20 @@ const ProfileHeaderStrick = () => {
                           <Text style={{fontSize:10, fontWeight:'bold'}}>{ploggingWeek[index]}회</Text>
                         </View>
                           )}
+
                   </View>
-
-
               </TouchableOpacity>
             ))}
           </ScrollView>
 
-
-
+            <View style={{display: 'flex', flexDirection:'row', justifyContent:'space-around'}}>
+              <View style={[Box.weekBox, {backgroundColor: '#ACD8A7', marginLeft: 10}]}></View>
+              <Text style={{fontSize: 10, fontWeight:'bold'}}>1~3</Text>
+              <View style={[Box.weekBox, {backgroundColor: '#52A447', marginLeft: 10}]}></View>
+              <Text style={{fontSize: 10, fontWeight:'bold'}}>4~7</Text>
+              <View style={[Box.weekBox, {backgroundColor: '#276221', marginLeft: 10}]}></View>
+              <Text style={{fontSize: 10, fontWeight:'bold'}}>7~</Text>
+            </View>
         </View>
     )
 }
