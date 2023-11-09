@@ -8,6 +8,7 @@ import trash from '../../Image/Data/trash.png';
 import badge from '../../Image/Achievement/badge.png'
 import styled from 'styled-components/native';
 import { Double } from 'react-native/Libraries/Types/CodegenTypes';
+import { useNavigation } from "@react-navigation/native";
 
 const ImageContainer = styled.View`
   width: 50%;
@@ -15,8 +16,9 @@ const ImageContainer = styled.View`
   align-items: center;
 `
 
-const ProfilePloggingDataInfo = ({navigation, timeInfo, distanceInfo, trashInfo, acheiveInfo}:any) => {
-
+const ProfilePloggingDataInfo = ({timeInfo, distanceInfo, trashInfo, acheiveInfo}:any) => {
+    const navigation = useNavigation();
+    
     const msToTime = (duration: Double): string => {
       let seconds: string | number = Math.floor((duration / 1000) % 60),
           minutes: string | number = Math.floor((duration / (1000 * 60)) % 60),
@@ -44,7 +46,7 @@ const ProfilePloggingDataInfo = ({navigation, timeInfo, distanceInfo, trashInfo,
           <ImageContainer>
             <Image source={distance} style={ImageStyle.tinyImage}></Image>
           </ImageContainer>
-          <Text style={{fontSize: 13, fontWeight:'bold', marginTop: 5, marginBottom: 2}} numberOfLines={1}>{distanceInfo} KM</Text>
+          <Text style={{fontSize: 13, fontWeight:'bold', marginTop: 5, marginBottom: 2}} numberOfLines={1}>{distanceInfo ? distanceInfo : 0} KM</Text>
           <Text style={{fontSize: 13}} numberOfLines={1}>깨끗해진 거리</Text>
         </View>
         
@@ -52,7 +54,7 @@ const ProfilePloggingDataInfo = ({navigation, timeInfo, distanceInfo, trashInfo,
           <ImageContainer>
             <Image source={trash} style={ImageStyle.tinyImage}></Image>
           </ImageContainer>
-          <Text style={{fontSize: 13, fontWeight:'bold', marginTop: 5, marginBottom: 2}} numberOfLines={1}>{trashInfo} 개</Text>
+          <Text style={{fontSize: 13, fontWeight:'bold', marginTop: 5, marginBottom: 2}} numberOfLines={1}>{trashInfo ? trashInfo : 0} 개</Text>
           <Text style={{fontSize: 13}} numberOfLines={1}>모은 쓰레기</Text>
         </View>
         
@@ -61,7 +63,7 @@ const ProfilePloggingDataInfo = ({navigation, timeInfo, distanceInfo, trashInfo,
             <ImageContainer>
               <Image source={badge} style={ImageStyle.tinyImage}></Image>
             </ImageContainer>
-            <Text style={{fontSize: 13, fontWeight:'bold', alignSelf: 'center', marginTop: 5, marginBottom: 2}} numberOfLines={1}>{acheiveInfo} 개</Text>
+            <Text style={{fontSize: 13, fontWeight:'bold', alignSelf: 'center', marginTop: 5, marginBottom: 2}} numberOfLines={1}>{acheiveInfo ? acheiveInfo : 0} 개</Text>
             <Text style={{fontSize: 13}} numberOfLines={1}>달성 업적</Text>
           </TouchableOpacity>
         </View>
