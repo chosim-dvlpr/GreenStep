@@ -22,6 +22,10 @@ import fileTokenHttp from '../Api/fileTokenHttp';
 
 interface PloggingFinishType {
   // props로 반드시 넘겨줘야 할 항목 (추후 ? 지우기)
+  travelTime?: string,  // string인지 확인 필요
+  travelRange?: number,
+  trashAmount?: number,
+  acheiveInfo?: number,
   ploggingId?: number,
   getExp?: number,
   isLevelUp?: boolean, 
@@ -31,7 +35,13 @@ interface PloggingFinishType {
   avatarImage?: string, // 아바타 이미지 url
 }
 
-const PloggingFinish = ({ ploggingId, getExp, isLevelUp, avartarName, avatarImage }: PloggingFinishType) => {
+const PloggingFinish = ({ 
+  ploggingId, 
+  getExp, 
+  isLevelUp, 
+  avartarName, 
+  avatarImage 
+}: PloggingFinishType) => {
   const navigation = useNavigation();
 
   /** 사진 선택 기능 */
@@ -128,7 +138,14 @@ const PloggingFinish = ({ ploggingId, getExp, isLevelUp, avartarName, avatarImag
   
         {/* 플로깅 데이터 */}
         <PloggingDataContainer>
-          <ProfilePloggingDataInfo/>
+          <ProfilePloggingDataInfo
+
+          // 데이터 바인딩 후 아래 주석 해제하기
+          // timeInfo={travelTime} 
+          // distanceInfo={travelRange}
+          // trashInfo={trashAmount}
+          // acheiveInfo={acheiveInfo}
+          />
         </PloggingDataContainer>
 
 
