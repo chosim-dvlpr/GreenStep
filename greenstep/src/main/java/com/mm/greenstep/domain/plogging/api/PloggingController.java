@@ -2,10 +2,7 @@ package com.mm.greenstep.domain.plogging.api;
 
 import com.mm.greenstep.domain.plogging.dto.request.PloggingReqDto;
 import com.mm.greenstep.domain.plogging.dto.request.PloggingUpdateImgReqDto;
-import com.mm.greenstep.domain.plogging.dto.response.PloggingAllResDto;
-import com.mm.greenstep.domain.plogging.dto.response.PloggingDetailResDto;
-import com.mm.greenstep.domain.plogging.dto.response.PloggingResDto;
-import com.mm.greenstep.domain.plogging.dto.response.TrashBoxAllResDto;
+import com.mm.greenstep.domain.plogging.dto.response.*;
 import com.mm.greenstep.domain.plogging.service.PloggingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -67,6 +64,13 @@ public class PloggingController {
     @GetMapping("/trashBox")
     public ResponseEntity<?> getAllTrashBox() {
         List<TrashBoxAllResDto> dtoList = ploggingService.getAllTrashBox();
+        return new ResponseEntity<>(dtoList, HttpStatus.OK);
+    }
+
+    // 데이터 지도
+    @GetMapping("/map")
+    public ResponseEntity<?> getAllTrashData() {
+        List<TrashDataAllResDto> dtoList = ploggingService.getAllTrashData();
         return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }
 }
