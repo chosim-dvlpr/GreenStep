@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import { View, Modal, Text, TouchableWithoutFeedback,
   TouchableOpacity, StyleSheet, Image } from "react-native";
-import panda from '../../Image/Avatar/panda.png'
-import bird from '../../Image/Avatar/bird.png'
-import cow from '../../Image/Avatar/cow.png'
-import crocodile from '../../Image/Avatar/crocodile.png'
 import LottieView from 'lottie-react-native';
 import treasureBox from '../../Image/PloggingFinish/treasureBox.json'
 import confetti from '../../Image/PloggingFinish/confetti.json'
@@ -24,21 +20,21 @@ const PloggingFinishLevelUpModal : React.FC<ModalProps> = ({ onClose, avatarName
     setIsOpened(true);
   };
 
-  // 이미지 불러오기
-  const getAvatarImage = () => {
-    switch (avatarName) {
-      case 'panda':
-        return panda;
-      case 'bird':
-        return bird;
-      case 'cow':
-        return cow;
-      case 'crocodile':
-        return crocodile;
-      default:
-        return null; // 혹은 기본 이미지 설정
-    }
-  };
+  // // 이미지 불러오기
+  // const getAvatarImage = () => {
+  //   switch (avatarName) {
+  //     case 'panda':
+  //       return panda;
+  //     case 'bird':
+  //       return bird;
+  //     case 'cow':
+  //       return cow;
+  //     case 'crocodile':
+  //       return crocodile;
+  //     default:
+  //       return null; // 혹은 기본 이미지 설정
+  //   }
+  // };
 
   return (
     <Modal
@@ -65,7 +61,7 @@ const PloggingFinishLevelUpModal : React.FC<ModalProps> = ({ onClose, avatarName
                     style={styles.confettiImage}
                     />
                     <Image
-                    source={getAvatarImage()}
+                    source={{uri: avatarImage}}
                     style={styles.avatarImage}
                     />
                     <Text style={styles.bottomText}>{avatarName} 획득!</Text>
