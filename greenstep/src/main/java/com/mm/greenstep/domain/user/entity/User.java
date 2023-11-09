@@ -48,7 +48,7 @@ public class User implements UserDetails {
     private Boolean isDeleted;
 
     @Column(name = "created_at")
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
@@ -58,7 +58,7 @@ public class User implements UserDetails {
 
     @PrePersist
     public void prePersist() {
-        this.createdAt = LocalDate.now(); // 저장하기 전에 현재 시간으로 초기화
+        this.createdAt = LocalDateTime.now(); // 저장하기 전에 현재 시간으로 초기화
         this.exp = 0;
         this.isDeleted = false;
         this.level = 1;
