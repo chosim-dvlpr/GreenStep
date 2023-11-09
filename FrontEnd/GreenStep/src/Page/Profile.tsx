@@ -15,9 +15,9 @@ const Profile = ({navigation}:any) => {
   const [percentage, setPerCentage] = useState(0);
   const [level, setLevel] = useState(0);
   const [timeInfo, setTimeInfo] = useState(0)
-  const [distanceInfo, setDistanceInfo] = useState(234)
-  const [trashInfo, setTrashInfo] = useState(123)
-  const [acheiveInfo, setAchieveInfo] = useState(10)
+  const [distanceInfo, setDistanceInfo] = useState(0)
+  const [trashInfo, setTrashInfo] = useState(0)
+  const [acheiveInfo, setAchieveInfo] = useState(0)
   // 사용자 정보(이름, 경험치, 레벨) 불러오기
   const getUserInfo = async () => {
     try{
