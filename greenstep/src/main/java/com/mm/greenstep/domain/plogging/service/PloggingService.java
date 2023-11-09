@@ -69,33 +69,12 @@ public class PloggingService {
         // 종료시간에서 - 전체 이동시간(Double TravelTime) 빼서 시작시간 만들기
         LocalDateTime endTime = LocalDateTime.now();
         // travelTime은 분 단위입니다. 이를 초 단위로 변환합니다.
-        try {
-        System.out.println("getTrashAmount " + dto.getTrashList().get(0).getLongitude());
-        System.out.println("getTrashAmount " + dto.getCoorList().get(0).getLatitude());
 
-
-
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-
-//            System.out.println("getTravelRange " + dto.getTravelRange());
-//            System.out.println("getTravelTime " + dto.getTravelTime());
-//            System.out.println("getTrashAmount " + dto.getTrashAmount());
-
-        Long travelTimeInSeconds = 0L;
-        LocalDateTime startTime = null;
-        try {
-
-        travelTimeInSeconds = (long) (dto.getTravelTime() * 60);
-        startTime = endTime.minusSeconds(travelTimeInSeconds);
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
+        Long travelTimeInSeconds = (long) (dto.getTravelTime() * 60);
+        LocalDateTime startTime = endTime.minusSeconds(travelTimeInSeconds);
 
         // 경쟁 score 갱신
         competeService.updateCompete(dto.getAITrashAmount(),dto.getTravelRange(),dto.getTravelTime(), dto.getTrashAmount());
-
 
         // 경험치 계산
         Integer getExp =
