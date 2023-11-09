@@ -19,8 +19,8 @@ public class AchieveController {
 
     // 업적 조회
     @GetMapping("/{achieveType}")
-    public ResponseEntity<?> getDetailAchieve(HttpServletRequest request, @PathVariable Byte achieveType) {
-        List<AchieveDetailResDto> dtoList = achieveService.getDetailAchieve(request, achieveType);
+    public ResponseEntity<?> getDetailAchieve(@PathVariable Byte achieveType) {
+        List<AchieveDetailResDto> dtoList = achieveService.getDetailAchieve(achieveType);
         return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }
 }

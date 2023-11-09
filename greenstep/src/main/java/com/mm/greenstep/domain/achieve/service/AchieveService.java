@@ -27,7 +27,7 @@ public class AchieveService {
     private final AchieveRepository achieveRepository;
 
 
-    public List<AchieveDetailResDto> getDetailAchieve(HttpServletRequest request, Byte achieveType) {
+    public List<AchieveDetailResDto> getDetailAchieve(Byte achieveType) {
         Long user_pk = SecurityUtil.getCurrentUserId();
 
         User user = userRepository.findByUserId(user_pk);
@@ -45,7 +45,7 @@ public class AchieveService {
 
         switch (achieveType) {
             // 거리
-            case 1:
+            case 0:
                 for (Plogging p : plogging) {
                     myTravelRange += p.getTravelRange();
                 }
@@ -61,7 +61,7 @@ public class AchieveService {
                 }
                 break;
             // 시간
-            case 2:
+            case 1:
                 for (Plogging p : plogging) {
                     myTravelTime += p.getTravelTime();
                 }
@@ -77,7 +77,7 @@ public class AchieveService {
                 }
                 break;
             // 쓰레기 수
-            case 3:
+            case 2:
                 for (Plogging p : plogging) {
                     myTrashAmount += p.getTrashAmount();
                 }
@@ -93,7 +93,7 @@ public class AchieveService {
                 }
                 break;
             // 횟수
-            case 4:
+            case 3:
                 for (UserAchieve a: userAchieveList) {
                     AchieveDetailResDto dto = AchieveDetailResDto.builder()
                             .achievePloggingCount(a.getAchieve().getAchieveCount()) // 업적의 이동거리
