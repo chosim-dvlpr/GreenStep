@@ -7,7 +7,6 @@ import distance from '../../Image/Data/distance.png';
 import trash from '../../Image/Data/trash.png';
 import badge from '../../Image/Achievement/badge.png'
 import styled from 'styled-components/native';
-import { Double } from 'react-native/Libraries/Types/CodegenTypes';
 import { roundedTravelRange, msToHM } from "../../Function/Plogging/funcPlogging";
 const ImageContainer = styled.View`
   width: 50%;

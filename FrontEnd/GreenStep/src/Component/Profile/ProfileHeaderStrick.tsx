@@ -115,12 +115,12 @@ const ProfileHeaderStrick = () => {
           </ScrollView>
 
             <View style={{display: 'flex', flexDirection:'row', justifyContent:'space-around'}}>
-              <View style={[Box.weekBox, {backgroundColor: '#ACD8A7', marginLeft: 10}]}></View>
-              <Text style={{fontSize: 10, fontWeight:'bold'}}>1~3</Text>
-              <View style={[Box.weekBox, {backgroundColor: '#52A447', marginLeft: 10}]}></View>
-              <Text style={{fontSize: 10, fontWeight:'bold'}}>4~7</Text>
-              <View style={[Box.weekBox, {backgroundColor: '#276221', marginLeft: 10}]}></View>
-              <Text style={{fontSize: 10, fontWeight:'bold'}}>7~</Text>
+              <View style={[Box.weekBox, {backgroundColor: '#ACD8A7', marginLeft: 13}]}></View>
+              <Text style={{fontSize: 10, fontWeight:'bold', marginTop: 2}}>1~3</Text>
+              <View style={[Box.weekBox, {backgroundColor: '#52A447', marginLeft: 13}]}></View>
+              <Text style={{fontSize: 10, fontWeight:'bold', marginTop: 2}}>4~7</Text>
+              <View style={[Box.weekBox, {backgroundColor: '#276221', marginLeft: 13}]}></View>
+              <Text style={{fontSize: 10, fontWeight:'bold', marginTop: 2}}>7~</Text>
             </View>
         </View>
     )
