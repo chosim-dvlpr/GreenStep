@@ -340,4 +340,21 @@ public class PloggingService {
 
         return dtoList;
     }
+
+    public List<TrashDataAllResDto> getAllTrashData() {
+        List<TrashDataAllResDto> dtoList = new ArrayList<>();
+        List<Trash> trashList = trashRepository.findAll();
+
+        for (Trash t : trashList) {
+            TrashDataAllResDto dto = TrashDataAllResDto.builder()
+                    .latitude(t.getLatitude())
+                    .longitude(t.getLongitude())
+                    .trashType(t.getTrashType())
+                    .build();
+
+            dtoList.add(dto);
+        }
+
+        return dtoList;
+    }
 }
