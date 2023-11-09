@@ -27,6 +27,7 @@ public class MainService {
         for (Plogging p : ploggingList) {
             travelRange += p.getTravelRange();
             travelTime += p.getTravelTime();
+            if(p.getTrashAmount() == null) continue;
             trashAmount += p.getTrashAmount();
         }
 

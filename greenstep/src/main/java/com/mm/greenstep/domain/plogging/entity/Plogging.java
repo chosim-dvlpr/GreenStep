@@ -32,7 +32,7 @@ public class Plogging {
     @Column(name = "travel_time")
     private Long travelTime;
 
-    @Column(name = "travel_amount")
+    @Column(name = "trash_amount")
     private Integer trashAmount;
 
     @Column(name = "created_at")
