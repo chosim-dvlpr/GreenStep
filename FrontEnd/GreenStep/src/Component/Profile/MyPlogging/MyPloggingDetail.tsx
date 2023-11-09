@@ -3,7 +3,7 @@ import { View, Modal, Text, TouchableOpacity, StyleSheet, Image } from "react-na
 import ImageStyle from '../../../Style/Image';
 import { ProfileAPI } from '../../../Api/profileApi';
 import { Double } from 'react-native/Libraries/Types/CodegenTypes';
-
+import { formatDate, roundedTravelRange, msToHMS } from '../../../Function/Plogging/funcPlogging';
 interface PloggingData {
     createdAt: string | null;
     getExp: number;
@@ -17,18 +17,6 @@ interface PloggingData {
 const MyPloggingDetail = ({ onClose, index }:any) => {
     const [detail, setDetail] = useState<PloggingData | null>(null);
     const [types, setTypes] = useState(['모은 쓰레기','진행 거리', '진행 시간', '플로깅 날짜', '얻은 경험치'])
-    
-    const msToTime = (duration: Double): string => {
-        let seconds: string | number = Math.floor((duration / 1000) % 60),
-            minutes: string | number = Math.floor((duration / (1000 * 60)) % 60),
-            hours: string | number = Math.floor((duration / (1000 * 60 * 60)) % 24);
-    
-        hours = hours < 10 ? "0" + hours : hours;
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-    
-        return `${hours}:${minutes}:${seconds}`;
-      };
 
     // 플로깅 상세 이력 불러오기
     const getMyploggingDetail = () => {
@@ -58,7 +46,7 @@ const MyPloggingDetail = ({ onClose, index }:any) => {
                             <View style={[styles.noWrapRow, {marginBottom: 20}]}>
                                 <View style={styles.center}>
                                     <Text style={{fontWeight:'bold', fontSize: 20}}>
-                                      {detail?.createdAt ? detail.createdAt.replace('T', ' ') : null}
+                                      {detail?.createdAt ? formatDate(detail.createdAt) : null}
                                     </Text>
                                     <Text style={{fontSize: 20}}>{types[3]}</Text>
                                 </View>
@@ -73,11 +61,11 @@ const MyPloggingDetail = ({ onClose, index }:any) => {
                                     <Text style={{fontSize: 20}}>{types[0]}</Text>
                                 </View>
                                 <View style={styles.center}>
-                                    <Text style={{fontWeight:'bold', fontSize: 20}}>{detail?.travelRange} KM</Text>
+                                    <Text style={{fontWeight:'bold', fontSize: 20}}>{roundedTravelRange(detail?.travelRange)} KM</Text>
                                     <Text style={{fontSize: 20}}>{types[1]}</Text>
                                 </View>
                                 <View style={styles.center}>
-                                    <Text style={{fontWeight:'bold', fontSize: 20}}>{detail ? msToTime(detail.travelTime) : "00:00:00"}</Text>
+                                    <Text style={{fontWeight:'bold', fontSize: 20}}>{detail ? msToHMS(detail.travelTime) : "00:00:00"}</Text>
                                     <Text style={{fontSize: 20}}>{types[2]}</Text>
                                 </View>
                             </View>
@@ -85,7 +73,7 @@ const MyPloggingDetail = ({ onClose, index }:any) => {
                         <View style={{justifyContent:'center', alignItems:'center'}}>
                         {detail?.travelPicture?( 
                             <Image source={{uri: detail?.travelPicture}} style={ImageStyle.largeImage}></Image>
-                        ):(<Text>등록된 사진이 없습니다.</Text>)
+                        ):(<Text style={{fontSize: 28, marginTop: 75}}>등록된 사진이 없습니다.</Text>)
                         }
                         </View>
                     </View>
