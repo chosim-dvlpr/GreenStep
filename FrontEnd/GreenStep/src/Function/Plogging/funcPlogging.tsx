@@ -14,7 +14,7 @@ import { Double } from 'react-native/Libraries/Types/CodegenTypes';
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
     
-        return `${hours}:${minutes}`;
+        return `${hours}H ${minutes}M`;
       };
     // 시/분/초 표시
     export const msToHMS = (duration: Double): string => {
