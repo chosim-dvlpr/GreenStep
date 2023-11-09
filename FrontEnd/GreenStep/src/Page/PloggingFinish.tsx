@@ -145,6 +145,7 @@ const PloggingFinish = ({
           // distanceInfo={travelRange}
           // trashInfo={trashAmount}
           // acheiveInfo={acheiveInfo}
+          isProfile={false}
           />
         </PloggingDataContainer>
 

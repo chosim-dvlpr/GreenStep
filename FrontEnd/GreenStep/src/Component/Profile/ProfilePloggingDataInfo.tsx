@@ -16,7 +16,7 @@ const ImageContainer = styled.View`
   align-items: center;
 `
 
-const ProfilePloggingDataInfo = ({timeInfo, distanceInfo, trashInfo, acheiveInfo}:any) => {
+const ProfilePloggingDataInfo = ({timeInfo, distanceInfo, trashInfo, acheiveInfo, isProfile}:any) => {
     const navigation = useNavigation();
     
     const msToTime = (duration: Double): string => {
@@ -57,16 +57,18 @@ const ProfilePloggingDataInfo = ({timeInfo, distanceInfo, trashInfo, acheiveInfo
           <Text style={{fontSize: 13, fontWeight:'bold', marginTop: 5, marginBottom: 2}} numberOfLines={1}>{trashInfo ? trashInfo : 0} 개</Text>
           <Text style={{fontSize: 13}} numberOfLines={1}>모은 쓰레기</Text>
         </View>
-        
-        <View style={[Box.ploggingDataInfoBox, {alignItems:'center', justifyContent: 'center'}]}>
-          <TouchableOpacity onPress={() => navigation.navigate('achievement')}>
-            <ImageContainer>
-              <Image source={badge} style={ImageStyle.tinyImage}></Image>
-            </ImageContainer>
-            <Text style={{fontSize: 13, fontWeight:'bold', alignSelf: 'center', marginTop: 5, marginBottom: 2}} numberOfLines={1}>{acheiveInfo ? acheiveInfo : 0} 개</Text>
-            <Text style={{fontSize: 13}} numberOfLines={1}>달성 업적</Text>
-          </TouchableOpacity>
-        </View>
+        {
+          isProfile &&
+          <View style={[Box.ploggingDataInfoBox, {alignItems:'center', justifyContent: 'center'}]}>
+            <TouchableOpacity onPress={() => navigation.navigate('achievement')}>
+              <ImageContainer>
+                <Image source={badge} style={ImageStyle.tinyImage}></Image>
+              </ImageContainer>
+              <Text style={{fontSize: 13, fontWeight:'bold', alignSelf: 'center', marginTop: 5, marginBottom: 2}} numberOfLines={1}>{acheiveInfo ? acheiveInfo : 0} 개</Text>
+              <Text style={{fontSize: 13}} numberOfLines={1}>달성 업적</Text>
+            </TouchableOpacity>
+          </View>
+        }
       </View>
     )
 }
