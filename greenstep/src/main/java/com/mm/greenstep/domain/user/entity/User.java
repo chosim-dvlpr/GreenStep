@@ -110,8 +110,8 @@ public class User implements UserDetails {
         return false;
     }
 
-    public void levelUp(Integer exp) {
-        this.level++;
+    public void levelUp(Integer up, Integer exp) {
+        this.level += up;
         this.exp = exp;
     }
 

@@ -12,10 +12,7 @@ import com.mm.greenstep.domain.plogging.dto.request.PloggingCoorDto;
 import com.mm.greenstep.domain.plogging.dto.request.PloggingReqDto;
 import com.mm.greenstep.domain.plogging.dto.request.PloggingTrashReqDto;
 import com.mm.greenstep.domain.plogging.dto.request.PloggingUpdateImgReqDto;
-import com.mm.greenstep.domain.plogging.dto.response.PloggingAllResDto;
-import com.mm.greenstep.domain.plogging.dto.response.PloggingDetailResDto;
-import com.mm.greenstep.domain.plogging.dto.response.PloggingResDto;
-import com.mm.greenstep.domain.plogging.dto.response.TrashBoxAllResDto;
+import com.mm.greenstep.domain.plogging.dto.response.*;
 import com.mm.greenstep.domain.plogging.entity.Coordinate;
 import com.mm.greenstep.domain.plogging.entity.Plogging;
 import com.mm.greenstep.domain.plogging.entity.Trash;
@@ -40,6 +37,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,11 +64,12 @@ public class PloggingService {
         Long user_pk = SecurityUtil.getCurrentUserId();
         User user = userRepository.findByUserId(user_pk);
 
-        // 종료시간에서 - 전체 이동시간(Double TravelTime) 빼서 시작시간 만들기
-        LocalDateTime endTime = LocalDateTime.now();
-        // travelTime은 분 단위입니다. 이를 초 단위로 변환합니다.
+        // 대한민국 시간대로 현재 시간을 설정
+        LocalDateTime endTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
 
-        Long travelTimeInSeconds = (long) (dto.getTravelTime() * 60);
+        // dto.getTravelTime()이 밀리초 단위로 시간을 반환한다고 가정할 때,
+        // 이를 LocalDateTime에서 사용하기 위해 초 단위로 변환합니다.
+        Long travelTimeInSeconds = dto.getTravelTime() / 1000; // 밀리초를 초로 변환
         LocalDateTime startTime = endTime.minusSeconds(travelTimeInSeconds);
 
         // 경쟁 score 갱신
@@ -95,26 +94,41 @@ public class PloggingService {
         // 경험치 계산
         Integer exp = user.getExp() + getExp;
 
+        List<getAvatar> getAvatarList = new ArrayList<>();
+
         // 레벨업 계산
         if (exp >= 100) {
-            Integer curExp = exp - 100;
-            user.levelUp(curExp);
+            int up = exp/100;
+            int remainingExp = exp%100;
+            user.levelUp(up, remainingExp);
             levelUp = true;
 
-            // 랜덤 아바타 선택을 위한 쿼리
-            Avatar randomAvatar = avatarRepository.findRandomAvatar();
-            // 선택된 랜덤 아바타를 `user_avatar` 테이블에 추가
-            UserAvatar userAvatar = UserAvatar.builder()
-                    .user(user)
-                    .avatar(randomAvatar)
-                    .isSelected(false)
-                    .build();
+            for (int i = 0; i < up; i++) {
+                // 랜덤 아바타 선택을 위한 쿼리
+                Avatar randomAvatar = avatarRepository.findRandomAvatar();
 
-            userAvatarRepository.save(userAvatar);
+                // 뽑은 아바타 넘겨주기
+                getAvatar g = getAvatar.builder()
+                        .avatarImg(randomAvatar.getAvatarImg())
+                        .avatarName(randomAvatar.getAvatarName())
+                        .build();
 
-            // dto에 넣어서 보내주기 위한 아바타 사진 주소와 아바타 이름
-            avatarImg = randomAvatar.getAvatarImg();
-            avatarName = randomAvatar.getAvatarName();
+                getAvatarList.add(g);
+
+                // randomAvatar가 해당 user의 userAvatar에 있으면 continue;
+                UserAvatar checkUserAvatar = userAvatarRepository.findByUserAndAvatar(user, randomAvatar);
+                if(checkUserAvatar != null) continue;
+
+                // 선택된 랜덤 아바타를 `user_avatar` 테이블에 추가
+                UserAvatar userAvatar = UserAvatar.builder()
+                        .user(user)
+                        .avatar(randomAvatar)
+                        .isSelected(false)
+                        .build();
+
+                userAvatarRepository.save(userAvatar);
+            }
+
         }
 
         userRepository.save(user);
