@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Table(name = "user_achieve")
 public class UserAchieve {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "my_achieve_id", nullable = false)
     private Long myAchieveId;
 
