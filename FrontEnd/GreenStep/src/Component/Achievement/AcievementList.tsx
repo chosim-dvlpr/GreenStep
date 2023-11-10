@@ -10,7 +10,7 @@ import { msToHM } from "../../Function/Plogging/funcPlogging";
 
 interface AchievementListProps{
     atom : achieveProps;
-    type : number;
+    achievetype : number;
 }
 interface achieveProps{
     achieveName : string;
@@ -25,12 +25,12 @@ interface achieveProps{
     myTravelTime: number | null;
   }
   
-const AchievementList = ({ atom, type }: AchievementListProps) => {
+const AchievementList = ({ atom, achievetype }: AchievementListProps) => {
     const isFocused = useIsFocused();
     const [reAtom, setReAtom] = useState({achieveName : '', goal: 1.1, my: 1, createdAt:''}) 
     
-    const getUnit = (type : number) => {
-        switch(type) {
+    const getUnit = (achievetype : number) => {
+        switch(achievetype) {
             case 0: return "KM";
             case 1: return "";
             case 2: return "개";
@@ -38,9 +38,9 @@ const AchievementList = ({ atom, type }: AchievementListProps) => {
         }
     };
 
-    const handleTime = (type: number): string | number => {
+    const handleTime = (achievetype: number): string | number => {
         let change: string | number = reAtom.goal;
-        if (type === 1) {
+        if (achievetype === 1) {
             // msToHM 함수가 시간과 분을 문자열로 반환한다고 가정합니다.
             change = msToHM(reAtom.goal);
         }
@@ -92,7 +92,7 @@ const AchievementList = ({ atom, type }: AchievementListProps) => {
                         }]}>
                 <View>
                     <Text style={{fontWeight:'bold', fontSize: 20, marginBottom: 20}}>{reAtom.achieveName}</Text>
-                    <Text style={{fontWeight:'bold', fontSize: 20, marginBottom: 10}}>목표 : {handleTime(type)} {getUnit(type)}</Text>
+                    <Text style={{fontWeight:'bold', fontSize: 20, marginBottom: 10}}>목표 : {handleTime(achievetype)} {getUnit(achievetype)}</Text>
                     <View>
                         <Text style={{fontWeight:'bold', marginBottom: 3}}>진행률 : {reAtom.my/reAtom.goal >=1? 100 : Math.round((reAtom.my/reAtom.goal) * 100)} % </Text>
                         <Progress.Bar

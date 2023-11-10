@@ -57,7 +57,7 @@ const Achievement = () => {
           <Text></Text>
       <View style={{alignItems:'center'}}>
         {achieveList?.map((achievement, idx) => (
-          <AchievementList atom={achievement} type={achieveType} key={idx} />
+          <AchievementList atom={achievement} achievetype={achieveType} key={idx} />
         ))}
       </View>
     </ScrollView>
