@@ -304,7 +304,7 @@ public class PloggingService {
 
     public String createAiImg(MultipartFile file) {
         WebClient webClient = WebClient.builder()
-                .baseUrl("http://localhost:8000") // FastAPI 서버 URL
+                .baseUrl("https://k9b303.p.ssafy.io/py") // FastAPI 서버 URL
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.MULTIPART_FORM_DATA_VALUE)
                 .build();
 
@@ -326,7 +326,7 @@ public class PloggingService {
 
         // POST 요청을 보내고 응답을 String으로 받음
         String response = webClient.post()
-                .uri("/predict-image/")
+                .uri("/predict-image")
                 .bodyValue(formData)
                 .retrieve() // 서버로부터의 응답을 가져옴
                 .bodyToMono(String.class) // 응답을 String 형태로 변환
