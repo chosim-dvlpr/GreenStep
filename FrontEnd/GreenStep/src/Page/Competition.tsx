@@ -1,11 +1,30 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text} from 'react-native';
 import styled from 'styled-components/native';
 import Calendar from '../Component/Competition/Calendar';
 import CompetitionGraphic from '../Component/Competition/CompetitionGraphic';
 import CompetitionDashBoard from '../Component/Competition/CompetitionDashBoard';
+import {CompetitionAPI} from '../Api/competitionApi';
 const Competition = () => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [myTeamName, setMyTeamName] = useState<string>('');
+
+  useEffect(() => {
+    const fetchTeamName = async () => {
+      try {
+        const response = await CompetitionAPI.getCompetitionAxios();
+        if (response && response.data) {
+          setMyTeamName(response.data.myTeamName);
+        } else {
+          setMyTeamName('팀 이름을 가져오지 못함');
+        }
+      } catch (error) {
+        console.error('Failed to fetch team name', error);
+      }
+    };
+
+    fetchTeamName();
+  }, []);
 
   return (
     <Container>
@@ -14,7 +33,7 @@ const Competition = () => {
           <Title>경쟁</Title>
           <Calendar onSelectDate={setSelectedDate} selected={selectedDate} />
         </CalendarWrap>
-        <GraphicText>내 팀 : 꼬북꼬북</GraphicText>
+        <GraphicText>내 팀 : {myTeamName}</GraphicText>
         <CompetitionGraphic />
         <CompetitionDashBoard />
       </ContainerBg>
