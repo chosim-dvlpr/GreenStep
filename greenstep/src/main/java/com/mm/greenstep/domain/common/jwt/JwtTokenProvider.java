@@ -145,6 +145,7 @@ public class JwtTokenProvider {
         // -> 토큰 타입, accessToken, refreshToken, refreshToken만료시간 포함
         return UserResDto.TokenInfo.builder()
                 .grantType(BEARER_TYPE)
+                .userId(userId)
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .refreshTokenExpirationTime(REFRESH_TOKEN_EXPIRE_TIME)

@@ -59,6 +59,7 @@ public class UserReqDto {
         private String email;
         private String password;
         private Long userId;
+        private boolean isNewUser;
 
         public UsernamePasswordAuthenticationToken toAuthentication() {
             return new UsernamePasswordAuthenticationToken(email, password);
