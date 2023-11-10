@@ -1,21 +1,75 @@
-import React from 'react';
-import {FlatList, Dimensions} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {FlatList} from 'react-native';
 import styled from 'styled-components/native';
+import {CompetitionAPI} from '../../Api/competitionApi';
+
+// teamData 배열의 항목 타입을 정의합니다.
+interface TeamDataItem {
+  key: string;
+  title: string;
+  content: string;
+}
 
 const CompetitionDashBoard = () => {
-  // renderTeamCountBox 함수를 여기로 이동
+  // useState에 타입을 명시적으로 선언합니다.
+  const [teamData, setTeamData] = useState<TeamDataItem[]>([]);
+
+  useEffect(() => {
+    const fetchCompetitionData = async () => {
+      try {
+        // API 호출
+        const response = await CompetitionAPI.getCompetitionAxios();
+        // response 객체의 존재 여부를 확인합니다.
+        if (response && response.data) {
+          const {
+            myTeamName,
+            myTeamScore,
+            otherTeamScore,
+            otherTeamName,
+            goalScore,
+            myTeamCompeteTime,
+            myTeamCompeteRange,
+            myTeamCompeteAmount,
+          } = response.data;
+
+          // API 응답으로부터 팀 데이터를 추출하여 상태를 업데이트합니다.
+          setTeamData([
+            {
+              key: '1',
+              title: `${myTeamName}의 이동거리`,
+              content: `${Math.floor(myTeamCompeteRange).toString()}km`,
+            },
+            {
+              key: '2',
+              title: `${myTeamName}의 소요시간`,
+              content: `${myTeamCompeteTime}시간`,
+            },
+            {
+              key: '3',
+              title: `${myTeamName}의 총 쓰레기`,
+              content: `${myTeamCompeteAmount}개`,
+            },
+            // ...다른 데이터 항목들
+          ]);
+        } else {
+          // 서버로부터 응답이 없거나 데이터가 없는 경우
+          console.error('No response or no data from the server');
+        }
+      } catch (error) {
+        console.error('Failed to fetch competititon data', error);
+      }
+    };
+
+    fetchCompetitionData();
+  }, []);
+
+  // 타입을 명시적으로 선언한 renderTeamCountBox 함수
   const renderTeamCountBox = (title: string, content: string) => (
     <TeamCountBox>
       <TeamText>{title}</TeamText>
       <TeamNum>{content}</TeamNum>
     </TeamCountBox>
   );
-  const teamData = [
-    {key: '1', title: '팀 거북의 이동거리', content: '1234km'},
-    {key: '2', title: '팀 거북의 소요시간', content: '124시간'},
-    {key: '3', title: '팀 거북의 총 쓰레기', content: '124개'},
-    // 여기에 추가 데이터를 키와 함께 추가할 수 있습니다.
-  ];
 
   return (
     <DashBoard>

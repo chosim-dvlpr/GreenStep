@@ -1,39 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {Text, TouchableOpacity, View} from 'react-native';
 import Login from '../Component/Main/Login';
 import Carousel from '../Component/Main/Carousel';
 import styled from 'styled-components/native';
 import ButtonStyle from '../Style/ButtonStyle';
-import { useIsFocused, useNavigation } from '@react-navigation/native';
-import { MainAPI } from '../Api/basicHttp';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {MainAPI} from '../Api/basicHttp';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import tokenHttp from '../Api/tokenHttp';
 
 export interface EmailLoginDataType {
-  'email': string,
-  'password': string,
+  email: string;
+  password: string;
 }
 
 const MainText = styled.Text`
   font-size: 30;
   font-weight: bold;
   color: black;
-`
+`;
 
 const MainTextContainer = styled.View`
   margin-top: 15%;
   margin-left: 30;
   margin-bottom: 25;
-`
+`;
 
 const CarouselContainer = styled.View`
   margin-bottom: 20;
   height: 57%;
-  `
+`;
 
 const LoginContainer = styled.View`
   align-items: center;
-`
+`;
 
 // 메인 텍스트 컨테이너
 const CarouselTextContainer = styled.View`
@@ -41,14 +41,14 @@ const CarouselTextContainer = styled.View`
   left: 30%;
   top: 60%;
   z-index: 1;
-`
+`;
 
 const Main = () => {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
 
   const [isLogin, setIsLogin] = useState<boolean>(false);
-  
+
   useEffect(() => {
     const checkToken = async () => {
       const token = await AsyncStorage.getItem('accessToken');
@@ -59,7 +59,7 @@ const Main = () => {
         console.log('토큰이 없습니다.');
       }
     };
-  
+
     checkToken();
   }, [isLogin]);
 
@@ -70,30 +70,28 @@ const Main = () => {
 
   const getMainData = () => {
     MainAPI.mainDataAxios()
-    .then(res => {
-      console.log("메인 문구 axios 성공 : ", res)
-      const data = res.data;
-      setTrashAmount(data.trashAmount);
-      setTravelRange(data.travelRange);
-      setTravelTime(data.travelTime);
-    })
-    .catch(err => console.log('메인 데이터 axios 에러 : ', err))
-  }
+      .then(res => {
+        console.log('메인 문구 axios 성공 : ', res);
+        const data = res.data;
+        setTrashAmount(data.trashAmount);
+        setTravelRange(data.travelRange);
+        setTravelTime(data.travelTime);
+      })
+      .catch(err => console.log('메인 데이터 axios 에러 : ', err));
+  };
 
   useEffect(() => {
-    return() => {
+    return () => {
       getMainData();
-    }
-  }, [isFocused, ])
+    };
+  }, [isFocused]);
 
   /** 임시 로그아웃 */
   const sampleLogout = () => {
-    console.log('로그아웃 되었습니다.')
-    AsyncStorage.removeItem('accessToken')
-    AsyncStorage.removeItem('refreshToken')
-    
-  }
-
+    console.log('로그아웃 되었습니다.');
+    AsyncStorage.removeItem('accessToken');
+    AsyncStorage.removeItem('refreshToken');
+  };
 
   // // 임시 로그인
   // const [email, setEmail] = useState<string>('');
@@ -132,28 +130,26 @@ const Main = () => {
     try {
       const accessToken = await AsyncStorage.getItem('accessToken');
       const refreshToken = await AsyncStorage.getItem('refreshToken');
-  
+
       const data = {
         accessToken: accessToken,
-        refreshToken: refreshToken
+        refreshToken: refreshToken,
       };
       AsyncStorage.removeItem('accessToken');
       AsyncStorage.removeItem('refreshToken');
       console.log('logout 실행');
-      setIsLogin(false)
-    //   tokenHttp.post('/user/logout', data)
-    //     .then(res => {
-    //       AsyncStorage.removeItem('accessToken');
-    //       AsyncStorage.removeItem('refreshToken');
-    //       setIsLogin(false);
-    //     })
-    //     .catch(err => console.log('로그아웃 실패 : ', err));
+      setIsLogin(false);
+      //   tokenHttp.post('/user/logout', data)
+      //     .then(res => {
+      //       AsyncStorage.removeItem('accessToken');
+      //       AsyncStorage.removeItem('refreshToken');
+      //       setIsLogin(false);
+      //     })
+      //     .catch(err => console.log('로그아웃 실패 : ', err));
     } catch (error) {
       console.error('로그아웃 중 오류 발생:', error);
     }
   };
-  
-  
 
   return (
     <View>
@@ -188,7 +184,7 @@ const Main = () => {
         <MainText>그린스텝</MainText>
       </MainTextContainer>
 
-      <CarouselContainer>
+      {/* <CarouselContainer>
         <CarouselTextContainer>
           <Text
           style={{fontSize: 24, fontWeight: 'bold'}}
@@ -198,24 +194,23 @@ const Main = () => {
           </Text>
         </CarouselTextContainer>
         <Carousel/>
-      </CarouselContainer>
+      </CarouselContainer> */}
 
       <LoginContainer>
-      {
-        isLogin ?
-        <View>
-          <TouchableOpacity onPress={logout}>
-            <Text>로그아웃</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('ploggingstart')}
-            style={[ButtonStyle.largeButton, ButtonStyle.lightGreenColor]}
-            >
-            <Text>플로깅 하러가기</Text>
-          </TouchableOpacity>
+        {isLogin ? (
+          <View>
+            <TouchableOpacity onPress={logout}>
+              <Text>로그아웃</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('ploggingstart')}
+              style={[ButtonStyle.largeButton, ButtonStyle.lightGreenColor]}>
+              <Text>플로깅 하러가기</Text>
+            </TouchableOpacity>
           </View>
-        : <Login setIsLogin={setIsLogin}/>
-      }
+        ) : (
+          <Login setIsLogin={setIsLogin} />
+        )}
       </LoginContainer>
     </View>
   );
