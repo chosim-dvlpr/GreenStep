@@ -98,6 +98,7 @@ public class PloggingService {
                 .createdAt(startTime)
                 .updatedAt(endTime)
                 .user(user)
+                .trashAmount(dto.getTrashAmount())
                 .travelTime(dto.getTravelTime())
                 .travelRange(dto.getTravelRange())
                 .getExp(getExp)
