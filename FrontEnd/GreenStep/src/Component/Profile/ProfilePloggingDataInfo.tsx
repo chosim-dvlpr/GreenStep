@@ -7,7 +7,6 @@ import distance from '../../Image/Data/distance.png';
 import trash from '../../Image/Data/trash.png';
 import badge from '../../Image/Achievement/badge.png'
 import styled from 'styled-components/native';
-import { Double } from 'react-native/Libraries/Types/CodegenTypes';
 import { useNavigation } from "@react-navigation/native";
 import { roundedTravelRange, msToHM } from "../../Function/Plogging/funcPlogging";
 
@@ -20,18 +19,6 @@ const ImageContainer = styled.View`
 const ProfilePloggingDataInfo = ({timeInfo, distanceInfo, trashInfo, acheiveInfo, isProfile}:any) => {
     const navigation = useNavigation();
     
-    const msToTime = (duration: Double): string => {
-      let seconds: string | number = Math.floor((duration / 1000) % 60),
-          minutes: string | number = Math.floor((duration / (1000 * 60)) % 60),
-          hours: string | number = Math.floor((duration / (1000 * 60 * 60)) % 24);
-  
-      hours = hours < 10 ? "0" + hours : hours;
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      seconds = seconds < 10 ? "0" + seconds : seconds;
-  
-      return `${hours}H ${minutes}M`;
-    };
-
     return(
         <View style={{display: 'flex', flexDirection: 'row', marginBottom: 20,
                       justifyContent: 'space-evenly', alignItems:'center'}}>
