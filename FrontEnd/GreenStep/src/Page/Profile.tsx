@@ -1,7 +1,9 @@
 import {View, ScrollView} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import { useIsFocused } from '@react-navigation/native';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { baseURL } from '../Api/tokenHttp';
 //components
 import ProfileHeader from '../Component/Profile/ProfileHeader';
 import ProfileHeaderImage from '../Component/Profile/ProfileHeaderImage';
@@ -25,7 +27,18 @@ const Profile = ({navigation}:any) => {
   // 사용자 정보(이름, 경험치, 레벨) 불러오기
   const getUserInfo = async () => {
     try{
-      const res = await ProfileAPI.getHeaderAxios();
+      const token = await AsyncStorage.getItem('accessToken');
+      console.log(token)
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`, // Bearer 스키마를 사용한 토큰 전달
+          'Content-Type': 'application/json', // JSON 형식의 컨텐츠 타입 명시
+        },
+      };
+      const res = await axios.get(
+        `${baseURL}/mypage`,
+        config,
+      );
       console.log(res)
         setName(res.data.nickname)
         setPerCentage(res.data.exp)
@@ -38,7 +51,17 @@ const Profile = ({navigation}:any) => {
   // 사용자 정보(플로깅 시간, 거리, 쓰레기양, 업적) 불러오기
   const getUserPloggingInfo = async () => {
     try{
-      const res = await ProfileAPI.getMyPloggingAxios();
+      const token = await AsyncStorage.getItem('accessToken');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`, // Bearer 스키마를 사용한 토큰 전달
+          'Content-Type': 'application/json', // JSON 형식의 컨텐츠 타입 명시
+        },
+      };
+      const res = await axios.get(
+        `${baseURL}/mypage/my-plogging`,
+        config,
+      );
       console.log(res)
       setTimeInfo(res.data.travelTime)
       setDistanceInfo(res.data.travelRange)

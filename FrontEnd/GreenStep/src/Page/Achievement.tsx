@@ -4,7 +4,9 @@ import AchievementButton from '../Component/Achievement/AchievementButton';
 import AchievementList from '../Component/Achievement/AcievementList';
 import { AchievementAPI } from '../Api/achievementAPi';
 import { useIsFocused } from '@react-navigation/native';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { baseURL } from '../Api/tokenHttp';
 interface achieveProps{
   achieveName : string;
   achievePloggingCount: number | null;
@@ -31,8 +33,18 @@ const Achievement = () => {
   // 업적 타입별 리스트 불러오기
   const getAchievementList = async (achieveType :number) => {
     try{
-      const res = await AchievementAPI.getAchievementAxios(achieveType);
-      setAchieveList(res.data)
+      const token = await AsyncStorage.getItem('accessToken');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`, // Bearer 스키마를 사용한 토큰 전달
+          'Content-Type': 'application/json', // JSON 형식의 컨텐츠 타입 명시
+        },
+      };
+      const res = await axios.get(
+        `${baseURL}/achieve/${achieveType}`,
+        config,
+      ); 
+    setAchieveList(res.data)
     }catch(err){
       console.log('업적 조회 error', err)
     }

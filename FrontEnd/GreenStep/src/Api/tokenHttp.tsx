@@ -5,7 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 // 토큰이 필요한 인증에 사용
-const baseURL = "https://k9b303.p.ssafy.io/api";
+export const baseURL = "https://k9b303.p.ssafy.io/api";
 
 const tokenHttp = axios.create({
   baseURL,
@@ -66,8 +66,9 @@ tokenHttp.interceptors.request.use(async (req) => {
       console.log('await axios 오류')
       throw new Error("expire token");
     });
+    
+    req.headers["Authorization"] = AsyncStorage.getItem("accessToken");
 
-  req.headers["Authorization"] = AsyncStorage.getItem("accessToken");
   return req;
 });
 
