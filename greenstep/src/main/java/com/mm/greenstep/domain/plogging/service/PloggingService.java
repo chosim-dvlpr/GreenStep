@@ -239,12 +239,12 @@ public class PloggingService {
         return responseDto;
     }
 
-    public void updatePloggingImg(MultipartFile file, PloggingUpdateImgReqDto dto) {
-        Plogging plogging = ploggingRepository.findByPloggingId(dto.getPloggingId());
+    public void updatePloggingImg(MultipartFile file, Long ploggingId) {
+        Plogging plogging = ploggingRepository.findByPloggingId(ploggingId);
 
         String s3Url = amazonS3Service.uploadFile(file);
 
-        plogging.updatePloggingImg(s3Url, dto.getIsVisible());
+        plogging.updatePloggingImg(s3Url);
         ploggingRepository.save(plogging);
     }
 
@@ -369,5 +369,13 @@ public class PloggingService {
         }
 
         return dtoList;
+    }
+
+
+    public void updateVisible(Boolean isVisible, Long ploggingId) {
+        Plogging plogging = ploggingRepository.findByPloggingId(ploggingId);
+
+        plogging.updateVisible(isVisible);
+        ploggingRepository.save(plogging);
     }
 }
