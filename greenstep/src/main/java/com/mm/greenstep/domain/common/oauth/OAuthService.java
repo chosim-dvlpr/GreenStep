@@ -82,10 +82,19 @@ public class OAuthService {
         return null;
     }
 
+    /**
+     * 카카오 아이디를 가져와서 유저에 따라서 회원가입 or 로그인 처리
+     * @param kakaoId
+     * @return
+     */
     public ResponseEntity<?> findUserByKakaoId(String kakaoId){
-        // 회원가입
+        // 기존 회원인지 확인
         Optional<User> user = userRepository.findByUserName(kakaoId);
+
+        //기본세팅
         Long userId = Long.valueOf(0);
+
+        UserReqDto.OAuthLogin login = new UserReqDto.OAuthLogin();
 
         if (user.isEmpty()) {
             log.info("회원 없음");
@@ -115,13 +124,14 @@ public class OAuthService {
             // 업적 등록
             achieveService.createUserAchieve(saveUser);
 
+            login.setNewUser(true);
+
         }
         else{
             log.info(user.get().getUsername()+"회원 있음");
             userId = user.get().getUserId();
+            login.setNewUser(false);
         }
-
-        UserReqDto.OAuthLogin login = new UserReqDto.OAuthLogin();
 
         login.setEmail(kakaoId);
         login.setPassword("kakao");

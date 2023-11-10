@@ -12,6 +12,7 @@ public class UserResDto {
         private String grantType;
         private String accessToken;
         private String refreshToken;
+        private Long userId;
         private Long refreshTokenExpirationTime;
     }
 }
