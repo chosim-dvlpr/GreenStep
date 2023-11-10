@@ -47,7 +47,7 @@ public class CompeteService {
 
         Compete myTeamCompete, otherTeamCompete;
 
-        if (compete1Team.getTeam() == myTeam) {
+        if (compete1Team.getTeam().getTeamId() == myTeam.getTeamId()) {
             myTeamCompete = compete1Team;
             otherTeamCompete = compete2Team;
         } else {
