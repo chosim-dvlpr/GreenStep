@@ -64,6 +64,8 @@ public class CompeteService {
                 .myTeamCompeteTime(myTeamCompete.getCompeteTime())
                 .myTeamCompeteRange(myTeamCompete.getCompeteRange())
                 .myTeamCompeteAmount(myTeamCompete.getCompeteAmount())
+                .isCompleted(victory.getIsComplete())
+                .victoryTeam(victory.getTeam())
                 .build();
     }
 
@@ -92,9 +94,14 @@ public class CompeteService {
         Integer updateScore = Math.min(score, 200);
 
         currentCompete.updateCompete(TravelRange,TravelTime,TrashAmount,updateScore);
+
+        // 플로깅 후 목표점수 도달 여부 확인
+        if (currentCompete.getCompeteScore() >= currentVictory.getGoalScore()){
+            currentCompete.updateScore(currentVictory.getGoalScore());
+            currentVictory.updateVictoryTeam(team);
+        }
+
         competeRepository.save(currentCompete);
     }
-
-    public void
 
 }

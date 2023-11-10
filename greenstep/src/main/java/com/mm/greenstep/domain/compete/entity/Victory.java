@@ -44,4 +44,10 @@ public class Victory {
         this.isComplete = false;
         this.goalScore = 10000;
     }
+
+    public void updateVictoryTeam(Team team){
+        this.isComplete = true;
+        this.team = team;
+    }
+
 }
