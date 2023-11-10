@@ -46,7 +46,7 @@ const Achievement = () => {
     <ScrollView>
       <View style={{display:'flex', flexDirection:'row', justifyContent:'space-evenly', marginTop:20}}>
         {Type.map((atom, idx) => (
-          <AchievementButton atom={atom} onPress={changeAchieveType(idx)} />
+          <AchievementButton key={idx} atom={atom} onPress={changeAchieveType(idx)} />
     ))}
       </View>      
           <Text></Text>
