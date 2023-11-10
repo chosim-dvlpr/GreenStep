@@ -12,6 +12,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
 @Slf4j
 @Service
 @Transactional
@@ -25,7 +29,7 @@ public class SchedulerService {
     // 요일 상관 없이, 매월, 1일, 00시, 1분, 0초 실행
     // cron = 초 분 시간 일 월 요일(0:일, 1:월, --- , 6:토), 연도 설정 안됨
     @Scheduled(cron= "1 0 0 1 * *",zone = "Asia/Seoul")
-    public void run(){
+    public void createVictory(){
         log.info("create victory");
         Victory victory = new Victory();
         victoryRepository.save(victory);
@@ -48,6 +52,34 @@ public class SchedulerService {
         log.info("created Compete1 : "+ team1Compete.getCompeteId());
         log.info("created Compete2 : "+ team2Compete.getCompeteId());
 
+        completeVictory();
+    }
+
+    public void completeVictory(){
+        // 1달 전 LocalDate가져옴
+        LocalDate lastMonth = LocalDate.now().minusMonths(1);
+        Victory lastMonthVictory =  victoryRepository.findByYearAndMonth(lastMonth.getYear(), lastMonth.getMonthValue()).orElseThrow();
+
+        // 경쟁이 끝나지 않은 경우
+        if(!lastMonthVictory.getIsComplete()){
+            List<Compete> competeList = competeRepository.findAllByVictory(lastMonthVictory);
+
+            Compete compete1Team = competeList.get(0);
+            Compete compete2Team = competeList.get(1);
+
+            if (compete1Team.getCompeteScore() > compete2Team.getCompeteScore()){
+                lastMonthVictory.updateVictoryTeam(compete1Team.getTeam());
+                log.info("lastMonthVictory - victoryTeam : " + compete1Team.getTeam().getTeamId() );
+            } else if(compete1Team.getCompeteScore() < compete2Team.getCompeteScore()){
+                lastMonthVictory.updateVictoryTeam(compete2Team.getTeam());
+                log.info("lastMonthVictory - victoryTeam : " + compete2Team.getTeam().getTeamId());
+            } else{
+                lastMonthVictory.updateVictoryComplete();
+                log.info("lastMonthVictory - tie");
+            }
+
+            victoryRepository.save(lastMonthVictory);
+        }
     }
 
 }
