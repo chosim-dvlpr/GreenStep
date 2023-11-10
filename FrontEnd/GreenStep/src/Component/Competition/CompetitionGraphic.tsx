@@ -1,15 +1,22 @@
-import React, {useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import {StyleSheet} from 'react-native';
 import styled from 'styled-components/native';
 import LottieView from 'lottie-react-native';
 import * as Progress from 'react-native-progress';
 
-// CompetitionGraphic 컴포넌트 정의
-const CompetitionGraphic = () => {
-  const [progressValue, setProgressValue] = useState(0.5);
+interface CompetitionGraphicProps {
+  myTeamProgress: number;
+  opponentTeamProgress: number;
+}
 
-  // renderProgressSection을 여기로 옮깁니다.
-  const renderProgressSection = (bottomOffset: number) => (
+const CompetitionGraphic = ({
+  myTeamProgress,
+  opponentTeamProgress,
+}: CompetitionGraphicProps) => {
+  const renderProgressSection = (
+    progressValue: number,
+    bottomOffset: number,
+  ) => (
     <ProgressBox bottomOffset={bottomOffset}>
       <Progress.Bar
         progress={progressValue}
@@ -24,9 +31,9 @@ const CompetitionGraphic = () => {
         style={styles.flag}
       />
       <ProgressTextWrap>
-        <ProgressText1>0p</ProgressText1>
-        <ProgressText2>25,000p</ProgressText2>
-        <ProgressText3>50,000p</ProgressText3>
+        <ProgressText>0p</ProgressText>
+        <ProgressText>25,000p</ProgressText>
+        <ProgressText>50,000p</ProgressText>
       </ProgressTextWrap>
     </ProgressBox>
   );
@@ -39,18 +46,17 @@ const CompetitionGraphic = () => {
         loop
         style={styles.turtle}
       />
-      {renderProgressSection(40)}
+      {renderProgressSection(myTeamProgress, 40)}
       <LottieView
         source={require('../../Image/Competition/dolphin.json')}
         autoPlay
         loop
         style={styles.dolphin}
       />
-      {renderProgressSection(170)}
+      {renderProgressSection(opponentTeamProgress, 170)}
     </Graphic>
   );
 };
-
 // 여기에 필요한 스타일드 컴포넌트를 옮깁니다.
 const Graphic = styled.View`
   flex: 2.4;
@@ -74,9 +80,8 @@ const ProgressTextWrap = styled.View`
   justify-content: space-between;
   bottom: 80px;
 `;
-const ProgressText1 = styled.Text``;
-const ProgressText2 = styled.Text``;
-const ProgressText3 = styled.Text``;
+const ProgressText = styled.Text``;
+
 // 그리고 ProgressBox와 관련 스타일...
 // StyleSheet에 해당하는 styles 객체...
 const styles = StyleSheet.create({

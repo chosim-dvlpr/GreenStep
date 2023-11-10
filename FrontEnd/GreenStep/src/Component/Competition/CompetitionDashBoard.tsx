@@ -1,69 +1,40 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {FlatList} from 'react-native';
 import styled from 'styled-components/native';
-import {CompetitionAPI} from '../../Api/competitionApi';
 
-// teamData 배열의 항목 타입을 정의합니다.
+// CompetitionData 인터페이스를 가져오거나 정의합니다.
+interface CompetitionData {
+  myTeamName: string;
+  myTeamCompeteRange: number;
+  myTeamCompeteTime: number;
+  myTeamCompeteAmount: number;
+  // 필요한 다른 속성들...
+}
+
+// TeamDataItem 인터페이스 정의
+interface CompetitionData {
+  myTeamScore: number;
+  goalScore: number;
+  otherTeamScore: number;
+  myTeamName: string;
+  myTeamCompeteRange: number;
+  myTeamCompeteTime: number;
+  myTeamCompeteAmount: number;
+  // 다른 필요한 속성들...
+}
+
+// TeamDataItem 인터페이스 정의
 interface TeamDataItem {
   key: string;
   title: string;
   content: string;
 }
 
-const CompetitionDashBoard = () => {
-  // useState에 타입을 명시적으로 선언합니다.
-  const [teamData, setTeamData] = useState<TeamDataItem[]>([]);
+interface CompetitionDashBoardProps {
+  teamData: CompetitionData | null;
+}
 
-  useEffect(() => {
-    const fetchCompetitionData = async () => {
-      try {
-        // API 호출
-        const response = await CompetitionAPI.getCompetitionAxios();
-        // response 객체의 존재 여부를 확인합니다.
-        if (response && response.data) {
-          const {
-            myTeamName,
-            myTeamScore,
-            otherTeamScore,
-            otherTeamName,
-            goalScore,
-            myTeamCompeteTime,
-            myTeamCompeteRange,
-            myTeamCompeteAmount,
-          } = response.data;
-
-          // API 응답으로부터 팀 데이터를 추출하여 상태를 업데이트합니다.
-          setTeamData([
-            {
-              key: '1',
-              title: `${myTeamName}의 이동거리`,
-              content: `${Math.floor(myTeamCompeteRange).toString()}km`,
-            },
-            {
-              key: '2',
-              title: `${myTeamName}의 소요시간`,
-              content: `${myTeamCompeteTime}시간`,
-            },
-            {
-              key: '3',
-              title: `${myTeamName}의 총 쓰레기`,
-              content: `${myTeamCompeteAmount}개`,
-            },
-            // ...다른 데이터 항목들
-          ]);
-        } else {
-          // 서버로부터 응답이 없거나 데이터가 없는 경우
-          console.error('No response or no data from the server');
-        }
-      } catch (error) {
-        console.error('Failed to fetch competititon data', error);
-      }
-    };
-
-    fetchCompetitionData();
-  }, []);
-
-  // 타입을 명시적으로 선언한 renderTeamCountBox 함수
+const CompetitionDashBoard = ({teamData}: CompetitionDashBoardProps) => {
   const renderTeamCountBox = (title: string, content: string) => (
     <TeamCountBox>
       <TeamText>{title}</TeamText>
@@ -71,11 +42,32 @@ const CompetitionDashBoard = () => {
     </TeamCountBox>
   );
 
+  const teamDataList: TeamDataItem[] = teamData
+    ? [
+        {
+          key: '1',
+          title: `${teamData.myTeamName}의 이동거리`,
+          content: `${Math.floor(teamData.myTeamCompeteRange).toString()}km`,
+        },
+        {
+          key: '2',
+          title: `${teamData.myTeamName}의 소요시간`,
+          content: `${teamData.myTeamCompeteTime}시간`,
+        },
+        {
+          key: '3',
+          title: `${teamData.myTeamName}의 총 쓰레기`,
+          content: `${teamData.myTeamCompeteAmount}개`,
+        },
+        // ...다른 데이터 항목들
+      ]
+    : [];
+
   return (
     <DashBoard>
       <MyTeamDashBoardTitle>현황판</MyTeamDashBoardTitle>
       <FlatList
-        data={teamData}
+        data={teamDataList}
         renderItem={({item}) => renderTeamCountBox(item.title, item.content)}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
