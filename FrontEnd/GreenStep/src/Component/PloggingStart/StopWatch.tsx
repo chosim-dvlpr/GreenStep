@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, TouchableOpacity, ImageBackground} from 'react-native';
-
+import styled from 'styled-components/native';
 type StopWatchProps = {
   isRunning: boolean;
 };
@@ -38,9 +38,13 @@ const StopWatch: React.FC<StopWatchProps> = ({isRunning}) => {
 
   return (
     <View>
-      <Text>{formatTime(time)}</Text>
+      <InfoText>{formatTime(time)}</InfoText>
     </View>
   );
 };
 
 export default StopWatch;
+const InfoText = styled.Text`
+  font-size: 25px;
+  color: #333;
+`;

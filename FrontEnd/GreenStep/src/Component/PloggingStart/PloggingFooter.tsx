@@ -1,32 +1,60 @@
-import {View, Text, StyleSheet, Modal} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
+import {Text} from 'react-native';
+import styled from 'styled-components/native';
 import PloggingDivision from './PloggingDivision';
-import PloggingModal from './PloggingModal';
+
 interface PloggingFooterProps {
   openModal: () => void;
 }
+
 const PloggingFooter: React.FC<PloggingFooterProps> = ({openModal}) => {
   return (
-    <View style={styles.footer}>
-      <PloggingDivision name="AI 쓰레기 인식" />
-      <PloggingDivision name="일반쓰레기" />
-      <PloggingDivision name="재활용품" onPress={openModal} />
-    </View>
+    <FooterContainer>
+      <Footer>
+        <PloggingDivisionContainer>
+          <PloggingDivision name="AI 쓰레기 인식" size="small" />
+          <Text>AI쓰레기 인식</Text>
+        </PloggingDivisionContainer>
+        <PloggingDivisionContainer>
+          <PloggingDivision name="일반쓰레기" size="small" />
+          <Text>일반 쓰레기</Text>
+        </PloggingDivisionContainer>
+        <PloggingDivisionContainer>
+          <PloggingDivision name="재활용품" onPress={openModal} size="small" />
+          <Text>재활용품</Text>
+        </PloggingDivisionContainer>
+      </Footer>
+    </FooterContainer>
   );
 };
 
 export default PloggingFooter;
-const styles = StyleSheet.create({
-  footer: {
-    position: 'absolute',
-    zIndex: 10,
-    width: 400,
-    height: 125,
-    bottom: 0,
-    margin: 10,
-    backgroundColor: 'rgba(255, 255, 255, 0.66)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-});
+
+const FooterContainer = styled.View`
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  width: 100%;
+  bottom: 10px;
+`;
+
+const Footer = styled.View`
+  z-index: 10;
+  width: 90%;
+  margin: 10px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.66);
+  shadow-color: #000;
+  shadow-opacity: 0.25;
+  shadow-radius: 4px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+`;
+
+const PloggingDivisionContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;

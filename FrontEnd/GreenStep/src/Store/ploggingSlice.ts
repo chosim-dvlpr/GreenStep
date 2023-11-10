@@ -1,14 +1,17 @@
-// features/plogging/ploggingSlice.ts
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-
+interface IncrementCountPayload {
+  name: string;
+  trashItem: TrashItem;
+}
 interface PloggingState {
-  counts: {
-    병: number;
-    캔: number;
-    페트병: number;
-    플라스틱: number;
-    일반쓰레기: number;
-  };
+  counts: Record<string, number>;
+  trashList: TrashItem[];
+}
+export interface TrashItem {
+  longitude: number;
+  latitude: number;
+  trash_picture?: string | null;
+  trash_type: number;
 }
 
 const initialState: PloggingState = {
@@ -18,21 +21,30 @@ const initialState: PloggingState = {
     페트병: 0,
     플라스틱: 0,
     일반쓰레기: 0,
+    쓰레기: 0,
   },
+  trashList: [],
 };
 
 const ploggingSlice = createSlice({
   name: 'plogging',
   initialState,
   reducers: {
-    incrementCount: (state, action: PayloadAction<string>) => {
-      const type = action.payload;
-      if (type in state.counts) {
-        state.counts[type as keyof PloggingState['counts']] += 1;
+    incrementCount: (state, action: PayloadAction<IncrementCountPayload>) => {
+      const {name, trashItem} = action.payload;
+
+      if (name in state.counts) {
+        state.counts[name] += 1;
+        state.trashList.push(trashItem);
+        state.counts['쓰레기'] = state.trashList.length;
       }
+    },
+    resetCounts: state => {
+      state.counts = initialState.counts;
+      state.trashList = initialState.trashList;
     },
   },
 });
 
-export const {incrementCount} = ploggingSlice.actions;
+export const {incrementCount, resetCounts} = ploggingSlice.actions;
 export default ploggingSlice.reducer;
