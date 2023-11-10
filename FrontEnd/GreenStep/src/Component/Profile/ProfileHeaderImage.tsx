@@ -26,10 +26,10 @@ const ProfileHeaderImage = ({percentage}:any) => {
             const res = await AvatarAPI.getAvatarAxios();
             console.log('캐릭터', res);
             setAvatars(res.data);
-            const selectedAvatar = avatars.find(ava => ava.isSelected);
-            if (selectedAvatar) {
-                setShowAvatar(selectedAvatar.avatarImg);
-            }
+            // const selectedAvatar = avatars.find(ava => ava.isSelected);
+            // if (selectedAvatar) {
+            //     setShowAvatar(selectedAvatar.avatarImg);
+            // }
         } catch (err) {
             console.log('사용자 캐릭터 조회 axios 에러 : ', err);
         }
@@ -41,8 +41,8 @@ const ProfileHeaderImage = ({percentage}:any) => {
             const res = await AvatarAPI.patchAvatarAxios(newAvatarId);
             console.log(res);
             await getAvatarInfo();
-            setAvatarId(newAvatarId); // 아바타 ID 상태 업데이트
-            handleToggle(); // 모달 토글
+            setAvatarId(newAvatarId);
+            handleToggle();
         } catch (err) {
             console.log('사용자 캐릭터 변경 axios 에러 : ', err, newAvatarId);
         }
