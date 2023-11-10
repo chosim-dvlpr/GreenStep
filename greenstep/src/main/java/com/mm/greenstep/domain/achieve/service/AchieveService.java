@@ -47,7 +47,7 @@ public class AchieveService {
             // 거리
             case 0:
                 for (Plogging p : plogging) {
-                    if(p.getTravelRange() != null) continue;
+                    if(p.getTravelRange() == null) continue;
                     myTravelRange += p.getTravelRange();
                 }
                 for (UserAchieve a: userAchieveList) {
@@ -64,7 +64,7 @@ public class AchieveService {
             // 시간
             case 1:
                 for (Plogging p : plogging) {
-                    if(p.getTravelTime() != null) continue;
+                    if(p.getTravelTime() == null) continue;
                     myTravelTime += p.getTravelTime();
                 }
                 for (UserAchieve a: userAchieveList) {
@@ -81,7 +81,7 @@ public class AchieveService {
             // 쓰레기 수
             case 2:
                 for (Plogging p : plogging) {
-                    if(p.getTrashAmount() != null) continue;
+                    if(p.getTrashAmount() == null) continue;
                     myTrashAmount += p.getTrashAmount();
                 }
                 for (UserAchieve a: userAchieveList) {
