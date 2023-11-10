@@ -48,13 +48,10 @@ const PloggingInfo: React.FC<PloggingInfoProps> = ({
   };
   const handleLongPress = () => {
     setIsTracking(false);
-    dispatch(resetCounts());
-    console.log(counts.쓰레기);
+
     const travelRange = distance;
 
-    const trashListProps = useSelector(
-      (state: RootState) => state.plogging.trashList,
-    );
+    console.log(trashListProps);
     const ploggingDataInfo = {
       travelTime: 100000,
       travelRange: travelRange,
@@ -65,15 +62,21 @@ const PloggingInfo: React.FC<PloggingInfoProps> = ({
     };
 
     const ploggingdata = async (ploggingDataInfo: PloggingDataProps) => {
+      console.log(ploggingDataInfo);
       try {
         const res = await PloggingAPI.postPloggingDataAxios(ploggingDataInfo);
-        console.log(res);
+        console.log('전송데이터 : ', res);
       } catch (err) {
-        console.log('사용자 정보 조회 error', err);
+        console.log('error', err);
       }
     };
     ploggingdata(ploggingDataInfo);
+    dispatch(resetCounts());
   };
+
+  const trashListProps = useSelector(
+    (state: RootState) => state.plogging.trashList,
+  );
   const counts = useSelector((state: RootState) => state.plogging.counts);
   return (
     <Con>
