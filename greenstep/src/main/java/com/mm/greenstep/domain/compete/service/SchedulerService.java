@@ -47,34 +47,7 @@ public class SchedulerService {
         competeRepository.save(team2Compete);
         log.info("created Compete1 : "+ team1Compete.getCompeteId());
         log.info("created Compete2 : "+ team2Compete.getCompeteId());
-    }
 
-    // 요일 상관 없이, 매월, 1일, 00시, 1분, 0초 실행
-    // cron = 초 분 시간 일 월 요일(0:일, 1:월, --- , 6:토), 연도 설정 안됨
-//    @Scheduled(cron= "0 * 0 8 11 *",zone = "Asia/Seoul")
-//    public void test(){
-//        log.info("create victory");
-//        Victory victory = new Victory();
-//        victoryRepository.save(victory);
-//
-//        log.info("victoryId : "+String.valueOf(victory.getVictoryId()));
-//
-//        Team team1 = teamRepository.findById(1).orElseThrow();
-//        Team team2 = teamRepository.findById(2).orElseThrow();
-//
-//        log.info("start create compete");
-//        Compete team1Compete = Compete.builder()
-//                .team(team1)
-//                .victory(victory)
-//                .build();
-//        Compete team2Compete = Compete.builder()
-//                .team(team2)
-//                .victory(victory)
-//                .build();
-//        competeRepository.save(team1Compete);
-//        competeRepository.save(team2Compete);
-//        log.info("created Compete1 : "+ team1Compete.getCompeteId());
-//        log.info("created Compete2 : "+ team2Compete.getCompeteId());
-//    }
+    }
 
 }

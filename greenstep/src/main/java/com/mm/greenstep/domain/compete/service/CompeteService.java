@@ -64,19 +64,22 @@ public class CompeteService {
                 .myTeamCompeteTime(myTeamCompete.getCompeteTime())
                 .myTeamCompeteRange(myTeamCompete.getCompeteRange())
                 .myTeamCompeteAmount(myTeamCompete.getCompeteAmount())
+                .isCompleted(victory.getIsComplete())
+                .victoryTeam(victory.getTeam())
                 .build();
     }
 
 
-
-    public void updateCompete(int AITrashAmount, double TravelRange, long TravelTime, int TrashAmount){
+    /**
+     * 플로깅 후 경쟁에 데이터 추가
+     * @param AITrashAmount
+     * @param TravelRange
+     * @param TravelTime
+     * @param TrashAmount
+     */
+    public void updateCompete(Victory currentVictory, int AITrashAmount, double TravelRange, long TravelTime, int TrashAmount){
         // 내팀 조회
         Team team = SecurityUtil.getCurrentUser().getTeam();
-
-        // 현재 진행중인 경쟁 확인
-        // 해당 년도 경쟁 기록 가져오기
-        LocalDate current = LocalDate.now();
-        Victory currentVictory = victoryRepository.findByYearAndMonth(current.getYear(),current.getMonthValue()).orElseThrow();
 
         Compete currentCompete = competeRepository.findByVictoryAndTeam(currentVictory,team);
 
@@ -91,6 +94,14 @@ public class CompeteService {
         Integer updateScore = Math.min(score, 200);
 
         currentCompete.updateCompete(TravelRange,TravelTime,TrashAmount,updateScore);
+
+        // 플로깅 후 목표점수 도달 여부 확인
+        if (currentCompete.getCompeteScore() >= currentVictory.getGoalScore()){
+            currentCompete.updateScore(currentVictory.getGoalScore());
+            currentVictory.updateVictoryTeam(team);
+        }
+
         competeRepository.save(currentCompete);
     }
+
 }

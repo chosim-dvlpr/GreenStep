@@ -1,5 +1,6 @@
 package com.mm.greenstep.domain.compete.dto.response;
 
+import com.mm.greenstep.domain.user.entity.Team;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -14,4 +15,6 @@ public class CompeteResDto {
     private Long myTeamCompeteTime;
     private Double myTeamCompeteRange;
     private Double myTeamCompeteAmount;
+    private Boolean isCompleted;
+    private Team victoryTeam;
 }

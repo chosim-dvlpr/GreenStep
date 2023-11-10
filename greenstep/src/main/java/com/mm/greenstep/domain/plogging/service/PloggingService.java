@@ -7,6 +7,8 @@ import com.mm.greenstep.domain.avatar.entity.UserAvatar;
 import com.mm.greenstep.domain.avatar.repository.AvatarRepository;
 import com.mm.greenstep.domain.avatar.repository.UserAvatarRepository;
 import com.mm.greenstep.domain.common.util.SecurityUtil;
+import com.mm.greenstep.domain.compete.entity.Victory;
+import com.mm.greenstep.domain.compete.repository.VictoryRepository;
 import com.mm.greenstep.domain.compete.service.CompeteService;
 import com.mm.greenstep.domain.plogging.dto.request.PloggingCoorDto;
 import com.mm.greenstep.domain.plogging.dto.request.PloggingReqDto;
@@ -36,6 +38,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -55,6 +58,7 @@ public class PloggingService {
     private final UserAchieveRepository userAchieveRepository; // 내 업적 레포
     private final TrashBoxRepository trashBoxRepository;
     private final CompeteService competeService;
+    private final VictoryRepository victoryRepository;
 
     public PloggingResDto createPlogging(PloggingReqDto dto) {
         Boolean levelUp = false;
@@ -72,8 +76,16 @@ public class PloggingService {
         Long travelTimeInSeconds = dto.getTravelTime() / 1000; // 밀리초를 초로 변환
         LocalDateTime startTime = endTime.minusSeconds(travelTimeInSeconds);
 
-        // 경쟁 score 갱신
-        competeService.updateCompete(dto.getAITrashAmount(),dto.getTravelRange(),dto.getTravelTime(), dto.getTrashAmount());
+
+        // 현재 시간 얻어오기
+        LocalDate current = LocalDate.now();
+        // 현재 진행중인 경쟁 확인
+        Victory currentVictory = victoryRepository.findByYearAndMonth(current.getYear(),current.getMonthValue()).orElseThrow();
+        if (!currentVictory.getIsComplete()){
+            // 경쟁 score 갱신
+            competeService.updateCompete(currentVictory, dto.getAITrashAmount(),dto.getTravelRange(),dto.getTravelTime(), dto.getTrashAmount());
+        }
+        
 
         // 경험치 계산
         Integer getExp =
