@@ -1,5 +1,7 @@
 import {View, ScrollView} from 'react-native';
 import React, {useState, useEffect} from 'react';
+import { useIsFocused } from '@react-navigation/native';
+
 //components
 import ProfileHeader from '../Component/Profile/ProfileHeader';
 import ProfileHeaderImage from '../Component/Profile/ProfileHeaderImage';
@@ -11,6 +13,7 @@ import MyPlogging from './MyPlogging';
 import { ProfileAPI } from '../Api/profileApi';
 
 const Profile = ({navigation}:any) => {
+  const isFocused = useIsFocused();
   const [name, setName] = useState('User')
   const [percentage, setPerCentage] = useState(0);
   const [level, setLevel] = useState(0);
@@ -48,9 +51,11 @@ const Profile = ({navigation}:any) => {
   }
 
   useEffect(() => {
+    if(isFocused){
       getUserInfo();
       getUserPloggingInfo();
-    }, [])
+    }
+    }, [isFocused])
     
   return (
     <ScrollView>

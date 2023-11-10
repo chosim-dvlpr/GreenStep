@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import AchievementButton from '../Component/Achievement/AchievementButton';
 import AchievementList from '../Component/Achievement/AcievementList';
 import { AchievementAPI } from '../Api/achievementAPi';
+import { useIsFocused } from '@react-navigation/native';
+
 interface achieveProps{
   achieveName : string;
   achievePloggingCount: number | null;
@@ -17,6 +19,7 @@ interface achieveProps{
 }
 
 const Achievement = () => {
+  const isFocused = useIsFocused();
   const Type = ['거리', '시간', '쓰레기 수', '횟수']
   const [achieveList, setAchieveList] = useState<achieveProps[]>([])
   const [achieveType, setAchieveType] = useState(0);
@@ -36,8 +39,10 @@ const Achievement = () => {
   }
 
   useEffect(() => {
-    getAchievementList(achieveType);
-  }, [achieveType])
+    if(isFocused){
+      getAchievementList(achieveType);
+    }
+  }, [achieveType, isFocused])
   
   console.log(Type[achieveType],achieveList)
 
