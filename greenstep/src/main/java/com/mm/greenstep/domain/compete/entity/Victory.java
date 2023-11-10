@@ -12,6 +12,9 @@ import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.Date;
 
+/**
+ * isComplete가 true인데 Team이 null인경우 무승부임
+ */
 @Entity
 @Getter
 @NoArgsConstructor
@@ -48,6 +51,10 @@ public class Victory {
     public void updateVictoryTeam(Team team){
         this.isComplete = true;
         this.team = team;
+    }
+
+    public void updateVictoryComplete(){
+        this.isComplete = true;
     }
 
 }
