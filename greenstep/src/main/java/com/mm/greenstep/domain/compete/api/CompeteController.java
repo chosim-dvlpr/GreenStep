@@ -26,8 +26,9 @@ public class CompeteController {
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
-    @GetMapping("/history/{victoryMonth}")
-    public ResponseEntity<?> getCompete(@PathVariable YearMonth yearMonth){
+    @GetMapping("/history/{year}/{month}")
+    public ResponseEntity<?> getCompete(@PathVariable int year, @PathVariable int month){
+        YearMonth yearMonth = YearMonth.of(year,month);
         CompeteResDto responseDto = competeService.getCompete(yearMonth);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
