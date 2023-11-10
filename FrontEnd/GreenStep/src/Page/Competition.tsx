@@ -49,6 +49,7 @@ const Competition = () => {
           <Title>경쟁</Title>
           <Calendar onSelectDate={setSelectedDate} selected={selectedDate} />
         </CalendarWrap>
+        <GraphicText>내 팀 : {competitionData?.myTeamName}</GraphicText>
         {competitionData && (
           <CompetitionGraphic
             myTeamProgress={calculateProgress(

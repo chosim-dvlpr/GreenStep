@@ -13,50 +13,70 @@ const CompetitionGraphic = ({
   myTeamProgress,
   opponentTeamProgress,
 }: CompetitionGraphicProps) => {
+  const progressBarWidth = 290; // ProgressBar의 너비
+
+  // ProgressBar 진척도에 따른 캐릭터의 x축 위치를 계산하는 함수
+  const calculateCharacterPosition = (progressValue: number) => {
+    // ProgressBar의 전체 너비에 진척도를 곱하여 캐릭터의 x축 위치를 계산
+    return progressBarWidth * progressValue;
+  };
+
   const renderProgressSection = (
     progressValue: number,
     bottomOffset: number,
+    characterStyle: any, // 캐릭터 스타일
+    characterSource: any, // 캐릭터 소스
+    progressMargin: number,
   ) => (
     <ProgressBox bottomOffset={bottomOffset}>
-      <Progress.Bar
-        progress={progressValue}
-        width={290}
-        height={14}
-        color="#99D959"
-      />
+      <ProgressBarContainer style={{marginTop: progressMargin}}>
+        <Progress.Bar
+          progress={progressValue}
+          width={progressBarWidth}
+          height={14}
+          color="#99D959"
+        />
+      </ProgressBarContainer>
       <LottieView
-        source={require('../../Image/Competition/flag.json')}
+        source={characterSource}
         autoPlay
         loop
-        style={styles.flag}
+        style={[
+          characterStyle,
+          {
+            left:
+              calculateCharacterPosition(progressValue) - characterStyle.width,
+          },
+        ]}
       />
       <ProgressTextWrap>
-        <ProgressText>0p</ProgressText>
-        <ProgressText>25,000p</ProgressText>
-        <ProgressText>50,000p</ProgressText>
+        <ProgressText>0%</ProgressText>
+        <ProgressText>50%</ProgressText>
+        <ProgressText>100%</ProgressText>
       </ProgressTextWrap>
     </ProgressBox>
   );
 
   return (
     <Graphic>
-      <LottieView
-        source={require('../../Image/Competition/turtle.json')}
-        autoPlay
-        loop
-        style={styles.turtle}
-      />
-      {renderProgressSection(myTeamProgress, 40)}
-      <LottieView
-        source={require('../../Image/Competition/dolphin.json')}
-        autoPlay
-        loop
-        style={styles.dolphin}
-      />
-      {renderProgressSection(opponentTeamProgress, 170)}
+      {renderProgressSection(
+        myTeamProgress,
+        30,
+        styles.turtle,
+        require('../../Image/Competition/turtle.json'),
+        30,
+      )}
+      {renderProgressSection(
+        opponentTeamProgress,
+        130,
+        styles.dolphin,
+        require('../../Image/Competition/dolphin.json'),
+        -40,
+      )}
     </Graphic>
   );
 };
+
 // 여기에 필요한 스타일드 컴포넌트를 옮깁니다.
 const Graphic = styled.View`
   flex: 2.4;
@@ -71,7 +91,6 @@ const Graphic = styled.View`
 const ProgressBox = styled.View<{bottomOffset: number}>`
   width: 400px;
   align-items: center;
-  bottom: ${props => props.bottomOffset}px;
 `;
 
 const ProgressTextWrap = styled.View`
@@ -88,17 +107,20 @@ const styles = StyleSheet.create({
   turtle: {
     width: 150,
     height: 150,
+    bottom: 60,
   },
   dolphin: {
     width: 140,
     height: 140,
-    bottom: 135,
+    bottom: 60,
   },
   flag: {
     width: 90,
     height: 80,
-    bottom: 85,
-    left: 140,
   },
 });
+const ProgressBarContainer = styled.View`
+  top: 58px;
+`;
+const ProgressUpper = styled.View``;
 export default CompetitionGraphic;
