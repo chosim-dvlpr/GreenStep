@@ -18,7 +18,7 @@ const ImageContainer = styled.View`
 
 const ProfilePloggingDataInfo = ({timeInfo, distanceInfo, trashInfo, acheiveInfo, isProfile}:any) => {
     const navigation = useNavigation();
-    
+
     return(
         <View style={{display: 'flex', flexDirection: 'row', marginBottom: 20,
                       justifyContent: 'space-evenly', alignItems:'center'}}>

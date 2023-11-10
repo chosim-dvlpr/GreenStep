@@ -5,6 +5,7 @@ import {useState, useEffect} from 'react';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import ProfileAvatarModal from "./ProfileAvatarModal";
 import { AvatarAPI } from "../../Api/avatarApi";
+import { useIsFocused } from '@react-navigation/native';
 
 interface AvatarProps {
     avatarId: number;
@@ -15,6 +16,7 @@ interface AvatarProps {
 }
 
 const ProfileHeaderImage = ({percentage}:any) => {
+    const isFocused = useIsFocused();
     const [showAvatar, setShowAvatar] = useState(avatar)
     const [toggle, setToggle] = useState(false)
     const [avatarId, setAvatarId] = useState<number>(1);
@@ -53,8 +55,10 @@ const ProfileHeaderImage = ({percentage}:any) => {
     };
 
     useEffect(() => {
-        getAvatarInfo();
-    }, []);
+        if(isFocused){
+            getAvatarInfo();
+        }
+    }, [isFocused]);
 
     useEffect(() => {
         const selectedAvatar = avatars.find(ava => ava.isSelected);

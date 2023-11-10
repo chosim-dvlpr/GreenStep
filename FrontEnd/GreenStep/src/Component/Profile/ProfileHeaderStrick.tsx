@@ -4,8 +4,10 @@ import Box from "../../Style/Box";
 import right from '../../Image/Profile/right.png'
 import left from '../../Image/Profile/left.png'
 import { ProfileAPI } from "../../Api/profileApi";
+import { useIsFocused } from '@react-navigation/native';
 
 const ProfileHeaderStrick = () => {
+    const isFocused = useIsFocused();
     const date = new Date();
     const nowYear = date.getFullYear();
     const [year, setYear] = useState(nowYear)
@@ -62,9 +64,11 @@ const ProfileHeaderStrick = () => {
   }
 
   useEffect(() => {
-    getStreak(year);
+    if(isFocused){
+      getStreak(year);
+    }
     console.log(year)
-  }, [year])
+  }, [year, isFocused])
 
     const handleYearPlus = () => {
       setYear(year+1)

@@ -6,6 +6,8 @@ import { ProfileAPI } from '../../../Api/profileApi';
 import { Double } from 'react-native/Libraries/Types/CodegenTypes';
 import noImage from '../../../Image/PloggingFinish/PloggingFinishNoImage.png'
 import { msToHM, roundedTravelRange } from '../../../Function/Plogging/funcPlogging';
+import { useIsFocused } from '@react-navigation/native';
+
 interface PloggingData {
     createdAt: string | null;
     getExp: number;
@@ -17,6 +19,7 @@ interface PloggingData {
   }
 
 const MyPloggingList = () => {
+    const isFocused = useIsFocused();
     const [dataList, setDataList] = useState<PloggingData[]>([]);
     const [idx, setIdx] = useState(0)
     const [toggle, setToggle] = useState(false)
@@ -40,8 +43,10 @@ const MyPloggingList = () => {
     }
 
     useEffect(() => {
-      getMyploggingList();
-    }, []);
+      if(isFocused){
+        getMyploggingList();
+      }
+    }, [isFocused]);
 
   return(
         <View>

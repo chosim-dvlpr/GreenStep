@@ -5,7 +5,8 @@ import ImageStyle from "../../Style/Image";
 import Box from "../../Style/Box";
 import React, { useEffect, useState } from "react";
 import * as Progress from 'react-native-progress';
-
+import { useIsFocused } from '@react-navigation/native';
+import { msToHM } from "../../Function/Plogging/funcPlogging";
 
 interface AchievementListProps{
     atom : achieveProps;
@@ -24,40 +25,42 @@ interface achieveProps{
   }
   
 const AchievementList = ({ atom }: AchievementListProps) => {
-
+    const isFocused = useIsFocused();
     const [reAtom, setReAtom] = useState({achieveName : '', goal: 1.1, my: 1, createdAt:''}) 
     useEffect(() => {
+        if(isFocused){
 
-        if (atom.achievePloggingCount !== null) {
-            setReAtom({
-                achieveName: atom.achieveName,
-                goal: atom.achievePloggingCount,
-                my: atom.myPloggingCount ?? 0,
-                createdAt: atom.createdAt ?? ''
-            });
-        } else if (atom.achieveTrashAmount !== null) {
-            setReAtom({
-                achieveName: atom.achieveName,
-                goal: atom.achieveTrashAmount,
-                my: atom.myTrashAmount ?? 0,
-                createdAt: atom.createdAt ?? ''
-            });
-        } else if (atom.achieveTravelRange !== null) {
-            setReAtom({
-                achieveName: atom.achieveName,
-                goal: atom.achieveTravelRange,
-                my: atom.myTravelRange ?? 0,
-                createdAt: atom.createdAt ?? ''
-            });
-        } else if (atom.achieveTravelTime !== null) {
-            setReAtom({
-                achieveName: atom.achieveName,
-                goal: atom.achieveTravelTime,
-                my: atom.myTravelTime ?? 0,
-                createdAt: atom.createdAt ?? ''
-            });
+            if (atom.achievePloggingCount !== null) {
+                setReAtom({
+                    achieveName: atom.achieveName,
+                    goal: atom.achievePloggingCount,
+                    my: atom.myPloggingCount ?? 0,
+                    createdAt: atom.createdAt ?? ''
+                });
+            } else if (atom.achieveTrashAmount !== null) {
+                setReAtom({
+                    achieveName: atom.achieveName,
+                    goal: atom.achieveTrashAmount,
+                    my: atom.myTrashAmount ?? 0,
+                    createdAt: atom.createdAt ?? ''
+                });
+            } else if (atom.achieveTravelRange !== null) {
+                setReAtom({
+                    achieveName: atom.achieveName,
+                    goal: atom.achieveTravelRange,
+                    my: atom.myTravelRange ?? 0,
+                    createdAt: atom.createdAt ?? ''
+                });
+            } else if (atom.achieveTravelTime !== null) {
+                setReAtom({
+                    achieveName: atom.achieveName,
+                    goal: atom.achieveTravelTime,
+                    my: atom.myTravelTime ?? 0,
+                    createdAt: atom.createdAt ?? ''
+                });
+            }
         }
-    }, [atom]);
+    }, [atom, isFocused]);
 
     return(
             <View style={[Box.cardBox,
@@ -69,8 +72,9 @@ const AchievementList = ({ atom }: AchievementListProps) => {
                         }]}>
                 <View>
                     <Text style={{fontWeight:'bold', fontSize: 20, marginBottom: 20}}>{reAtom.achieveName}</Text>
+                    <Text style={{fontWeight:'bold', fontSize: 20, marginBottom: 10}}>목표 : {reAtom.goal}</Text>
                     <View>
-                        <Text style={{fontWeight:'bold', marginBottom: 3}}>진행률 : {reAtom.my/reAtom.goal} % </Text>
+                        <Text style={{fontWeight:'bold', marginBottom: 3}}>진행률 : {reAtom.my/reAtom.goal >=1? 100 : Math.round((reAtom.my/reAtom.goal) * 100)} % </Text>
                         <Progress.Bar
                         progress={reAtom.my / reAtom.goal}
                         width={null}
