@@ -1,7 +1,6 @@
 package com.mm.greenstep.domain.plogging.api;
 
 import com.mm.greenstep.domain.plogging.dto.request.PloggingReqDto;
-import com.mm.greenstep.domain.plogging.dto.request.PloggingUpdateImgReqDto;
 import com.mm.greenstep.domain.plogging.dto.response.*;
 import com.mm.greenstep.domain.plogging.service.PloggingService;
 import lombok.RequiredArgsConstructor;
@@ -28,12 +27,22 @@ public class PloggingController {
     }
 
     // 플로깅 사진 등록
-    @PostMapping("/upload/img")
+    @PostMapping("/{ploggingId}/upload/img")
     public ResponseEntity<?> updatePloggingImg(
             @RequestPart(value = "file", required = false) MultipartFile file,
-            @RequestPart(value = "dto", required = false) PloggingUpdateImgReqDto dto
+            @PathVariable(value = "ploggingId", required = false) Long ploggingId
     ) {
-        ploggingService.updatePloggingImg(file, dto);
+        ploggingService.updatePloggingImg(file, ploggingId);
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
+    // 플로깅 사진 동의여부 설정
+    @PatchMapping("/{ploggingId}/{isVisible}")
+    public ResponseEntity<?> updateVisible(
+            @PathVariable Boolean isVisible,
+            @PathVariable Long ploggingId
+    ) {
+        ploggingService.updateVisible(isVisible, ploggingId);
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 

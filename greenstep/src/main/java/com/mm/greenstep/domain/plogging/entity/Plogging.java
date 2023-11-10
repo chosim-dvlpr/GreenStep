@@ -63,8 +63,11 @@ public class Plogging {
     @Column(name = "is_visibled", columnDefinition = "BOOLEAN DEFAULT false")
     private Boolean isVisibled;
 
-    public void updatePloggingImg(String s3Url, Boolean tf) {
+    public void updatePloggingImg(String s3Url) {
         this.travelPicture = s3Url;
-        this.isVisibled = tf;
+    }
+
+    public void updateVisible(Boolean yN) {
+        this.isVisibled = yN;
     }
 }
