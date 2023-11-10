@@ -140,7 +140,7 @@ public class PloggingService {
                 .trashAmount(dto.getTrashAmount())
                 .travelTime(dto.getTravelTime())
                 .isLevelUp(levelUp)
-//                .getAvatarList(getAvatarList)
+                .getAvatarList(getAvatarList)
                 .ploggingId(plogging.getPloggingId())
                 .getExp(getExp)
                 .build();

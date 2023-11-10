@@ -55,9 +55,9 @@ public class MyPageService {
         Double travelTime = 0.0; // 나의 총 이동시간
 
         for (Plogging p : plogging) {
-            trashAmount += p.getTrashAmount();
-            travelRange += p.getTravelRange();
-            travelTime += p.getTravelTime();
+            if(p.getTrashAmount() != null) trashAmount += p.getTrashAmount();
+            if(p.getTravelRange() != null) travelRange += p.getTravelRange();
+            if(p.getTravelTime() != null) travelTime += p.getTravelTime();
         }
 
         // 완료된 업적 리스트
