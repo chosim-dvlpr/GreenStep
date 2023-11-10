@@ -13,7 +13,7 @@ MODEL_PATH = 'model'
 model = tf.saved_model.load(MODEL_PATH)
 print(model.signatures["serving_default"].structured_outputs)
 
-@app.post("/py/predict-image")
+@app.post("/predict-image")
 async def predict_image(file: UploadFile = File(...)):
     contents = await file.read()
     pil_image = Image.open(BytesIO(contents))
