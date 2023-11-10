@@ -1,36 +1,17 @@
 import {View, Text, TouchableOpacity, StyleSheet, Modal} from 'react-native';
 import React, {useState, useRef, useEffect, useReducer} from 'react';
 import Geolocation from 'react-native-geolocation-service';
-import {Marker, Polyline} from 'react-native-maps';
-import styled from 'styled-components';
-import {Platform, PermissionsAndroid} from 'react-native';
 import {
   IState,
   locationReducer,
   initialState,
 } from '../Component/PloggingStart/LocationReducer';
-import MapView from 'react-native-map-clustering';
 import PloggingInfo from '../Component/PloggingStart/PloggingInfo';
 import PloggingFooter from '../Component/PloggingStart/PloggingFooter';
 import PloggingMap from '../Component/Common/PloggingMap';
 import PloggingModal from '../Component/PloggingStart/PloggingModal';
-//안드로이드에서 권한 갖고오기
-async function requestPermission() {
-  try {
-    if (Platform.OS === 'ios') {
-      return await Geolocation.requestAuthorization('always');
-    }
-    // 안드로이드 위치 정보 수집 권한 요청
-    if (Platform.OS === 'android') {
-      return await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-      );
-    }
-  } catch (e) {
-    console.log(e);
-  }
-}
-
+import {requestPermission} from '../Component/PloggingStart/MapPermission';
+import useModal from '../Component/PloggingStart/Hook/useModal';
 const PloggingStart = () => {
   const [state, dispatch] = useReducer(locationReducer, initialState);
   const watchId = useRef(null);
@@ -38,7 +19,8 @@ const PloggingStart = () => {
 
   useEffect(() => {
     requestPermission().then(result => {
-      if (result === 'granted') {
+      console.log(result);
+      if (result) {
         watchId.current = Geolocation.watchPosition(
           position => {
             const {latitude, longitude} = position.coords;
@@ -60,9 +42,7 @@ const PloggingStart = () => {
   }, []);
 
   // 새로운 useEffect를 추가하여 거리를 콘솔에 출력
-  useEffect(() => {
-    console.log('Total Distance:', state.totalDist);
-  }, [state.totalDist]);
+  useEffect(() => {}, [state.totalDist]);
 
   useEffect(() => {
     return () => {
@@ -72,21 +52,18 @@ const PloggingStart = () => {
     };
   }, []);
 
-  // 모달
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const openModal = () => {
-    setIsModalVisible(true);
+  const handleStartTracking = () => {
+    setIsTracking(true);
   };
-  const closeModal = () => {
-    setIsModalVisible(false);
-  };
+  const {isModalVisible, openModal, closeModal} = useModal();
 
   return (
     <View style={styles.container}>
       <PloggingInfo
         isTracking={isTracking}
-        setIsTracking={setIsTracking}
+        setIsTracking={handleStartTracking}
         distance={state.totalDist}
+        locations={state.locations}
       />
       {state.locations.length > 0 && (
         <PloggingMap locations={state.locations} isTracking={isTracking} />
@@ -111,6 +88,32 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+// // 모달
+// const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+// const openModal = () => {
+//   setIsModalVisible(true);
+// };
+// const closeModal = () => {
+//   setIsModalVisible(false);
+// };
+
+//안드로이드에서 권한 갖고오기
+// async function requestPermission() {
+//   try {
+//     if (Platform.OS === 'ios') {
+//       return await Geolocation.requestAuthorization('always');
+//     }
+//     // 안드로이드 위치 정보 수집 권한 요청
+//     if (Platform.OS === 'android') {
+//       return await PermissionsAndroid.request(
+//         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+//       );
+//     }
+//   } catch (e) {
+//     console.log(e);
+//   }
+// }
 
 // //쓰레기 통 로직 더미데이터
 // function generateTrashBins(center, count) {

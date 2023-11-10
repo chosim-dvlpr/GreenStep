@@ -5,10 +5,15 @@ import ImageStyle from '../../Style/Image';
 import PloggingModal from './PloggingModal';
 import {useDispatch} from 'react-redux';
 import {incrementCount} from '../../Store/ploggingSlice';
+import {getLocation} from './getLocation';
+import {TrashItem} from '../../Store/ploggingSlice';
+import {trashTypeMapping} from './TrashType';
 interface PloggingDivisionProps {
   name: string;
   onPress?: () => void; // Optional, 모든 division에 필요한 것은 아님
+  size?: 'small' | 'medium';
 }
+
 function getImage(name: string): any {
   switch (name) {
     case 'AI 쓰레기 인식':
@@ -27,23 +32,44 @@ function getImage(name: string): any {
       return require('../../Image/PloggingStart/trash_img.png');
   }
 }
-const PloggingDivision: React.FC<PloggingDivisionProps> = ({name, onPress}) => {
+const PloggingDivision: React.FC<PloggingDivisionProps> = ({
+  name,
+  onPress,
+  size = 'medium',
+}) => {
   const imageSource = getImage(name);
   const dispatch = useDispatch();
 
-  const handlePress = (name: string) => {
+  const handlePress = async (name: string) => {
     if (name === '재활용품' && onPress) {
       onPress();
-    } else {
-      dispatch(incrementCount(name));
+      return;
+    }
+    try {
+      const location = (await getLocation()) as {
+        latitude: number;
+        longitude: number;
+      };
+      const trashType = trashTypeMapping[name];
+      const trashItem: TrashItem = {
+        trash_type: trashType,
+        latitude: location.latitude,
+        longitude: location.longitude,
+        trash_picture: null,
+      };
+      dispatch(incrementCount({name, trashItem}));
+      console.log('trashItem', trashItem);
+    } catch (error) {
+      console.log(error);
     }
   };
-
+  const imageSizeStyle =
+    size === 'small' ? ImageStyle.smallImage : ImageStyle.mediumImage;
   return (
     <>
       <TouchableOpacity onPress={() => handlePress(name)}>
         <ImageContainer>
-          <Image source={imageSource} style={ImageStyle.smallImage} />
+          <Image source={imageSource} style={imageSizeStyle} />
         </ImageContainer>
       </TouchableOpacity>
     </>

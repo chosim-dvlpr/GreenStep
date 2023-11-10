@@ -28,32 +28,22 @@ const PloggingModal: React.FC<PloggingModalProps> = ({onClose, visible}) => {
           <TouchableWithoutFeedback>
             <ModalContainer>
               <PloggingDivisionContainer>
-                <StyledImageBackground
-                  source={require('../../Image/PloggingStart/bgcircle.png')}
-                  resizeMode="contain">
-                  <PloggingDivision name="페트병" />
+                <StyledImageBackground>
+                  <PloggingDivision name="페트병" size="medium" />
                   <CountText>{counts.페트병}</CountText>
-                  {/* 페트병 카운트를 표시 */}
                 </StyledImageBackground>
-                <StyledImageBackground
-                  source={require('../../Image/PloggingStart/bgcircle.png')}
-                  resizeMode="contain">
-                  <PloggingDivision name="플라스틱" />
+                <StyledImageBackground>
+                  <PloggingDivision name="플라스틱" size="medium" />
                   <CountText>{counts.플라스틱}</CountText>
-                  {/* 플라스틱 카운트를 표시 */}
                 </StyledImageBackground>
               </PloggingDivisionContainer>
               <PloggingDivisionContainer>
-                <StyledImageBackground
-                  source={require('../../Image/PloggingStart/bgcircle.png')}
-                  resizeMode="contain">
-                  <PloggingDivision name="병" />
+                <StyledImageBackground>
+                  <PloggingDivision name="병" size="medium" />
                   <CountText>{counts.병}</CountText>
                 </StyledImageBackground>
-                <StyledImageBackground
-                  source={require('../../Image/PloggingStart/bgcircle.png')}
-                  resizeMode="contain">
-                  <PloggingDivision name="캔" />
+                <StyledImageBackground>
+                  <PloggingDivision name="캔" size="medium" />
                   <CountText>{counts.캔}</CountText>
                 </StyledImageBackground>
               </PloggingDivisionContainer>
@@ -92,7 +82,7 @@ const PloggingDivisionContainer = styled.View`
 
   margin: 10px;
 `;
-const StyledImageBackground = styled(ImageBackground)`
+const StyledImageBackground = styled.View`
   width: 130px;
   height: 130px;
   justify-content: center;
