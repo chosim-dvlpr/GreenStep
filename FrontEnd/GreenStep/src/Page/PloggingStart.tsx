@@ -1,5 +1,5 @@
-import {View, Text, TouchableOpacity, StyleSheet, Modal} from 'react-native';
 import React, {useState, useRef, useEffect, useReducer} from 'react';
+import {View, StyleSheet, Modal} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import {
   IState,
@@ -12,48 +12,53 @@ import PloggingMap from '../Component/Common/PloggingMap';
 import PloggingModal from '../Component/PloggingStart/PloggingModal';
 import {requestPermission} from '../Component/PloggingStart/MapPermission';
 import useModal from '../Component/PloggingStart/Hook/useModal';
+
 const PloggingStart = () => {
   const [state, dispatch] = useReducer(locationReducer, initialState);
   const watchId = useRef(null);
-  const [isTracking, setIsTracking] = useState<boolean>(false);
+  const [isTracking, setIsTracking] = useState(false);
 
   useEffect(() => {
     requestPermission().then(result => {
-      console.log(result);
       if (result) {
         watchId.current = Geolocation.watchPosition(
           position => {
             const {latitude, longitude} = position.coords;
-            console.log(position.coords);
-            dispatch({type: 'ADD_LOCATION', payload: {latitude, longitude}});
+            if (isTracking) {
+              dispatch({type: 'ADD_LOCATION', payload: {latitude, longitude}});
+            } else {
+              dispatch({
+                type: 'UPDATE_CURRENT_LOCATION',
+                payload: {latitude, longitude},
+              });
+            }
           },
-          error => {
-            console.log(error.code, error.message);
-          },
-          {
-            enableHighAccuracy: true,
-            distanceFilter: 10,
-            interval: 5000,
-            fastestInterval: 2000,
-          },
+          error => console.log(error),
+          {enableHighAccuracy: true, distanceFilter: 10},
         );
       }
     });
-  }, []);
 
-  // 새로운 useEffect를 추가하여 거리를 콘솔에 출력
-  useEffect(() => {}, [state.totalDist]);
-
-  useEffect(() => {
     return () => {
       if (watchId.current !== null) {
         Geolocation.clearWatch(watchId.current);
       }
     };
-  }, []);
+  }, [isTracking]);
 
   const handleStartTracking = () => {
     setIsTracking(true);
+    Geolocation.getCurrentPosition(
+      position => {
+        const {latitude, longitude} = position.coords;
+        dispatch({
+          type: 'RESET_AND_ADD_LOCATION',
+          payload: {latitude, longitude},
+        });
+      },
+      error => console.log(error),
+      {enableHighAccuracy: true},
+    );
   };
   const {isModalVisible, openModal, closeModal} = useModal();
 
@@ -65,6 +70,7 @@ const PloggingStart = () => {
         distance={state.totalDist}
         locations={state.locations}
       />
+
       {state.locations.length > 0 && (
         <PloggingMap locations={state.locations} isTracking={isTracking} />
       )}
@@ -86,6 +92,11 @@ export default PloggingStart;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  button: {
+    width: 30,
+    height: 30,
+    backgroundColor: 'black',
   },
 });
 
