@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
 import { View, Modal, Text, TouchableWithoutFeedback,
-  TouchableOpacity, StyleSheet, Image } from "react-native";
+  TouchableOpacity, StyleSheet, Image, ScrollView, FlatList } from "react-native";
 import LottieView from 'lottie-react-native';
 import treasureBox from '../../Image/PloggingFinish/treasureBox.json'
 import confetti from '../../Image/PloggingFinish/confetti.json'
+import { getAvatarListType } from '../../Page/PloggingFinish';
 
 interface ModalProps {
   onClose: () => void;
   visible: boolean;
-  avatarName: string,
-  avatarImage: string,
+  getAvatarList: getAvatarListType[]
+  // avatarName: string[],
+  // avatarImage: string[],
 }
 
 
-const PloggingFinishLevelUpModal : React.FC<ModalProps> = ({ onClose, avatarName, avatarImage }) => {
+const PloggingFinishLevelUpModal : React.FC<ModalProps> = ({ onClose, getAvatarList }) => {
   /** 상자 오픈했는지 여부 */
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const handleIsOpened = () => {
@@ -46,27 +48,41 @@ const PloggingFinishLevelUpModal : React.FC<ModalProps> = ({ onClose, avatarName
       <View style={styles.modalOverlay}>
         <TouchableWithoutFeedback>
           <View style={[styles.modalView]}>
-            <TouchableOpacity
-            onPress={handleIsOpened}
-            disabled={isOpened}
-            >
-              {
-                isOpened
-                ? <View style={styles.avatarContainer}>
-                    <Text style={styles.levelUpText}>{avatarName}</Text>
-                    <LottieView
-                    source={confetti}
-                    autoPlay
-                    loop
-                    style={styles.confettiImage}
-                    />
-                    <Image
-                    source={{uri: avatarImage}}
-                    style={styles.avatarImage}
-                    />
-                    <Text style={styles.bottomText}>{avatarName} 획득!</Text>
-                  </View>
-                : <View style={styles.treasureBoxContainer}>
+            {
+              isOpened
+              ? 
+              <ScrollView 
+              horizontal={true}
+              style={{backgroundColor: 'red', width: '100%'}}
+              // contentContainerStyle={{ flexDirection: 'row' }}
+              showsHorizontalScrollIndicator={false}
+              centerContent={true}
+              alwaysBounceHorizontal={true}
+              >
+                {
+                  getAvatarList.map((avatar, idx) => (
+                    <TouchableOpacity key={idx} style={styles.avatarContainer}>
+                      <Text style={styles.levelUpText}>{avatar.avatarName}</Text>
+                      <LottieView
+                      source={confetti}
+                      autoPlay
+                      loop
+                      style={styles.confettiImage}
+                      />
+                      <Image 
+                      source={{uri: avatar.avatarImage}}
+                      style={styles.avatarImage}
+                      />
+                      <Text style={styles.bottomText}>{avatar.avatarName} 획득!</Text>
+                    </TouchableOpacity>
+                  ))
+                }
+              </ScrollView>
+              : <View style={styles.treasureBoxContainer}>
+                <TouchableOpacity
+                  onPress={handleIsOpened}
+                  disabled={isOpened}
+                  >
                     <Text style={styles.levelUpText}>레벨 업!</Text>
                     <LottieView 
                     source={treasureBox}
@@ -76,9 +92,9 @@ const PloggingFinishLevelUpModal : React.FC<ModalProps> = ({ onClose, avatarName
                     />
                     <Text style={styles.treasureBoxText}>상자를 획득했습니다.</Text>
                     <Text style={styles.treasureBoxText}>상자를 눌러 열어주세요.</Text>
+                  </TouchableOpacity>
                   </View>
-              }
-            </TouchableOpacity>
+            }
           </View>
           </TouchableWithoutFeedback>
       </View>
@@ -123,11 +139,15 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'space-between',
     alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'row',
   },
   avatarImage: {
-    width: 200,
-    height: 200,
+    width: '100%',
+    // height: '100%',
+    aspectRatio: 1,
     marginBottom: 20,
+    backgroundColor: 'yellow',
   },
   treasureBoxContainer: {
     alignItems: 'center',

@@ -24,87 +24,108 @@ import PloggingFinishLevelUpModal from '../Component/PloggingFinish/PloggingFini
 import lock from '../Image/PloggingFinish/lock.png';
 
 // axios
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import fileTokenHttp from '../Api/fileTokenHttp';
+
+export interface getAvatarListType {
+  avatarName: string | null,
+  avatarImage: string | null,
+}
 
 interface PloggingFinishType {
   // props로 반드시 넘겨줘야 할 항목 (추후 ? 지우기)
-  travelTime?: string; // string인지 확인 필요
-  travelRange?: number;
-  trashAmount?: number;
-  acheiveInfo?: number;
-  ploggingId?: number;
-  getExp?: number;
-  isLevelUp?: boolean;
-
+  travelTime?: string,  // string인지 확인 필요
+  travelRange?: number,
+  trashAmount?: number,
+  acheiveInfo?: number,
+  ploggingId?: number,
+  getExp?: number,
+  isLevelUp?: boolean, 
+  
   // 선택 항목
-  avartarName?: string;
-  avatarImage?: string; // 아바타 이미지 url
+  getAvatarList?: getAvatarListType[]
+  // avartarName?: string[], 
+  // avatarImage?: string[], // 아바타 이미지 url
 }
+
+
+// const PloggingFinish = ({ 
+//   ploggingId, 
+//   getExp, 
+//   isLevelUp, 
+//   avartarName, 
+//   avatarImage 
+// }: PloggingFinishType) => {
+
+// interface PloggingFinishType {
+//   // props로 반드시 넘겨줘야 할 항목 (추후 ? 지우기)
+//   travelTime?: string; // string인지 확인 필요
+//   travelRange?: number;
+//   trashAmount?: number;
+//   acheiveInfo?: number;
+//   ploggingId?: number;
+//   getExp?: number;
+//   isLevelUp?: boolean;
+
+//   // 선택 항목
+//   avartarName?: string;
+//   avatarImage?: string; // 아바타 이미지 url
+// }
 const PloggingFinish = () => {
   const route = useRoute();
-  const {ploggingId, getExp, isLevelUp, avartarName, avatarImage, trashAmount} =
+  const {ploggingId, getExp, isLevelUp, getAvatarList, trashAmount} =
     route.params as PloggingFinishType;
   const navigation = useNavigation();
-
+  const data = {
+    accessToken: AsyncStorage.getItem('accessToken'),
+    refreshToken: AsyncStorage.getItem('refreshToken'),
+  }
+  
   /** 사진 선택 기능 */
   const [photo, setPhoto] = useState<string>('');
 
   const pickedPhoto = async () => {
     console.log('사진 인증 버튼 클릭 (미리보기)');
 
-    const result = await launchImageLibrary();
-    const formData = await new FormData();
-
-    if (result.didCancel) {
+    const result = await launchImageLibrary({mediaType: 'photo'});
+    const formData = new FormData()
+    
+    if (result.didCancel){
       return null;
     }
 
     console.log('이미지 업로드 성공 : ', result);
 
     const localUri = result.assets[0].uri;
-    const uriPath = localUri.split('//').pop();
-    // const imageName = localUri.split("/").pop();
-    setPhoto('file://' + uriPath);
-
-    await formData.append(
-      'file',
-      new Blob(
-        {
-          uri: localUri,
-          type: result.assets[0].type,
-          name: result.assets[0].fileName,
-        },
-        fileBlobOptions,
-      ),
-    );
-
-    const isVisibleObject = {
-      isVisible: isVisible,
-      ploggingId: ploggingId,
-    };
-
-    const jsonBlobOptions = {
-      type: 'application/json',
-      lastModified: Date.now(),
-    };
-    const fileBlobOptions = {
+    const uriPath = localUri.split("//").pop();
+    setPhoto("file://"+uriPath)    
+    
+    formData.append('file', {
+      uri: result.assets[0].uri,
       type: 'multipart/form-data',
-      lastModified: Date.now(),
-    };
-
-    formData.append(
-      'dto',
-      new Blob([JSON.stringify(isVisibleObject)], jsonBlobOptions),
-    );
-
-    fileTokenHttp
-      .post(`/plogging/upload/img`, formData)
-      .then(res => console.log('file 전송 성공 : ', res))
-      .catch(err => console.log('file 전송 실패 : ', err));
+      name: result.assets[0].fileName,
+    });
+    
+    fileTokenHttp.post('/plogging/${ploggingId}/upload/img', formData)
+    .then(res => console.log('성공', res))
+    .catch(err => console.log(err))
+    // UploadAPI.uploadFile(formData)
+    // .then(res => console.log('파일 서버 업로드 성공 '))
+    // .catch(async err => {
+    //   console.log('서버 업로드 실패 ', err)
+    //   // await AsyncStorage.removeItem('accessToken')
+    //   // await AsyncStorage.removeItem('refreshToken')
+    //   Refresh.getRefreshToken()
+    //   .then(() => {
+    //       UploadAPI.uploadFile(formData)
+    //       console.log('재업로드')
+    //     })
+    // .catch(() => console.log('실패'))
+    // })    
   };
 
   /** 레벨업 토글 */
-  const [levelUpToggle, setLevelUpToggle] = useState(false);
+  const [levelUpToggle, setLevelUpToggle] = useState(true); // 추후 지우기
   const handleLevelUpToggle = () => {
     setLevelUpToggle(!levelUpToggle);
   };
@@ -127,18 +148,27 @@ const PloggingFinish = () => {
 
   return (
     <ScrollView>
-      {levelUpToggle && (
-        <PloggingFinishLevelUpModal
-          onClose={handleLevelUpToggle}
-          visible={levelUpToggle}
-          // avatarName={avatarName}
-          // avatarImage={avatarImage}
+      {levelUpToggle && 
+      <PloggingFinishLevelUpModal 
+      onClose={handleLevelUpToggle} 
+      visible={levelUpToggle} 
+      // getAvatarList={getAvatarList}
 
-          // 데이터 props로 받은 뒤 삭제하기
-          avatarName={'cow'}
-          avatarImage={''}
-        />
-      )}
+      
+      // 데이터 props로 받은 뒤 삭제하기
+      getAvatarList={[
+        {
+          avatarName: 'bear',
+          avatarImage: 'https://3mm.s3.ap-northeast-2.amazonaws.com/bear.png',
+        },
+        {
+          avatarName: 'cat',
+          avatarImage: 'https://3mm.s3.ap-northeast-2.amazonaws.com/cat.png',
+        },
+      ]}
+      // avatarName={['bear', 'cat']}
+      // avatarImage={['https://3mm.s3.ap-northeast-2.amazonaws.com/bear.png', 'https://3mm.s3.ap-northeast-2.amazonaws.com/cat.png']} 
+      />}
 
       <PloggingFinishContainer>
         {/* 헤더 */}

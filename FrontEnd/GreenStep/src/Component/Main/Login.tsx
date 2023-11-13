@@ -20,9 +20,7 @@ interface LoginPropsType {
   setIsLogin: Dispatch<SetStateAction<boolean>>;
 }
 
-const Login = ({setIsLogin}: LoginPropsType) => {  
-  // const [token, setToken] = useState<KakaoOAuthToken | string>('');
-  
+const Login = ({setIsLogin}: LoginPropsType) => {    
   const getLogin = async () => {
     try {
       const newToken: KakaoOAuthToken = await loginWithKakaoAccount();
@@ -48,10 +46,10 @@ const Login = ({setIsLogin}: LoginPropsType) => {
         LoginAPI.getLoginAxios(response?.accessToken)
         .then(res => {
           const data = res.data.data
-          console.log('storage에 토큰 저장 성공 : ', res)
+          console.log('storage에 토큰 저장 성공 : ', JSON.stringify(data))
           setIsLogin(true);
-          AsyncStorage.setItem('accessToken', data.accessToken);
-          AsyncStorage.setItem('refreshToken', data.refreshToken); 
+          AsyncStorage.setItem('accessToken', data.accessToken)
+          AsyncStorage.setItem('refreshToken', data.refreshToken)
         })
         .catch(err => {
           console.log("login axios 에러 발생: ", err);

@@ -49,19 +49,19 @@ const Main = () => {
 
   const [isLogin, setIsLogin] = useState<boolean>(false);
 
-  useEffect(() => {
-    const checkToken = async () => {
-      const token = await AsyncStorage.getItem('accessToken');
-      if (token) {
-        console.log('토큰을 갖고 있습니다.', token);
-        setIsLogin(true);
-      } else {
-        console.log('토큰이 없습니다.');
-      }
-    };
+  const checkToken = async () => {
+    const token = await AsyncStorage.getItem('accessToken');
+    if (token) {
+      console.log('토큰을 갖고 있습니다.', token);
+      setIsLogin(true);
+    } else {
+      console.log('토큰이 없습니다.');
+    }
+  };
 
+  useEffect(() => {
     checkToken();
-  }, [isLogin]);
+  }, [isLogin, isFocused]);
 
   // 메인 문구 불러오기
   const [trashAmount, setTrashAmount] = useState<number>(0);
@@ -71,7 +71,7 @@ const Main = () => {
   const getMainData = () => {
     MainAPI.mainDataAxios()
       .then(res => {
-        console.log('메인 문구 axios 성공 : ', res);
+        console.log('메인 문구 axios 성공');
         const data = res.data;
         setTrashAmount(data.trashAmount);
         setTravelRange(data.travelRange);
@@ -137,6 +137,7 @@ const Main = () => {
       };
       AsyncStorage.removeItem('accessToken');
       AsyncStorage.removeItem('refreshToken');
+      AsyncStorage.removeItem('testToken');
       console.log('logout 실행');
       setIsLogin(false);
       //   tokenHttp.post('/user/logout', data)
