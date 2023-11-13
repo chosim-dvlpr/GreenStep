@@ -26,7 +26,9 @@ import dataMap from '../GreenStep/src/Image/Footer/dataMap.png';
 import board from '../GreenStep/src/Image/Footer/board.png';
 import {Provider} from 'react-redux';
 import {persistor, store} from './src/Store/store';
-import { PersistGate } from 'redux-persist/integration/react';
+import {PersistGate} from 'redux-persist/integration/react';
+import {encode, decode} from 'react-native-base64';
+
 const BottomTabScreen = () => {
   const Tab = createBottomTabNavigator();
   return (

@@ -1,33 +1,38 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity, ImageBackground} from 'react-native';
+import {View} from 'react-native';
 import styled from 'styled-components/native';
+import BackgroundTimer from 'react-native-background-timer';
+
 type StopWatchProps = {
   isRunning: boolean;
+  reset: boolean;
 };
-const StopWatch: React.FC<StopWatchProps> = ({isRunning}) => {
+
+const StopWatch: React.FC<StopWatchProps> = ({isRunning, reset}) => {
   const [time, setTime] = useState(0);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout | null = null;
+    let interval: number | undefined;
 
-    if (isRunning) {
-      // 스탑워치 시작
-      interval = setInterval(() => {
+    if (reset) {
+      setTime(0);
+      interval && BackgroundTimer.clearInterval(interval);
+    }
+
+    if (isRunning && !reset) {
+      interval = BackgroundTimer.setInterval(() => {
         setTime(prevTime => prevTime + 1);
       }, 1000);
-    } else if (interval) {
-      // 스탑워치 중지
-      clearInterval(interval);
     }
 
     return () => {
-      // 언마운트 시 인터벌 정리
-      if (interval) clearInterval(interval);
+      if (interval) {
+        BackgroundTimer.clearInterval(interval);
+      }
     };
-  }, [isRunning]);
+  }, [isRunning, reset]);
 
   const formatTime = (time: number) => {
-    // 시간 포맷팅 로직
     const hours = Math.floor(time / 3600);
     const minutes = Math.floor((time % 3600) / 60);
     const seconds = time % 60;
@@ -44,6 +49,7 @@ const StopWatch: React.FC<StopWatchProps> = ({isRunning}) => {
 };
 
 export default StopWatch;
+
 const InfoText = styled.Text`
   font-size: 25px;
   color: #333;
