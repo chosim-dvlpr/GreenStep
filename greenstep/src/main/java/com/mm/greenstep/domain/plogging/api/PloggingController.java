@@ -4,6 +4,7 @@ import com.mm.greenstep.domain.plogging.dto.request.PloggingReqDto;
 import com.mm.greenstep.domain.plogging.dto.response.*;
 import com.mm.greenstep.domain.plogging.service.PloggingService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/plogging")
 @RequiredArgsConstructor
@@ -65,6 +67,7 @@ public class PloggingController {
     public ResponseEntity<?> createAiImg(
             @RequestPart(value = "file", required = false) MultipartFile file
     ) {
+        log.info("input AIimage : " + file.getName());
         String type = ploggingService.createAiImg(file);
         return new ResponseEntity<>(type, HttpStatus.OK);
     }
