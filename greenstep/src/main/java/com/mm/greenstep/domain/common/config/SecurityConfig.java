@@ -50,7 +50,7 @@ public class SecurityConfig {
                 // 요청에 대한 인증 설정
                 // Spring 설정클래스는 지정된 antMatchers URL순차적 탐색하여 현재 요청과 가장 먼저 매칭되는 규칙 따른다.
                 .authorizeRequests()
-                .antMatchers("/user/login/**","/OAuth/**","/user/reissue/**","/main/**","/plogging/**").permitAll() // 토큰 발급을 위한 경로는 모두 허용
+                .antMatchers("/user/login/**","/OAuth/**","/user/reissue/**","/main/**").permitAll() // 토큰 발급을 위한 경로는 모두 허용
                 .antMatchers("/", "/css/**","/images/**","/js/**","/favicon.ico","/h2-console/**").permitAll()
                 .antMatchers("/user/**").hasAnyRole("USER","MANAGER") //마이페이지는 권한 있어야함
                 .antMatchers("/**").hasAnyRole("USER","MANAGER") //마이페이지는 권한 있어야함
