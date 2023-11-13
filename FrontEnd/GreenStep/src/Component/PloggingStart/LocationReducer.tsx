@@ -11,8 +11,10 @@ export interface IState {
   totalDist: number;
 }
 
-export type LocationAction = {type: 'ADD_LOCATION'; payload: ILocation};
-// 필요한 다른 액션 타입들을 여기에 추가할 수 있습니다.
+export type LocationAction =
+  | {type: 'ADD_LOCATION'; payload: ILocation}
+  | {type: 'UPDATE_CURRENT_LOCATION'; payload: ILocation}
+  | {type: 'RESET_AND_ADD_LOCATION'; payload: ILocation};
 
 export const initialState: IState = {
   locations: [],
@@ -26,15 +28,22 @@ export const locationReducer = (
   switch (action.type) {
     case 'ADD_LOCATION':
       const newLocation = action.payload;
-      const prevLocation = state.locations[state.locations.length - 1];
-      const distance =
-        state.locations.length > 0
-          ? haversine(prevLocation, newLocation, {unit: 'meter'})
-          : 0;
-      const updatedTotalDist = state.totalDist + distance;
+      const prevLocation =
+        state.locations[state.locations.length - 1] || newLocation;
+      const distance = haversine(prevLocation, newLocation, {unit: 'meter'});
       return {
         locations: [...state.locations, newLocation],
-        totalDist: updatedTotalDist,
+        totalDist: state.totalDist + distance,
+      };
+    case 'UPDATE_CURRENT_LOCATION':
+      return {
+        ...state,
+        locations: [action.payload],
+      };
+    case 'RESET_AND_ADD_LOCATION':
+      return {
+        locations: [action.payload],
+        totalDist: 0,
       };
     default:
       return state;

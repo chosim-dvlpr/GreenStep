@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, TouchableOpacity, Image} from 'react-native';
 import StopWatch from './StopWatch';
 import styled from 'styled-components/native';
@@ -10,6 +10,10 @@ import {PloggingAPI} from '../../Api/ploggingApi';
 import {Double} from 'react-native/Libraries/Types/CodegenTypes';
 import {useDispatch} from 'react-redux';
 import {resetCounts} from '../../Store/ploggingSlice';
+
+import {useNavigation} from '@react-navigation/native';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 type PloggingInfoProps = {
   isTracking: boolean;
   setIsTracking: React.Dispatch<React.SetStateAction<boolean>>;
@@ -43,18 +47,23 @@ const PloggingInfo: React.FC<PloggingInfoProps> = ({
   locations,
 }) => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const [resetStopwatch, setResetStopwatch] = useState(false);
   const handleToggleTracking = () => {
-    setIsTracking(!isTracking);
+    if (!isTracking) {
+      setIsTracking(true);
+      setResetStopwatch(false);
+    }
   };
+  useEffect(() => {
+    console.log(`isTracking 상태: ${isTracking}`);
+  }, [isTracking]);
   const handleLongPress = () => {
-    setIsTracking(false);
-    dispatch(resetCounts());
-    console.log(counts.쓰레기);
+    setIsTracking(true);
+    setResetStopwatch(true);
+
     const travelRange = distance;
 
-    const trashListProps = useSelector(
-      (state: RootState) => state.plogging.trashList,
-    );
     const ploggingDataInfo = {
       travelTime: 100000,
       travelRange: travelRange,
@@ -63,24 +72,59 @@ const PloggingInfo: React.FC<PloggingInfoProps> = ({
       coorList: locations,
       trashList: trashListProps,
     };
+    setIsTracking(false);
+    console.log(`isTracking을 false로 설정함`);
 
     const ploggingdata = async (ploggingDataInfo: PloggingDataProps) => {
       try {
-        const res = await PloggingAPI.postPloggingDataAxios(ploggingDataInfo);
-        console.log(res);
+        const token = await AsyncStorage.getItem('accessToken');
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`, // Bearer 스키마를 사용한 토큰 전달
+            'Content-Type': 'application/json', // JSON 형식의 컨텐츠 타입 명시
+          },
+        };
+
+        // axios를 사용해 API 호출
+        const res = await axios.post(
+          'https://k9b303.p.ssafy.io/api/plogging/end',
+          ploggingDataInfo,
+          config,
+        );
+        const ploggingFinishData = {
+          // API 응답에서 직접 가져온 데이터
+          ploggingId: res.data.ploggingId,
+          getExp: res.data.getExp,
+          isLevelUp: res.data.isLevelUp,
+          getAvatarList: res.data.getAvatarList, //api에 이거 객체로전달
+          travelTime: res.data.travelTime.toString(), // 여행 시간을 문자열로 변환
+          travelRange: res.data.travelRange,
+          trashAmount: res.data.trashAmount,
+
+          acheiveInfo: 0, // 달성 정보 (실제 사용 시에는 적절한 값으로 변경)
+        };
+
+        // PloggingFinish 컴포넌트로 네비게이션
+        navigation.navigate('ploggingfinish', ploggingFinishData);
       } catch (err) {
-        console.log('사용자 정보 조회 error', err);
+        console.log('error', err);
       }
     };
     ploggingdata(ploggingDataInfo);
+    dispatch(resetCounts());
   };
+
+  const trashListProps = useSelector(
+    (state: RootState) => state.plogging.trashList,
+  );
   const counts = useSelector((state: RootState) => state.plogging.counts);
+
   return (
     <Con>
       <Container>
         <InfoSection>
           <InfoContentContainer>
-            <StopWatch isRunning={isTracking} />
+            <StopWatch isRunning={isTracking} reset={resetStopwatch} />
             <Label>시간</Label>
           </InfoContentContainer>
 
@@ -90,7 +134,7 @@ const PloggingInfo: React.FC<PloggingInfoProps> = ({
           </InfoContentContainer>
 
           <InfoContentContainer>
-            <InfoText>{distance} m</InfoText>
+            <InfoText>{Math.round(distance)} m</InfoText>
             <Label>거리</Label>
           </InfoContentContainer>
         </InfoSection>

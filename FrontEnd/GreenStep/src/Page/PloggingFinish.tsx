@@ -1,8 +1,15 @@
 // React Native
-import React, { useState, useEffect } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import {Text, TouchableOpacity, ScrollView, Image, Switch, StyleSheet } from 'react-native';
-import { launchImageLibrary } from 'react-native-image-picker';
+import React, {useState, useEffect} from 'react';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Image,
+  Switch,
+  StyleSheet,
+} from 'react-native';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 // 스타일
 import styled from 'styled-components/native';
@@ -14,7 +21,7 @@ import ProfilePloggingDataInfo from '../Component/Profile/ProfilePloggingDataInf
 import PloggingFinishHeader from '../Component/PloggingFinish/PloggingFinishHeader';
 import PloggingFinishNoImage from '../Image/PloggingFinish/PloggingFinishNoImage.png';
 import PloggingFinishLevelUpModal from '../Component/PloggingFinish/PloggingFinishLevelUpModal';
-import lock from '../Image/PloggingFinish/lock.png'
+import lock from '../Image/PloggingFinish/lock.png';
 
 // axios
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -42,13 +49,32 @@ interface PloggingFinishType {
 }
 
 
-const PloggingFinish = ({ 
-  ploggingId, 
-  getExp, 
-  isLevelUp, 
-  avartarName, 
-  avatarImage 
-}: PloggingFinishType) => {
+// const PloggingFinish = ({ 
+//   ploggingId, 
+//   getExp, 
+//   isLevelUp, 
+//   avartarName, 
+//   avatarImage 
+// }: PloggingFinishType) => {
+
+// interface PloggingFinishType {
+//   // props로 반드시 넘겨줘야 할 항목 (추후 ? 지우기)
+//   travelTime?: string; // string인지 확인 필요
+//   travelRange?: number;
+//   trashAmount?: number;
+//   acheiveInfo?: number;
+//   ploggingId?: number;
+//   getExp?: number;
+//   isLevelUp?: boolean;
+
+//   // 선택 항목
+//   avartarName?: string;
+//   avatarImage?: string; // 아바타 이미지 url
+// }
+const PloggingFinish = () => {
+  const route = useRoute();
+  const {ploggingId, getExp, isLevelUp, getAvatarList, trashAmount} =
+    route.params as PloggingFinishType;
   const navigation = useNavigation();
   const data = {
     accessToken: AsyncStorage.getItem('accessToken'),
@@ -59,7 +85,7 @@ const PloggingFinish = ({
   const [photo, setPhoto] = useState<string>('');
 
   const pickedPhoto = async () => {
-    console.log('사진 인증 버튼 클릭 (미리보기)')
+    console.log('사진 인증 버튼 클릭 (미리보기)');
 
     const result = await launchImageLibrary({mediaType: 'photo'});
     const formData = new FormData()
@@ -68,7 +94,7 @@ const PloggingFinish = ({
       return null;
     }
 
-    console.log('이미지 업로드 성공 : ', result)
+    console.log('이미지 업로드 성공 : ', result);
 
     const localUri = result.assets[0].uri;
     const uriPath = localUri.split("//").pop();
@@ -108,18 +134,18 @@ const PloggingFinish = ({
     if (isLevelUp) {
       setLevelUpToggle(true);
     }
-  }, [])
+  }, []);
 
-  /** 비공개로 설정 토글 
+  /** 비공개로 설정 토글
    * isVisible = false : 비공개
    * isVisible = true : 공개
-  */
+   */
   const [isVisible, setIsVisible] = useState<boolean>(true);
 
   const toggleSwitch = () => {
     setIsVisible(!isVisible);
   };
-  
+
   return (
     <ScrollView>
       {levelUpToggle && 
@@ -132,11 +158,11 @@ const PloggingFinish = ({
       // 데이터 props로 받은 뒤 삭제하기
       getAvatarList={[
         {
-          avartarName: 'bear',
+          avatarName: 'bear',
           avatarImage: 'https://3mm.s3.ap-northeast-2.amazonaws.com/bear.png',
         },
         {
-          avartarName: 'cat',
+          avatarName: 'cat',
           avatarImage: 'https://3mm.s3.ap-northeast-2.amazonaws.com/cat.png',
         },
       ]}
@@ -145,82 +171,80 @@ const PloggingFinish = ({
       />}
 
       <PloggingFinishContainer>
-
         {/* 헤더 */}
         <PloggingFinishHeader getExp={getExp} />
 
-  
         {/* 플로깅 데이터 */}
         <PloggingDataContainer>
           <ProfilePloggingDataInfo
-
-          // 데이터 바인딩 후 아래 주석 해제하기
-          // timeInfo={travelTime} 
-          // distanceInfo={travelRange}
-          // trashInfo={trashAmount}
-          // acheiveInfo={acheiveInfo}
-          isProfile={false}
+            // 데이터 바인딩 후 아래 주석 해제하기
+            // timeInfo={travelTime}
+            // distanceInfo={travelRange}
+            // trashInfo={trashAmount}
+            // acheiveInfo={acheiveInfo}
+            isProfile={false}
           />
         </PloggingDataContainer>
-
 
         {/* 인증하기 버튼 */}
         <UploadPhotoButtonContainer>
           <TouchableOpacity
-          onPress={() => pickedPhoto()}
-          style={[
-            ButtonStyle.whiteColor, 
-            ButtonStyle.fullLargeButton
-          ]}>
-            <Text 
-            style={{color: ButtonTextColor, fontWeight: 'bold', fontSize: 20}}
-            >인증하기</Text>
+            onPress={() => pickedPhoto()}
+            style={[ButtonStyle.whiteColor, ButtonStyle.fullLargeButton]}>
+            <Text
+              style={{
+                color: ButtonTextColor,
+                fontWeight: 'bold',
+                fontSize: 20,
+              }}>
+              인증하기
+            </Text>
           </TouchableOpacity>
         </UploadPhotoButtonContainer>
-
 
         {/* 비공개로 설정 */}
         <IsVisibleContainer>
           <IsVisibleLeft>
-            <Image
-            source={lock}
-            />
+            <Image source={lock} />
             <LockText>비공개로 설정</LockText>
           </IsVisibleLeft>
           <Switch
-          value={!isVisible}
-          onValueChange={toggleSwitch}
-          trackColor={{ true: '#ACD8A7', false: `${TextStyle.defaultGray}` }}
-          // thumbColor={!isVisible ? 'rgba(255, 255, 255, 1)' : '#ACD8A7'}
-          thumbColor={'rgba(255, 255, 255, 1)'}
+            value={!isVisible}
+            onValueChange={toggleSwitch}
+            trackColor={{true: '#ACD8A7', false: `${TextStyle.defaultGray}`}}
+            // thumbColor={!isVisible ? 'rgba(255, 255, 255, 1)' : '#ACD8A7'}
+            thumbColor={'rgba(255, 255, 255, 1)'}
           />
         </IsVisibleContainer>
-
 
         {/* 인증 사진/회색 빈 칸 */}
         <ImageContainer>
           <TouchableOpacity onPress={pickedPhoto}>
-            <Image 
-            source={photo ? {uri: photo} : PloggingFinishNoImage} 
-            style={[ButtonStyle.whiteColor, {width: '100%', height: '100%', borderRadius: 20}]} />
+            <Image
+              source={photo ? {uri: photo} : PloggingFinishNoImage}
+              style={[
+                ButtonStyle.whiteColor,
+                {width: '100%', height: '100%', borderRadius: 20},
+              ]}
+            />
           </TouchableOpacity>
         </ImageContainer>
-        
 
         {/* 지도 */}
-
 
         {/* 메인 버튼 */}
         <GoToMainContainer>
           <TouchableOpacity
             onPress={() => navigation.navigate('main')}
-            style={[
-              ButtonStyle.whiteColor, 
-              ButtonStyle.fullLargeButton
-            ]}>
-              <Text 
-              style={{color: ButtonTextColor, fontWeight: 'bold', fontSize: 20}}
-              >메인으로</Text>
+            style={[ButtonStyle.whiteColor, ButtonStyle.fullLargeButton]}>
+            <Text
+              style={{
+                color: ButtonTextColor,
+                fontWeight: 'bold',
+                fontSize: 20,
+              }}>
+              메인으로
+            </Text>
           </TouchableOpacity>
         </GoToMainContainer>
       </PloggingFinishContainer>
@@ -228,34 +252,32 @@ const PloggingFinish = ({
   );
 };
 
-
-const PloggingFinishContainer = styled.View`
-`
+const PloggingFinishContainer = styled.View``;
 
 const PloggingDataContainer = styled.View`
   width: 90%;
   margin: auto;
   margin-top: 30;
-`
+`;
 
 const UploadPhotoButtonContainer = styled.View`
   width: 86%;
   margin: auto;
   margin-top: 10;
-`
+`;
 
 const ImageContainer = styled.View`
   width: 86%;
   margin: auto;
   aspect-ratio: 1;
-`
+`;
 
 const GoToMainContainer = styled.View`
   width: 86%;
   margin: auto;
   margin-top: 30;
   margin-bottom: 110;
-`
+`;
 
 const IsVisibleContainer = styled.View`
   width: 86%;
@@ -266,18 +288,17 @@ const IsVisibleContainer = styled.View`
   justify-content: space-between;
   align-self: center;
   align-items: center;
-`
+`;
 
 const IsVisibleLeft = styled.View`
   display: flex;
   flex-direction: row;
-`
+`;
 
 const LockText = styled.Text`
   margin-left: 10;
-`
+`;
 
 const ButtonTextColor = '#8BCA84';
-
 
 export default PloggingFinish;

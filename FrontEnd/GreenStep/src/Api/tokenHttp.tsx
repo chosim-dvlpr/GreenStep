@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Buffer } from 'buffer';
 
 // 토큰이 필요한 인증에 사용
-export const baseURL = "https://k9b303.p.ssafy.io/api";
+export const baseURL = 'https://k9b303.p.ssafy.io/api';
 
 const tokenHttp = axios.create({
   baseURL,
@@ -13,7 +13,6 @@ const tokenHttp = axios.create({
   },
 });
 
-
 // 요청 인터셉터 설정 (요청 보내기 전에 수행되는 함수)
 tokenHttp.interceptors.request.use(async (req) => {
   const accessToken = await AsyncStorage.getItem('accessToken')
@@ -21,8 +20,8 @@ tokenHttp.interceptors.request.use(async (req) => {
   console.log(accessToken)
 
   if (!accessToken) {
-    console.log("token 이 존재하지 않습니다.");
-    throw new Error("expire token");
+    console.log('token 이 존재하지 않습니다.');
+    throw new Error('expire token');
   }
 
   const tokenData = Buffer.from(accessToken, 'base64');
@@ -45,7 +44,7 @@ tokenHttp.interceptors.request.use(async (req) => {
   // access token 이 만료되지 않았다면 access-token 을 넣어 요청 실행
   if (!isExpired) {
     req.headers['Authorization'] = `Bearer ${accessToken}`;
-    
+
     return req;
   }
 
@@ -66,20 +65,19 @@ tokenHttp.interceptors.request.use(async (req) => {
         },
       },
     )
-    .then((response) => {
-      console.log(response)
+    .then(response => {
+      console.log(response);
       if (response.data.status === 200) {
         console.log('토큰 업데이트 완료', response.data.data)
         AsyncStorage.setItem("accessToken", response.data.data.accessToken);
         AsyncStorage.setItem("refreshToken", response.data.data.refreshToken);
       } else {
-        console.log('토큰 업데이트 실패')
-        throw new Error("expire token");
+        console.log('토큰 업데이트 실패');
+        throw new Error('expire token');
       }
     })
     .catch(() => {
-      console.log('await axios 오류')
-      throw new Error("expire token");
+      throw new Error('expire token');
     });
   
   const newToken = await AsyncStorage.getItem("accessToken");
