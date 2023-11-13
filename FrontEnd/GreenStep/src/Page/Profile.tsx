@@ -12,7 +12,6 @@ import ProfileHeaderStrick from '../Component/Profile/ProfileHeaderStrick';
 import ProfilePloggingDataInfo from '../Component/Profile/ProfilePloggingDataInfo';
 import MyPlogging from './MyPlogging';
 //API
-import {ProfileAPI} from '../Api/profileApi';
 
 const Profile = ({navigation}: any) => {
   const isFocused = useIsFocused();
