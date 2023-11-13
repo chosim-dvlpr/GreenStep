@@ -72,8 +72,8 @@ public class UserController {
         return userService.updateNickName(nickName);
     }
 
-    @GetMapping("/exists")
-    public ResponseEntity<?> isExistsNickName(@RequestBody String nickName){
+    @GetMapping("/{nickName}/exists")
+    public ResponseEntity<?> isExistsNickName(@PathVariable String nickName){
         log.info("nickName Duplicate test");
         return new ResponseEntity<>(userService.isExistNickName(nickName), HttpStatus.OK);
     }
