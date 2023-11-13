@@ -26,10 +26,11 @@ import lock from '../Image/PloggingFinish/lock.png';
 // axios
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import fileTokenHttp from '../Api/fileTokenHttp';
+import tokenHttp, { baseURL } from '../Api/tokenHttp';
 
 export interface getAvatarListType {
   avatarName: string | null,
-  avatarImage: string | null,
+  avatarImg: string | null,
 }
 
 interface PloggingFinishType {
@@ -37,7 +38,7 @@ interface PloggingFinishType {
   travelTime?: string,  // string인지 확인 필요
   travelRange?: number,
   trashAmount?: number,
-  acheiveInfo?: number,
+  // acheiveInfo?: number,
   ploggingId?: number,
   getExp?: number,
   isLevelUp?: boolean, 
@@ -73,7 +74,7 @@ interface PloggingFinishType {
 // }
 const PloggingFinish = () => {
   const route = useRoute();
-  const {ploggingId, getExp, isLevelUp, getAvatarList, trashAmount} =
+  const {travelTime, travelRange, ploggingId, getExp, isLevelUp, getAvatarList, trashAmount} =
     route.params as PloggingFinishType;
   const navigation = useNavigation();
   const data = {
@@ -106,22 +107,9 @@ const PloggingFinish = () => {
       name: result.assets[0].fileName,
     });
     
-    fileTokenHttp.post('/plogging/${ploggingId}/upload/img', formData)
+    fileTokenHttp.post(`/plogging/${ploggingId}/upload/img`, formData)
     .then(res => console.log('성공', res))
     .catch(err => console.log(err))
-    // UploadAPI.uploadFile(formData)
-    // .then(res => console.log('파일 서버 업로드 성공 '))
-    // .catch(async err => {
-    //   console.log('서버 업로드 실패 ', err)
-    //   // await AsyncStorage.removeItem('accessToken')
-    //   // await AsyncStorage.removeItem('refreshToken')
-    //   Refresh.getRefreshToken()
-    //   .then(() => {
-    //       UploadAPI.uploadFile(formData)
-    //       console.log('재업로드')
-    //     })
-    // .catch(() => console.log('실패'))
-    // })    
   };
 
   /** 레벨업 토글 */
@@ -146,6 +134,18 @@ const PloggingFinish = () => {
     setIsVisible(!isVisible);
   };
 
+  const changeVisible = () => {
+    fetch(`${baseURL}/plogging/${ploggingId}}/${isVisible}`)
+    .then(res => {
+      console.log('공개 설정 변경 성공 : ', res)
+    })
+    .catch(err => console.log('공개 설정 변경 실패 : ', err))
+  }
+
+  useEffect(() => {
+    changeVisible();
+  }, [isVisible])
+
   return (
     <ScrollView>
       {levelUpToggle && 
@@ -159,15 +159,13 @@ const PloggingFinish = () => {
       getAvatarList={[
         {
           avatarName: 'bear',
-          avatarImage: 'https://3mm.s3.ap-northeast-2.amazonaws.com/bear.png',
+          avatarImg: 'https://3mm.s3.ap-northeast-2.amazonaws.com/bear.png',
         },
         {
           avatarName: 'cat',
-          avatarImage: 'https://3mm.s3.ap-northeast-2.amazonaws.com/cat.png',
+          avatarImg: 'https://3mm.s3.ap-northeast-2.amazonaws.com/cat.png',
         },
       ]}
-      // avatarName={['bear', 'cat']}
-      // avatarImage={['https://3mm.s3.ap-northeast-2.amazonaws.com/bear.png', 'https://3mm.s3.ap-northeast-2.amazonaws.com/cat.png']} 
       />}
 
       <PloggingFinishContainer>
@@ -178,9 +176,9 @@ const PloggingFinish = () => {
         <PloggingDataContainer>
           <ProfilePloggingDataInfo
             // 데이터 바인딩 후 아래 주석 해제하기
-            // timeInfo={travelTime}
-            // distanceInfo={travelRange}
-            // trashInfo={trashAmount}
+            timeInfo={travelTime}
+            distanceInfo={travelRange}
+            trashInfo={trashAmount}
             // acheiveInfo={acheiveInfo}
             isProfile={false}
           />

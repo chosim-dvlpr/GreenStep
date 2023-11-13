@@ -9,7 +9,7 @@ import { getAvatarListType } from '../../Page/PloggingFinish';
 interface ModalProps {
   onClose: () => void;
   visible: boolean;
-  getAvatarList: getAvatarListType[]
+  getAvatarList: getAvatarListType[] | undefined
   // avatarName: string[],
   // avatarImage: string[],
 }
@@ -21,6 +21,7 @@ const PloggingFinishLevelUpModal : React.FC<ModalProps> = ({ onClose, getAvatarL
   const handleIsOpened = () => {
     setIsOpened(true);
   };
+  console.log(getAvatarList)
 
   // // 이미지 불러오기
   // const getAvatarImage = () => {
@@ -60,7 +61,7 @@ const PloggingFinishLevelUpModal : React.FC<ModalProps> = ({ onClose, getAvatarL
               alwaysBounceHorizontal={true}
               >
                 {
-                  getAvatarList.map((avatar, idx) => (
+                  getAvatarList?.map((avatar, idx) => (
                     <TouchableOpacity key={idx} style={styles.avatarContainer}>
                       <Text style={styles.levelUpText}>{avatar.avatarName}</Text>
                       <LottieView
