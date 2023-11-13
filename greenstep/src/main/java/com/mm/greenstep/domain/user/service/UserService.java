@@ -147,6 +147,8 @@ public class UserService {
 
         // 4. 새로운 토큰 생성
         UserResDto.TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
+        // 3. 인증 정보를 기반으로 JWT 토큰 생성
+//        UserResDto.TokenInfo tokenInfo = jwtTokenProvider.generateToken(login.getUserId() ,authentication);
 
         // 5. RefreshToken Redis 업데이트
         redisTemplate.opsForValue()

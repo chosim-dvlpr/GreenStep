@@ -54,6 +54,7 @@ public class JwtTokenProvider {
 
     /**
      * 유저 정보(authentication)를 가지고 AccessToken, RefreshToken 을 생성하는 메서드
+     * 사용안했음
      */
     public UserResDto.TokenInfo generateToken(String name, Collection<? extends GrantedAuthority> inputAuthorities) {
         // 1. 권한 가져오기
@@ -99,7 +100,8 @@ public class JwtTokenProvider {
                 .build();
     }
     public UserResDto.TokenInfo generateToken(Authentication authentication) {
-        return generateToken(authentication.getName(), authentication.getAuthorities());
+        Long userId = userRepository.findUserByUserName(authentication.getName()).getUserId();
+        return generateToken(userId, authentication);
     }
 
 
