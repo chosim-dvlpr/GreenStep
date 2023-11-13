@@ -66,14 +66,14 @@ public class UserController {
         return userService.authority();
     }
 
-    @PatchMapping("/{nickName}/update")
-    public ResponseEntity<?> updateNickName(@PathVariable String nickName){
+    @PatchMapping("/update")
+    public ResponseEntity<?> updateNickName(@RequestBody String nickName){
         log.info("UPDATE USER NICKNAME");
         return userService.updateNickName(nickName);
     }
 
-    @GetMapping("/{nickName}/exists")
-    public ResponseEntity<?> isExistsNickName(@PathVariable String nickName){
+    @GetMapping("/exists")
+    public ResponseEntity<?> isExistsNickName(@RequestBody String nickName){
         log.info("nickName Duplicate test");
         return new ResponseEntity<>(userService.isExistNickName(nickName), HttpStatus.OK);
     }
