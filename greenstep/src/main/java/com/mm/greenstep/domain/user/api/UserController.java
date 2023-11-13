@@ -2,6 +2,7 @@ package com.mm.greenstep.domain.user.api;
 
 import com.mm.greenstep.domain.common.lib.Helper;
 import com.mm.greenstep.domain.common.util.SecurityUtil;
+import com.mm.greenstep.domain.user.dto.request.UserNicknameReqDto;
 import com.mm.greenstep.domain.user.dto.request.UserReqDto;
 import com.mm.greenstep.domain.user.dto.response.Response;
 import com.mm.greenstep.domain.user.service.UserService;
@@ -67,9 +68,9 @@ public class UserController {
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<?> updateNickName(@RequestBody String nickName){
+    public ResponseEntity<?> updateNickName(@RequestBody UserNicknameReqDto nickname){
         log.info("UPDATE USER NICKNAME");
-        return userService.updateNickName(nickName);
+        return userService.updateNickName(nickname.getNickname());
     }
 
     @GetMapping("/{nickName}/exists")
