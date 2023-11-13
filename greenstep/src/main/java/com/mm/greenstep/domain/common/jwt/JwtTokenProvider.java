@@ -31,10 +31,10 @@ public class JwtTokenProvider {
     private static final String USER_ID = "userId";
 
 //    private static final long ACCESS_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L;              // 30분
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 24 * 30 * 60 * 1000L;          // 24시간
-    //    private static final long ACCESS_TOKEN_EXPIRE_TIME = 60 * 1000L;              // 60초
-//    private static final long REFRESH_TOKEN_EXPIRE_TIME = 7 * 24 * 60 * 60 * 1000L;    // 7일
-    private static final long REFRESH_TOKEN_EXPIRE_TIME = 1 * 60 * 1000L;    // 1분
+//    private static final long ACCESS_TOKEN_EXPIRE_TIME = 24 * 30 * 60 * 1000L;          // 24시간
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 60 * 1000L;              // 60초
+    private static final long REFRESH_TOKEN_EXPIRE_TIME = 7 * 24 * 60 * 60 * 1000L;    // 7일
+//    private static final long REFRESH_TOKEN_EXPIRE_TIME = 1 * 60 * 1000L;    // 1분
 
 //    @Value("${jwt.access.expiration}")
 //    private long expiration;
