@@ -8,6 +8,7 @@ import {incrementCount} from '../../Store/ploggingSlice';
 import {getLocation} from './getLocation';
 import {TrashItem} from '../../Store/ploggingSlice';
 import {trashTypeMapping} from './TrashType';
+import AiCamera from './Camera';
 interface PloggingDivisionProps {
   name: string;
   onPress?: () => void; // Optional, 모든 division에 필요한 것은 아님
@@ -40,9 +41,14 @@ const PloggingDivision: React.FC<PloggingDivisionProps> = ({
   const imageSource = getImage(name);
   const dispatch = useDispatch();
 
+  const [isCameraModalVisible, setIsCameraModalVisible] = useState(false);
+
   const handlePress = async (name: string) => {
     if (name === '재활용품' && onPress) {
       onPress();
+      return;
+    } else if (name === 'AI 쓰레기 인식') {
+      setIsCameraModalVisible(true);
       return;
     }
     try {
@@ -72,6 +78,17 @@ const PloggingDivision: React.FC<PloggingDivisionProps> = ({
           <Image source={imageSource} style={imageSizeStyle} />
         </ImageContainer>
       </TouchableOpacity>
+      {isCameraModalVisible && (
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={isCameraModalVisible}
+          onRequestClose={() => {
+            setIsCameraModalVisible(false);
+          }}>
+          <AiCamera />
+        </Modal>
+      )}
     </>
   );
 };
