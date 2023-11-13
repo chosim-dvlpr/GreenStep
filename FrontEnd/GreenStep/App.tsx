@@ -3,7 +3,6 @@ import {Image} from 'react-native';
 import {Provider} from 'react-redux';
 import {persistor, store} from './src/Store/store';
 import {PersistGate} from 'redux-persist/integration/react';
-import {encode, decode} from 'react-native-base64';
 //navigator
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -21,13 +20,13 @@ import BoardDetail from './src/Page/BoardDetail';
 import BoardCRUD from './src/Page/BoardCRUD';
 import MyPlogging from './src/Page/MyPlogging';
 import Menu from './src/Page/Menu';
+import UserInfo from './src/Page/UserInfo';
 //style
 import ImageStyle from './src/Style/Image';
 //Image
 import home from '../GreenStep/src/Image/Footer/home.png';
 import profile from '../GreenStep/src/Image/Footer/profile.png';
 import competition from '../GreenStep/src/Image/Footer/competition.png';
-import dataMap from '../GreenStep/src/Image/Footer/dataMap.png';
 import board from '../GreenStep/src/Image/Footer/board.png';
 import menu from '../GreenStep/src/Image/Footer/menu.png'
 
@@ -143,6 +142,15 @@ const App = () => {
               options={{
                 headerShown: true,
                 title: 'My Plogging',
+                headerTitleAlign: 'center',
+              }}
+            />
+            <Stack.Screen
+              name="userinfo"
+              component={UserInfo}
+              options={{
+                headerShown: true,
+                title: '회원 정보',
                 headerTitleAlign: 'center',
               }}
             />

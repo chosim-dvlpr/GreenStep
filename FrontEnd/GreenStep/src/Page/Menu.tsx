@@ -20,7 +20,7 @@ const Menu = () => {
         }else if(idx === 1){
             navigation.navigate('main')
         }else if(idx === 2){
-            navigation.navigate('profile')
+            navigation.navigate('userinfo')
         }else{
             navigation.navigate('board')
         }
