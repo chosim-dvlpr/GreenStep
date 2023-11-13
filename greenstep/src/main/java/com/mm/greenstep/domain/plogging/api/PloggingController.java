@@ -67,7 +67,7 @@ public class PloggingController {
     public ResponseEntity<?> createAiImg(
             @RequestPart(value = "file", required = false) MultipartFile file
     ) {
-        log.info("input AIimage : " + file.getName());
+        log.info("input AIimage isEmpty : " + file.isEmpty());
         String type = ploggingService.createAiImg(file);
         return new ResponseEntity<>(type, HttpStatus.OK);
     }
