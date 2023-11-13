@@ -1,27 +1,73 @@
 import React from 'react';
-import {FlatList, Dimensions} from 'react-native';
+import {FlatList} from 'react-native';
 import styled from 'styled-components/native';
 
-const CompetitionDashBoard = () => {
-  // renderTeamCountBox 함수를 여기로 이동
+// CompetitionData 인터페이스를 가져오거나 정의합니다.
+interface CompetitionData {
+  myTeamName: string;
+  myTeamCompeteRange: number;
+  myTeamCompeteTime: number;
+  myTeamCompeteAmount: number;
+  // 필요한 다른 속성들...
+}
+
+// TeamDataItem 인터페이스 정의
+interface CompetitionData {
+  myTeamScore: number;
+  goalScore: number;
+  otherTeamScore: number;
+  myTeamName: string;
+  myTeamCompeteRange: number;
+  myTeamCompeteTime: number;
+  myTeamCompeteAmount: number;
+  // 다른 필요한 속성들...
+}
+
+// TeamDataItem 인터페이스 정의
+interface TeamDataItem {
+  key: string;
+  title: string;
+  content: string;
+}
+
+interface CompetitionDashBoardProps {
+  teamData: CompetitionData | null;
+}
+
+const CompetitionDashBoard = ({teamData}: CompetitionDashBoardProps) => {
   const renderTeamCountBox = (title: string, content: string) => (
     <TeamCountBox>
       <TeamText>{title}</TeamText>
       <TeamNum>{content}</TeamNum>
     </TeamCountBox>
   );
-  const teamData = [
-    {key: '1', title: '팀 거북의 이동거리', content: '1234km'},
-    {key: '2', title: '팀 거북의 소요시간', content: '124시간'},
-    {key: '3', title: '팀 거북의 총 쓰레기', content: '124개'},
-    // 여기에 추가 데이터를 키와 함께 추가할 수 있습니다.
-  ];
+
+  const teamDataList: TeamDataItem[] = teamData
+    ? [
+        {
+          key: '1',
+          title: `${teamData.myTeamName}의 이동거리`,
+          content: `${Math.floor(teamData.myTeamCompeteRange).toString()}km`,
+        },
+        {
+          key: '2',
+          title: `${teamData.myTeamName}의 소요시간`,
+          content: `${teamData.myTeamCompeteTime}시간`,
+        },
+        {
+          key: '3',
+          title: `${teamData.myTeamName}의 총 쓰레기`,
+          content: `${teamData.myTeamCompeteAmount}개`,
+        },
+        // ...다른 데이터 항목들
+      ]
+    : [];
 
   return (
     <DashBoard>
       <MyTeamDashBoardTitle>현황판</MyTeamDashBoardTitle>
       <FlatList
-        data={teamData}
+        data={teamDataList}
         renderItem={({item}) => renderTeamCountBox(item.title, item.content)}
         horizontal={true}
         showsHorizontalScrollIndicator={false}

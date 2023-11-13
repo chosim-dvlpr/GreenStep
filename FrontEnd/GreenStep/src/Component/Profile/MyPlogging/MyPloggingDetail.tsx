@@ -4,6 +4,9 @@ import ImageStyle from '../../../Style/Image';
 import { ProfileAPI } from '../../../Api/profileApi';
 import { Double } from 'react-native/Libraries/Types/CodegenTypes';
 import { formatDate, roundedTravelRange, msToHMS } from '../../../Function/Plogging/funcPlogging';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { baseURL } from '../../../Api/tokenHttp';
 interface PloggingData {
     createdAt: string | null;
     getExp: number;
@@ -18,19 +21,43 @@ const MyPloggingDetail = ({ onClose, index }:any) => {
     const [detail, setDetail] = useState<PloggingData | null>(null);
     const [types, setTypes] = useState(['모은 쓰레기','진행 거리', '진행 시간', '플로깅 날짜', '얻은 경험치'])
 
-    // 플로깅 상세 이력 불러오기
-    const getMyploggingDetail = () => {
-        ProfileAPI.getPloggingDetailAxios(index)
-        .then((res) =>{
-        console.log(res)
-        setDetail(res.data)
+    const getMyploggingDetail = async (index : number) => {
+        try{
+          const token = await AsyncStorage.getItem('accessToken');
+          const config = {
+            headers: {
+              Authorization: `Bearer ${token}`, // Bearer 스키마를 사용한 토큰 전달
+              'Content-Type': 'application/json', // JSON 형식의 컨텐츠 타입 명시
+            },
+          };
+          const res = await axios.get(
+            `${baseURL}/plogging/${index}/detail`,
+            config,
+          ); 
+          console.log(res);
+          setDetail(res.data)
+        } catch(err){
+          console.log('사용자 플로깅 List 조회 error', err)
         } 
-        )
-        .catch(err => console.log('플로깅 상세 이력 axios 에러 : ', err))
     }
 
+
+
+
+
+    // // 플로깅 상세 이력 불러오기
+    // const getMyploggingDetail = () => {
+    //     ProfileAPI.getPloggingDetailAxios(index)
+    //     .then((res) =>{
+    //     console.log(res)
+    //     setDetail(res.data)
+    //     } 
+    //     )
+    //     .catch(err => console.log('플로깅 상세 이력 axios 에러 : ', err))
+    // }
+
     useEffect(() => {
-        getMyploggingDetail();
+        getMyploggingDetail(index);
       }, [index]);
       
     return(

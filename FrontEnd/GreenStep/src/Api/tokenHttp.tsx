@@ -4,7 +4,11 @@ import dayjs from 'dayjs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // 토큰이 필요한 인증에 사용
+<<<<<<< HEAD
 export const baseURL = 'https://k9b303.p.ssafy.io/api';
+=======
+export const baseURL = "https://k9b303.p.ssafy.io/api";
+>>>>>>> 9f6266c3d24468958c2915940bc286c621dc32eb
 
 const tokenHttp = axios.create({
   baseURL,
@@ -67,9 +71,14 @@ tokenHttp.interceptors.request.use(async req => {
       console.log('await axios 오류');
       throw new Error('expire token');
     });
+    
+    req.headers["Authorization"] = AsyncStorage.getItem("accessToken");
 
+<<<<<<< HEAD
   req.headers['Authorization'] = AsyncStorage.getItem('accessToken');
   console.log(req.headers['Authorization']);
+=======
+>>>>>>> 9f6266c3d24468958c2915940bc286c621dc32eb
   return req;
 });
 

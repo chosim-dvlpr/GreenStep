@@ -1,11 +1,46 @@
-import React, {useState} from 'react';
-import {StyleSheet, Text} from 'react-native';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components/native';
 import Calendar from '../Component/Competition/Calendar';
 import CompetitionGraphic from '../Component/Competition/CompetitionGraphic';
 import CompetitionDashBoard from '../Component/Competition/CompetitionDashBoard';
+import {CompetitionAPI} from '../Api/competitionApi';
+
+interface CompetitionData {
+  myTeamScore: number;
+  goalScore: number;
+  otherTeamScore: number;
+  myTeamName: string;
+  myTeamCompeteRange: number;
+  myTeamCompeteTime: number;
+  myTeamCompeteAmount: number;
+  // 다른 필요한 속성들...
+}
+
 const Competition = () => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [competitionData, setCompetitionData] =
+    useState<CompetitionData | null>(null);
+
+  useEffect(() => {
+    const fetchCompetitionData = async () => {
+      try {
+        const response = await CompetitionAPI.getCompetitionAxios();
+        if (response && response.data) {
+          setCompetitionData(response.data);
+        } else {
+          console.error('No response or no data from the server');
+        }
+      } catch (error) {
+        console.error('Failed to fetch competition data', error);
+      }
+    };
+
+    fetchCompetitionData();
+  }, []);
+
+  const calculateProgress = (teamScore: number, goalScore: number): number => {
+    return teamScore / goalScore;
+  };
 
   return (
     <Container>
@@ -14,13 +49,25 @@ const Competition = () => {
           <Title>경쟁</Title>
           <Calendar onSelectDate={setSelectedDate} selected={selectedDate} />
         </CalendarWrap>
-        <GraphicText>내 팀 : 꼬북꼬북</GraphicText>
-        <CompetitionGraphic />
-        <CompetitionDashBoard />
+        <GraphicText>내 팀 : {competitionData?.myTeamName}</GraphicText>
+        {competitionData && (
+          <CompetitionGraphic
+            myTeamProgress={calculateProgress(
+              competitionData.myTeamScore,
+              competitionData.goalScore,
+            )}
+            opponentTeamProgress={calculateProgress(
+              competitionData.otherTeamScore,
+              competitionData.goalScore,
+            )}
+          />
+        )}
+        <CompetitionDashBoard teamData={competitionData} />
       </ContainerBg>
     </Container>
   );
 };
+
 export default Competition;
 
 const Container = styled.View`

@@ -6,6 +6,10 @@ import { ProfileAPI } from '../../../Api/profileApi';
 import { Double } from 'react-native/Libraries/Types/CodegenTypes';
 import noImage from '../../../Image/PloggingFinish/PloggingFinishNoImage.png'
 import { msToHM, roundedTravelRange } from '../../../Function/Plogging/funcPlogging';
+import { useIsFocused } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { baseURL } from '../../../Api/tokenHttp';
 interface PloggingData {
     createdAt: string | null;
     getExp: number;
@@ -17,6 +21,7 @@ interface PloggingData {
   }
 
 const MyPloggingList = () => {
+    const isFocused = useIsFocused();
     const [dataList, setDataList] = useState<PloggingData[]>([]);
     const [idx, setIdx] = useState(0)
     const [toggle, setToggle] = useState(false)
@@ -24,7 +29,17 @@ const MyPloggingList = () => {
     // 내 플로깅 이력 불러오기
     const getMyploggingList = async () => {
       try{
-        const res = await ProfileAPI.getPloggingListAxios()
+        const token = await AsyncStorage.getItem('accessToken');
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`, // Bearer 스키마를 사용한 토큰 전달
+            'Content-Type': 'application/json', // JSON 형식의 컨텐츠 타입 명시
+          },
+        };
+        const res = await axios.get(
+          `${baseURL}/plogging`,
+          config,
+        ); 
         console.log(res);
         setDataList(res.data)
       } catch(err){
@@ -40,8 +55,10 @@ const MyPloggingList = () => {
     }
 
     useEffect(() => {
-      getMyploggingList();
-    }, []);
+      if(isFocused){
+        getMyploggingList();
+      }
+    }, [isFocused]);
 
   return(
         <View>

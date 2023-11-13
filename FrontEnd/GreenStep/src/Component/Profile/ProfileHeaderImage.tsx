@@ -5,7 +5,10 @@ import {useState, useEffect} from 'react';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import ProfileAvatarModal from "./ProfileAvatarModal";
 import { AvatarAPI } from "../../Api/avatarApi";
-
+import { useIsFocused } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { baseURL } from '../../Api/tokenHttp';
 interface AvatarProps {
     avatarId: number;
     boxId: number;
@@ -15,6 +18,7 @@ interface AvatarProps {
 }
 
 const ProfileHeaderImage = ({percentage}:any) => {
+    const isFocused = useIsFocused();
     const [showAvatar, setShowAvatar] = useState(avatar)
     const [toggle, setToggle] = useState(false)
     const [avatarId, setAvatarId] = useState<number>(1);
@@ -23,13 +27,23 @@ const ProfileHeaderImage = ({percentage}:any) => {
     // 사용자 캐릭터 불러오기
     const getAvatarInfo = async () => {
         try {
-            const res = await AvatarAPI.getAvatarAxios();
+            const token = await AsyncStorage.getItem('accessToken');
+            const config = {
+              headers: {
+                Authorization: `Bearer ${token}`, // Bearer 스키마를 사용한 토큰 전달
+                'Content-Type': 'application/json', // JSON 형식의 컨텐츠 타입 명시
+              },
+            };
+            const res = await axios.get(
+              `${baseURL}/avatar`,
+              config,
+            );
             console.log('캐릭터', res);
             setAvatars(res.data);
-            const selectedAvatar = avatars.find(ava => ava.isSelected);
-            if (selectedAvatar) {
-                setShowAvatar(selectedAvatar.avatarImg);
-            }
+            // const selectedAvatar = avatars.find(ava => ava.isSelected);
+            // if (selectedAvatar) {
+            //     setShowAvatar(selectedAvatar.avatarImg);
+            // }
         } catch (err) {
             console.log('사용자 캐릭터 조회 axios 에러 : ', err);
         }
@@ -38,11 +52,23 @@ const ProfileHeaderImage = ({percentage}:any) => {
     // 사용자 캐릭터 변경하기
     const changeAvatar = async (newAvatarId: number) => {
         try {
-            const res = await AvatarAPI.patchAvatarAxios(newAvatarId);
+            console.log(newAvatarId)
+            const token = await AsyncStorage.getItem('accessToken');
+            const config = {
+                headers: {
+                  Authorization: `Bearer ${token}`, // Bearer 스키마를 사용한 토큰 전달
+                  'Content-Type': 'application/json', // JSON 형식의 컨텐츠 타입 명시
+                },
+              };
+              const res = await axios.patch(
+                `${baseURL}/avatar/${newAvatarId}`,
+                newAvatarId,
+                config,
+              );
             console.log(res);
             await getAvatarInfo();
-            setAvatarId(newAvatarId); // 아바타 ID 상태 업데이트
-            handleToggle(); // 모달 토글
+            setAvatarId(newAvatarId);
+            handleToggle();
         } catch (err) {
             console.log('사용자 캐릭터 변경 axios 에러 : ', err, newAvatarId);
         }
@@ -53,8 +79,10 @@ const ProfileHeaderImage = ({percentage}:any) => {
     };
 
     useEffect(() => {
-        getAvatarInfo();
-    }, []);
+        if(isFocused){
+            getAvatarInfo();
+        }
+    }, [isFocused]);
 
     useEffect(() => {
         const selectedAvatar = avatars.find(ava => ava.isSelected);

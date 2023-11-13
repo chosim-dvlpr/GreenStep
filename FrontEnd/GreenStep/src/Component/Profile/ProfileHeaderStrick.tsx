@@ -4,8 +4,12 @@ import Box from "../../Style/Box";
 import right from '../../Image/Profile/right.png'
 import left from '../../Image/Profile/left.png'
 import { ProfileAPI } from "../../Api/profileApi";
-
+import { useIsFocused } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { baseURL } from "../../Api/tokenHttp";
 const ProfileHeaderStrick = () => {
+    const isFocused = useIsFocused();
     const date = new Date();
     const nowYear = date.getFullYear();
     const [year, setYear] = useState(nowYear)
@@ -53,7 +57,17 @@ const ProfileHeaderStrick = () => {
   // 플로깅 스트릭 불러오기
   const getStreak = async (year:number) => {
     try{
-      const res = await ProfileAPI.getStreakAxios(year);
+      const token = await AsyncStorage.getItem('accessToken');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`, // Bearer 스키마를 사용한 토큰 전달
+          'Content-Type': 'application/json', // JSON 형식의 컨텐츠 타입 명시
+        },
+      };
+      const res = await axios.get(
+        `${baseURL}/mypage/${year}/streak`,
+        config,
+      );
       console.log(res)
       setPloggingWeek(res.data)
     }catch(err){
@@ -62,9 +76,11 @@ const ProfileHeaderStrick = () => {
   }
 
   useEffect(() => {
-    getStreak(year);
+    if(isFocused){
+      getStreak(year);
+    }
     console.log(year)
-  }, [year])
+  }, [year, isFocused])
 
     const handleYearPlus = () => {
       setYear(year+1)
