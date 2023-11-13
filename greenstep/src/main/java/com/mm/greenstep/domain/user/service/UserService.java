@@ -196,6 +196,7 @@ public class UserService {
     public ResponseEntity<?> updateNickName(String nickName){
         if(isExistNickName(nickName)){
             User user = userRepository.findByUserId(SecurityUtil.getCurrentUser().getUserId());
+            log.info("input nickname : "+nickName);
             user.updateNickName(nickName);
             userRepository.save(user);
             return new ResponseEntity<>(true,HttpStatus.OK);
