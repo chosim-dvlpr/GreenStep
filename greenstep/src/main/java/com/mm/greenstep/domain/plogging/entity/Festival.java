@@ -12,7 +12,10 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "festival")
+@Table(name = "festival", uniqueConstraints = {
+        // 데이터베이스 선에서 중복방지
+        @UniqueConstraint(columnNames = {"festival_name"})
+})
 public class Festival {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
