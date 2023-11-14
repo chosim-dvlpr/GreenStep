@@ -10,6 +10,7 @@ import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
@@ -23,6 +24,18 @@ public class AmazonS3Service {
     private String region;
 
     private final S3Client s3Client;
+
+    public String uploadCsvFile(ByteArrayOutputStream baos){
+        String fileName = "쓰레기_데이터.csv";
+        s3Client.putObject(PutObjectRequest.builder()
+                .bucket(bucketName)
+                .key(fileName)
+                .build(), RequestBody.fromBytes(baos.toByteArray()));
+
+        // S3 URL 생성
+        String S3url = "https://" + bucketName + ".s3." + region + ".amazonaws.com/" + fileName;
+        return S3url;
+    }
 
     public String uploadFile(MultipartFile file) {
         String fileName = UUID.randomUUID() + "-" + file.getOriginalFilename();
