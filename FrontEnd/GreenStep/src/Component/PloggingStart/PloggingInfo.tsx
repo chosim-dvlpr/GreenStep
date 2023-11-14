@@ -10,7 +10,7 @@ import {PloggingAPI} from '../../Api/ploggingApi';
 import {Double} from 'react-native/Libraries/Types/CodegenTypes';
 import {useDispatch} from 'react-redux';
 import {resetCounts} from '../../Store/ploggingSlice';
-
+import {reset} from '../../Store/aiCountSlice';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -49,6 +49,13 @@ const PloggingInfo: React.FC<PloggingInfoProps> = ({
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [resetStopwatch, setResetStopwatch] = useState(false);
+  const [elapsedTime, setElapsedTime] = useState(0); // 경과 시간 상태 추가
+  const aiCount = useSelector((state: RootState) => state.aiCount.value);
+
+  const handleTimeUpdate = (time: number) => {
+    setElapsedTime(time);
+  };
+
   const handleToggleTracking = () => {
     if (!isTracking) {
       setIsTracking(true);
@@ -65,16 +72,16 @@ const PloggingInfo: React.FC<PloggingInfoProps> = ({
     const travelRange = distance;
 
     const ploggingDataInfo = {
-      travelTime: 100000,
+      travelTime: elapsedTime,
       travelRange: travelRange,
       trashAmount: counts.쓰레기,
-      AITrashAmount: 0,
+      AITrashAmount: aiCount,
       coorList: locations,
       trashList: trashListProps,
     };
+
     setIsTracking(false);
     console.log(`isTracking을 false로 설정함`);
-
     const ploggingdata = async (ploggingDataInfo: PloggingDataProps) => {
       try {
         const token = await AsyncStorage.getItem('accessToken');
@@ -105,6 +112,7 @@ const PloggingInfo: React.FC<PloggingInfoProps> = ({
         };
 
         // PloggingFinish 컴포넌트로 네비게이션
+
         navigation.navigate('ploggingfinish', ploggingFinishData);
       } catch (err) {
         console.log('error', err);
@@ -112,6 +120,8 @@ const PloggingInfo: React.FC<PloggingInfoProps> = ({
     };
     ploggingdata(ploggingDataInfo);
     dispatch(resetCounts());
+    dispatch(reset());
+    console.log(aiCount);
   };
 
   const trashListProps = useSelector(
@@ -124,7 +134,11 @@ const PloggingInfo: React.FC<PloggingInfoProps> = ({
       <Container>
         <InfoSection>
           <InfoContentContainer>
-            <StopWatch isRunning={isTracking} reset={resetStopwatch} />
+            <StopWatch
+              isRunning={isTracking}
+              reset={resetStopwatch}
+              onTimeUpdate={handleTimeUpdate}
+            />
             <Label>시간</Label>
           </InfoContentContainer>
 

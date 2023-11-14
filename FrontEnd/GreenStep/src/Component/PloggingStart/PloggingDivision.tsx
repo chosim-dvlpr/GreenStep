@@ -58,11 +58,12 @@ const PloggingDivision: React.FC<PloggingDivisionProps> = ({
       };
       const trashType = trashTypeMapping[name];
       const trashItem: TrashItem = {
-        trash_type: trashType,
+        trashType: trashType,
         latitude: location.latitude,
         longitude: location.longitude,
         trash_picture: null,
       };
+
       dispatch(incrementCount({name, trashItem}));
       console.log('trashItem', trashItem);
     } catch (error) {

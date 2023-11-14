@@ -187,14 +187,13 @@ const Main = () => {
 
       <CarouselContainer>
         <CarouselTextContainer>
-          <Text
-          style={{fontSize: 24, fontWeight: 'bold'}}
-          >자연을 지킨{'\n'}
-          {travelTime} 시간{'\n'}
-          {travelRange} km
+          <Text style={{fontSize: 24, fontWeight: 'bold'}}>
+            자연을 지킨{'\n'}
+            {travelTime} 시간{'\n'}
+            {travelRange} km
           </Text>
         </CarouselTextContainer>
-        <Carousel/>
+        <Carousel />
       </CarouselContainer>
 
       <LoginContainer>
