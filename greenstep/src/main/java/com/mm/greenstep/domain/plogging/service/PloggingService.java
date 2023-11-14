@@ -62,8 +62,6 @@ public class PloggingService {
 
     public PloggingResDto createPlogging(PloggingReqDto dto) {
         Boolean levelUp = false;
-        String avatarImg = "";
-        String avatarName = "";
 
         Long user_pk = SecurityUtil.getCurrentUserId();
         User user = userRepository.findByUserId(user_pk);
@@ -71,9 +69,8 @@ public class PloggingService {
         // 대한민국 시간대로 현재 시간을 설정
         LocalDateTime endTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
 
-        // dto.getTravelTime()이 밀리초 단위로 시간을 반환한다고 가정할 때,
-        // 이를 LocalDateTime에서 사용하기 위해 초 단위로 변환합니다.
-        Long travelTimeInSeconds = dto.getTravelTime() / 1000; // 밀리초를 초로 변환
+        // dto.getTravelTime()이 초 단위로 시간을 반환한다고 가정
+        Long travelTimeInSeconds = dto.getTravelTime();
         LocalDateTime startTime = endTime.minusSeconds(travelTimeInSeconds);
 
 
@@ -85,13 +82,12 @@ public class PloggingService {
             // 경쟁 score 갱신
             competeService.updateCompete(currentVictory, dto.getAITrashAmount(),dto.getTravelRange(),dto.getTravelTime(), dto.getTrashAmount());
         }
-        
 
         // 경험치 계산
         Integer getExp =
                 (int) ((dto.getAITrashAmount() * 0.9) +
                         (dto.getTravelRange() * 0.7) +
-                        (dto.getTravelTime() * 0.5) +
+                        (dto.getTravelTime() * 0.05) +
                         (dto.getTrashAmount() * 0.5)) ;
 
         Plogging plogging = Plogging.builder()
@@ -170,17 +166,17 @@ public class PloggingService {
 
         // 플로깅 모든 쓰레기 좌표 등록
         for (PloggingTrashReqDto tr : dto.getTrashList()) {
-            Boolean isPicture = false;
-            if(tr.getTrashPicture() != null) {
-                isPicture = true;
-            }
+//            Boolean isPicture = false;
+//            if(tr.getTrashPicture() != null) {
+//                isPicture = true;
+//            }
             Trash t = Trash.builder()
                     .plogging(plogging)
-                    .trashPicture(tr.getTrashPicture())
+//                    .trashPicture(tr.getTrashPicture())
                     .latitude(tr.getLatitude())
                     .longitude(tr.getLongitude())
                     .trashType(tr.getTrashType())
-                    .isPicture(isPicture)
+//                    .isPicture(isPicture)
                     .build();
             trashRepository.save(t);
         }
