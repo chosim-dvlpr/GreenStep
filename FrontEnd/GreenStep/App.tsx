@@ -29,7 +29,7 @@ import home from '../GreenStep/src/Image/Footer/home.png';
 import profile from '../GreenStep/src/Image/Footer/profile.png';
 import competition from '../GreenStep/src/Image/Footer/competition.png';
 import board from '../GreenStep/src/Image/Footer/board.png';
-import menu from '../GreenStep/src/Image/Footer/menu.png'
+import menu from '../GreenStep/src/Image/Footer/menu.png';
 
 const BottomTabScreen = () => {
   const Tab = createBottomTabNavigator();
