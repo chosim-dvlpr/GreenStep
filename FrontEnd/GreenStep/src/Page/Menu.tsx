@@ -18,7 +18,7 @@ const Menu = () => {
         if (idx === 0) {
             navigation.navigate('achievement')
         }else if(idx === 1){
-            navigation.navigate('main')
+            navigation.navigate('event')
         }else if(idx === 2){
             navigation.navigate('userinfo')
         }else{

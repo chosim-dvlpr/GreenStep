@@ -21,6 +21,7 @@ import BoardCRUD from './src/Page/BoardCRUD';
 import MyPlogging from './src/Page/MyPlogging';
 import Menu from './src/Page/Menu';
 import UserInfo from './src/Page/UserInfo';
+import Event from './src/Page/Event';
 //style
 import ImageStyle from './src/Style/Image';
 //Image
@@ -151,6 +152,15 @@ const App = () => {
               options={{
                 headerShown: true,
                 title: '회원 정보',
+                headerTitleAlign: 'center',
+              }}
+            />
+            <Stack.Screen
+              name="event"
+              component={Event}
+              options={{
+                headerShown: true,
+                title: '플로깅 이벤트',
                 headerTitleAlign: 'center',
               }}
             />
