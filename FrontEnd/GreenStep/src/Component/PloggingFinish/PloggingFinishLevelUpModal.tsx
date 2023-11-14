@@ -54,7 +54,7 @@ const PloggingFinishLevelUpModal : React.FC<ModalProps> = ({ onClose, getAvatarL
               ? 
               <ScrollView 
               horizontal={true}
-              style={{backgroundColor: 'red', width: '100%'}}
+              style={{flexDirection: 'row'}}
               // contentContainerStyle={{ flexDirection: 'row' }}
               showsHorizontalScrollIndicator={false}
               centerContent={true}
@@ -71,7 +71,7 @@ const PloggingFinishLevelUpModal : React.FC<ModalProps> = ({ onClose, getAvatarL
                       style={styles.confettiImage}
                       />
                       <Image 
-                      source={{uri: avatar.avatarImage}}
+                      source={{uri: `${avatar?.avatarImg}`}}
                       style={styles.avatarImage}
                       />
                       <Text style={styles.bottomText}>{avatar.avatarName} 획득!</Text>
@@ -131,27 +131,28 @@ const styles = StyleSheet.create({
   levelUpText: {
     fontWeight: '900', 
     fontSize: 30,
+    textAlign: 'center',
   },
   bottomText: {
     fontSize: 20,
+    fontWeight: '500',
     marginBottom: 20,
+    textAlign: 'center',
   },
   avatarContainer: {
-    width: '100%',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    width: 220,
+    height: '100%',
+    justifyContent: 'center',
     display: 'flex',
-    flexDirection: 'row',
   },
   avatarImage: {
-    width: '100%',
-    // height: '100%',
+    width: 220,
+    height: 220,
     aspectRatio: 1,
-    marginBottom: 20,
-    backgroundColor: 'yellow',
   },
   treasureBoxContainer: {
     alignItems: 'center',
+    justifyContent: 'center',
   },
   treasureBoxImage: {
     width: 200,
