@@ -66,7 +66,7 @@ const MyPloggingList = () => {
                 <View style={styles.wrapRow}>
                     {dataList.map((data, index) => (
                         <TouchableOpacity key={index} onPress={() => handleAvatarId(data.ploggingId)}>
-                            <View style={{justifyContent:'center', alignItems:'center'}}>
+                            <View style={{justifyContent:'center', alignItems:'center', marginLeft: 3, marginBottom: 3}}>
                               {data?.travelPicture?( 
                               <Image source={{uri: data?.travelPicture}} style={ImageStyle.mediumImage} resizeMode="stretch"></Image>
                               ):(<Image source={noImage} style={ImageStyle.mediumImage} resizeMode="stretch"></Image>)
@@ -90,8 +90,8 @@ const styles = StyleSheet.create({
     wrapRow: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        justifyContent: 'center',
-        
+        justifyContent: 'flex-start',
+        margin: 10,
     },
     noWrapRow: {
         flexDirection: 'row',
