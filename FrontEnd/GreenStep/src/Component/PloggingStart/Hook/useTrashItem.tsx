@@ -12,7 +12,7 @@ export const useTrashItem = () => {
       const location = await getLocation();
       const trashType = trashTypeMapping[name];
       const trashItem = {
-        trash_type: trashType,
+        trashType: trashType,
         latitude: location.latitude,
         longitude: location.longitude,
         trash_picture: null,

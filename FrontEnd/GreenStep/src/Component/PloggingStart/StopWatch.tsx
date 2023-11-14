@@ -6,9 +6,12 @@ import BackgroundTimer from 'react-native-background-timer';
 type StopWatchProps = {
   isRunning: boolean;
   reset: boolean;
+  onTimeUpdate: (time: number) => void; // 새로운 prop 추가
 };
 
-const StopWatch: React.FC<StopWatchProps> = ({isRunning, reset}) => {
+const StopWatch: React.FC<
+  StopWatchProps & {onTimeUpdate: (time: number) => void}
+> = ({isRunning, reset, onTimeUpdate}) => {
   const [time, setTime] = useState(0);
 
   useEffect(() => {
@@ -16,12 +19,17 @@ const StopWatch: React.FC<StopWatchProps> = ({isRunning, reset}) => {
 
     if (reset) {
       setTime(0);
+      onTimeUpdate(0); // 시간 업데이트를 부모 컴포넌트에 전달
       interval && BackgroundTimer.clearInterval(interval);
     }
 
     if (isRunning && !reset) {
       interval = BackgroundTimer.setInterval(() => {
-        setTime(prevTime => prevTime + 1);
+        setTime(prevTime => {
+          const newTime = prevTime + 1;
+          onTimeUpdate(newTime); // 시간 업데이트를 부모 컴포넌트에 전달
+          return newTime;
+        });
       }, 1000);
     }
 
@@ -30,7 +38,7 @@ const StopWatch: React.FC<StopWatchProps> = ({isRunning, reset}) => {
         BackgroundTimer.clearInterval(interval);
       }
     };
-  }, [isRunning, reset]);
+  }, [isRunning, reset, onTimeUpdate]);
 
   const formatTime = (time: number) => {
     const hours = Math.floor(time / 3600);
@@ -50,6 +58,7 @@ const StopWatch: React.FC<StopWatchProps> = ({isRunning, reset}) => {
 
 export default StopWatch;
 
+// Styled Components
 const InfoText = styled.Text`
   font-size: 25px;
   color: #333;
