@@ -7,7 +7,6 @@ import {
   ScrollView,
   Image,
   Switch,
-  StyleSheet,
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 
@@ -24,63 +23,35 @@ import PloggingFinishLevelUpModal from '../Component/PloggingFinish/PloggingFini
 import lock from '../Image/PloggingFinish/lock.png';
 
 // axios
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import fileTokenHttp from '../Api/fileTokenHttp';
+import tokenHttp from '../Api/tokenHttp';
 
 export interface getAvatarListType {
   avatarName: string | null,
-  avatarImage: string | null,
+  avatarImg: string | null,
 }
 
 interface PloggingFinishType {
-  // props로 반드시 넘겨줘야 할 항목 (추후 ? 지우기)
-  travelTime?: string,  // string인지 확인 필요
-  travelRange?: number,
-  trashAmount?: number,
-  acheiveInfo?: number,
-  ploggingId?: number,
-  getExp?: number,
-  isLevelUp?: boolean, 
+  // props로 반드시 넘겨줘야 할 항목
+  travelTime: string,  // string인지 확인 필요
+  travelRange: number,
+  trashAmount: number,
+  // acheiveInfo: number,
+  ploggingId: number,
+  getExp: number,
+  isLevelUp: boolean, 
   
   // 선택 항목
-  getAvatarList?: getAvatarListType[]
-  // avartarName?: string[], 
-  // avatarImage?: string[], // 아바타 이미지 url
+  getAvatarList: getAvatarListType[]
 }
 
 
-// const PloggingFinish = ({ 
-//   ploggingId, 
-//   getExp, 
-//   isLevelUp, 
-//   avartarName, 
-//   avatarImage 
-// }: PloggingFinishType) => {
-
-// interface PloggingFinishType {
-//   // props로 반드시 넘겨줘야 할 항목 (추후 ? 지우기)
-//   travelTime?: string; // string인지 확인 필요
-//   travelRange?: number;
-//   trashAmount?: number;
-//   acheiveInfo?: number;
-//   ploggingId?: number;
-//   getExp?: number;
-//   isLevelUp?: boolean;
-
-//   // 선택 항목
-//   avartarName?: string;
-//   avatarImage?: string; // 아바타 이미지 url
-// }
 const PloggingFinish = () => {
   const route = useRoute();
-  const {ploggingId, getExp, isLevelUp, getAvatarList, trashAmount} =
+  const {travelTime, travelRange, ploggingId, getExp, isLevelUp, getAvatarList, trashAmount} =
     route.params as PloggingFinishType;
   const navigation = useNavigation();
-  const data = {
-    accessToken: AsyncStorage.getItem('accessToken'),
-    refreshToken: AsyncStorage.getItem('refreshToken'),
-  }
-  
+
   /** 사진 선택 기능 */
   const [photo, setPhoto] = useState<string>('');
 
@@ -106,22 +77,9 @@ const PloggingFinish = () => {
       name: result.assets[0].fileName,
     });
     
-    fileTokenHttp.post('/plogging/${ploggingId}/upload/img', formData)
+    fileTokenHttp.post(`/plogging/${ploggingId}/upload/img`, formData)
     .then(res => console.log('성공', res))
     .catch(err => console.log(err))
-    // UploadAPI.uploadFile(formData)
-    // .then(res => console.log('파일 서버 업로드 성공 '))
-    // .catch(async err => {
-    //   console.log('서버 업로드 실패 ', err)
-    //   // await AsyncStorage.removeItem('accessToken')
-    //   // await AsyncStorage.removeItem('refreshToken')
-    //   Refresh.getRefreshToken()
-    //   .then(() => {
-    //       UploadAPI.uploadFile(formData)
-    //       console.log('재업로드')
-    //     })
-    // .catch(() => console.log('실패'))
-    // })    
   };
 
   /** 레벨업 토글 */
@@ -146,28 +104,29 @@ const PloggingFinish = () => {
     setIsVisible(!isVisible);
   };
 
+  const changeVisible = () => {
+    tokenHttp.patch(`/plogging/${ploggingId}/${isVisible}`)
+    .then(res => {
+      if (res.status === 200) {
+        console.log('공개 설정 변경 성공')
+      } else {
+        console.log('공개 설정 변경 실패 : ', res)
+      }
+    })
+    .catch(err => console.log('공개 설정 axios 에러 : ', err))
+  }
+
+  useEffect(() => {
+    changeVisible();
+  }, [isVisible, setIsVisible])
+
   return (
     <ScrollView>
       {levelUpToggle && 
       <PloggingFinishLevelUpModal 
       onClose={handleLevelUpToggle} 
       visible={levelUpToggle} 
-      // getAvatarList={getAvatarList}
-
-      
-      // 데이터 props로 받은 뒤 삭제하기
-      getAvatarList={[
-        {
-          avatarName: 'bear',
-          avatarImage: 'https://3mm.s3.ap-northeast-2.amazonaws.com/bear.png',
-        },
-        {
-          avatarName: 'cat',
-          avatarImage: 'https://3mm.s3.ap-northeast-2.amazonaws.com/cat.png',
-        },
-      ]}
-      // avatarName={['bear', 'cat']}
-      // avatarImage={['https://3mm.s3.ap-northeast-2.amazonaws.com/bear.png', 'https://3mm.s3.ap-northeast-2.amazonaws.com/cat.png']} 
+      getAvatarList={getAvatarList}
       />}
 
       <PloggingFinishContainer>
@@ -177,11 +136,9 @@ const PloggingFinish = () => {
         {/* 플로깅 데이터 */}
         <PloggingDataContainer>
           <ProfilePloggingDataInfo
-            // 데이터 바인딩 후 아래 주석 해제하기
-            // timeInfo={travelTime}
-            // distanceInfo={travelRange}
-            // trashInfo={trashAmount}
-            // acheiveInfo={acheiveInfo}
+            timeInfo={travelTime}
+            distanceInfo={travelRange}
+            trashInfo={trashAmount}
             isProfile={false}
           />
         </PloggingDataContainer>
