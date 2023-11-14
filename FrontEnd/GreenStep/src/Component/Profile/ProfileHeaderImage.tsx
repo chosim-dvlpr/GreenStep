@@ -95,10 +95,10 @@ const ProfileHeaderImage = ({percentage}:any) => {
         <View>
           <AnimatedCircularProgress
                 size={150}
-                width={5}
+                width={9}
                 fill={percentage}
-                tintColor="#00e0ff"
-                backgroundColor="#3d5875">
+                tintColor="#ACD8A7"
+                backgroundColor="#D6D6D6">
                 {(fill) => (
                     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                         <TouchableOpacity onPress={handleToggle}>
