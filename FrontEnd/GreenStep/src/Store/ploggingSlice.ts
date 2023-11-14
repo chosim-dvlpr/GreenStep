@@ -11,7 +11,7 @@ export interface TrashItem {
   longitude: number;
   latitude: number;
   trash_picture?: string | null;
-  trash_type: number;
+  trashType: number;
 }
 
 const initialState: PloggingState = {

@@ -7,7 +7,6 @@ import ButtonStyle from '../Style/ButtonStyle';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {MainAPI} from '../Api/basicHttp';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import tokenHttp from '../Api/tokenHttp';
 
 export interface EmailLoginDataType {
   email: string;
@@ -188,7 +187,7 @@ const Main = () => {
           {travelRange.toFixed(3)} km
           </Text>
         </CarouselTextContainer>
-        <Carousel/>
+        <Carousel />
       </CarouselContainer>
 
       <LoginContainer>

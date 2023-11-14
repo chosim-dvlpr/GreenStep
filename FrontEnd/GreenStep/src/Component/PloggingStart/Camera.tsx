@@ -12,13 +12,17 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {trashTypeMapping2} from './TrashType';
 import {useTrashItem} from './Hook/useTrashItem';
+import {useDispatch} from 'react-redux';
+import {increment} from '../../Store/aiCountSlice';
 const AiCamera = () => {
+  const dispatch = useDispatch();
   const camera = useRef<Camera>(null);
   const device = useCameraDevice('back');
 
   const [permission, setPermission] = useState(false);
   const [showCamera, setShowCamera] = useState(true);
   const [imageSource, setImageSource] = useState('');
+
   const addTrashItem = useTrashItem();
 
   useEffect(() => {
@@ -52,10 +56,10 @@ const AiCamera = () => {
         formData,
         config,
       );
+      dispatch(increment());
 
       console.log('Response from server:', res.data.predicted_class);
       const name = trashTypeMapping2[res.data.predicted_class];
-      console.log(name);
 
       addTrashItem(name);
     } catch (error) {

@@ -4,7 +4,7 @@ import MapView from 'react-native-map-clustering';
 import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import {Image} from 'react-native';
 interface ILocation {
   latitude: number;
   longitude: number;
@@ -24,7 +24,17 @@ interface PloggingMapProps {
 const PloggingMap: React.FC<PloggingMapProps> = ({locations, isTracking}) => {
   const [trashBins, setTrashBins] = useState<TrashBin[]>([]);
   const [showTrashBins, setShowTrashBins] = useState<boolean>(false);
-
+  const getImageForTrashType = (type: number) => {
+    switch (type) {
+      case 0:
+        return require('../../Image/PloggingStart/trash.png');
+      case 1:
+        return require('../../Image/PloggingStart/pet.png');
+      // 다른 타입에 대한 이미지 추가
+      default:
+        return require('../../Image/PloggingStart/pet.png'); // 기본 이미지
+    }
+  };
   useEffect(() => {
     const fetchTrashBins = async () => {
       try {
@@ -45,6 +55,7 @@ const PloggingMap: React.FC<PloggingMapProps> = ({locations, isTracking}) => {
           latitude: parseFloat(bin.latitude),
           longitude: parseFloat(bin.longitude),
         }));
+        console.log(bins);
         setTrashBins(bins);
       } catch (error) {
         console.error('Error fetching trash bins:', error);
@@ -74,16 +85,23 @@ const PloggingMap: React.FC<PloggingMapProps> = ({locations, isTracking}) => {
             coordinate={{
               latitude: locations[locations.length - 1].latitude,
               longitude: locations[locations.length - 1].longitude,
-            }}
-          />
+            }}>
+            <Image
+              source={require('../../Image/PloggingStart/can.png')}
+              style={{width: 50, height: 50}} // 원하는 스타일 지정
+            />
+          </Marker>
         )}
         {showTrashBins &&
           trashBins.map((bin, index) => (
             <Marker
               key={index}
-              coordinate={{latitude: bin.latitude, longitude: bin.longitude}}
-              // 쓰레기통 타입에 따른 마커 아이콘 설정 가능
-            />
+              coordinate={{latitude: bin.latitude, longitude: bin.longitude}}>
+              <Image
+                source={getImageForTrashType(bin.type)}
+                style={{width: 50, height: 50}} // 원하는 스타일 지정
+              />
+            </Marker>
           ))}
         {isTracking && locations.length > 1 && (
           <Polyline
