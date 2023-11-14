@@ -1,5 +1,5 @@
 
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native'
 import React, { Dispatch, SetStateAction, useState } from 'react'
 import {
   KakaoOAuthToken,
@@ -97,9 +97,13 @@ const Login = ({setIsLogin}: LoginPropsType) => {
       {/* 카카오 로그인 버튼 */}
       <TouchableOpacity
         onPress={() => signInWithKakao()}
-        style={[ButtonStyle.kakaoButton]}
+        // style={[ButtonStyle.kakaoButton]}
+        style={{width: '100%', paddingBottom: 5, paddingTop: 5,}}
       >
-        <Text>카카오로그인</Text>
+        <Image
+        style={styles.kakaoImg}
+        source={{uri: "https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"}}
+        />
       </TouchableOpacity>
     
       {/* <Button
@@ -128,5 +132,15 @@ const Login = ({setIsLogin}: LoginPropsType) => {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  kakaoImg: {
+    // width: '100%',
+    height: 50,
+    borderRadius: 12,
+
+  }
+})
+
 
 export default Login
