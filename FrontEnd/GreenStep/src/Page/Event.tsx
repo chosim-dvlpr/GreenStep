@@ -49,14 +49,14 @@ const Event = () => {
         });
     };
 
-
     return(
         <ScrollView>
             <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                <Text></Text>
                 {eventList?.map((event) =>(
                     <View style={[Box.cardBox,{marginBottom: 15}]}>
                     <TouchableOpacity onPress={() => openURL(event.festivalUrl)}>
-                        <Text style={{fontSize: 30}}>{event.festivalName}</Text>
+                        <Text style={{fontSize: 30}} ellipsizeMode="tail" numberOfLines={1}>{event.festivalName}</Text>
                     </TouchableOpacity>
                     </View>
                 ))}
