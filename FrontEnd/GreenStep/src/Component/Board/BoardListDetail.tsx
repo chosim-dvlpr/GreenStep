@@ -1,7 +1,8 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import Box from "../../Style/Box";
 import ImageStyle from "../../Style/Image";
 import avatar from '../../Image/Avatar/panda.png';
+import { useNavigation } from "@react-navigation/native";
 
 interface PostCardProps{
     title: string;
@@ -10,8 +11,12 @@ interface PostCardProps{
 }
 
 const BoardListDetail = (props:PostCardProps) => {
+  const navigation = useNavigation();
+
   return(
-    <View style={{alignItems:'center', marginBottom: 20}}>
+    <TouchableOpacity 
+    onPress={() => navigation.navigate('boarddetail')}
+    style={{alignItems:'center', marginBottom: 20}}>
       <View style={[Box.cardBox,{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems:'center'}]}>
         <View>
           <Text style={{fontWeight:'bold', fontSize: 20, marginBottom: 20}}>{props.title}</Text>
@@ -22,7 +27,7 @@ const BoardListDetail = (props:PostCardProps) => {
           <Image source={avatar} style={ImageStyle.mediumImage}></Image>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 
