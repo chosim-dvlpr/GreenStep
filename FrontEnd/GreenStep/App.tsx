@@ -75,7 +75,8 @@ const BottomTabScreen = () => {
 };
 const App = () => {
   const Stack = createNativeStackNavigator();
-
+  const now = new Date();
+  const month = now.getMonth() + 1;
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
@@ -160,7 +161,7 @@ const App = () => {
               component={Event}
               options={{
                 headerShown: true,
-                title: '플로깅 이벤트',
+                title: `${month}월 플로깅 이벤트`,
                 headerTitleAlign: 'center',
               }}
             />
