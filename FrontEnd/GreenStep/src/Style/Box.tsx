@@ -15,7 +15,7 @@ const Box = StyleSheet.create({
     // display: 'flex',
     // height: '80%',
     aspectRatio: 0.9,
-    backgroundColor: 'yellow',
+    backgroundColor: '#FFFFFF',
     paddingTop: 10,
     paddingBottom: 10,
     borderRadius: 20,
@@ -24,13 +24,13 @@ const Box = StyleSheet.create({
   cardBox: {
     width: '90%',
     padding: 20,
-    backgroundColor: 'skyblue',
+    backgroundColor: '#FFFFFF',
     borderRadius: 10,
   },
   /** 내가 작성한 게시글 박스 */
   mediumCardBox: {
     width: '30%',
-    backgroundColor: 'yellow',
+    backgroundColor: '#FFFFFF',
     padding: 20,
     borderRadius: 15,
   },
@@ -47,7 +47,7 @@ const Box = StyleSheet.create({
     width: '50%',
     height : 160,
     padding : 20,
-    backgroundColor: 'pink',
+    backgroundColor: '#FFFFFF',
     borderRadius: 15,
   },
     /** 프로필 달력내 주 박스 */
