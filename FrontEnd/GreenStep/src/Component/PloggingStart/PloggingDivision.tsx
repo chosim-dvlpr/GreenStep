@@ -13,6 +13,7 @@ interface PloggingDivisionProps {
   name: string;
   onPress?: () => void; // Optional, 모든 division에 필요한 것은 아님
   size?: 'small' | 'medium';
+  isTracking: boolean;
 }
 
 function getImage(name: string): any {
@@ -37,13 +38,16 @@ const PloggingDivision: React.FC<PloggingDivisionProps> = ({
   name,
   onPress,
   size = 'medium',
+  isTracking,
 }) => {
   const imageSource = getImage(name);
   const dispatch = useDispatch();
 
   const [isCameraModalVisible, setIsCameraModalVisible] = useState(false);
+  console.log(isTracking);
 
   const handlePress = async (name: string) => {
+    if (!isTracking) return;
     if (name === '재활용품' && onPress) {
       onPress();
       return;
@@ -87,7 +91,7 @@ const PloggingDivision: React.FC<PloggingDivisionProps> = ({
           onRequestClose={() => {
             setIsCameraModalVisible(false);
           }}>
-          <AiCamera />
+          <AiCamera onClose={() => setIsCameraModalVisible(false)} />
         </Modal>
       )}
     </>

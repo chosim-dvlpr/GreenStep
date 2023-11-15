@@ -16,9 +16,10 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 type PloggingInfoProps = {
   isTracking: boolean;
-  setIsTracking: React.Dispatch<React.SetStateAction<boolean>>;
+  handlestart: React.Dispatch<React.SetStateAction<boolean>>;
   distance: number;
   locations: any;
+  setIsTracking: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 interface PloggingDataProps {
@@ -42,9 +43,10 @@ interface trashListProps {
 
 const PloggingInfo: React.FC<PloggingInfoProps> = ({
   isTracking,
-  setIsTracking,
+  handlestart,
   distance,
   locations,
+  setIsTracking,
 }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -58,7 +60,7 @@ const PloggingInfo: React.FC<PloggingInfoProps> = ({
 
   const handleToggleTracking = () => {
     if (!isTracking) {
-      setIsTracking(true);
+      handlestart(true);
       setResetStopwatch(false);
     }
   };
@@ -67,6 +69,7 @@ const PloggingInfo: React.FC<PloggingInfoProps> = ({
   }, [isTracking]);
   const handleLongPress = () => {
     setResetStopwatch(true);
+    handlestart(false);
     setIsTracking(false);
 
     const travelRange = distance;
@@ -154,7 +157,7 @@ const PloggingInfo: React.FC<PloggingInfoProps> = ({
         </InfoSection>
         <ButtonSection>
           {!isTracking ? (
-            <StartStopButton onPress={handleToggleTracking}>
+            <StartStopButton onLongPress={handleToggleTracking}>
               <Image source={startImage} style={{width: 50, height: 50}} />
             </StartStopButton>
           ) : (

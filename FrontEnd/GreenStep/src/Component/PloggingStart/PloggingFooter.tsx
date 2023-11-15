@@ -5,22 +5,39 @@ import PloggingDivision from './PloggingDivision';
 
 interface PloggingFooterProps {
   openModal: () => void;
+  isTracking: boolean;
 }
 
-const PloggingFooter: React.FC<PloggingFooterProps> = ({openModal}) => {
+const PloggingFooter: React.FC<PloggingFooterProps> = ({
+  openModal,
+  isTracking,
+}) => {
   return (
     <FooterContainer>
       <Footer>
         <PloggingDivisionContainer>
-          <PloggingDivision name="AI 쓰레기 인식" size="small" />
+          <PloggingDivision
+            name="AI 쓰레기 인식"
+            size="small"
+            isTracking={isTracking}
+          />
           <Text>AI쓰레기 인식</Text>
         </PloggingDivisionContainer>
         <PloggingDivisionContainer>
-          <PloggingDivision name="일반쓰레기" size="small" />
+          <PloggingDivision
+            name="일반쓰레기"
+            size="small"
+            isTracking={isTracking}
+          />
           <Text>일반 쓰레기</Text>
         </PloggingDivisionContainer>
         <PloggingDivisionContainer>
-          <PloggingDivision name="재활용품" onPress={openModal} size="small" />
+          <PloggingDivision
+            name="재활용품"
+            onPress={openModal}
+            size="small"
+            isTracking={isTracking}
+          />
           <Text>재활용품</Text>
         </PloggingDivisionContainer>
       </Footer>

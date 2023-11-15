@@ -71,22 +71,23 @@ const PloggingStart = () => {
     <View style={styles.container}>
       <PloggingInfo
         isTracking={isTracking}
-        setIsTracking={handleStartTracking}
+        handlestart={handleStartTracking}
         distance={state.totalDist}
         locations={state.locations}
+        setIsTracking={setIsTracking}
       />
 
       {state.locations.length > 0 && (
         <PloggingMap locations={state.locations} isTracking={isTracking} />
       )}
 
-      <PloggingFooter openModal={openModal} />
+      <PloggingFooter openModal={openModal} isTracking={isTracking} />
       <Modal
         animationType="slide"
         transparent={true}
         visible={isModalVisible}
         onRequestClose={closeModal}>
-        <PloggingModal onClose={closeModal} />
+        <PloggingModal onClose={closeModal} isTracking={isTracking} />
       </Modal>
     </View>
   );
