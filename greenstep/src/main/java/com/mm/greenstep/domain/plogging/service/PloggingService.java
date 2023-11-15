@@ -198,33 +198,35 @@ public class PloggingService {
         // 깨지지 않은 나의 모든 업적 가져온다.
         List<UserAchieve> achieveList = userAchieveRepository.findAllByUserAndIsBreakedFalse(user);
 
+
         for (UserAchieve ua : achieveList) {
             Byte achieveType = ua.getAchieve().getAchieveType();
 
             switch (achieveType) {
             // 거리
-            case 1:
+            case 0:
+                System.out.println(ua.getAchieve().getAchieveDistance());
                 if(ua.getAchieve().getAchieveDistance() <= myTravelRange) {
                     ua.updateisBreaked();
                     userAchieveRepository.save(ua);
                 }
                 break;
             // 시간
-            case 2:
+            case 1:
                 if(ua.getAchieve().getAchieveTime() <= myTravelTime) {
                     ua.updateisBreaked();
                     userAchieveRepository.save(ua);
                 }
                 break;
             // 쓰레기 수
-            case 3:
+            case 2:
                 if(ua.getAchieve().getAchieveTrash() <= myTrashAmount) {
                     ua.updateisBreaked();
                     userAchieveRepository.save(ua);
                 }
                 break;
             // 횟수
-            case 4:
+            case 3:
                 if(ua.getAchieve().getAchieveCount() <= myPloggingCount) {
                     ua.updateisBreaked();
                     userAchieveRepository.save(ua);

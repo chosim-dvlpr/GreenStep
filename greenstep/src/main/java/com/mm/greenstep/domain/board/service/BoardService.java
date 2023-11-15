@@ -105,8 +105,9 @@ public class BoardService {
         Board board = boardRepository.findByBoardId(boardId);
         User user = SecurityUtil.getCurrentUser();
 
-        if (board.getUser() == user) {
+        if (board.getUser().getUserId() == user.getUserId()) {
             board.deleteState();
+            boardRepository.save(board);
             return true;
         } else {
             return false;
