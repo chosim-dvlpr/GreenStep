@@ -15,6 +15,7 @@ import {
 import ButtonStyle from '../../Style/ButtonStyle';
 import { LoginAPI } from '../../Api/basicHttp';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import kakao from '../../Image/Login/kakao.png'
 
 interface LoginPropsType {
   setIsLogin: Dispatch<SetStateAction<boolean>>;
@@ -99,8 +100,12 @@ const Login = ({setIsLogin}: LoginPropsType) => {
         onPress={() => signInWithKakao()}
         // style={[ButtonStyle.kakaoButton]}
         // style={{width: '100%', paddingBottom: 5, paddingTop: 5,}}
-        style={ButtonStyle.kakaoButton}
+        style={[ButtonStyle.kakaoButton, {display: 'flex', flexDirection: 'row'}]}
       >
+        <Image
+        source={kakao}
+        style={styles.kakaoImg}
+        />
         <Text style={{fontSize: 16, fontFamily: 'SUITE-Bold'}}>카카오 로그인</Text>
         {/* <Image
         style={styles.kakaoImg}
@@ -137,10 +142,9 @@ const Login = ({setIsLogin}: LoginPropsType) => {
 
 const styles = StyleSheet.create({
   kakaoImg: {
-    // width: '100%',
-    height: 50,
-    borderRadius: 12,
-
+    width: 30,
+    height: 30,
+    marginRight: 20,
   }
 })
 
