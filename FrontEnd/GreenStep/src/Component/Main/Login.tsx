@@ -93,17 +93,19 @@ const Login = ({setIsLogin}: LoginPropsType) => {
 
 
   return (
-    <View style={{width: '80%'}}>      
+    <View style={{width: '90%'}}>      
       {/* 카카오 로그인 버튼 */}
       <TouchableOpacity
         onPress={() => signInWithKakao()}
         // style={[ButtonStyle.kakaoButton]}
-        style={{width: '100%', paddingBottom: 5, paddingTop: 5,}}
+        // style={{width: '100%', paddingBottom: 5, paddingTop: 5,}}
+        style={ButtonStyle.kakaoButton}
       >
-        <Image
+        <Text style={{fontSize: 16, fontFamily: 'SUITE-Bold'}}>카카오 로그인</Text>
+        {/* <Image
         style={styles.kakaoImg}
-        source={{uri: "https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"}}
-        />
+        // source={{uri: "https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"}}
+        /> */}
       </TouchableOpacity>
     
       {/* <Button

@@ -49,8 +49,9 @@ const ButtonStyle = StyleSheet.create({
   },
   /** 카카오 로그인 버튼 */
   kakaoButton: {
-    // backgroundColor: '#FEE500',
-    height: 50,
+    backgroundColor: '#FEE500',
+    width: '100%',
+    height: 60,
     borderRadius: 12,
     alignItems : 'center',
     justifyContent: 'center',
