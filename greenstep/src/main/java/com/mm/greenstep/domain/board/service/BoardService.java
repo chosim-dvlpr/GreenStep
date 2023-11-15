@@ -150,4 +150,11 @@ public class BoardService {
                 .map(this::convertToBoardResDto)
                 .collect(Collectors.toList()), HttpStatus.OK) ;
     }
+
+    public ResponseEntity<?> getAllBoardByfindLocation(String word){
+        List<Board> boardList = boardRepository.findAllByIsDeletedFalseAndScheduleLocationContaining(word);
+        return new ResponseEntity<>(boardList.stream()
+                .map(this::convertToBoardResDto)
+                .collect(Collectors.toList()), HttpStatus.OK) ;
+    }
 }

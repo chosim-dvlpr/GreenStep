@@ -61,4 +61,9 @@ public class Board {
     public void deleteState() {
         this.isDeleted = true;
     }
+
+    @PrePersist
+    public void prepersist(){
+        this.isDeleted = false;
+    }
 }

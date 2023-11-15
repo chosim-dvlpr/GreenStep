@@ -66,4 +66,12 @@ private final BoardService boardService;
     public ResponseEntity<?> getAllAttendList(){
         return boardService.getAllBoardList();
     }
+
+
+    @GetMapping("/search/{word}")
+    public ResponseEntity<?>  findAllBoardByLocation(@PathVariable String word){
+        System.out.println(word);
+        return boardService.getAllBoardByfindLocation(word);
+    }
+
 }

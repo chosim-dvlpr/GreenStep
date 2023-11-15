@@ -18,6 +18,8 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     List<Board> findAllByUserAndIsDeletedFalse(User user);
 
-
     List<Board> findAllByIsDeletedFalse();
+
+    List<Board> findAllByIsDeletedFalseAndScheduleLocationContaining(String word);
+
 }
