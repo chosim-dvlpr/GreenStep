@@ -20,5 +20,6 @@ public class BoardResDto {
     private LocalDateTime updatedAt;
     private Boolean isDeleted;
     private Boolean isAttended;
+    private String avatarImg;
 
 }

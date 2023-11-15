@@ -1,5 +1,7 @@
 package com.mm.greenstep.domain.board.service;
 
+import com.mm.greenstep.domain.avatar.entity.UserAvatar;
+import com.mm.greenstep.domain.avatar.repository.UserAvatarRepository;
 import com.mm.greenstep.domain.board.dto.request.BoardReqDto;
 import com.mm.greenstep.domain.board.dto.response.BoardResDto;
 import com.mm.greenstep.domain.board.entity.Attend;
@@ -27,6 +29,7 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
     private final AttendRepository attendRepository;
+    private final UserAvatarRepository userAvatarRepository;
 
     @Transactional(readOnly = true)
     public List<BoardResDto> getAllBoards() {
@@ -39,6 +42,7 @@ public class BoardService {
 
     private BoardResDto convertToBoardResDto(Board board) {
         Attend attend = attendRepository.findByUserAndBoard(SecurityUtil.getCurrentUser(), board);
+        UserAvatar userAvatar = userAvatarRepository.findByUserAndIsSelected(board.getUser(), true);
 
         return BoardResDto.builder()
                 .boardId(board.getBoardId())
@@ -50,12 +54,14 @@ public class BoardService {
                 .maxParticipants(board.getMaxParticipants())
                 .createdAt(board.getCreatedAt())
                 .isAttended(attend != null)
+                .avatarImg(userAvatar.getAvatar().getAvatarImg())
                 .build();
     }
 
     @Transactional(readOnly = true)
     public List<BoardResDto> getAllMyBoards() {
         User user= SecurityUtil.getCurrentUser();
+        UserAvatar userAvatar = userAvatarRepository.findByUserAndIsSelected(user, true);
 
         List<Board> userBoardList = boardRepository.findAllByUserAndIsDeletedFalse(user);
         List<BoardResDto> list = new ArrayList<>();
@@ -70,6 +76,7 @@ public class BoardService {
                     .maxParticipants(board.getMaxParticipants())
                     .createdAt(board.getCreatedAt())
                     .isAttended(attend != null)
+                    .avatarImg(userAvatar.getAvatar().getAvatarImg())
                     .build();
             list.add(dto);
         }
@@ -78,6 +85,8 @@ public class BoardService {
     public BoardResDto getBoardDetail(Long boardId){
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new EntityNotFoundException("Board not found with id: " + boardId));
+
+        UserAvatar userAvatar = userAvatarRepository.findByUserAndIsSelected(board.getUser(), true);
 
         Attend attend = attendRepository.findByUserAndBoard(SecurityUtil.getCurrentUser(), board);
 
@@ -90,6 +99,7 @@ public class BoardService {
                     .maxParticipants(board.getMaxParticipants())
                     .createdAt(board.getCreatedAt())
                     .isAttended(attend != null)
+                    .avatarImg(userAvatar.getAvatar().getAvatarImg())
                     .build();
         return dto;
     }
