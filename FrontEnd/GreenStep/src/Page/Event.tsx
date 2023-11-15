@@ -55,8 +55,11 @@ const Event = () => {
                 <Text></Text>
                 {eventList?.map((event) =>(
                     <View style={[Box.cardBox,{marginBottom: 15}]}>
-                    <TouchableOpacity onPress={() => openURL(event.festivalUrl)}>
-                        <Text style={{fontSize: 30}} ellipsizeMode="tail" numberOfLines={1}>{event.festivalName}</Text>
+                    <TouchableOpacity 
+                    onPress={() => openURL(event.festivalUrl)}
+                    style={{padding: 10}}
+                    >
+                        <Text style={{fontSize: 20, fontFamily: 'SUITE-Bold'}} ellipsizeMode="tail" numberOfLines={1}>{event.festivalName}</Text>
                     </TouchableOpacity>
                     </View>
                 ))}
