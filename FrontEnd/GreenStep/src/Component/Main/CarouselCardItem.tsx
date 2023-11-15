@@ -18,10 +18,10 @@ const PageItem = styled.View`
 const CarouselCardItem = ({item, style}: CarouselCardItemProps) => {
   return (
     <View>
-      <PageItem style={style}>
+      <PageItem style={[style, {backgroundColor: 'black', borderRadius: 20}]}>
         <Image 
         source={{uri: item.imageUrl}}
-        style={{flex: 1, width: pageWidth, height: 100, resizeMode: 'cover', borderRadius: 20}}
+        style={{flex: 1, width: pageWidth, height: 100, resizeMode: 'cover', borderRadius: 20, opacity: 0.6}}
         ></Image>
       </PageItem>
     </View>

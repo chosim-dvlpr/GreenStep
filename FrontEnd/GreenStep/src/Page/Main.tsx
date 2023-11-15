@@ -180,12 +180,9 @@ const Main = () => {
 
       <CarouselContainer>
         <CarouselTextContainer>
-          <Text
-          style={{fontSize: 24, fontWeight: 'bold', fontFamily: 'SUITE-Bold'}}
-          >자연을 지킨{'\n'}
-          {travelTime} 시간{'\n'}
-          {travelRange.toFixed(3)} km
-          </Text>
+          <Text style={styles.mainFont}>자연을 지킨</Text>
+          <Text style={styles.mainFont}>{travelTime} 시간</Text>
+          <Text style={styles.mainFont}>{travelRange.toFixed(3)} km</Text>
         </CarouselTextContainer>
         <Carousel />
       </CarouselContainer>
@@ -216,6 +213,13 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontFamily: 'SUITE-Bold'
   },
+  mainFont: {
+    fontSize: 24, 
+    fontFamily: 'SUITE-Bold', 
+    color: 'lightgray', 
+    marginBottom: 4, 
+    fontWeight: 'bold'
+  }
 })
 
 export default Main;
