@@ -13,13 +13,13 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "participation")
-public class Participation {
+@Table(name = "attend")
+public class Attend {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "participation_id")
-    private Long participationId;
+    @Column(name = "attend_id")
+    private Long attendId;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
