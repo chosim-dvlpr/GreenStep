@@ -2,7 +2,9 @@ package com.mm.greenstep.domain.board.service;
 
 import com.mm.greenstep.domain.board.dto.request.BoardReqDto;
 import com.mm.greenstep.domain.board.dto.response.BoardResDto;
+import com.mm.greenstep.domain.board.entity.Attend;
 import com.mm.greenstep.domain.board.entity.Board;
+import com.mm.greenstep.domain.board.repository.AttendRepository;
 import com.mm.greenstep.domain.board.repository.BoardRepository;
 import com.mm.greenstep.domain.common.util.SecurityUtil;
 import com.mm.greenstep.domain.user.entity.User;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final AttendRepository attendRepository;
 
     @Transactional(readOnly = true)
     public List<BoardResDto> getAllBoards() {
@@ -33,6 +36,7 @@ public class BoardService {
 
 
     private BoardResDto convertToBoardResDto(Board board) {
+        Attend attend = attendRepository.findByUserAndBoard(SecurityUtil.getCurrentUser(), board);
 
         return BoardResDto.builder()
                 .boardId(board.getBoardId())
@@ -43,6 +47,7 @@ public class BoardService {
                 .scheduleLocation(board.getScheduleLocation())
                 .maxParticipants(board.getMaxParticipants())
                 .createdAt(board.getCreatedAt())
+                .isAttended(attend != null)
                 .build();
     }
 
@@ -53,6 +58,7 @@ public class BoardService {
         List<Board> userBoardList = boardRepository.findAllByUserAndIsDeletedFalse(user);
         List<BoardResDto> list = new ArrayList<>();
         for(Board board : userBoardList){
+            Attend attend = attendRepository.findByUserAndBoard(user,board);
             BoardResDto dto = BoardResDto.builder()
                     .nickname(board.getUser().getNickName()) // 사용자 닉네임 설정
                     .boardTitle(board.getBoardTitle())
@@ -61,6 +67,7 @@ public class BoardService {
                     .scheduleLocation(board.getScheduleLocation())
                     .maxParticipants(board.getMaxParticipants())
                     .createdAt(board.getCreatedAt())
+                    .isAttended(attend != null)
                     .build();
             list.add(dto);
         }
@@ -70,6 +77,8 @@ public class BoardService {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new EntityNotFoundException("Board not found with id: " + boardId));
 
+        Attend attend = attendRepository.findByUserAndBoard(SecurityUtil.getCurrentUser(), board);
+
             BoardResDto dto = BoardResDto.builder()
                     .nickname(board.getUser().getNickName()) // 사용자 닉네임 설정
                     .boardTitle(board.getBoardTitle())
@@ -78,6 +87,7 @@ public class BoardService {
                     .scheduleLocation(board.getScheduleLocation())
                     .maxParticipants(board.getMaxParticipants())
                     .createdAt(board.getCreatedAt())
+                    .isAttended(attend != null)
                     .build();
         return dto;
     }
