@@ -70,37 +70,40 @@ const MyPloggingDetail = ({ onClose, index }:any) => {
                 <TouchableOpacity onPress={onClose}>
                     <View style={styles.modalView}>
                         <View style={{marginBottom: 30}}>
-                            <View style={[styles.noWrapRow, {marginBottom: 20}]}>
+                            <View style={[styles.noWrapRow]}>
                                 <View style={styles.center}>
-                                    <Text style={{fontWeight:'bold', fontSize: 20}}>
-                                      {detail?.createdAt ? formatDate(detail.createdAt) : null}
+                                    <Text style={{fontWeight:'bold', fontSize: 18, color: '#52A447'}}>{types[3]}</Text>
+                                    <Text style={{fontSize: 18}}>
+                                      {detail?.createdAt ? formatDate(detail.createdAt).datePart : null}
                                     </Text>
-                                    <Text style={{fontSize: 20}}>{types[3]}</Text>
+                                    <Text style={{fontSize: 18}}>
+                                      {detail?.createdAt ? formatDate(detail.createdAt).timePart : null}
+                                    </Text>
                                 </View>
                                 <View style={styles.center}>
-                                    <Text style={{fontWeight:'bold', fontSize: 20}}>{detail?.getExp}</Text>
-                                    <Text style={{fontSize: 20}}>{types[4]}</Text>
+                                    <Text style={{fontWeight:'bold', fontSize: 18, color: '#52A447'}}>{types[4]}</Text>
+                                    <Text style={{fontSize: 18}}>{detail?.getExp}</Text>
                                 </View>
                             </View>
                             <View style={styles.noWrapRow}>
                                 <View style={styles.center}>
-                                    <Text style={{fontWeight:'bold', fontSize: 20}}>{detail?.trashAmount} 개</Text>
-                                    <Text style={{fontSize: 20}}>{types[0]}</Text>
+                                    <Text style={{fontWeight:'bold', fontSize: 18, color: '#52A447'}}>{types[0]}</Text>
+                                    <Text style={{fontSize: 18}}>{detail?.trashAmount} 개</Text>
                                 </View>
                                 <View style={styles.center}>
-                                    <Text style={{fontWeight:'bold', fontSize: 20}}>{roundedTravelRange(detail?.travelRange)} KM</Text>
-                                    <Text style={{fontSize: 20}}>{types[1]}</Text>
+                                    <Text style={{fontWeight:'bold', fontSize: 18, color: '#52A447'}}>{types[1]}</Text>
+                                    <Text style={{fontSize: 18}}>{roundedTravelRange(detail?.travelRange)} KM</Text>
                                 </View>
                                 <View style={styles.center}>
-                                    <Text style={{fontWeight:'bold', fontSize: 20}}>{detail ? msToHMS(detail.travelTime) : "00:00:00"}</Text>
-                                    <Text style={{fontSize: 20}}>{types[2]}</Text>
+                                    <Text style={{fontWeight:'bold', fontSize: 18, color: '#52A447'}}>{types[2]}</Text>
+                                    <Text style={{fontSize: 18}}>{detail ? msToHMS(detail.travelTime) : "00:00:00"}</Text>
                                 </View>
                             </View>
                         </View>
                         <View style={{justifyContent:'center', alignItems:'center'}}>
                         {detail?.travelPicture?( 
                             <Image source={{uri: detail?.travelPicture}} style={ImageStyle.largeImage}></Image>
-                        ):(<Text style={{fontSize: 28, marginTop: 75}}>등록된 사진이 없습니다.</Text>)
+                        ):(<Text style={{fontSize: 18, marginTop: 75}}>등록된 사진이 없습니다.</Text>)
                         }
                         </View>
                     </View>
@@ -121,17 +124,17 @@ const styles = StyleSheet.create({
         height: '82%',
         backgroundColor: 'rgba(255, 255, 255, 0.9)',
         borderRadius: 20,
-        padding: 20,
-
+        padding: 30,
     },
     noWrapRow: {
         flexDirection: 'row',
         flexWrap: 'nowrap',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
     },
     center :{
         justifyContent:'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        padding: 10,
     }
 });
 export default MyPloggingDetail;

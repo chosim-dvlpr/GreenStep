@@ -80,7 +80,7 @@ const Profile = ({navigation}: any) => {
         style={{
           display: 'flex',
           flexDirection: 'row',
-          marginBottom: 20,
+          marginBottom: 30,
           justifyContent: 'space-evenly',
           alignItems: 'center',
         }}>
@@ -90,15 +90,19 @@ const Profile = ({navigation}: any) => {
         </View>
         <ProfileHeaderStrick />
       </View>
-
-      <ProfilePloggingDataInfo
-        navigation={navigation}
-        timeInfo={timeInfo}
-        distanceInfo={distanceInfo}
-        trashInfo={trashInfo}
-        acheiveInfo={acheiveInfo}
-        isProfile={isProfile}
-      />
+      
+      <View
+      style={{marginLeft: 10, marginRight: 10,}}
+      >
+        <ProfilePloggingDataInfo
+          navigation={navigation}
+          timeInfo={timeInfo}
+          distanceInfo={distanceInfo}
+          trashInfo={trashInfo}
+          acheiveInfo={acheiveInfo}
+          isProfile={isProfile}
+        />
+      </View>
       <MyPlogging />
     </ScrollView>
   );
