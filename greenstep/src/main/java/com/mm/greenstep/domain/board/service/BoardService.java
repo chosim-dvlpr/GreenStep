@@ -69,6 +69,7 @@ public class BoardService {
             Attend attend = attendRepository.findByUserAndBoard(user,board);
             BoardResDto dto = BoardResDto.builder()
                     .nickname(board.getUser().getNickName()) // 사용자 닉네임 설정
+                    .boardId(board.getBoardId())
                     .boardTitle(board.getBoardTitle())
                     .boardContent(board.getBoardContent())
                     .scheduleTime(board.getScheduleTime().toString()) // LocalDateTime을 String으로 변환
@@ -93,6 +94,7 @@ public class BoardService {
             BoardResDto dto = BoardResDto.builder()
                     .nickname(board.getUser().getNickName()) // 사용자 닉네임 설정
                     .boardTitle(board.getBoardTitle())
+                    .boardId(board.getBoardId())
                     .boardContent(board.getBoardContent())
                     .scheduleTime(board.getScheduleTime().toString())
                     .scheduleLocation(board.getScheduleLocation())

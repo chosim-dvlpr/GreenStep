@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 public class BoardResDto {
     private Long boardId;
     private String nickname;
-    private String AvatarImage;
     private String boardTitle;
     private String boardContent;
     private String scheduleTime;
