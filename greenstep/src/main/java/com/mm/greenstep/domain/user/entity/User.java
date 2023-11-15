@@ -73,9 +73,9 @@ public class User implements UserDetails {
     // @ElementCollection
     // 별도의 엔티티가 아닌 값의 컬렉션을 매핑할 때 사용됩니다.
     // JPA는 이를 위해 별도의 테이블을 생성함
-    @Column
     @ElementCollection(fetch = FetchType.EAGER)
-    @Builder.Default
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role")
     private List<String> roles = new ArrayList<>();
 
     @Override
