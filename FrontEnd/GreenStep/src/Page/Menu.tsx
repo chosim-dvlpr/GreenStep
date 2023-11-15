@@ -17,8 +17,8 @@ const ContainerBg = styled.ImageBackground`
 `;
 
 const Menu = () => {
-    const pictures = [badge, trash, profile, map]
-    const names = ['업적', '플로깅 이벤트', '회원 정보 수정', 'GreenStep 발자취']
+    const pictures = [badge, trash, profile, badge, map]
+    const names = ['업적', '플로깅 이벤트', '회원 정보 수정', '참여 플로깅', 'GreenStep 발자취']
     const navigation = useNavigation();
     //추후 페이지 만들고 나서 수정
     const moveToCategory = (idx : number) => {
@@ -28,6 +28,8 @@ const Menu = () => {
             navigation.navigate('event')
         }else if(idx === 2){
             navigation.navigate('userinfo')
+        }else if(idx === 3){
+            navigation.navigate('myjoinedplogginglist')
         }else{
             openURL()
         }
