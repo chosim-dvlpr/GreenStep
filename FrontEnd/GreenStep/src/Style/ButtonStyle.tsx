@@ -59,8 +59,9 @@ const ButtonStyle = StyleSheet.create({
   },
   /** 업적 페이지 작은 버튼 */
   achievementButton: {
-    backgroundColor: '#ACD8A7',
-    elevation: 5
+    backgroundColor: '#8BCA84',
+    elevation: 5,
+    marginBottom: 20,
   },
   /** 버튼 색 - 연초록 */
   lightGreenColor: {

@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList} from 'react-native';
+import {FlatList, StyleSheet} from 'react-native';
 import styled from 'styled-components/native';
 
 // CompetitionData 인터페이스를 가져오거나 정의합니다.
@@ -36,7 +36,7 @@ interface CompetitionDashBoardProps {
 
 const CompetitionDashBoard = ({teamData}: CompetitionDashBoardProps) => {
   const renderTeamCountBox = (title: string, content: string) => (
-    <TeamCountBox>
+    <TeamCountBox style={styles.teamCount}>
       <TeamText>{title}</TeamText>
       <TeamNum>{content}</TeamNum>
     </TeamCountBox>
@@ -102,6 +102,7 @@ const TeamCountBox = styled.View`
   justify-content: space-evenly;
   margin-top: 15px;
   margin-left: 23px;
+
 `;
 
 const TeamText = styled.Text`
@@ -113,3 +114,16 @@ const TeamNum = styled.Text`
   font-size: 30px;
   font-family: 'SUITE-Bold';
 `;
+
+const styles = StyleSheet.create({
+  teamCount: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  }
+})
