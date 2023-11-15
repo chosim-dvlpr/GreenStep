@@ -6,7 +6,6 @@ import com.mm.greenstep.domain.plogging.repository.FestivalRepository;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.jsoup.Jsoup;
@@ -17,6 +16,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +30,8 @@ public class FestivalService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
         String formattedDate = localDate.format(formatter);
 
+        List<Festival> festivalList = festivalRepository.findAll();
+
         // 개인봉사 페이지
         String url1 =
                 "https://www.1365.go.kr/vols/search.do?collection=personalserve&startCount=0&sort=RANK&cateSearch=all&range=A&startDate=1970.01.01&endDate="
@@ -42,12 +44,12 @@ public class FestivalService {
                         + formattedDate
                         + "&searchField=ALL&reQuery=2&realQuery=%ED%94%8C%EB%A1%9C%EA%B9%85&query=%ED%94%8C%EB%A1%9C%EA%B9%85";
 
+
         Document doc = Jsoup.connect(url1).get();
 
         // class="tit"인 a 태그 추출
         Elements links = doc.select("a.tit");
 
-        // 각 a 태그에 대해 반복 처리
         for (Element link : links) {
             // a 태그의 href 속성 추출
             String linkHref = "https://www.1365.go.kr/" + link.attr("href");
@@ -55,43 +57,49 @@ public class FestivalService {
             // a 태그 내부의 텍스트 추출
             String linkText = link.text();
 
-            Festival festival = Festival.builder()
-                    .festivalName(linkText)
-                    .festivalUrl(linkHref)
-                    .build();
+// 데이터베이스에서 동일한 항목이 있는지 확인
+            Optional<Festival> existingFestival = festivalRepository.findByFestivalNameAndFestivalUrl(linkText, linkHref);
 
-            try {
-                // 데이터 저장
+            if (!existingFestival.isPresent()) {
+                Festival festival = Festival.builder()
+                        .festivalName(linkText)
+                        .festivalUrl(linkHref)
+                        .build();
+
                 festivalRepository.save(festival);
-            } catch (DataIntegrityViolationException e) {
-                System.out.println("중복된 데이터라 넘어갑니다.");
             }
         }
+
+
+        // 각 a 태그에 대해 반복 처리
+
 
         doc = Jsoup.connect(url2).get();
 
         // class="tit"인 a 태그 추출
         links = doc.select("a.tit");
 
-        for (Element link : links) {
-            // a 태그의 href 속성 추출
-            String linkHref = "https://www.1365.go.kr/" + link.attr("href");
+        for (Festival f : festivalList) {
+            for (Element link : links) {
+                // a 태그의 href 속성 추출
+                String linkHref = "https://www.1365.go.kr/" + link.attr("href");
 
-            // a 태그 내부의 텍스트 추출
-            String linkText = link.text();
+                // a 태그 내부의 텍스트 추출
+                String linkText = link.text();
 
-            Festival festival = Festival.builder()
-                    .festivalName(linkText)
-                    .festivalUrl(linkHref)
-                    .build();
+                Optional<Festival> existingFestival = festivalRepository.findByFestivalNameAndFestivalUrl(linkText, linkHref);
 
-            try {
-                // 데이터 저장
-                festivalRepository.save(festival);
-            } catch (DataIntegrityViolationException e) {
-                System.out.println("중복된 데이터라 넘어갑니다.");
+                if (!existingFestival.isPresent()) {
+                    Festival festival = Festival.builder()
+                            .festivalName(linkText)
+                            .festivalUrl(linkHref)
+                            .build();
+
+                    festivalRepository.save(festival);
+                }
             }
         }
+
     }
 
 
