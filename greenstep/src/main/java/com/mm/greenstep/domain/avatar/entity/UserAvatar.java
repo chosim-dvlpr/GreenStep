@@ -31,4 +31,5 @@ public class UserAvatar {
     public void updateAvatar(Boolean tf) {
         this.isSelected = tf;
     }
+
 }

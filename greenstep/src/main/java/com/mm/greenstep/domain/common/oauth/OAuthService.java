@@ -1,6 +1,10 @@
 package com.mm.greenstep.domain.common.oauth;
 
 import com.mm.greenstep.domain.achieve.service.AchieveService;
+import com.mm.greenstep.domain.avatar.entity.Avatar;
+import com.mm.greenstep.domain.avatar.entity.UserAvatar;
+import com.mm.greenstep.domain.avatar.repository.AvatarRepository;
+import com.mm.greenstep.domain.avatar.repository.UserAvatarRepository;
 import com.mm.greenstep.domain.common.jwt.JwtTokenProvider;
 import com.mm.greenstep.domain.user.dto.request.UserReqDto;
 import com.mm.greenstep.domain.user.dto.response.Response;
@@ -39,6 +43,8 @@ public class OAuthService {
     private final PasswordEncoder passwordEncoder;
     private final TeamRepository teamRepository;
     private final AchieveService achieveService;
+    private final AvatarRepository avatarRepository;
+    private final UserAvatarRepository userAvatarRepository;
 
     public String findKakaoId(String token) {
 
@@ -118,6 +124,15 @@ public class OAuthService {
                     .build();
 
             userRepository.save(saveUser);
+
+            Avatar avatar = avatarRepository.findByBoxId(22L);
+
+            UserAvatar userAvatar = UserAvatar.builder()
+                    .user(saveUser)
+                    .avatar(avatar)
+                    .isSelected(true)
+                    .build();
+            userAvatarRepository.save(userAvatar);
 
             userId = saveUser.getUserId();
             log.info("createUser-userId : "+userId);
