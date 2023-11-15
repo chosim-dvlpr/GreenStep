@@ -27,9 +27,9 @@ const PloggingMap: React.FC<PloggingMapProps> = ({locations, isTracking}) => {
   const getImageForTrashType = (type: number) => {
     switch (type) {
       case 0:
-        return require('../../Image/PloggingStart/trash.png');
+        return require('../../Image/PloggingStart/trashcan.png');
       case 1:
-        return require('../../Image/PloggingStart/pet.png');
+        return require('../../Image/PloggingStart/recycletrashcan.png');
       // 다른 타입에 대한 이미지 추가
       default:
         return require('../../Image/PloggingStart/pet.png'); // 기본 이미지
@@ -112,7 +112,10 @@ const PloggingMap: React.FC<PloggingMapProps> = ({locations, isTracking}) => {
         )}
       </MapView>
       <TouchableOpacity onPress={toggleTrashBins} style={styles.button}>
-        <Text>쓰레기통 위치 토글</Text>
+        <Image
+          source={require('../../Image/PloggingStart/trashcanimg.png')}
+          style={{width: 50, height: 50}} // 원하는 스타일 지정
+        />
       </TouchableOpacity>
     </>
   );
@@ -125,10 +128,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 200,
     left: 10,
-    width: 30,
-    height: 30,
-    backgroundColor: 'black',
-    padding: 10,
+    width: 50, // TouchableOpacity의 크기를 이미지 크기에 맞게 조정
+    height: 50,
     borderRadius: 5,
   },
 });

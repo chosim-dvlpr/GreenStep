@@ -64,7 +64,7 @@ const PloggingEndMap: React.FC<PloggingEndMapProps> = ({locations}) => {
               longitude: locations[0].longitude,
             }}>
             <Image
-              source={require('../../Image/PloggingStart/pet.png')} // 시작점 마커 이미지
+              source={require('../../Image/PloggingStart/startpoint.png')} // 시작점 마커 이미지
               style={{width: 50, height: 50}}
             />
           </Marker>
@@ -89,7 +89,10 @@ const PloggingEndMap: React.FC<PloggingEndMapProps> = ({locations}) => {
         )}
       </MapView>
       <TouchableOpacity onPress={toggleTrashBins} style={styles.button}>
-        <Text>쓰레기통 위치 토글</Text>
+        <Image
+          source={require('../../Image/PloggingStart/trashcanimg.png')}
+          style={{width: 50, height: 50}} // 원하는 스타일 지정
+        />
       </TouchableOpacity>
     </>
   );
@@ -99,12 +102,11 @@ export default PloggingEndMap;
 const styles = StyleSheet.create({
   button: {
     position: 'absolute',
-    top: 200,
+    top: 20,
     left: 10,
     width: 30,
     height: 30,
-    backgroundColor: 'black',
-    padding: 10,
+
     borderRadius: 5,
   },
 });
