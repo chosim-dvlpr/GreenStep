@@ -60,4 +60,10 @@ private final BoardService boardService;
         }
 
     }
+
+
+    @GetMapping("/attend/list")
+    public ResponseEntity<?> getAllAttendList(){
+        return boardService.getAllBoardList();
+    }
 }

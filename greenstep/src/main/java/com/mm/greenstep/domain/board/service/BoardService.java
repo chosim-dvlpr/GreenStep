@@ -9,6 +9,8 @@ import com.mm.greenstep.domain.board.repository.BoardRepository;
 import com.mm.greenstep.domain.common.util.SecurityUtil;
 import com.mm.greenstep.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -122,5 +124,18 @@ public class BoardService {
         } else {
             return false;
         }
+    }
+
+    public ResponseEntity<?> getAllBoardList(){
+        List<Attend> attendList = attendRepository.findAllByUser(SecurityUtil.getCurrentUser());
+        List<Board> boardList = new ArrayList<>();
+
+        for(Attend attend : attendList){
+            boardList.add(attend.getBoard());
+        }
+
+        return new ResponseEntity<>(boardList.stream()
+                .map(this::convertToBoardResDto)
+                .collect(Collectors.toList()), HttpStatus.OK) ;
     }
 }
