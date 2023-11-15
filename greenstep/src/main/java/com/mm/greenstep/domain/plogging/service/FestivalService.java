@@ -30,8 +30,6 @@ public class FestivalService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
         String formattedDate = localDate.format(formatter);
 
-        List<Festival> festivalList = festivalRepository.findAll();
-
         // 개인봉사 페이지
         String url1 =
                 "https://www.1365.go.kr/vols/search.do?collection=personalserve&startCount=0&sort=RANK&cateSearch=all&range=A&startDate=1970.01.01&endDate="
@@ -55,50 +53,52 @@ public class FestivalService {
             String linkHref = "https://www.1365.go.kr/" + link.attr("href");
 
             // a 태그 내부의 텍스트 추출
-            String linkText = link.text();
+            String linkText = "[개인봉사] " + link.text();
 
-// 데이터베이스에서 동일한 항목이 있는지 확인
+            // 데이터베이스에서 동일한 항목이 있는지 확인
             Optional<Festival> existingFestival = festivalRepository.findByFestivalNameAndFestivalUrl(linkText, linkHref);
-
-            if (!existingFestival.isPresent()) {
-                Festival festival = Festival.builder()
-                        .festivalName(linkText)
-                        .festivalUrl(linkHref)
-                        .build();
-
-                festivalRepository.save(festival);
+            if (existingFestival.isPresent()) {
+                continue;
             }
+
+            Festival festival = Festival.builder()
+                    .festivalName(linkText)
+                    .festivalUrl(linkHref)
+                    .build();
+
+            festivalRepository.save(festival);
+
         }
 
 
         // 각 a 태그에 대해 반복 처리
 
 
-        doc = Jsoup.connect(url2).get();
+        Document doc2 = Jsoup.connect(url2).get();
 
         // class="tit"인 a 태그 추출
-        links = doc.select("a.tit");
+        Elements links2 = doc2.select("a.tit");
 
-        for (Festival f : festivalList) {
-            for (Element link : links) {
-                // a 태그의 href 속성 추출
-                String linkHref = "https://www.1365.go.kr/" + link.attr("href");
+        for (Element link : links2) {
+            // a 태그의 href 속성 추출
+            String linkHref = "https://www.1365.go.kr/" + link.attr("href");
 
-                // a 태그 내부의 텍스트 추출
-                String linkText = link.text();
+            // a 태그 내부의 텍스트 추출
+            String linkText = "[기업단체봉사] " + link.text();
 
-                Optional<Festival> existingFestival = festivalRepository.findByFestivalNameAndFestivalUrl(linkText, linkHref);
-
-                if (!existingFestival.isPresent()) {
-                    Festival festival = Festival.builder()
-                            .festivalName(linkText)
-                            .festivalUrl(linkHref)
-                            .build();
-
-                    festivalRepository.save(festival);
-                }
+            Optional<Festival> existingFestival = festivalRepository.findByFestivalNameAndFestivalUrl(linkText, linkHref);
+            if (existingFestival.isPresent()) {
+                continue;
             }
+
+            Festival festival = Festival.builder()
+                    .festivalName(linkText)
+                    .festivalUrl(linkHref)
+                    .build();
+
+            festivalRepository.save(festival);
         }
+
 
     }
 

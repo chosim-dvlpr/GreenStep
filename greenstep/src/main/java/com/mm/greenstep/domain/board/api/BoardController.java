@@ -44,7 +44,7 @@ private final BoardService boardService;
             @PathVariable(value = "boardId", required = false) Long boardId
             ){
         BoardResDto detailBoard = boardService.getBoardDetail(boardId);
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        return new ResponseEntity<>(detailBoard, HttpStatus.OK);
     }
 
     // 게시글 삭제
