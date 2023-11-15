@@ -1,4 +1,4 @@
-import {View, Text, ScrollView, Image, TouchableOpacity} from 'react-native';
+import {Dimensions, View, Text, ScrollView, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 //component
 import BoardMyPost from '../Component/Board/BoardMyPost';
@@ -9,9 +9,11 @@ import ButtonStyle from '../Style/ButtonStyle';
 import pencil from '../Image/Board/pencil.png';
 import styled from 'styled-components/native';
 
+const screenHeight = Dimensions.get('screen').height;
+
 const ContainerBg = styled.ImageBackground`
   width: 100%;
-  height: 100%;
+  height: ${screenHeight}px;
 `;
 
 
@@ -21,24 +23,24 @@ const Board = ({navigation}:any) => {
       <ContainerBg source={require('../Image/Competition/bg.png')}>
         <ScrollView style={{ flex: 1 }}>
           <View style={{alignItems:'center', justifyContent:'center', margin: 20}}>
-            <Text style={{fontSize: 22, fontWeight:'bold'}}>크루 찾기</Text>
+            {/* <Text style={{fontSize: 22, fontWeight:'bold'}}>크루 찾기</Text> */}
           </View>
           
           <BoardMyPost navigation={navigation}/>
           <BoardList/>
           </ScrollView>
           
-          <TouchableOpacity style={[ButtonStyle.smallButton,ButtonStyle.achievementButton,
-                                  {position:'absolute', bottom: 20, alignSelf: 'center',
-                                    display:'flex', flexDirection: 'row', 
-                                    justifyContent: 'space-evenly', alignItems:'center'
-                                  }]}
-                            onPress={()=>navigation.navigate('boardcrud')}       
-                                  >
-              <Image source={pencil} style={{width:15, height: 15}}></Image>
-              <Text style={{fontSize:16, color:'white', fontWeight:'bold'}}>글 쓰기</Text>
-          </TouchableOpacity>
       </ContainerBg>
+      <TouchableOpacity style={[ButtonStyle.smallButton,ButtonStyle.achievementButton,
+                              {position:'absolute', bottom: 20, alignSelf: 'center',
+                                display:'flex', flexDirection: 'row', 
+                                justifyContent: 'space-evenly', alignItems:'center'
+                              }]}
+                        onPress={()=>navigation.navigate('boardcrud')}       
+                              >
+          <Image source={pencil} style={{width:15, height: 15}}></Image>
+          <Text style={{fontSize:16, color:'white', fontWeight:'bold'}}>글 쓰기</Text>
+      </TouchableOpacity>
     </View>
   );
 };

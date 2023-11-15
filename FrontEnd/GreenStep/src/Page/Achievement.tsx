@@ -1,4 +1,4 @@
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView, Dimensions } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import AchievementButton from '../Component/Achievement/AchievementButton';
 import AchievementList from '../Component/Achievement/AcievementList';
@@ -21,10 +21,10 @@ interface achieveProps{
   myTravelRange: number | null;
   myTravelTime: number | null;
 }
-
+const screenHeight = Dimensions.get('screen').height;
 const ContainerBg = styled.ImageBackground`
   width: 100%;
-  height: 100%;
+  height: ${screenHeight}px;
 `;
 
 

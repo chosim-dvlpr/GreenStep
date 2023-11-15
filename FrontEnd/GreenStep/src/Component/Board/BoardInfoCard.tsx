@@ -10,11 +10,11 @@ const BoardInfoCard = () => {
 
     return(
         <View style={{marginBottom: 20}}>
-            <View style={[Box.cardBox, {display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', alignItems:'center'}]}>
+            <View style={[Box.cardBox, {width: '100%', isplay: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', alignItems:'center'}]}>
                 <View style={{flex: 1, marginLeft: 10,}}>
                     <Text style={{fontWeight:'bold', fontSize: 20, marginBottom: 20}}>Information</Text>
                     <Text style={{marginBottom: 10}}>{joinInfo.name}</Text>
-                    <Text style={{marginBottom: 10}}>날짜 {joinInfo.date}</Text> 
+                    <Text style={{marginBottom: 10}}>날짜123 {joinInfo.date}</Text> 
                     <Text style={{marginBottom: 10}}>인원 {joinInfo.member} / 4</Text> 
                 </View>
                 <View>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text,TouchableOpacity, ScrollView } from "react-native";
+import { Dimensions, View, Text,TouchableOpacity, ScrollView } from "react-native";
 //component
 import DetailBoard from '../Component/Board/BoardDetail';
 import BoardInfoCard from '../Component/Board/BoardInfoCard';
@@ -8,23 +8,25 @@ import BoardInfoParticipationList from '../Component/Board/BoardInfoParticipatio
 import ButtonStyle from "../Style/ButtonStyle";
 import styled from 'styled-components/native';
 
+const screenHeight = Dimensions.get('screen').height;
 const ContainerBg = styled.ImageBackground`
   width: 100%;
-  height: 100%;
+  height: ${screenHeight}px;
 `;
 
 const BoardDetail = () => {
     
     return(
-        <ScrollView>
+        <ScrollView style={{backgroundColor: 'yellow'}}>
             <ContainerBg source={require('../Image/Competition/bg.png')}>
                 <View style={{alignItems:'center'}}>
                     <View style={{alignItems:'center', justifyContent:'center', margin: 20}}>
-                        <Text style={{fontSize: 22, fontWeight:'bold'}}>크루 찾기</Text>
+                        {/* <Text style={{fontSize: 22, fontWeight:'bold'}}>크루 찾기</Text> */}
                     </View>
-                    
-                    <DetailBoard/>
-                    <BoardInfoCard/>
+                    <View style={{paddingLeft: 20, paddingRight: 20}}>
+                        <DetailBoard/>
+                        <BoardInfoCard/>
+                    </View>
                     <BoardInfoParticipationList/>
 
                     <TouchableOpacity style={[ButtonStyle.largeButton, ButtonStyle.achievementButton, {marginBottom: 20}]}>

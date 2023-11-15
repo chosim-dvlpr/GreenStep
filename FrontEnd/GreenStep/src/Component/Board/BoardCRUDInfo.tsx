@@ -25,7 +25,7 @@ const BoardCRUDInfo = () => {
         }
     }
     return(
-        <ScrollView style={{marginBottom: 20}}>
+        <ScrollView style={{marginBottom: 30}}>
             <View style={{justifyContent:'center', alignItems:'center'}}>
         <View style={[Box.cardBox, {display:'flex'}]}>
             <Text style={{marginBottom: 10, fontSize:20}}>Information</Text>

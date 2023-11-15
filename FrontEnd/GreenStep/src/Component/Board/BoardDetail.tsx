@@ -8,14 +8,14 @@ import avatar from '../../Image/Avatar/panda.png';
 
 const DetailBoard = () => {
   const [detail, setDetail] = useState({
-    name : '이대경', 
+    name : '이대경123', 
     create_at: '10/26 16:45',
     title:'대전 3반 플로깅 하실 분?', 
     content:'2030년 4월 20일 일과 끝나고 플로깅 하실 분 구해요~ 저는 B303의 이대경입니다.'})
 
   return(
     <View>
-      <View style={[Box.cardBox, {marginBottom:20}]}>
+      <View style={[Box.cardBox, {marginBottom:20, width: '100%'}]}>
         <View style={[Box.flexRowBox,{marginBottom: 20}]}>
           <Image source={avatar} style={[ImageStyle.tinyImage, {borderRadius: 50, marginRight: 20,}]}></Image>
           <View>
