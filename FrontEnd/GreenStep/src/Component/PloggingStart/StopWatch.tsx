@@ -39,6 +39,9 @@ const StopWatch: React.FC<
       }
     };
   }, [isRunning, reset, onTimeUpdate]);
+  useEffect(() => {
+    onTimeUpdate(time); // 이 부분을 추가
+  }, [time, onTimeUpdate]);
 
   const formatTime = (time: number) => {
     const hours = Math.floor(time / 3600);

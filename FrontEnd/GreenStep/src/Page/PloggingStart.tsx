@@ -60,6 +60,11 @@ const PloggingStart = () => {
       {enableHighAccuracy: true},
     );
   };
+
+  const handleStopTracking = () => {
+    setIsTracking(false);
+  };
+
   const {isModalVisible, openModal, closeModal} = useModal();
 
   return (

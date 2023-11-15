@@ -178,7 +178,7 @@ const Main = () => {
         <MainText>그린스텝</MainText>
       </MainTextContainer>
 
-      <CarouselContainer>
+      {/* <CarouselContainer>
         <CarouselTextContainer>
           <Text
           style={{fontSize: 24, fontWeight: 'bold', fontFamily: 'SUITE-Bold'}}
@@ -188,7 +188,7 @@ const Main = () => {
           </Text>
         </CarouselTextContainer>
         <Carousel />
-      </CarouselContainer>
+      </CarouselContainer> */}
 
       <LoginContainer>
         {isLogin ? (
