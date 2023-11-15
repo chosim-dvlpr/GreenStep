@@ -24,7 +24,7 @@ const Board = ({navigation}:any) => {
             <Text style={{fontSize: 22, fontWeight:'bold'}}>크루 찾기</Text>
           </View>
           
-          <BoardMyPost navigation={navigation}/>
+          <BoardMyPost/>
           <BoardList/>
           </ScrollView>
           
