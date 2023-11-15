@@ -25,7 +25,7 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<BoardResDto> getAllBoards() {
-        List<Board> boards = boardRepository.findAllIsDeletedFalse();
+        List<Board> boards = boardRepository.findAllByIsDeletedFalse();
         return boards.stream()
                 .map(this::convertToBoardResDto)
                 .collect(Collectors.toList());
