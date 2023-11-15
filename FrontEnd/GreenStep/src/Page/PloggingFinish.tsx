@@ -192,7 +192,7 @@ const PloggingFinish = () => {
         {/* 메인 버튼 */}
         <GoToMainContainer>
           <TouchableOpacity
-            onPress={() => navigation.navigate('main')}
+            onPress={() => navigation.navigate('bottom', { screen: '메인 페이지' })}
             style={[ButtonStyle.whiteColor, ButtonStyle.fullLargeButton]}>
             <Text
               style={{
@@ -233,7 +233,7 @@ const GoToMainContainer = styled.View`
   width: 86%;
   margin: auto;
   margin-top: 30;
-  margin-bottom: 110;
+  margin-bottom: 40;
 `;
 
 const IsVisibleContainer = styled.View`
