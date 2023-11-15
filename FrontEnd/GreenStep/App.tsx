@@ -21,6 +21,7 @@ import BoardCRUD from './src/Page/BoardCRUD';
 import MyPlogging from './src/Page/MyPlogging';
 import Menu from './src/Page/Menu';
 import UserInfo from './src/Page/UserInfo';
+import Event from './src/Page/Event';
 //style
 import ImageStyle from './src/Style/Image';
 //Image
@@ -74,7 +75,8 @@ const BottomTabScreen = () => {
 };
 const App = () => {
   const Stack = createNativeStackNavigator();
-
+  const now = new Date();
+  const month = now.getMonth() + 1;
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
@@ -151,6 +153,15 @@ const App = () => {
               options={{
                 headerShown: true,
                 title: '회원 정보',
+                headerTitleAlign: 'center',
+              }}
+            />
+            <Stack.Screen
+              name="event"
+              component={Event}
+              options={{
+                headerShown: true,
+                title: `${month}월 플로깅 이벤트`,
                 headerTitleAlign: 'center',
               }}
             />
