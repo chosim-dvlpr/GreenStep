@@ -1,0 +1,1 @@
+package com.mm.greenstep.domain.board.dto.response;
