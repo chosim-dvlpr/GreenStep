@@ -22,7 +22,7 @@ const BoardInfoCard: React.FC<{ boardDetail: BoardProps }> = ({ boardDetail }) =
       <View style={[Box.cardBox, { display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }]}>
         <View style={{ flex: 1, marginLeft: 10 }}>
           <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 20 }}>Information</Text>
-          <Text style={{ marginBottom: 10 }}>{boardDetail.nickname}</Text>
+          <Text style={{ marginBottom: 10 }}>모집자 : {boardDetail.nickname}</Text>
           <Text style={{ marginBottom: 10 }}>날짜 {boardDetail.scheduleTime}</Text>
           <Text style={{ marginBottom: 10 }}>인원 3/{boardDetail.maxParticipants}</Text>
         </View>

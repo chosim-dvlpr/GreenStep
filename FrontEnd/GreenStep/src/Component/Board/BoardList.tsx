@@ -7,12 +7,16 @@ import {baseURL} from '../../Api/tokenHttp';
 import BoardListDetail from "./BoardListDetail";
 
 interface BoardProps{
-    boardId : number | null;
+    avatarImg : string;
+    nickname : string;
+    boardId : number;
     boardTitle: string;
     boardContent: string;
     scheduleLocation: string;
     scheduleTime : string;
     maxParticipants: number;
+    createdAt : string;
+    isAttended: boolean;
   }
 
 const BoardList = () => {
@@ -46,8 +50,8 @@ const BoardList = () => {
         <View>
         <Text style={{ fontSize: 20, fontWeight: 'bold', paddingLeft: 20, marginBottom: 20}}>최신</Text>
                 <ScrollView >
-                    {allBoardList.map((list) =>(
-                        <BoardListDetail {...list}/>
+                    {allBoardList.map((list, idx) =>(
+                        <BoardListDetail key={idx} {...list}/>
                     ))}
                 </ScrollView>
 

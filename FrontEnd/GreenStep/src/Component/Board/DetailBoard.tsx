@@ -22,19 +22,17 @@ const DetailBoard: React.FC<{ boardDetail: BoardProps }> = ({ boardDetail }) => 
  
   
   return (
-    <View>
       <View style={[Box.cardBox, { marginBottom: 20 }]}>
         <View style={[Box.flexRowBox, { marginBottom: 20 }]}>
           <Image source={{ uri: boardDetail.avatarImg }} style={[ImageStyle.tinyImage, { borderRadius: 50, marginRight: 20 }]}></Image>
           <View>
-            <Text>{boardDetail.nickname}</Text>
+            <Text>작성자 : {boardDetail.nickname}</Text>
             <Text>{formattedTime}</Text>
           </View>
         </View>
         <Text style={{ fontWeight: 'bold', marginBottom: 20 }}>{boardDetail.boardTitle}</Text>
         <Text>{boardDetail.boardContent}</Text>
       </View>
-    </View>
   );
 }
 

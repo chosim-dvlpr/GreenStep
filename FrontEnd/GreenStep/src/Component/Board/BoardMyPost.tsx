@@ -51,8 +51,8 @@ const BoardMyPost = ({navigation}:any) => {
         <View>
             <Text style={{ fontSize: 20, fontWeight: 'bold', paddingLeft: 20, marginBottom: 20}}>내 글</Text>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{marginBottom: 30}}>
-                {myBoardList.map((list) =>(
-                    <BoardMyPostCard {...list}/>
+                {myBoardList.map((list, idx) =>(
+                    <BoardMyPostCard key={idx} {...list}/>
                 ))}
             </ScrollView>
         </View>
