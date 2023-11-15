@@ -33,7 +33,7 @@ const ButtonStyle = StyleSheet.create({
    */
   largeButton: {
     width: '90%', 
-    height: 60,       
+    height: 50,       
     borderRadius: 15,
     alignItems : 'center',
     justifyContent: 'center',
@@ -51,7 +51,7 @@ const ButtonStyle = StyleSheet.create({
   kakaoButton: {
     backgroundColor: '#FEE500',
     width: '100%',
-    height: 60,
+    height: 50,
     borderRadius: 12,
     alignItems : 'center',
     justifyContent: 'center',

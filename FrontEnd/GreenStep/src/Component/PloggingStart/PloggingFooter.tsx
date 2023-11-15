@@ -21,7 +21,7 @@ const PloggingFooter: React.FC<PloggingFooterProps> = ({
             size="small"
             isTracking={isTracking}
           />
-          <Text>AI쓰레기 인식</Text>
+          <Text style={{fontFamily: 'SUITE-Bold', marginTop: 4,}}>AI쓰레기 인식</Text>
         </PloggingDivisionContainer>
         <PloggingDivisionContainer>
           <PloggingDivision
@@ -29,7 +29,7 @@ const PloggingFooter: React.FC<PloggingFooterProps> = ({
             size="small"
             isTracking={isTracking}
           />
-          <Text>일반 쓰레기</Text>
+          <Text style={{fontFamily: 'SUITE-Bold', marginTop: 4,}}>일반 쓰레기</Text>
         </PloggingDivisionContainer>
         <PloggingDivisionContainer>
           <PloggingDivision
@@ -38,7 +38,7 @@ const PloggingFooter: React.FC<PloggingFooterProps> = ({
             size="small"
             isTracking={isTracking}
           />
-          <Text>재활용품</Text>
+          <Text style={{fontFamily: 'SUITE-Bold', marginTop: 4,}}>재활용품</Text>
         </PloggingDivisionContainer>
       </Footer>
     </FooterContainer>
@@ -68,6 +68,7 @@ const Footer = styled.View`
   justify-content: center;
   align-items: center;
   flex-direction: row;
+  padding: 10px;
 `;
 
 const PloggingDivisionContainer = styled.View`
