@@ -103,7 +103,7 @@ const AchievementList = ({ atom, achievetype }: AchievementListProps) => {
                         style={{marginBottom:5}}
                         />
                     </View>
-                    <Text style={{fontWeight:'bold'}}>달성 날짜 : {atom.createdAt}</Text>
+                    <Text style={{fontWeight:'bold'}}>달성 날짜 : {reAtom.createdAt}</Text>
                 </View>
                 <View>
                     {reAtom.my / reAtom.goal >= 1 ?

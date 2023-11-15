@@ -3,7 +3,6 @@ import {useState, useEffect} from 'react';
 import Box from "../../Style/Box";
 import right from '../../Image/Profile/right.png'
 import left from '../../Image/Profile/left.png'
-import { ProfileAPI } from "../../Api/profileApi";
 import { useIsFocused } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
@@ -92,7 +91,7 @@ const ProfileHeaderStrick = () => {
   }
     return(
         <View style={[Box.calendarBox, {alignItems:'center'}]}>
-            <View style={{display: 'flex', flexDirection:'row', justifyContent:'space-around'}}>
+            <View style={[Box.flexRowBox,{justifyContent:'space-around'}]}>
             <TouchableOpacity onPress={handleYearMinus} style={{paddingLeft: 10, paddingRight: 10}}>
                     <Image source={left} style={{marginTop:10}}></Image>
                 </TouchableOpacity>
@@ -130,7 +129,7 @@ const ProfileHeaderStrick = () => {
             ))}
           </ScrollView>
 
-            <View style={{display: 'flex', flexDirection:'row', justifyContent:'space-around'}}>
+            <View style={[Box.flexRowBox,{justifyContent:'space-around'}]}>
               <View style={[Box.weekBox, {backgroundColor: '#ACD8A7', marginLeft: 13}]}></View>
               <Text style={{fontSize: 10, fontWeight:'bold', marginTop: 2}}>1~3</Text>
               <View style={[Box.weekBox, {backgroundColor: '#52A447', marginLeft: 13}]}></View>

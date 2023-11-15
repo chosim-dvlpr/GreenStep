@@ -16,7 +16,7 @@ const DetailBoard = () => {
   return(
     <View>
       <View style={[Box.cardBox, {marginBottom:20}]}>
-        <View style={{display:'flex', flexDirection:'row', marginBottom: 20}}>
+        <View style={[Box.flexRowBox,{marginBottom: 20}]}>
           <Image source={avatar} style={[ImageStyle.tinyImage, {borderRadius: 50, marginRight: 20,}]}></Image>
           <View>
             <Text>{detail.name}</Text>

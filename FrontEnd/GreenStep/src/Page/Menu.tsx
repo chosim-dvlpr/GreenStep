@@ -1,4 +1,4 @@
-import { Text, View, Image, TouchableOpacity } from "react-native";
+import { Text, View, Image, TouchableOpacity, Linking } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 import ImageStyle from "../Style/Image";
@@ -29,9 +29,19 @@ const Menu = () => {
         }else if(idx === 2){
             navigation.navigate('userinfo')
         }else{
-            navigation.navigate('board')
+            openURL()
         }
     }
+
+    const openURL = () => {
+        Linking.canOpenURL('https://k9b303.p.ssafy.io/').then(supported => {
+            if (supported) {
+                Linking.openURL('https://k9b303.p.ssafy.io/');
+            } else {
+                console.log("URL open 실패 ");
+            }
+        });
+    };
     return(
         <View>
             <ContainerBg source={require('../Image/Competition/bg.png')}>
