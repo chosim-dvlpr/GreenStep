@@ -73,12 +73,12 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     checkButton: {
-        backgroundColor: '#2196F3',
+        backgroundColor: '#8BCA84',
         padding: 10,
         borderRadius: 10,
     },
     cancelButton: {
-        backgroundColor: 'gray',
+        backgroundColor: '#CCE7C9',
         padding: 10,
         borderRadius: 10,
     },
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
       },
       disabledButton: {
-        backgroundColor: 'lightgray',
+        backgroundColor: '#8BCA84',
     },
 });
 

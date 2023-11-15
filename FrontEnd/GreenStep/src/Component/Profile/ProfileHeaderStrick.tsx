@@ -50,7 +50,7 @@ const ProfileHeaderStrick = () => {
         } else if (ploggingCount >= 1) {
           return {...Box.weekBox, backgroundColor: '#ACD8A7'};
         } else {
-          return {...Box.weekBox, backgroundColor: 'white'};
+          return {...Box.weekBox, backgroundColor: '#efecec'};
         }
       };
     
@@ -93,11 +93,11 @@ const ProfileHeaderStrick = () => {
     return(
         <View style={[Box.calendarBox, {alignItems:'center'}]}>
             <View style={{display: 'flex', flexDirection:'row', justifyContent:'space-around'}}>
-            <TouchableOpacity onPress={handleYearMinus}>
+            <TouchableOpacity onPress={handleYearMinus} style={{paddingLeft: 10, paddingRight: 10}}>
                     <Image source={left} style={{marginTop:10}}></Image>
                 </TouchableOpacity>
             <Text style={{fontSize: 20, marginHorizontal: 30}}>{year}</Text>
-            <TouchableOpacity onPress={handleYearPlus}>
+            <TouchableOpacity onPress={handleYearPlus} style={{paddingLeft: 10, paddingRight: 10}}>
                     <Image source={right} style={{marginTop:10}}></Image>
                 </TouchableOpacity>
           </View>

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Login from '../Component/Main/Login';
 import Carousel from '../Component/Main/Carousel';
 import styled from 'styled-components/native';
@@ -7,7 +7,6 @@ import ButtonStyle from '../Style/ButtonStyle';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {MainAPI} from '../Api/basicHttp';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import tokenHttp from '../Api/tokenHttp';
 
 export interface EmailLoginDataType {
   email: string;
@@ -18,6 +17,7 @@ const MainText = styled.Text`
   font-size: 30;
   font-weight: bold;
   color: black;
+  font-family: 'SUITE-Bold';
 `;
 
 const MainTextContainer = styled.View`
@@ -81,17 +81,10 @@ const Main = () => {
   };
 
   useEffect(() => {
+    getMainData();
     return () => {
-      getMainData();
     };
-  }, [isFocused]);
-
-  /** 임시 로그아웃 */
-  const sampleLogout = () => {
-    console.log('로그아웃 되었습니다.');
-    AsyncStorage.removeItem('accessToken');
-    AsyncStorage.removeItem('refreshToken');
-  };
+  }, [isFocused,]);
 
   // // 임시 로그인
   // const [email, setEmail] = useState<string>('');
@@ -187,10 +180,11 @@ const Main = () => {
 
       <CarouselContainer>
         <CarouselTextContainer>
-          <Text style={{fontSize: 24, fontWeight: 'bold'}}>
-            자연을 지킨{'\n'}
-            {travelTime} 시간{'\n'}
-            {travelRange} km
+          <Text
+          style={{fontSize: 24, fontWeight: 'bold', fontFamily: 'SUITE-Bold'}}
+          >자연을 지킨{'\n'}
+          {travelTime} 시간{'\n'}
+          {travelRange.toFixed(3)} km
           </Text>
         </CarouselTextContainer>
         <Carousel />
@@ -198,14 +192,14 @@ const Main = () => {
 
       <LoginContainer>
         {isLogin ? (
-          <View>
-            <TouchableOpacity onPress={logout}>
+          <View style={{width: '100%', alignItems: 'center'}}>
+            {/* <TouchableOpacity onPress={logout}>
               <Text>로그아웃</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity
               onPress={() => navigation.navigate('ploggingstart')}
               style={[ButtonStyle.largeButton, ButtonStyle.lightGreenColor]}>
-              <Text>플로깅 하러가기</Text>
+              <Text style={styles.goToPloggingText}>플로깅 하러가기</Text>
             </TouchableOpacity>
           </View>
         ) : (
@@ -215,5 +209,13 @@ const Main = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  goToPloggingText: {
+    fontSize: 16, 
+    fontWeight: '500',
+    fontFamily: 'SUITE-Bold'
+  },
+})
 
 export default Main;

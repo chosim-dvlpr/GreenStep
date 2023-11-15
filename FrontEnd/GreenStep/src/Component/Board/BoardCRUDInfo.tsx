@@ -5,7 +5,7 @@ import { useState } from "react";
 import plus from '../../Image/Board/plus.png'
 import minus from '../../Image/Board/minus.png'
 const BoardCRUDInfo = () => {
-    const [day, setDay] = useState('날짜 선택하기')
+    const [day, setDay] = useState('날짜 선택')
     const [showCalendar, setShowCalendar] = useState(false)
     const [join, setJoin] = useState(0)
 
@@ -30,20 +30,20 @@ const BoardCRUDInfo = () => {
         <View style={[Box.cardBox, {display:'flex'}]}>
             <Text style={{marginBottom: 10, fontSize:20}}>Information</Text>
             <View style={{display: 'flex', flexDirection:'row', marginBottom: 10, justifyContent:'space-between' }}>
-                <Text style={{fontSize: 20}}>모집인원</Text>
+                <Text style={{fontSize: 16}}>모집인원</Text>
                 <TouchableOpacity onPress={handleJoinMinus}>
                     <Image source={minus}></Image>
                 </TouchableOpacity>
-                <Text style={{fontSize: 25}}>{join}</Text>
+                <Text style={{fontSize: 16}}>{join}</Text>
                 <TouchableOpacity onPress={handleJoinPlus}>
                     <Image source={plus}></Image>
                 </TouchableOpacity>
             </View>
 
             <View style={{display: 'flex', flexDirection:'row', marginBottom: 10, justifyContent:'space-between' }}>
-                    <Text style={{fontSize: 20}}>활동날짜</Text>
+                    <Text style={{fontSize: 16}}>활동날짜</Text>
                 <TouchableOpacity onPress={handleShow}>
-                    <Text style={{fontSize: 20}}>{day}</Text>
+                    <Text style={{fontSize: 16, color: "#72BF6A"}}>{day}</Text>
                 </TouchableOpacity>
             </View>
             {showCalendar && <Calendar onDayPress={handleDay}></Calendar>}

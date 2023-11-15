@@ -7,9 +7,9 @@ import avatar from '../../Image/Avatar/panda.png';
 
 const BoardInfoParticipationDetail =() => {
     return(
-        <View style={{borderWidth: 3, borderColor: 'green', overflow: 'hidden',  
-                      borderRadius: 50, marginLeft: 10}}>
-            <Image source={avatar} style={[ImageStyle.tinyImage, {marginLeft: 5}]}></Image>
+        <View style={{borderWidth: 3, borderColor: '#ACD8A7', overflow: 'hidden',  
+                      borderRadius: 50, marginLeft: 15}}>
+            <Image source={avatar} style={[ImageStyle.tinyImage]}></Image>
         </View>
     )
 }
