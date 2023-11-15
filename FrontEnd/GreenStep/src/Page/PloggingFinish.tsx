@@ -83,7 +83,7 @@ const PloggingFinish = () => {
   };
 
   /** 레벨업 토글 */
-  const [levelUpToggle, setLevelUpToggle] = useState(true); // 추후 지우기
+  const [levelUpToggle, setLevelUpToggle] = useState(false);
   const handleLevelUpToggle = () => {
     setLevelUpToggle(!levelUpToggle);
   };
