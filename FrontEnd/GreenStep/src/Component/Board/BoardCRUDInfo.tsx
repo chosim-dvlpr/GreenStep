@@ -29,7 +29,7 @@ const BoardCRUDInfo = () => {
             <View style={{justifyContent:'center', alignItems:'center'}}>
         <View style={[Box.cardBox, {display:'flex'}]}>
             <Text style={{marginBottom: 10, fontSize:20}}>Information</Text>
-            <View style={{display: 'flex', flexDirection:'row', marginBottom: 10, justifyContent:'space-between' }}>
+            <View style={[Box.flexRowBox,{marginBottom: 10, justifyContent:'space-between' }]}>
                 <Text style={{fontSize: 16}}>모집인원</Text>
                 <TouchableOpacity onPress={handleJoinMinus}>
                     <Image source={minus}></Image>
@@ -40,7 +40,7 @@ const BoardCRUDInfo = () => {
                 </TouchableOpacity>
             </View>
 
-            <View style={{display: 'flex', flexDirection:'row', marginBottom: 10, justifyContent:'space-between' }}>
+            <View style={[Box.flexRowBox,{marginBottom: 10, justifyContent:'space-between' }]}>
                     <Text style={{fontSize: 16}}>활동날짜</Text>
                 <TouchableOpacity onPress={handleShow}>
                     <Text style={{fontSize: 16, color: "#72BF6A"}}>{day}</Text>

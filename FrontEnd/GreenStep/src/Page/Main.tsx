@@ -161,14 +161,17 @@ const Main = () => {
           <MainText>그린스텝</MainText>
         </MainTextContainer>
 
-        <CarouselContainer>
-          <CarouselTextContainer>
-            <Text style={styles.mainFont}>자연을 지킨</Text>
-            <Text style={styles.mainFont}>{travelTime} 시간</Text>
-            <Text style={styles.mainFont}>{travelRange.toFixed(3)} km</Text>
-          </CarouselTextContainer>
-          <Carousel />
-        </CarouselContainer>
+      <CarouselContainer>
+        <CarouselTextContainer>
+          <Text
+          style={{fontSize: 24, fontWeight: 'bold', fontFamily: 'SUITE-Bold'}}
+          >자연을 지킨{'\n'}
+          {travelTime} 시간{'\n'}
+          {travelRange.toFixed(3)} km
+          </Text>
+        </CarouselTextContainer>
+        <Carousel />
+      </CarouselContainer>
 
         <LoginContainer>
           {isLogin ? (
