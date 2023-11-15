@@ -66,8 +66,8 @@ const PloggingInfo: React.FC<PloggingInfoProps> = ({
     console.log(`isTracking 상태: ${isTracking}`);
   }, [isTracking]);
   const handleLongPress = () => {
-    setIsTracking(true);
     setResetStopwatch(true);
+    setIsTracking(false);
 
     const travelRange = distance;
 
@@ -80,7 +80,6 @@ const PloggingInfo: React.FC<PloggingInfoProps> = ({
       trashList: trashListProps,
     };
 
-    setIsTracking(false);
     console.log(`isTracking을 false로 설정함`);
     const ploggingdata = async (ploggingDataInfo: PloggingDataProps) => {
       try {
@@ -112,6 +111,7 @@ const PloggingInfo: React.FC<PloggingInfoProps> = ({
         };
 
         // PloggingFinish 컴포넌트로 네비게이션
+        console.log(`isTracking 상태: ${isTracking}`);
 
         navigation.navigate('ploggingfinish', ploggingFinishData);
       } catch (err) {
@@ -153,14 +153,23 @@ const PloggingInfo: React.FC<PloggingInfoProps> = ({
           </InfoContentContainer>
         </InfoSection>
         <ButtonSection>
-          <StartStopButton
+          {!isTracking ? (
+            <StartStopButton onPress={handleToggleTracking}>
+              <Image source={startImage} style={{width: 50, height: 50}} />
+            </StartStopButton>
+          ) : (
+            <StartStopButton onLongPress={handleLongPress}>
+              <Image source={stopImage} style={{width: 50, height: 50}} />
+            </StartStopButton>
+          )}
+          {/* <StartStopButton
             onPress={handleToggleTracking}
             onLongPress={handleLongPress}>
             <Image
               source={isTracking ? stopImage : startImage}
               style={{width: 50, height: 50}}
             />
-          </StartStopButton>
+          </StartStopButton> */}
         </ButtonSection>
       </Container>
     </Con>

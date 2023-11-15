@@ -26,35 +26,35 @@ import lock from '../Image/PloggingFinish/lock.png';
 // axios
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import fileTokenHttp from '../Api/fileTokenHttp';
-
+import PloggingEndMap from '../Component/Common/PloggingEndMap';
+import {plogginghistory} from '../Component/PloggingStart/api/ploggingService';
 export interface getAvatarListType {
-  avatarName: string | null,
-  avatarImage: string | null,
+  avatarName: string | null;
+  avatarImage: string | null;
 }
 
 interface PloggingFinishType {
   // props로 반드시 넘겨줘야 할 항목 (추후 ? 지우기)
-  travelTime?: string,  // string인지 확인 필요
-  travelRange?: number,
-  trashAmount?: number,
-  acheiveInfo?: number,
-  ploggingId?: number,
-  getExp?: number,
-  isLevelUp?: boolean, 
-  
+  travelTime?: string; // string인지 확인 필요
+  travelRange?: number;
+  trashAmount?: number;
+  acheiveInfo?: number;
+  ploggingId?: number;
+  getExp?: number;
+  isLevelUp?: boolean;
+
   // 선택 항목
-  getAvatarList?: getAvatarListType[]
-  // avartarName?: string[], 
+  getAvatarList?: getAvatarListType[];
+  // avartarName?: string[],
   // avatarImage?: string[], // 아바타 이미지 url
 }
 
-
-// const PloggingFinish = ({ 
-//   ploggingId, 
-//   getExp, 
-//   isLevelUp, 
-//   avartarName, 
-//   avatarImage 
+// const PloggingFinish = ({
+//   ploggingId,
+//   getExp,
+//   isLevelUp,
+//   avartarName,
+//   avatarImage
 // }: PloggingFinishType) => {
 
 // interface PloggingFinishType {
@@ -79,8 +79,20 @@ const PloggingFinish = () => {
   const data = {
     accessToken: AsyncStorage.getItem('accessToken'),
     refreshToken: AsyncStorage.getItem('refreshToken'),
-  }
-  
+  };
+  // 지도 로직
+  const [locations, setLocations] = useState([]);
+
+  useEffect(() => {
+    if (ploggingId) {
+      plogginghistory(ploggingId)
+        .then(data => {
+          setLocations(data);
+        })
+        .catch(error => console.error(error));
+    }
+  }, [ploggingId]);
+
   /** 사진 선택 기능 */
   const [photo, setPhoto] = useState<string>('');
 
@@ -88,27 +100,28 @@ const PloggingFinish = () => {
     console.log('사진 인증 버튼 클릭 (미리보기)');
 
     const result = await launchImageLibrary({mediaType: 'photo'});
-    const formData = new FormData()
-    
-    if (result.didCancel){
+    const formData = new FormData();
+
+    if (result.didCancel) {
       return null;
     }
 
     console.log('이미지 업로드 성공 : ', result);
 
     const localUri = result.assets[0].uri;
-    const uriPath = localUri.split("//").pop();
-    setPhoto("file://"+uriPath)    
-    
+    const uriPath = localUri.split('//').pop();
+    setPhoto('file://' + uriPath);
+
     formData.append('file', {
       uri: result.assets[0].uri,
       type: 'multipart/form-data',
       name: result.assets[0].fileName,
     });
-    
-    fileTokenHttp.post('/plogging/${ploggingId}/upload/img', formData)
-    .then(res => console.log('성공', res))
-    .catch(err => console.log(err))
+
+    fileTokenHttp
+      .post('/plogging/${ploggingId}/upload/img', formData)
+      .then(res => console.log('성공', res))
+      .catch(err => console.log(err));
     // UploadAPI.uploadFile(formData)
     // .then(res => console.log('파일 서버 업로드 성공 '))
     // .catch(async err => {
@@ -121,7 +134,7 @@ const PloggingFinish = () => {
     //       console.log('재업로드')
     //     })
     // .catch(() => console.log('실패'))
-    // })    
+    // })
   };
 
   /** 레벨업 토글 */
@@ -148,27 +161,29 @@ const PloggingFinish = () => {
 
   return (
     <ScrollView>
-      {levelUpToggle && 
-      <PloggingFinishLevelUpModal 
-      onClose={handleLevelUpToggle} 
-      visible={levelUpToggle} 
-      // getAvatarList={getAvatarList}
+      {levelUpToggle && (
+        <PloggingFinishLevelUpModal
+          onClose={handleLevelUpToggle}
+          visible={levelUpToggle}
+          // getAvatarList={getAvatarList}
 
-      
-      // 데이터 props로 받은 뒤 삭제하기
-      getAvatarList={[
-        {
-          avatarName: 'bear',
-          avatarImage: 'https://3mm.s3.ap-northeast-2.amazonaws.com/bear.png',
-        },
-        {
-          avatarName: 'cat',
-          avatarImage: 'https://3mm.s3.ap-northeast-2.amazonaws.com/cat.png',
-        },
-      ]}
-      // avatarName={['bear', 'cat']}
-      // avatarImage={['https://3mm.s3.ap-northeast-2.amazonaws.com/bear.png', 'https://3mm.s3.ap-northeast-2.amazonaws.com/cat.png']} 
-      />}
+          // 데이터 props로 받은 뒤 삭제하기
+          getAvatarList={[
+            {
+              avatarName: 'bear',
+              avatarImage:
+                'https://3mm.s3.ap-northeast-2.amazonaws.com/bear.png',
+            },
+            {
+              avatarName: 'cat',
+              avatarImage:
+                'https://3mm.s3.ap-northeast-2.amazonaws.com/cat.png',
+            },
+          ]}
+          // avatarName={['bear', 'cat']}
+          // avatarImage={['https://3mm.s3.ap-northeast-2.amazonaws.com/bear.png', 'https://3mm.s3.ap-northeast-2.amazonaws.com/cat.png']}
+        />
+      )}
 
       <PloggingFinishContainer>
         {/* 헤더 */}
@@ -228,6 +243,10 @@ const PloggingFinish = () => {
               ]}
             />
           </TouchableOpacity>
+        </ImageContainer>
+
+        <ImageContainer>
+          <PloggingEndMap locations={locations} />
         </ImageContainer>
 
         {/* 지도 */}
