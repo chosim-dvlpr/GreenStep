@@ -63,6 +63,8 @@ export default StopWatch;
 
 // Styled Components
 const InfoText = styled.Text`
-  font-size: 25px;
+  font-size: 20px;
   color: #333;
+  font-family: 'SUITE-Bold';
+  margin-bottom: 10;
 `;

@@ -14,6 +14,8 @@ import {trashTypeMapping2} from './TrashType';
 import {useTrashItem} from './Hook/useTrashItem';
 import {useDispatch} from 'react-redux';
 import {increment} from '../../Store/aiCountSlice';
+import cameraButton from '../../Image/PloggingStart/ai_camera.png'
+
 const AiCamera = ({onClose}) => {
   const dispatch = useDispatch();
   const camera = useRef<Camera>(null);
@@ -105,7 +107,11 @@ const AiCamera = ({onClose}) => {
           />
           <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={takePhoto} style={styles.button}>
-              <Text style={styles.buttonText}>사진 촬영</Text>
+              {/* <Text style={styles.buttonText}>사진 촬영</Text> */}
+              <Image
+              source={cameraButton}
+              style={{width: '80%', height: '80%'}}
+              />
             </TouchableOpacity>
           </View>
         </>
