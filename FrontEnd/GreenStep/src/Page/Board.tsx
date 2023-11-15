@@ -18,7 +18,7 @@ const Board = ({navigation}:any) => {
         <BoardMyPost navigation={navigation}/>
         <BoardList/>
         </ScrollView>
-
+        
         <TouchableOpacity style={[ButtonStyle.smallButton,ButtonStyle.achievementButton,
                                  {position:'absolute', bottom: 20, alignSelf: 'center',
                                   display:'flex', flexDirection: 'row', 

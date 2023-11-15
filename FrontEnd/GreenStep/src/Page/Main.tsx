@@ -61,7 +61,7 @@ const Main = () => {
 
   useEffect(() => {
     checkToken();
-  }, [isLogin, isFocused]);
+  }, [isLogin, isFocused, ]);
 
   // 메인 문구 불러오기
   const [trashAmount, setTrashAmount] = useState<number>(0);

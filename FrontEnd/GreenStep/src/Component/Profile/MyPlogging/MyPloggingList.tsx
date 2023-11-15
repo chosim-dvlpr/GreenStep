@@ -65,7 +65,8 @@ const MyPloggingList = () => {
             <ScrollView horizontal={false}>
                 <View style={styles.wrapRow}>
                     {dataList.map((data, index) => (
-                        <TouchableOpacity key={index} onPress={() => handleAvatarId(data.ploggingId)}>
+                        <TouchableOpacity 
+                        key={index} onPress={() => handleAvatarId(data.ploggingId)}>
                             <View style={{justifyContent:'center', alignItems:'center', marginLeft: 3, marginBottom: 3}}>
                               {data?.travelPicture?( 
                               <Image source={{uri: data?.travelPicture}} style={ImageStyle.mediumImage} resizeMode="stretch"></Image>

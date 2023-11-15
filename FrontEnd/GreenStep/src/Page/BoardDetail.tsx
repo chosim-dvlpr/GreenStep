@@ -19,7 +19,7 @@ const BoardDetail = () => {
                 <BoardInfoCard/>
                 <BoardInfoParticipationList/>
 
-                <TouchableOpacity style={[ButtonStyle.largeButton, ButtonStyle.achievementButton]}>
+                <TouchableOpacity style={[ButtonStyle.largeButton, ButtonStyle.achievementButton, {marginBottom: 20}]}>
                     <Text style={{color:'white', fontSize:20}}>참여하기</Text>
                 </TouchableOpacity>
             </View>

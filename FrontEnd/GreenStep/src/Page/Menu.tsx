@@ -33,8 +33,8 @@ const Menu = () => {
                     <TouchableOpacity key={idx} onPress={()=> moveToCategory(idx)}
                                       style={[Box.cardBox, { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20}]}>
                         <Image source={pictures[idx]} style={ImageStyle.tinyImage}></Image>
-                        <Text style={{justifyContent:'center', alignItems:'center', fontSize: 25, fontWeight:'bold'}}>{name}</Text>
-                        <Image source={move} style={{width:25, height: 25, marginLeft: 20, marginTop:5}}></Image>
+                        <Text style={{justifyContent:'center', alignItems:'center', fontSize: 20, fontWeight:'bold', fontFamily: 'SUITE-Bold'}}>{name}</Text>
+                        <Image source={move} style={{width:20, height: 20, marginLeft: 20, marginTop:5}}></Image>
                     </TouchableOpacity>
                 ))}
            </View>

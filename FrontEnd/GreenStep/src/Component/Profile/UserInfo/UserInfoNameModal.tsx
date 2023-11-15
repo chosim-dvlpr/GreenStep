@@ -24,21 +24,21 @@ const UserInfoNameModal = (props: ModalProps) => {
             <View style={styles.modalOverlay}>
            <TouchableWithoutFeedback>
                 <View style={[styles.modalView, {justifyContent:'center', alignItems:'center'}]}>
-                    <Text>닉네임 변경</Text>
+                    <Text style={{fontSize: 16, marginBottom: 15,}}>닉네임 변경</Text>
                     <View style={{display:'flex', flexDirection:'row'}}>
                         <TextInput style={styles.input} value={changeName} onChangeText={setChangeName}></TextInput>
                         <TouchableOpacity style={styles.checkButton} onPress={() => props.checkAble(changeName)}><Text>중복 확인</Text></TouchableOpacity>
                     </View> 
 
-                        <View style={{display:'flex', flexDirection:'row'}}>
-                        <TouchableOpacity 
-                            style={[styles.checkButton, !props.changeAble && styles.disabledButton]} 
-                            onPress={() => props.PatchUserName(changeName)} 
-                            disabled={!props.changeAble}>
-                            <Text>변경</Text>
-                        </TouchableOpacity>
-                            <TouchableOpacity style={styles.cancelButton} onPress={props.onClose}><Text>취소</Text></TouchableOpacity>
-                        </View>
+                    <View style={{display:'flex', flexDirection:'row', marginTop: 10,}}>
+                    <TouchableOpacity 
+                        style={[styles.checkButton, !props.changeAble && styles.disabledButton]} 
+                        onPress={() => props.PatchUserName(changeName)} 
+                        disabled={!props.changeAble}>
+                        <Text>변경</Text>
+                    </TouchableOpacity>
+                        <TouchableOpacity style={styles.cancelButton} onPress={props.onClose}><Text>취소</Text></TouchableOpacity>
+                    </View>
 
                 </View>
             </TouchableWithoutFeedback>
@@ -73,26 +73,28 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     checkButton: {
-        backgroundColor: '#8BCA84',
+        backgroundColor: '#ACD8A7',
         padding: 10,
         borderRadius: 10,
+        elevation: 5,
     },
     cancelButton: {
-        backgroundColor: '#CCE7C9',
+        backgroundColor: '#e3e3e3',
         padding: 10,
         borderRadius: 10,
+        marginLeft: 4
     },
     input: {
         height: 40,
         width: 120,
-        marginHorizontal: 20,
+        marginHorizontal: 10,
         marginBottom: 5,
         borderWidth: 1,
         padding: 10,
         borderRadius: 10,
       },
       disabledButton: {
-        backgroundColor: '#8BCA84',
+        backgroundColor: '#ACD8A7',
     },
 });
 
