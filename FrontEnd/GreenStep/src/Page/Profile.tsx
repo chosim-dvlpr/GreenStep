@@ -11,7 +11,14 @@ import ProfileHeaderMessage from '../Component/Profile/ProfileHeaderMessage';
 import ProfileHeaderStrick from '../Component/Profile/ProfileHeaderStrick';
 import ProfilePloggingDataInfo from '../Component/Profile/ProfilePloggingDataInfo';
 import MyPlogging from './MyPlogging';
+import styled from 'styled-components/native';
 //API
+
+
+const ContainerBg = styled.ImageBackground`
+  width: 100%;
+  height: 100%;
+`;
 
 const Profile = ({navigation}: any) => {
   const isFocused = useIsFocused();
@@ -74,36 +81,38 @@ const Profile = ({navigation}: any) => {
 
   return (
     <ScrollView>
-      <ProfileHeader name={name} />
+      <ContainerBg source={require('../Image/Competition/bg.png')}>
+        <ProfileHeader name={name} />
 
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          marginBottom: 30,
-          justifyContent: 'space-evenly',
-          alignItems: 'center',
-        }}>
-        <View style={{alignItems: 'center'}}>
-          <ProfileHeaderImage percentage={percentage} />
-          <ProfileHeaderMessage level={level} />
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            marginBottom: 30,
+            justifyContent: 'space-evenly',
+            alignItems: 'center',
+          }}>
+          <View style={{alignItems: 'center'}}>
+            <ProfileHeaderImage percentage={percentage} />
+            <ProfileHeaderMessage level={level} />
+          </View>
+          <ProfileHeaderStrick />
         </View>
-        <ProfileHeaderStrick />
-      </View>
-      
-      <View
-      style={{marginLeft: 10, marginRight: 10,}}
-      >
-        <ProfilePloggingDataInfo
-          navigation={navigation}
-          timeInfo={timeInfo}
-          distanceInfo={distanceInfo}
-          trashInfo={trashInfo}
-          acheiveInfo={acheiveInfo}
-          isProfile={isProfile}
-        />
-      </View>
-      <MyPlogging />
+        
+        <View
+        style={{marginLeft: 10, marginRight: 10,}}
+        >
+          <ProfilePloggingDataInfo
+            navigation={navigation}
+            timeInfo={timeInfo}
+            distanceInfo={distanceInfo}
+            trashInfo={trashInfo}
+            acheiveInfo={acheiveInfo}
+            isProfile={isProfile}
+          />
+        </View>
+        <MyPlogging />
+      </ContainerBg>
     </ScrollView>
   );
 };

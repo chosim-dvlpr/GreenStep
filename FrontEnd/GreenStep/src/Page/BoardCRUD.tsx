@@ -6,6 +6,13 @@ import BoardCRUDInfo from "../Component/Board/BoardCRUDInfo";
 import ButtonStyle from "../Style/ButtonStyle";
 import ImageStyle from "../Style/Image";
 import pencil from '../Image/Board/pencil.png'
+import styled from "styled-components/native";
+
+const ContainerBg = styled.ImageBackground`
+  width: 100%;
+  height: 100%;
+`;
+
 const BoardCRUD = () => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
@@ -20,6 +27,7 @@ const BoardCRUD = () => {
   };
   return(
     <ScrollView>
+      <ContainerBg source={require('../Image/Competition/bg.png')}>
       {/* <Text style={{alignItems:"center", fontSize: 20, justifyContent:"center", marginBottom: 10}}>글 쓰기</Text> */}
       <BoardCRUDTitle onChangeText={onTitleChange}/>
       <BoardCRUDContent onChangeText={onContentChange}/>
@@ -33,6 +41,7 @@ const BoardCRUD = () => {
           </View>
         </TouchableOpacity>
       </View>
+      </ContainerBg>
     </ScrollView>
   )
 }

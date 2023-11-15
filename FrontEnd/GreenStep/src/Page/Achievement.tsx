@@ -7,6 +7,7 @@ import { useIsFocused } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { baseURL } from '../Api/tokenHttp';
+import styled from 'styled-components/native';
 interface achieveProps{
   achieveName : string;
   achievePloggingCount: number | null;
@@ -19,6 +20,12 @@ interface achieveProps{
   myTravelRange: number | null;
   myTravelTime: number | null;
 }
+
+const ContainerBg = styled.ImageBackground`
+  width: 100%;
+  height: 100%;
+`;
+
 
 const Achievement = () => {
   const isFocused = useIsFocused();
@@ -61,17 +68,19 @@ const Achievement = () => {
 
   return (
     <ScrollView>
-      <View style={{display:'flex', flexDirection:'row', justifyContent:'space-evenly', marginTop:20}}>
-        {Type.map((atom, idx) => (
-          <AchievementButton key={idx} atom={atom} onPress={changeAchieveType(idx)} />
-    ))}
-      </View>      
-          <Text></Text>
-      <View style={{alignItems:'center'}}>
-        {achieveList?.map((achievement, idx) => (
-          <AchievementList atom={achievement} achievetype={achieveType} key={idx} />
-        ))}
-      </View>
+      <ContainerBg source={require('../Image/Competition/bg.png')}>
+        <View style={{display:'flex', flexDirection:'row', justifyContent:'space-evenly', marginTop:20}}>
+          {Type.map((atom, idx) => (
+            <AchievementButton key={idx} atom={atom} onPress={changeAchieveType(idx)} />
+      ))}
+        </View>      
+            <Text></Text>
+        <View style={{alignItems:'center'}}>
+          {achieveList?.map((achievement, idx) => (
+            <AchievementList atom={achievement} achievetype={achieveType} key={idx} />
+          ))}
+        </View>
+      </ContainerBg>
     </ScrollView>
   );
 };

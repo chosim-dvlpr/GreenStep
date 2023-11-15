@@ -9,6 +9,13 @@ import map from '../Image/Footer/dataMap.png'
 import move from '../Image/Profile/move.png'
 import profile from '../Image/Footer/profile.png'
 import trash from '../Image/PloggingStart/trash_img.png'
+import styled from "styled-components/native";
+
+const ContainerBg = styled.ImageBackground`
+  width: 100%;
+  height: 100%;
+`;
+
 const Menu = () => {
     const pictures = [badge, trash, profile, map]
     const names = ['업적', '플로깅 이벤트', '회원 정보 수정', 'GreenStep 발자취']
@@ -27,17 +34,19 @@ const Menu = () => {
     }
     return(
         <View>
-            <Text style={{marginBottom: 50}}></Text>
-            <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                {names.map((name, idx) =>(
-                    <TouchableOpacity key={idx} onPress={()=> moveToCategory(idx)}
-                                      style={[Box.cardBox, { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20}]}>
-                        <Image source={pictures[idx]} style={ImageStyle.tinyImage}></Image>
-                        <Text style={{justifyContent:'center', alignItems:'center', fontSize: 20, fontWeight:'bold', fontFamily: 'SUITE-Bold'}}>{name}</Text>
-                        <Image source={move} style={{width:20, height: 20, marginLeft: 20, marginTop:5}}></Image>
-                    </TouchableOpacity>
-                ))}
-           </View>
+            <ContainerBg source={require('../Image/Competition/bg.png')}>
+                <Text style={{marginBottom: 50}}></Text>
+                <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                    {names.map((name, idx) =>(
+                        <TouchableOpacity key={idx} onPress={()=> moveToCategory(idx)}
+                                        style={[Box.cardBox, { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20}]}>
+                            <Image source={pictures[idx]} style={ImageStyle.tinyImage}></Image>
+                            <Text style={{justifyContent:'center', alignItems:'center', fontSize: 20, fontWeight:'bold', fontFamily: 'SUITE-Bold'}}>{name}</Text>
+                            <Image source={move} style={{width:20, height: 20, marginLeft: 20, marginTop:5}}></Image>
+                        </TouchableOpacity>
+                    ))}
+                </View>
+            </ContainerBg>
         </View>
     ) 
 }

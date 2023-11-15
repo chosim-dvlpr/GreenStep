@@ -5,11 +5,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {baseURL} from '../Api/tokenHttp';
 import Box from "../Style/Box";
+import styled from "styled-components/native";
 
 interface eventListProps{
     festivalName: string;
     festivalUrl: string;
 }
+
+const ContainerBg = styled.ImageBackground`
+  width: 100%;
+  height: 100%;
+`;
+
 
 const Event = () => {
     const isFocused = useIsFocused();
@@ -51,19 +58,21 @@ const Event = () => {
 
     return(
         <ScrollView>
-            <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                <Text></Text>
-                {eventList?.map((event) =>(
-                    <View style={[Box.cardBox,{marginBottom: 15}]}>
-                    <TouchableOpacity 
-                    onPress={() => openURL(event.festivalUrl)}
-                    style={{padding: 10}}
-                    >
-                        <Text style={{fontSize: 20, fontFamily: 'SUITE-Bold'}} ellipsizeMode="tail" numberOfLines={1}>{event.festivalName}</Text>
-                    </TouchableOpacity>
-                    </View>
-                ))}
-            </View>
+            <ContainerBg source={require('../Image/Competition/bg.png')}>
+                <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                    <Text></Text>
+                    {eventList?.map((event) =>(
+                        <View style={[Box.cardBox,{marginBottom: 15}]}>
+                        <TouchableOpacity 
+                        onPress={() => openURL(event.festivalUrl)}
+                        style={{padding: 10}}
+                        >
+                            <Text style={{fontSize: 20, fontFamily: 'SUITE-Bold'}} ellipsizeMode="tail" numberOfLines={1}>{event.festivalName}</Text>
+                        </TouchableOpacity>
+                        </View>
+                    ))}
+                </View>
+            </ContainerBg>
         </ScrollView>
     )
 }

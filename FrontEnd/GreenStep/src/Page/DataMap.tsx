@@ -4,6 +4,12 @@ import {useNavigation} from '@react-navigation/native';
 import TextStyle from '../Style/Text';
 import PloggingStart from './PloggingStart';
 import PloggingMap from './Ploggingmap';
+import styled from 'styled-components/native';
+
+const ContainerBg = styled.ImageBackground`
+  width: 100%;
+  height: 100%;
+`;
 
 const DataMap = () => {
   const navigation = useNavigation();
@@ -12,9 +18,11 @@ const DataMap = () => {
   };
   return (
     <View>
-      <TouchableOpacity onPress={gotomap}>
-        <Text>gogo</Text>
-      </TouchableOpacity>
+      <ContainerBg source={require('../Image/Competition/bg.png')}>
+        <TouchableOpacity onPress={gotomap}>
+          <Text>gogo</Text>
+        </TouchableOpacity>
+      </ContainerBg>
     </View>
   );
 };
