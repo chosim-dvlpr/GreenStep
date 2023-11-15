@@ -26,6 +26,7 @@ import com.mm.greenstep.domain.plogging.repository.TrashRepository;
 import com.mm.greenstep.domain.user.entity.User;
 import com.mm.greenstep.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -44,6 +45,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PloggingService {
@@ -188,6 +190,10 @@ public class PloggingService {
             myTravelRange += p.getTravelRange();
             myTravelTime += p.getTravelTime();
         }
+
+        log.info("myTrashAmount : " + myTrashAmount);
+        log.info("myTravelRange : " + myTravelRange);
+        log.info("myTravelTime : " + myTravelTime);
 
         // 깨지지 않은 나의 모든 업적 가져온다.
         List<UserAchieve> achieveList = userAchieveRepository.findAllByUserAndIsBreakedFalse(user);
