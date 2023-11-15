@@ -393,4 +393,10 @@ public class PloggingService {
 
         return coordinateResDtoList;
     }
+
+    public String getMyAvatar() {
+        User user= SecurityUtil.getCurrentUser();
+        UserAvatar userAvatar = userAvatarRepository.findByUserAndIsSelected(user, true);
+        return userAvatar.getAvatar().getAvatarImg();
+    }
 }

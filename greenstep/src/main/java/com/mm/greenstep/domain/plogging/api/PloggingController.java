@@ -92,4 +92,11 @@ public class PloggingController {
         List<PloggingCoorResDto> dtoList = ploggingService.getAllCoordinate(ploggingId);
         return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }
+
+    // 내 Avatar
+    @GetMapping("/myAvatar")
+    public ResponseEntity<?> getMyAvatar() {
+        String myAvatarImg = ploggingService.getMyAvatar();
+        return new ResponseEntity<>(myAvatarImg, HttpStatus.OK);
+    }
 }
