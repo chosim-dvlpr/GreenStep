@@ -7,14 +7,14 @@ interface titleProps {
 
 const BoardCRUDTitle = (props:titleProps) => {
   return(
-    <View style={{marginTop: 20}}>
-    <SafeAreaView>
-      <TextInput 
-      style={styles.input} 
-      placeholder="제목"
-      onChangeText={props.onChangeText} 
-      value={props.title} />
-    </SafeAreaView>
+    <View style={{marginTop: 20, padding: 10,}}>
+      <SafeAreaView>
+        <TextInput 
+        style={styles.input} 
+        placeholder="제목"
+        onChangeText={props.onChangeText} 
+        value={props.title} />
+      </SafeAreaView>
     </View>
   )
 }
@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     borderRadius: 10,
+    borderColor: 'gray',
   },
 });
 

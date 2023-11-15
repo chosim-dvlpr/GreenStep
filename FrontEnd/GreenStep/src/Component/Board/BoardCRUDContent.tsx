@@ -5,7 +5,7 @@ interface contentProps {
 }
 const BoardCRUDContent = (props:contentProps) => {
     return(
-        <View style={{marginBottom: 20}}>
+        <View style={{marginBottom: 20, padding: 10,}}>
             <SafeAreaView>
                 <TextInput
                     editable
@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       padding: 10,
       borderRadius: 10,
-      textAlignVertical: 'top'  
+      textAlignVertical: 'top',
+      borderColor: 'gray',
     },
   });
 export default BoardCRUDContent;

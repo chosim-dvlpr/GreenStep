@@ -28,8 +28,8 @@ const BoardCRUD = () => {
       <View style={{justifyContent:'center', alignItems:'center' }}>
         <TouchableOpacity style={[ButtonStyle.largeButton, ButtonStyle.achievementButton]}>
           <View style={{display:'flex', flexDirection:'row', justifyContent:'center', alignItems:'center' }}>
-            <Image source={pencil} style={ImageStyle.tinyImage}></Image>
-            <Text style={{fontSize:30, color:'white', fontWeight:'bold', marginLeft: 20}}>글 쓰기</Text>
+            <Image source={pencil}></Image>
+            <Text style={{fontSize:20, color:'white', fontWeight:'bold', marginLeft: 20}}>글 쓰기</Text>
           </View>
         </TouchableOpacity>
       </View>
