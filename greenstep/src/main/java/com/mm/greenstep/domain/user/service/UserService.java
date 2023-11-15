@@ -181,11 +181,8 @@ public class UserService {
     }
 
     public ResponseEntity<?> authority() {
-        // SecurityContext에 담겨 있는 authentication userEamil 정보
-        Long userId = SecurityUtil.getCurrentUserId();
-
-        User user = userRepository.findByUserId(userId);
-
+        User user = SecurityUtil.getCurrentUser();
+        System.out.println(user.getUserId());
         // add ROLE_ADMIN
         user.getRoles().add(Authority.ROLE_ADMIN.name());
         userRepository.save(user);
