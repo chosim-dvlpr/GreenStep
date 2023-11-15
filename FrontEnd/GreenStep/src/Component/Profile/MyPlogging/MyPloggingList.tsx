@@ -61,7 +61,7 @@ const MyPloggingList = () => {
     }, [isFocused]);
 
   return(
-        <View>
+        <View style={{alignItems: 'center', justifyContent: 'center'}}>
             <ScrollView horizontal={false}>
                 <View style={styles.wrapRow}>
                     {dataList.map((data, index) => (
