@@ -107,7 +107,7 @@ const PloggingMap: React.FC<PloggingMapProps> = ({locations, isTracking}) => {
           <Polyline
             coordinates={locations}
             strokeColor="#00FF00"
-            strokeWidth={3}
+            strokeWidth={6}
           />
         )}
       </MapView>

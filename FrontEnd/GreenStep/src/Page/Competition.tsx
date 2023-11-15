@@ -4,7 +4,8 @@ import Calendar from '../Component/Competition/Calendar';
 import CompetitionGraphic from '../Component/Competition/CompetitionGraphic';
 import CompetitionDashBoard from '../Component/Competition/CompetitionDashBoard';
 import {CompetitionAPI} from '../Api/competitionApi';
-
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 interface CompetitionData {
   myTeamScore: number;
   goalScore: number;
@@ -24,9 +25,20 @@ const Competition = () => {
   useEffect(() => {
     const fetchCompetitionData = async () => {
       try {
-        const response = await CompetitionAPI.getCompetitionAxios();
-        if (response && response.data) {
-          setCompetitionData(response.data);
+        const token = await AsyncStorage.getItem('accessToken');
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`, // Bearer 스키마를 사용한 토큰 전달
+            'Content-Type': 'application/json', // JSON 형식의 컨텐츠 타입 명시
+          },
+        };
+        const res = await axios.get(
+          'https://k9b303.p.ssafy.io/api/compete/',
+          config,
+        );
+        console.log(res.data);
+        if (res && res.data) {
+          setCompetitionData(res.data);
         } else {
           console.error('No response or no data from the server');
         }
