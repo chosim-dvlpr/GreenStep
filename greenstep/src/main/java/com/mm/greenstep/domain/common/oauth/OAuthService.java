@@ -26,9 +26,7 @@ import org.springframework.stereotype.Service;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Collections;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -108,14 +106,17 @@ public class OAuthService {
             int teamId = randomTeam();
             log.info("createUser - team : " + teamId);
 
+            List<String> roles = new ArrayList<>();
+            roles.add(Authority.ROLE_USER.name());
+            
             User saveUser = User.builder()
                     .userName(kakaoId)
                     .password(passwordEncoder.encode("kakao"))
+                    .roles(roles)
                     .team(teamRepository.findById(teamId).orElseThrow())  //랜덤 팀
                     .nickName(randomNick)   //랜덤 닉네임
                     .build();
 
-            saveUser.getRoles().add(Authority.ROLE_USER.name());
             userRepository.save(saveUser);
 
             userId = saveUser.getUserId();
