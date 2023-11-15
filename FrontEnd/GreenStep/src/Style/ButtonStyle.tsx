@@ -37,6 +37,7 @@ const ButtonStyle = StyleSheet.create({
     borderRadius: 15,
     alignItems : 'center',
     justifyContent: 'center',
+    elevation: 5,
   },
   /** 너비 100%의 꽉차는 버튼 */
   fullLargeButton: {
@@ -48,8 +49,9 @@ const ButtonStyle = StyleSheet.create({
   },
   /** 카카오 로그인 버튼 */
   kakaoButton: {
-    // backgroundColor: '#FEE500',
-    height: 50,
+    backgroundColor: '#FEE500',
+    width: '100%',
+    height: 60,
     borderRadius: 12,
     alignItems : 'center',
     justifyContent: 'center',
@@ -57,7 +59,8 @@ const ButtonStyle = StyleSheet.create({
   },
   /** 업적 페이지 작은 버튼 */
   achievementButton: {
-    backgroundColor: '#8BCA84',
+    backgroundColor: '#ACD8A7',
+    elevation: 5
   },
   /** 버튼 색 - 연초록 */
   lightGreenColor: {

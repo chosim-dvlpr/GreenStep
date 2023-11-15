@@ -37,10 +37,15 @@ interface PloggingFinishType {
   ploggingId: number;
   getExp: number;
   isLevelUp: boolean;
-
+  
   // 선택 항목
-  getAvatarList: getAvatarListType[];
+  getAvatarList?: getAvatarListType[];
 }
+
+const ContainerBg = styled.ImageBackground`
+  width: 100%;
+  height: 100%;
+`;
 
 const PloggingFinish = () => {
   const route = useRoute();
@@ -100,7 +105,7 @@ const PloggingFinish = () => {
   };
 
   /** 레벨업 토글 */
-  const [levelUpToggle, setLevelUpToggle] = useState(true); // 추후 지우기
+  const [levelUpToggle, setLevelUpToggle] = useState(false);
   const handleLevelUpToggle = () => {
     setLevelUpToggle(!levelUpToggle);
   };
@@ -140,93 +145,94 @@ const PloggingFinish = () => {
 
   return (
     <ScrollView>
-      {levelUpToggle && (
-        <PloggingFinishLevelUpModal
-          onClose={handleLevelUpToggle}
-          visible={levelUpToggle}
-          getAvatarList={getAvatarList}
-        />
-      )}
+      {levelUpToggle && 
+      <PloggingFinishLevelUpModal 
+      onClose={handleLevelUpToggle} 
+      visible={levelUpToggle} 
+      getAvatarList={getAvatarList}
+      />}
+      <ContainerBg source={require('../Image/Competition/bg.png')}>
 
-      <PloggingFinishContainer>
-        {/* 헤더 */}
-        <PloggingFinishHeader getExp={getExp} />
+        <PloggingFinishContainer>
+          {/* 헤더 */}
+          <PloggingFinishHeader getExp={getExp} />
 
-        {/* 플로깅 데이터 */}
-        <PloggingDataContainer>
-          <ProfilePloggingDataInfo
-            timeInfo={travelTime}
-            distanceInfo={travelRange}
-            trashInfo={trashAmount}
-            isProfile={false}
-          />
-        </PloggingDataContainer>
-
-        {/* 인증하기 버튼 */}
-        <UploadPhotoButtonContainer>
-          <TouchableOpacity
-            onPress={() => pickedPhoto()}
-            style={[ButtonStyle.whiteColor, ButtonStyle.fullLargeButton]}>
-            <Text
-              style={{
-                color: ButtonTextColor,
-                fontWeight: 'bold',
-                fontSize: 20,
-              }}>
-              인증하기
-            </Text>
-          </TouchableOpacity>
-        </UploadPhotoButtonContainer>
-
-        {/* 비공개로 설정 */}
-        <IsVisibleContainer>
-          <IsVisibleLeft>
-            <Image source={lock} />
-            <LockText>비공개로 설정</LockText>
-          </IsVisibleLeft>
-          <Switch
-            value={!isVisible}
-            onValueChange={toggleSwitch}
-            trackColor={{true: '#ACD8A7', false: `${TextStyle.defaultGray}`}}
-            // thumbColor={!isVisible ? 'rgba(255, 255, 255, 1)' : '#ACD8A7'}
-            thumbColor={'rgba(255, 255, 255, 1)'}
-          />
-        </IsVisibleContainer>
-
-        {/* 인증 사진/회색 빈 칸 */}
-        <ImageContainer>
-          <TouchableOpacity onPress={pickedPhoto}>
-            <Image
-              source={photo ? {uri: photo} : PloggingFinishNoImage}
-              style={[
-                ButtonStyle.whiteColor,
-                {width: '100%', height: '100%', borderRadius: 20},
-              ]}
+          {/* 플로깅 데이터 */}
+          <PloggingDataContainer>
+            <ProfilePloggingDataInfo
+              timeInfo={travelTime}
+              distanceInfo={travelRange}
+              trashInfo={trashAmount}
+              isProfile={false}
             />
-          </TouchableOpacity>
-        </ImageContainer>
+          </PloggingDataContainer>
 
-        {/* 지도 */}
-        <ImageContainer>
-          <PloggingEndMap locations={locations} />
-        </ImageContainer>
+          {/* 지도 */}
+          <MapContainer>
+            <PloggingEndMap locations={locations} />
+          </MapContainer>
 
-        {/* 메인 버튼 */}
-        <GoToMainContainer>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('main')}
-            style={[ButtonStyle.whiteColor, ButtonStyle.fullLargeButton]}>
-            <Text
-              style={{
-                color: ButtonTextColor,
-                fontWeight: 'bold',
-                fontSize: 20,
-              }}>
-              메인으로
-            </Text>
-          </TouchableOpacity>
-        </GoToMainContainer>
-      </PloggingFinishContainer>
+          {/* 인증하기 버튼 */}
+          <UploadPhotoButtonContainer>
+            <TouchableOpacity
+              onPress={() => pickedPhoto()}
+              style={[ButtonStyle.whiteColor, ButtonStyle.fullLargeButton]}>
+              <Text
+                style={{
+                  color: ButtonTextColor,
+                  fontWeight: 'bold',
+                  fontSize: 20,
+                }}>
+                인증하기
+              </Text>
+            </TouchableOpacity>
+          </UploadPhotoButtonContainer>
+
+          {/* 비공개로 설정 */}
+          <IsVisibleContainer>
+            <IsVisibleLeft>
+              <Image source={lock} />
+              <LockText>비공개로 설정</LockText>
+            </IsVisibleLeft>
+            <Switch
+              value={!isVisible}
+              onValueChange={toggleSwitch}
+              trackColor={{true: '#ACD8A7', false: `${TextStyle.defaultGray}`}}
+              // thumbColor={!isVisible ? 'rgba(255, 255, 255, 1)' : '#ACD8A7'}
+              thumbColor={'rgba(255, 255, 255, 1)'}
+            />
+          </IsVisibleContainer>
+
+          {/* 인증 사진/회색 빈 칸 */}
+          <ImageContainer>
+            <TouchableOpacity onPress={pickedPhoto}>
+              <Image
+                source={photo ? {uri: photo} : PloggingFinishNoImage}
+                style={[
+                  ButtonStyle.whiteColor,
+                  {width: '100%', height: '100%'},
+                ]}
+              />
+            </TouchableOpacity>
+          </ImageContainer>
+
+          {/* 메인 버튼 */}
+          <GoToMainContainer>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('bottom', { screen: '메인 페이지' })}
+              style={[ButtonStyle.whiteColor, ButtonStyle.fullLargeButton]}>
+              <Text
+                style={{
+                  color: ButtonTextColor,
+                  fontWeight: 'bold',
+                  fontSize: 20,
+                }}>
+                메인으로
+              </Text>
+            </TouchableOpacity>
+          </GoToMainContainer>
+        </PloggingFinishContainer>
+      </ContainerBg>
     </ScrollView>
   );
 };
@@ -251,11 +257,18 @@ const ImageContainer = styled.View`
   aspect-ratio: 1;
 `;
 
+const MapContainer = styled.View`
+  width: 86%;
+  margin: auto;
+  aspect-ratio: 1;
+  margin-bottom: 20;
+`;
+
 const GoToMainContainer = styled.View`
   width: 86%;
   margin: auto;
   margin-top: 30;
-  margin-bottom: 110;
+  margin-bottom: 40;
 `;
 
 const IsVisibleContainer = styled.View`

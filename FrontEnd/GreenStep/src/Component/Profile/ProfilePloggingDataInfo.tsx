@@ -20,9 +20,8 @@ const ProfilePloggingDataInfo = ({timeInfo, distanceInfo, trashInfo, acheiveInfo
     const navigation = useNavigation();
 
     return(
-        <View style={{display: 'flex', flexDirection: 'row', marginBottom: 20,
-                      justifyContent: 'space-evenly', alignItems:'center'}}>
-        <View style={[Box.ploggingDataInfoBox, {alignItems:'center', marginRight: 5, justifyContent: 'center'}]}>
+      <View style={{display: 'flex', flexDirection: 'row', marginBottom: 20, justifyContent: 'space-evenly', alignItems:'center'}}>
+        <View style={[Box.ploggingDataInfoBox, {alignItems:'center', marginRight: 5, justifyContent: 'center', paddingTop: 10,}]}>
           <ImageContainer>
             <Image source={time} style={ImageStyle.tinyImage}></Image>
           </ImageContainer>
@@ -30,7 +29,7 @@ const ProfilePloggingDataInfo = ({timeInfo, distanceInfo, trashInfo, acheiveInfo
           <Text style={{fontSize: 13}} numberOfLines={1}>함께한 시간</Text>
         </View>
         
-        <View style={[Box.ploggingDataInfoBox, {alignItems:'center', marginRight: 5, justifyContent: 'center'}]}>
+        <View style={[Box.ploggingDataInfoBox, {alignItems:'center', marginRight: 5, justifyContent: 'center', paddingTop: 10,}]}>
           <ImageContainer>
             <Image source={distance} style={ImageStyle.tinyImage}></Image>
           </ImageContainer>
@@ -38,7 +37,7 @@ const ProfilePloggingDataInfo = ({timeInfo, distanceInfo, trashInfo, acheiveInfo
           <Text style={{fontSize: 13}} numberOfLines={1}>깨끗해진 거리</Text>
         </View>
         
-        <View style={[Box.ploggingDataInfoBox, {alignItems:'center', marginRight: 5, justifyContent: 'center'}]}>
+        <View style={[Box.ploggingDataInfoBox, {alignItems:'center', marginRight: 5, justifyContent: 'center', paddingTop: 10,}]}>
           <ImageContainer>
             <Image source={trash} style={ImageStyle.tinyImage}></Image>
           </ImageContainer>

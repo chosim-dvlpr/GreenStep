@@ -26,6 +26,7 @@ const Box = StyleSheet.create({
     padding: 20,
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
+    elevation: 5
   },
   /** 내가 작성한 게시글 박스 */
   mediumCardBox: {

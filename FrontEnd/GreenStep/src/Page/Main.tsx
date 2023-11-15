@@ -43,6 +43,12 @@ const CarouselTextContainer = styled.View`
   z-index: 1;
 `;
 
+const ContainerBg = styled.ImageBackground`
+  width: 100%;
+  height: 100%;
+`;
+
+
 const Main = () => {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
@@ -61,7 +67,7 @@ const Main = () => {
 
   useEffect(() => {
     checkToken();
-  }, [isLogin, isFocused]);
+  }, [isLogin, isFocused, ]);
 
   // 메인 문구 불러오기
   const [trashAmount, setTrashAmount] = useState<number>(0);
@@ -147,65 +153,40 @@ const Main = () => {
 
   return (
     <View>
-      {/* 임시 로그인 */}
-      {/* <View style={{flexDirection: 'row'}}>
-        <TextInput
-        onChangeText={e => onChangeEmail(e)}
-        style={{backgroundColor: 'skyblue', width: 100}}
-        ></TextInput>
-        <TextInput
-        onChangeText={e => onChangePassword(e)}
-        style={{backgroundColor: 'lightgreen', width: 100}}
-        ></TextInput>
-      </View>
-      <View style={{flexDirection: 'row'}}>
-        <TouchableOpacity
-        style={[ButtonStyle.smallButton, ButtonStyle.lightGreenColor]}
-        onPress={emailLogin}
-        ><Text>임시 로그인 버튼</Text></TouchableOpacity>
-        <TouchableOpacity
-        style={[ButtonStyle.smallButton, ButtonStyle.lightGreenColor]}
-        onPress={logout}
-        ><Text>임시 로그아웃 버튼</Text></TouchableOpacity>
-        <TouchableOpacity
-        style={[ButtonStyle.smallButton, ButtonStyle.lightGreenColor]}
-        // onPress={}
-        ><Text>임시 회원가입 버튼</Text></TouchableOpacity>
-      </View> */}
-      <MainTextContainer>
-        <MainText>자연을 지키는</MainText>
-        <MainText>당신과 우리의 발자국</MainText>
-        <MainText>그린스텝</MainText>
-      </MainTextContainer>
+      <ContainerBg source={require('../Image/Competition/bg.png')}>
+      
+        <MainTextContainer>
+          <MainText>자연을 지키는</MainText>
+          <MainText>당신과 우리의 발자국</MainText>
+          <MainText>그린스텝</MainText>
+        </MainTextContainer>
 
-      {/* <CarouselContainer>
-        <CarouselTextContainer>
-          <Text
-          style={{fontSize: 24, fontWeight: 'bold', fontFamily: 'SUITE-Bold'}}
-          >자연을 지킨{'\n'}
-          {travelTime} 시간{'\n'}
-          {travelRange.toFixed(3)} km
-          </Text>
-        </CarouselTextContainer>
-        <Carousel />
-      </CarouselContainer> */}
+        <CarouselContainer>
+          <CarouselTextContainer>
+            <Text style={styles.mainFont}>자연을 지킨</Text>
+            <Text style={styles.mainFont}>{travelTime} 시간</Text>
+            <Text style={styles.mainFont}>{travelRange.toFixed(3)} km</Text>
+          </CarouselTextContainer>
+          <Carousel />
+        </CarouselContainer>
 
-      <LoginContainer>
-        {isLogin ? (
-          <View style={{width: '100%', alignItems: 'center'}}>
-            {/* <TouchableOpacity onPress={logout}>
-              <Text>로그아웃</Text>
-            </TouchableOpacity> */}
-            <TouchableOpacity
-              onPress={() => navigation.navigate('ploggingstart')}
-              style={[ButtonStyle.largeButton, ButtonStyle.lightGreenColor]}>
-              <Text style={styles.goToPloggingText}>플로깅 하러가기</Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <Login setIsLogin={setIsLogin} />
-        )}
-      </LoginContainer>
+        <LoginContainer>
+          {isLogin ? (
+            <View style={{width: '100%', alignItems: 'center'}}>
+              {/* <TouchableOpacity onPress={logout}>
+                <Text>로그아웃</Text>
+              </TouchableOpacity> */}
+              <TouchableOpacity
+                onPress={() => navigation.navigate('ploggingstart')}
+                style={[ButtonStyle.largeButton, ButtonStyle.lightGreenColor]}>
+                <Text style={styles.goToPloggingText}>플로깅 하러가기</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <Login setIsLogin={setIsLogin} />
+          )}
+        </LoginContainer>
+      </ContainerBg>
     </View>
   );
 };
@@ -216,6 +197,13 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontFamily: 'SUITE-Bold'
   },
+  mainFont: {
+    fontSize: 24, 
+    fontFamily: 'SUITE-Bold', 
+    color: 'lightgray', 
+    marginBottom: 4, 
+    fontWeight: 'bold'
+  }
 })
 
 export default Main;

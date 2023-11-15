@@ -10,7 +10,7 @@ interface PostCardProps{
 
 const BoardMyPostCard = (props:PostCardProps) => {
     return(
-        <TouchableOpacity style={[Box.mediumCardBox, {marginLeft: 10}]}
+        <TouchableOpacity style={[Box.mediumCardBox, {marginLeft: 10, elevation: 5, marginBottom: 10}]}
                           onPress={() => props.onPress()}>
             <Text style={{fontSize:16, fontWeight:'bold', marginBottom: 10}} numberOfLines={1} ellipsizeMode="tail">{props.title}</Text>
             <Text style={{fontSize:12, marginBottom: 10}}>인원 {props.member}</Text>
