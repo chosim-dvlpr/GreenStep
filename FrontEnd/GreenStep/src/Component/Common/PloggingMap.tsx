@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Marker, Polyline} from 'react-native-maps';
 import MapView from 'react-native-map-clustering';
-import {TouchableOpacity, Text, StyleSheet} from 'react-native';
+import {TouchableOpacity, Text, StyleSheet, ActivityIndicator} from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Image} from 'react-native';
@@ -59,8 +59,10 @@ const PloggingMap: React.FC<PloggingMapProps> = ({locations, isTracking}) => {
         }));
         console.log(bins);
         setTrashBins(bins);
+        setIsLoading(false);
       } catch (error) {
         console.error('Error fetching trash bins:', error);
+        setIsLoading(false);
       }
     };
 
@@ -71,8 +73,18 @@ const PloggingMap: React.FC<PloggingMapProps> = ({locations, isTracking}) => {
     setShowTrashBins(!showTrashBins);
   };
 
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
   return (
     <>
+    {isLoading ? ( // 데이터 로딩 중일 때 ActivityIndicator 표시
+        <ActivityIndicator
+          style={styles.loadingIndicator}
+          size="large"
+          color="#52A447"
+        />
+      ) : 
+      <>
       <MapView
         style={{width: '100%', height: '100%'}}
         initialRegion={{
@@ -113,6 +125,7 @@ const PloggingMap: React.FC<PloggingMapProps> = ({locations, isTracking}) => {
           />
         )}
       </MapView>
+      
       <TouchableOpacity onPress={toggleTrashBins} style={styles.trashBinImageContainer}>
         {/* <Text>쓰레기통 위치 토글</Text> */}
         <Image
@@ -120,6 +133,8 @@ const PloggingMap: React.FC<PloggingMapProps> = ({locations, isTracking}) => {
         source={trashBin}
         />
       </TouchableOpacity>
+      </>
+      }
     </>
   );
 };
@@ -138,5 +153,10 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     resizeMode: 'contain',
-  }
+  },
+  loadingIndicator: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+  },
 });
