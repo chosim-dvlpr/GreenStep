@@ -368,4 +368,21 @@ public class PloggingService {
         plogging.updateVisible(isVisible);
         ploggingRepository.save(plogging);
     }
+
+    public List<PloggingCoorResDto> getAllCoordinate(Long ploggingId) {
+        Plogging plogging = ploggingRepository.findByPloggingId(ploggingId);
+        List<Coordinate> coordinateList = coordinateRepository.findAllByPlogging(plogging);
+        List<PloggingCoorResDto> coordinateResDtoList = new ArrayList<>();
+
+        for (Coordinate c : coordinateList) {
+            PloggingCoorResDto dto = PloggingCoorResDto.builder()
+                    .latitude(c.getLatitude())
+                    .longitude(c.getLongitude())
+                    .build();
+
+            coordinateResDtoList.add(dto);
+        }
+
+        return coordinateResDtoList;
+    }
 }

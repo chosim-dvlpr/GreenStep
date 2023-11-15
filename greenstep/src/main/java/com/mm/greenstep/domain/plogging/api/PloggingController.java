@@ -85,4 +85,11 @@ public class PloggingController {
         List<TrashDataAllResDto> dtoList = ploggingService.getAllTrashData();
         return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }
+
+    // 종료시 뿌려 줄 위치 데이터
+    @GetMapping("/{ploggingId}/finishMap")
+    public ResponseEntity<?> getAllCoordinate(@PathVariable Long ploggingId) {
+        List<PloggingCoorResDto> dtoList = ploggingService.getAllCoordinate(ploggingId);
+        return new ResponseEntity<>(dtoList, HttpStatus.OK);
+    }
 }
