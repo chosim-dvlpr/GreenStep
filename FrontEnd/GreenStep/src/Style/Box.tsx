@@ -30,7 +30,7 @@ const Box = StyleSheet.create({
   },
   /** 내가 작성한 게시글 박스 */
   mediumCardBox: {
-    width: '30%',
+    width: '60%',
     backgroundColor: '#FFFFFF',
     padding: 20,
     borderRadius: 15,
