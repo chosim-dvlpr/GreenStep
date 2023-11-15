@@ -4,12 +4,12 @@ import Box from "../../Style/Box";
 import Hello from '../../Image/Profile/hello.png'
 const ProfileHeader = ({name}:any) => {
 
-    return(
-        <View style={[Box.flexRowBox, {alignItems:'center'}]}>
-            <Image source={Hello} style={[{width: 180,height:70, resizeMode:'contain'}]}></Image>
-            <Text style={styles.profileHeaderText}>{name}</Text>
-        </View>
-    )
+  return(
+    <View style={[Box.flexRowBox, {alignItems:'center'}]}>
+      <Image source={Hello} style={[{width: 180,height:70, resizeMode:'contain', marginLeft: 20}]}></Image>
+      <Text style={styles.profileHeaderText}>{name}</Text>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({

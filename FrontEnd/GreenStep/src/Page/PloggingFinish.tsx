@@ -18,10 +18,12 @@ import lock from '../Image/PloggingFinish/lock.png';
 
 // axios
 import fileTokenHttp from '../Api/fileTokenHttp';
-import tokenHttp from '../Api/tokenHttp';
+import tokenHttp, { baseURL } from '../Api/tokenHttp';
 //지도
 import PloggingEndMap from '../Component/Common/PloggingEndMap';
 import {plogginghistory} from '../Component/PloggingStart/api/ploggingService';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 export interface getAvatarListType {
   avatarName: string | null;
@@ -98,11 +100,34 @@ const PloggingFinish = () => {
       name: result.assets[0].fileName,
     });
 
-    fileTokenHttp
-      .post(`/plogging/${ploggingId}/upload/img`, formData)
-      .then(res => console.log('성공', res))
-      .catch(err => console.log(err));
+    postPloggingImage(formData);
+    // fileTokenHttp
+    //   .post(`/plogging/${ploggingId}/upload/img`, formData)
+    //   .then(res => console.log('성공', res))
+    //   .catch(err => console.log(err));
   };
+
+  /** 사진 서버에 전송 */
+  const postPloggingImage = async (formData: FormData) => {
+    try {
+        const token = await AsyncStorage.getItem('accessToken');
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`, // Bearer 스키마를 사용한 토큰 전달
+            'Content-Type': "multipart/form-data",
+          },
+        };
+        const res = await axios.post(
+          `${baseURL}/plogging/${ploggingId}/upload/img`, 
+          formData,
+          config,
+        );
+        console.log('사진 서버 전송 성공');
+    } catch (err) {
+        console.log('사진 서버 전송 axios 에러 : ', err);
+    }
+};
+
 
   /** 레벨업 토글 */
   const [levelUpToggle, setLevelUpToggle] = useState(false);
@@ -126,17 +151,35 @@ const PloggingFinish = () => {
     setIsVisible(!isVisible);
   };
 
-  const changeVisible = () => {
-    tokenHttp
-      .patch(`/plogging/${ploggingId}/${isVisible}`)
-      .then(res => {
-        if (res.status === 200) {
-          console.log('공개 설정 변경 성공');
-        } else {
-          console.log('공개 설정 변경 실패 : ', res);
-        }
-      })
-      .catch(err => console.log('공개 설정 axios 에러 : ', err));
+  const changeVisible = async () => {
+    try {
+      const token = await AsyncStorage.getItem('accessToken');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`, // Bearer 스키마를 사용한 토큰 전달
+          'Content-Type': "application/json",
+        },
+      };
+      console.log(ploggingId)
+      const res = await axios.patch(
+        `${baseURL}/plogging/${ploggingId}/${isVisible}`, 
+        null,
+        config,
+      )
+      console.log('공개 설정 변경 성공', res);
+  } catch (err) {
+      console.log('공개 설정 변경 axios 에러 : ', err);
+  }
+    // tokenHttp
+    //   .patch(`/plogging/${ploggingId}/${isVisible}`)
+    //   .then(res => {
+    //     if (res.status === 200) {
+    //       console.log('공개 설정 변경 성공');
+    //     } else {
+    //       console.log('공개 설정 변경 실패 : ', res);
+    //     }
+    //   })
+    //   .catch(err => console.log('공개 설정 axios 에러 : ', err));
   };
 
   useEffect(() => {
