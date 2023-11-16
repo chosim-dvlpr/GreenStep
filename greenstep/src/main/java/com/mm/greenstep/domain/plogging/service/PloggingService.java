@@ -149,7 +149,7 @@ public class PloggingService {
 
         PloggingResDto responseDto = PloggingResDto.builder()
                 .trashAmount(getExp)
-                .travelRange(dto.getTravelRange())
+                .travelRange(dto.getTravelRange()/1000)
                 .trashAmount(dto.getTrashAmount())
                 .travelTime(dto.getTravelTime())
                 .isLevelUp(levelUp)
