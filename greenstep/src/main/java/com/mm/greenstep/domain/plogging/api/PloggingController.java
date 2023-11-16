@@ -97,6 +97,9 @@ public class PloggingController {
     @GetMapping("/myAvatar")
     public ResponseEntity<?> getMyAvatar() {
         String myAvatarImg = ploggingService.getMyAvatar();
+        if (myAvatarImg.equals("")) {
+            return new ResponseEntity<>("선택된 아바타 없음", HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(myAvatarImg, HttpStatus.OK);
     }
 }

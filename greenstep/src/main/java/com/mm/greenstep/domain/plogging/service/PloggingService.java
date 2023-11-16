@@ -397,6 +397,10 @@ public class PloggingService {
     public String getMyAvatar() {
         User user= SecurityUtil.getCurrentUser();
         UserAvatar userAvatar = userAvatarRepository.findByUserAndIsSelected(user, true);
-        return userAvatar.getAvatar().getAvatarImg();
+        String img = "";
+        if(userAvatar != null) {
+            img = userAvatar.getAvatar().getAvatarImg();
+        }
+        return img;
     }
 }
