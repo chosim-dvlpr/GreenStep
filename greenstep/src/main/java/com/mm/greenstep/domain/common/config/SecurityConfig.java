@@ -87,8 +87,8 @@ public class SecurityConfig {
         configuration.setAllowCredentials(true); // 쿠키 및 인증 정보 허용
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/plogging/map", configuration); // 모든 경로에 대한 CORS 설정 적용
-//        source.registerCorsConfiguration("/**", configuration); // // 모든 경로에 대한 CORS 설정 적용
+//        source.registerCorsConfiguration("api/plogging/map", configuration); // 모든 경로에 대한 CORS 설정 적용
+        source.registerCorsConfiguration("/**", configuration); // // 모든 경로에 대한 CORS 설정 적용
         return source;
     }
 
