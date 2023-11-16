@@ -21,7 +21,7 @@ public class MainService {
         List<Plogging> ploggingList = ploggingRepository.findAll();
 
         Double travelRange = 0.0;
-        Double travelTime  = 0.0;
+        Long travelTime  = 0L;
         Integer trashAmount  = 0;
 
         for (Plogging p : ploggingList) {
