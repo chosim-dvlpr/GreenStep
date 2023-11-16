@@ -1,22 +1,21 @@
-import { Text, View } from "react-native";
+import { View, Text, ScrollView } from "react-native"
 import React, {useState, useEffect} from 'react';
 import {useIsFocused} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {baseURL} from '../Api/tokenHttp';
+import BoardListDetail from "../Component/Board/BoardListDetail";
 
-interface myJoinPloggingListProps{
-    boardId : number;
+interface BoardProps{
+    avatarImg : string;
     nickname : string;
-    avatarImage : string;
+    boardId : number;
     boardTitle: string;
     boardContent: string;
-    scheduleTime : string;
     scheduleLocation: string;
+    scheduleTime : string;
     maxParticipants: number;
     createdAt : string;
-    updatedAt : string;
-    isDeleted: boolean;
     isAttended: boolean;
   }
 
@@ -24,7 +23,7 @@ interface myJoinPloggingListProps{
 const MyJoinedPloggingList = () =>{
 
     const isFocused = useIsFocused();
-    const [myJoinList, setMyJoinList] = useState<myJoinPloggingListProps[]>([]);
+    const [myJoinList, setMyJoinList] = useState<BoardProps[]>([]);
 
     const getMyJoinPloggingList =async () => {
         try{
@@ -51,11 +50,14 @@ const MyJoinedPloggingList = () =>{
 
     return(
         <View>
-            {myJoinList.map((list, idx) =>(
-                <View>
-                    <Text>{list.boardTitle}</Text>
-                </View>
-            ))}
+            <View style={{justifyContent:'center', alignItems:'center'}}>
+                <Text style={{ fontSize: 30, fontWeight: 'bold', paddingLeft: 20, marginBottom: 20}}> Crew With Plogging</Text>
+            </View>
+            <ScrollView >
+                {myJoinList.map((list, idx) =>(
+                    <BoardListDetail key={idx} {...list}/>
+                ))}
+            </ScrollView>
         </View>
     )
 }
