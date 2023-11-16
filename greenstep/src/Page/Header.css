@@ -3,4 +3,5 @@ header {
     color: white;
     padding: 10px 15px;
     text-align: center;
+    z-index: 2;
   }
