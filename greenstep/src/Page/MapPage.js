@@ -46,7 +46,43 @@ const modifiedDarkStyle = [
       elementType: 'geometry.stroke',
       stylers: [{ color: '#212a37' }] // 도로 윤곽선 색상 조정
     },
-    // 기타 스타일 규칙을 추가할 수 있습니다.
+    {
+        featureType: 'poi',
+        elementType: 'all',
+        stylers: [{ visibility: 'off' }]
+      },
+      {
+        featureType: 'road',
+        elementType: 'labels',
+        stylers: [{ visibility: 'off' }]
+      },
+    
+      // 도로 윤곽선 스타일 조정
+      {
+        featureType: 'road',
+        elementType: 'geometry.stroke',
+        stylers: [{ color: '#212a37' }, { weight: 1 }] // 색상과 두께 조정
+      },
+    
+   // 버스 정류장 숨기기
+  {
+    featureType: 'transit.station.bus',
+    stylers: [{ visibility: 'off' }]
+  },
+
+  // 지하철 역 숨기기
+  {
+    featureType: 'transit.station.rail',
+    stylers: [{ visibility: 'off' }]
+  },
+  {
+    featureType: 'transit',
+    stylers: [{ visibility: 'off' }]
+  },
+  {
+    featureType: 'transit.station.bus',
+    stylers: [{ visibility: 'off' }]
+  },
   ];
   
  
