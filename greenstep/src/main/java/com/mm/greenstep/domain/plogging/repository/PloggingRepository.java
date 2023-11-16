@@ -15,8 +15,11 @@ public interface PloggingRepository extends JpaRepository<Plogging, Long> {
     List<Plogging> findAllByUser(User user);
 
 
-    @Query(value = "SELECT * FROM plogging WHERE is_visibled = true ORDER BY RAND() LIMIT :count", nativeQuery = true)
-    List<Plogging> findRandomVisiblePloggingRecords(@Param("count") int count);
+//    @Query(value = "SELECT * FROM plogging WHERE is_visibled = true ORDER BY RAND() LIMIT :count", nativeQuery = true)
+//    List<Plogging> findRandomVisiblePloggingRecords(@Param("count") int count);
+
+    @Query(value = "SELECT * FROM plogging WHERE is_visibled = true AND travel_picture IS NOT NULL ORDER BY RAND() LIMIT :count", nativeQuery = true)
+    List<Plogging> findRandomVisiblePloggingRecordsExcludeNullImageUrl(@Param("count") int count);
 
 
     @Query("SELECT p FROM Plogging p WHERE FUNCTION('YEAR', p.createdAt) = :year AND p.user = :user")

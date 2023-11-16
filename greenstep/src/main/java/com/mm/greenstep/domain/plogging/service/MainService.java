@@ -45,7 +45,7 @@ public class MainService {
         int count = 6;
 
         // findAll() 메서드 대신에 custom query를 사용하여 랜덤한 6개의 레코드를 가져옵니다.
-        List<Plogging> ploggingList = ploggingRepository.findRandomVisiblePloggingRecords(count);
+        List<Plogging> ploggingList = ploggingRepository.findRandomVisiblePloggingRecordsExcludeNullImageUrl(count);
 
         List<PloggingAllImgResDto> imgList = new ArrayList<>();
 
