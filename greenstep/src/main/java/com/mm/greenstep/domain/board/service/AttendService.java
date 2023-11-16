@@ -62,7 +62,6 @@ public class AttendService {
         }
     }
 
-
     public ResponseEntity<?> getAllAttend(Long boardId){
         Board board = boardRepository.findByBoardId(boardId);
         List<Attend> attendList = attendRepository.findAllByBoard(board);
