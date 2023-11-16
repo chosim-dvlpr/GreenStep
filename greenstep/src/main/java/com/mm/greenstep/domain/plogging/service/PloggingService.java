@@ -90,7 +90,7 @@ public class PloggingService {
         // 경험치 계산
         Integer getExp =
                 (int) ((dto.getAITrashAmount() * 0.9) +
-                        (dto.getTravelRange() * 0.7) +
+                        (dto.getTravelRange() * 0.07) +
                         (dto.getTravelTime() * 0.05) +
                         (dto.getTrashAmount() * 0.5)) ;
 
@@ -100,7 +100,7 @@ public class PloggingService {
                 .user(user)
                 .trashAmount(dto.getTrashAmount())
                 .travelTime(dto.getTravelTime())
-                .travelRange(dto.getTravelRange())
+                .travelRange(dto.getTravelRange()/1000)
                 .getExp(getExp)
                 .build();
 
