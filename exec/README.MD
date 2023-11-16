@@ -40,6 +40,6 @@
 
 <br>
 
-- [🤖 AI](AI/)
-- [🌐 AWS S3](AWS_S3/)
-- [🔧 Infra](Infra/)
+# [🤖 AI](AI/)
+# [🌐 AWS S3](AWS_S3/)
+# [🔧 Infra](Infra/)
