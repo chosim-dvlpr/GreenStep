@@ -34,7 +34,7 @@ public class MainService {
         PloggingAllLogResDto dto = PloggingAllLogResDto.builder()
                 .trashAmount(trashAmount)
                 .travelRange(travelRange)
-                .travelTime(travelTime)
+                .travelTime(travelTime/3600)
                 .build();
 
         return dto;
