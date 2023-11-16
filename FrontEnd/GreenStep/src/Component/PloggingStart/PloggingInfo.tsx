@@ -108,7 +108,8 @@ const PloggingInfo: React.FC<PloggingInfoProps> = ({
           getExp: res.data.getExp,
           isLevelUp: res.data.isLevelUp,
           getAvatarList: res.data.getAvatarList, //api에 이거 객체로전달
-          travelTime: res.data.travelTime.toString(), // 여행 시간을 문자열로 변환
+          // travelTime: res.data.travelTime.toString(), // 여행 시간을 문자열로 변환
+          travelTime: res.data.travelTime, // 여행 시간을 문자열로 변환
           travelRange: res.data.travelRange,
           trashAmount: res.data.trashAmount,
 
@@ -117,7 +118,7 @@ const PloggingInfo: React.FC<PloggingInfoProps> = ({
 
         // PloggingFinish 컴포넌트로 네비게이션
         console.log(`isTracking 상태: ${isTracking}`);
-
+        console.log('데이터 Info에서 넘어가는지 확인', ploggingFinishData)
         navigation.navigate('ploggingfinish', ploggingFinishData);
       } catch (err) {
         console.log('error', err);

@@ -6,10 +6,10 @@ export const roundedTravelRange = (range: Double): number => {
     return Math.round(range * 100) / 100;
 };
 // 시/분 표시
-export const msToHM = (duration: Double): string => {
-    let seconds: string | number = Math.floor((duration / 1000) % 60),
-        minutes: string | number = Math.floor((duration / (1000 * 60)) % 60),
-        hours: string | number = Math.floor((duration / (1000 * 60 * 60)) % 24);
+export const msToHM = (duration: number): string => {
+    let seconds: string | number = Math.floor(duration  % 60),
+        minutes: string | number = Math.floor((duration / 60) % 60),
+        hours: string | number = Math.floor((duration / (60 * 60)) % 24);
 
     hours = hours < 10 ? "0" + hours : hours;
     minutes = minutes < 10 ? "0" + minutes : minutes;
@@ -18,10 +18,10 @@ export const msToHM = (duration: Double): string => {
     return `${hours}H ${minutes}M`;
     };
 // 시/분/초 표시
-export const msToHMS = (duration: Double): string => {
-    let seconds: string | number = Math.floor((duration / 1000) % 60),
-        minutes: string | number = Math.floor((duration / (1000 * 60)) % 60),
-        hours: string | number = Math.floor(duration / (1000 * 60 * 60));
+export const msToHMS = (duration: number): string => {
+    let seconds: string | number = Math.floor(duration  % 60),
+        minutes: string | number = Math.floor((duration / 60) % 60),
+        hours: string | number = Math.floor(duration / (60 * 60) );
 
     hours = hours < 10 ? "0" + hours : hours;
     minutes = minutes < 10 ? "0" + minutes : minutes;

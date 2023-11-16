@@ -11,6 +11,7 @@ const BoardCRUDContent = (props:contentProps) => {
                     editable
                     multiline
                     placeholder="내용을 입력하세요"
+                    placeholderTextColor="black"
                     onChangeText={props.onChangeText}
                     value={props.content}
                     style={styles.input}

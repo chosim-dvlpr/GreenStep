@@ -27,7 +27,7 @@ const BoardCRUDInfo = (props: CreateInfoProps) => {
                 <View style={[Box.flexRowBox,{marginBottom: 10, justifyContent:'space-between' }]}>
                     <Text style={[TextStyle.defaultBlack,{fontSize: 20}]}>지역</Text>
                     <SafeAreaView>
-                        <TextInput style={styles.input} placeholder="지역을 입력하세요"
+                        <TextInput style={styles.input} placeholder="지역을 입력하세요" placeholderTextColor="black"
                                 onChangeText={props.onLocateChange} value={props.location} />
                     </SafeAreaView>
                 </View>

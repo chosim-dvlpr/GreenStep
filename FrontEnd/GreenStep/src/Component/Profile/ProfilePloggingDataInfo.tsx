@@ -19,14 +19,14 @@ const ImageContainer = styled.View`
 
 const ProfilePloggingDataInfo = ({timeInfo, distanceInfo, trashInfo, acheiveInfo, isProfile}:any) => {
     const navigation = useNavigation();
-
+    console.log('시간 체크', timeInfo)
     return(
       <View style={{display: 'flex', flexDirection: 'row', marginBottom: 20, justifyContent: 'space-evenly', alignItems:'center'}}>
         <View style={[Box.ploggingDataInfoBox, {alignItems:'center', marginRight: 5, justifyContent: 'center', paddingTop: 10,}]}>
           <ImageContainer>
             <Image source={time} style={ImageStyle.tinyImage}></Image>
           </ImageContainer>
-          <Text style={[TextStyle.defaultBlack, {fontSize: 13, fontWeight:'bold', marginTop: 5, marginBottom: 2}]} numberOfLines={1}>{timeInfo ? msToHM(timeInfo) : "00:00:00"}</Text>
+          <Text style={[TextStyle.defaultBlack, {fontSize: 13, fontWeight:'bold', marginTop: 5, marginBottom: 2}]} numberOfLines={1}>{timeInfo ? msToHM(timeInfo) : "00:00"}</Text>
           <Text style={[TextStyle.defaultBlack, {fontSize: 13}]} numberOfLines={1}>함께한 시간</Text>
         </View>
         
