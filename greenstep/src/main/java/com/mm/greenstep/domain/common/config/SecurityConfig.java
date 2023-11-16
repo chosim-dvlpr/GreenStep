@@ -79,7 +79,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*")); // 모든 출처 허용
-        configuration.setAllowedOrigins(Arrays.asList("https://k9b303.p.ssafy.io/api", "https://k9b303.p.ssafy.io/api/", "http://localhost:3000","http://localhost:3000/"));
+//        configuration.setAllowedOrigins(Arrays.asList("https://k9b303.p.ssafy.io/api", "https://k9b303.p.ssafy.io/api/", "http://localhost:3000","http://localhost:3000/"));
         configuration.setAllowedHeaders(Arrays.asList("*")); // 모든 헤더 허용
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")); // 허용되는 메소드
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
@@ -87,8 +87,8 @@ public class SecurityConfig {
         configuration.setAllowCredentials(true); // 쿠키 및 인증 정보 허용
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/plogging/map", configuration); // 모든 경로에 대한 CORS 설정 적용
-        source.registerCorsConfiguration("/**", configuration); // // 모든 경로에 대한 CORS 설정 적용
+        source.registerCorsConfiguration("/plogging/map", configuration); // 모든 경로에 대한 CORS 설정 적용
+//        source.registerCorsConfiguration("/**", configuration); // // 모든 경로에 대한 CORS 설정 적용
         return source;
     }
 
