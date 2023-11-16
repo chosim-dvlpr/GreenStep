@@ -105,10 +105,10 @@ const AiCamera = ({onClose}) => {
           />
           <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={takePhoto} style={styles.button}>
-              <Image
+              {/* <Image
                 source={require('../../Image/PloggingStart/record.png')}
                 style={{width: 50, height: 50}} // 원하는 스타일 지정
-              />
+              /> */}
             </TouchableOpacity>
           </View>
         </>

@@ -33,7 +33,7 @@ const ButtonStyle = StyleSheet.create({
    */
   largeButton: {
     width: '90%', 
-    height: 60,       
+    height: 50,       
     borderRadius: 15,
     alignItems : 'center',
     justifyContent: 'center',
@@ -51,7 +51,7 @@ const ButtonStyle = StyleSheet.create({
   kakaoButton: {
     backgroundColor: '#FEE500',
     width: '100%',
-    height: 60,
+    height: 50,
     borderRadius: 12,
     alignItems : 'center',
     justifyContent: 'center',
@@ -71,6 +71,11 @@ const ButtonStyle = StyleSheet.create({
   /** 버튼 색 - 흰색 */
   whiteColor: {
     backgroundColor: 'white',
+    elevation: 5, // 그림자
+  },
+  /** 버튼 색 - 빨간색 */
+  RedColor: {
+    backgroundColor: 'red',
     elevation: 5, // 그림자
   },
 })
