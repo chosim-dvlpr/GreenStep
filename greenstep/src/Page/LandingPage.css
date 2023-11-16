@@ -19,7 +19,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     color: rgb(19, 159, 19);
-    font-size: 9rem; /* 글씨 크기 조정 */
+    font-size: 7rem; /* 글씨 크기 조정 */
     font-weight: bolder;
     text-align: center;
     font-family: Bobby_Rough_Soft;
