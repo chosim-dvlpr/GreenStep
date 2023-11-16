@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { useIsFocused, useRoute } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 
 import DetailBoard from '../Component/Board/DetailBoard';
 import BoardInfoCard from '../Component/Board/BoardInfoCard';
@@ -26,15 +27,37 @@ interface BoardProps {
 interface attendListProps{
   userId : number;
   nickname: string;
+  avatarImg: string;
 }
 
 const BoardDetail= () => {
   const isFocused = useIsFocused();
   const route = useRoute();
+  const navigation = useNavigation();
+
   const { boardId }: any = route.params;
   const [boardDetail, setBoardDetail] = useState<BoardProps | null>(null);
   const [attendList, setAttendList] = useState<attendListProps[]>([]);
   const [myJoined, setMyJoined] = useState(false)
+  const [myNickname, setMynickName] = useState('')
+  const [joinCount, setJoinCount] = useState(0)
+
+  const getMyNickname = async () => {
+    try {
+      const token = await AsyncStorage.getItem('accessToken');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      };
+      const res = await axios.get(`${baseURL}/mypage`, config);
+      console.log('유저 조회 성공', res);
+      setMynickName(res.data.nickname);
+    } catch (err) {
+      console.log('유저 조회 실패', err);
+    }
+  };
 
   const getBoardDetail = async (boardId: number) => {
     try {
@@ -65,6 +88,7 @@ const BoardDetail= () => {
       const res = await axios.get(`${baseURL}/attend/attendList/${boardId}`, config);
       console.log('플로깅 참여 회원 목록 조회 성공', res)
       setAttendList(res.data);
+      setJoinCount(res.data.length)
     } catch (err) {
       console.log('플로깅 참여 회원 목록 조회 실패', err);
     }
@@ -101,15 +125,30 @@ const BoardDetail= () => {
       console.log('플로깅 탈퇴 실패', err);
     }
   }
-
-
+  const patchBoard = async (boardId : number) => {
+    try {
+      const token = await AsyncStorage.getItem('accessToken');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      };
+      const res = await axios.patch(`${baseURL}/board/${boardId}`, boardId, config);
+      console.log('게시판 삭제 성공', res);
+      navigation.navigate('board')
+    } catch (err) {
+      console.log('게시판 삭제 실패', err);
+    }
+  };
 
   useEffect(() => {
     if (isFocused && boardId) {
       getBoardDetail(boardId);
       getAttendList(boardId);
+      getMyNickname();
     }
-  }, [isFocused, boardId]);
+  }, [isFocused, boardId, myNickname]);
 
   useEffect(() => {
     if (isFocused && boardId) {
@@ -117,28 +156,45 @@ const BoardDetail= () => {
     }
   }, [isFocused, myJoined]);
 
+  useEffect(() => {
+    const isParticipating = attendList.some(member => member.nickname === myNickname);
+    setMyJoined(isParticipating);
+  }, [attendList, myNickname]);
+
   return (
     <ScrollView>
       {/* 여기에 배경 이미지 관련 코드가 있으면 추가해주세요. */}
       <View style={{ alignItems: 'center' }}>
         <View style={{ alignItems: 'center', justifyContent: 'center', margin: 20 }}>
-          <Text style={{ fontSize: 22, fontWeight: 'bold' }}>크루 찾기</Text>
+          <Text style={{ fontSize: 22, fontWeight: 'bold' }}>Green Step</Text>
         </View>
 
         {boardDetail && <DetailBoard boardDetail={boardDetail} />}
-        {boardDetail && <BoardInfoCard boardDetail={boardDetail} />}
-        <BoardInfoParticipationList />
+        {boardDetail && <BoardInfoCard boardDetail={boardDetail} joinCount={joinCount} />}
+        <BoardInfoParticipationList attendList={attendList}/>
 
-        {myJoined ? 
-        <TouchableOpacity style={[ButtonStyle.largeButton, ButtonStyle.achievementButton, { marginBottom: 20 }]}
-                          onPress={() => getAttendPloggingLeave(boardId)}>
-          <Text style={{ color: 'white', fontSize: 20 }}>탈퇴하기</Text>
-        </TouchableOpacity>
-        :
-        <TouchableOpacity style={[ButtonStyle.largeButton, ButtonStyle.achievementButton, { marginBottom: 20 }]}
-                          onPress={() => getAttendPlogging(boardId)}>
-          <Text style={{ color: 'white', fontSize: 20 }}>참여하기</Text>
-        </TouchableOpacity>
+        {myJoined ? (
+          <TouchableOpacity style={[ButtonStyle.largeButton, ButtonStyle.achievementButton, { marginBottom: 20 }]}
+                            onPress={() => getAttendPloggingLeave(boardId)}>
+            <Text style={{ color: 'white', fontSize: 20 }}>탈퇴하기</Text>
+          </TouchableOpacity>
+        ) : (
+          joinCount === boardDetail?.maxParticipants ? (
+            <TouchableOpacity style={[ButtonStyle.largeButton, ButtonStyle.achievementButton, { marginBottom: 20 }]}>
+              <Text style={{ color: 'white', fontSize: 20 }}>모집 완료</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity style={[ButtonStyle.largeButton, ButtonStyle.achievementButton, { marginBottom: 20 }]}
+                              onPress={() => getAttendPlogging(boardId)}>
+              <Text style={{ color: 'white', fontSize: 20 }}>참여하기</Text>
+            </TouchableOpacity>
+          )
+        )}
+        {myNickname === boardDetail?.nickname &&
+          <TouchableOpacity style={[ButtonStyle.largeButton, ButtonStyle.RedColor, { marginBottom: 20 }]}
+                            onPress={() => patchBoard(boardId)}>
+            <Text style={{ color: 'white', fontSize: 20 }}>삭제하기</Text>
+          </TouchableOpacity>
         }
       </View>
     </ScrollView>
