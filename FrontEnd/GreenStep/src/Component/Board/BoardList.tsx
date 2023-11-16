@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {baseURL} from '../../Api/tokenHttp';
 import BoardListDetail from "./BoardListDetail";
-
+import TextStyle from "../../Style/Text";
 interface BoardProps{
     avatarImg : string;
     nickname : string;
@@ -48,12 +48,12 @@ const BoardList = () => {
 
     return(
         <View>
-        <Text style={{ fontSize: 20, fontWeight: 'bold', paddingLeft: 20, marginBottom: 20}}>전체</Text>
-                <ScrollView >
+        <Text style={[TextStyle.defaultBlack, { fontSize: 20, fontWeight: 'bold', paddingLeft: 20, marginBottom: 20}]}>전체</Text>
+                {/* <ScrollView > */}
                     {allBoardList.map((list, idx) =>(
                         <BoardListDetail key={idx} {...list}/>
                     ))}
-                </ScrollView>
+                {/* </ScrollView> */}
 
         </View>
     )

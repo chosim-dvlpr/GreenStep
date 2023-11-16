@@ -30,7 +30,7 @@ const Box = StyleSheet.create({
   },
   /** 내가 작성한 게시글 박스 */
   mediumCardBox: {
-    width: '30%',
+    width: '40%',
     backgroundColor: '#FFFFFF',
     padding: 20,
     borderRadius: 15,
@@ -63,6 +63,12 @@ const Box = StyleSheet.create({
     flexRowBox: {
       display:'flex',
       flexDirection:'row',
+    },
+    /** 밑 공백 채우는 박스 */
+    blankBox: {
+      width: '90%',
+      padding: 20,      
+      borderRadius: 10,
     },
 })
 

@@ -11,6 +11,7 @@ import axios from 'axios';
 import {baseURL} from '../Api/tokenHttp';
 import VictortyModal from '../Component/Main/VictoryModal';
 import VictoryGetAvatarModal from '../Component/Main/VitoryGetAvatarModal';
+import TextStyle from '../Style/Text';
 
 export interface EmailLoginDataType {
   email: string;
@@ -120,6 +121,7 @@ const Main = () => {
       console.log('승리 여부 조회 error', err);
     }
   };
+
   const getWinnerAvatar = async (alarmId: number) => {
     try {
       const token = await AsyncStorage.getItem('accessToken');
@@ -129,10 +131,7 @@ const Main = () => {
           'Content-Type': 'application/json', // JSON 형식의 컨텐츠 타입 명시
         },
       };
-      const res = await axios.get(
-        `${baseURL}/alarm/confirm/${alarmId}`,
-        config,
-      );
+      const res = await axios.get(`${baseURL}/alarm/confirm/${alarmId}`,config,);
       console.log(res);
       setWinnerAvatar(res.data);
     } catch (err) {
@@ -143,6 +142,7 @@ const Main = () => {
     setModalToggle(false);
     setRewardModalToggle(true);
   };
+
   const closeAvatarModal = () => {
     setRewardModalToggle(false);
   };
@@ -167,20 +167,22 @@ const Main = () => {
       setModalToggle(true);
     }
   }, [userVictory]);
+
   return (
     <View>
       <ContainerBg source={require('../Image/Competition/bg.png')}>
+
         <MainTextContainer>
-          <Text style={styles.mainText}>자연을 지키는</Text>
-          <Text style={styles.mainText}>당신과 우리의 발자국</Text>
-          <Text style={styles.mainText}>그린스텝</Text>
+          <Text style={[TextStyle.defaultBlack, styles.mainText]}>자연을 지키는</Text>
+          <Text style={[TextStyle.defaultBlack, styles.mainText]}>당신과 우리의 발자국</Text>
+          <Text style={[TextStyle.defaultBlack, styles.mainText]}>그린스텝</Text>
         </MainTextContainer>
 
         <CarouselContainer>
           <CarouselTextContainer>
-            <Text style={styles.mainFont}>자연을 지킨</Text>
-            <Text style={styles.mainFont}>{travelTime.toFixed(0)} 시간</Text>
-            <Text style={styles.mainFont}>{travelRange.toFixed(3)} km</Text>
+          <Text style={[TextStyle.defaultBlack, styles.mainFont]}>자연을 지킨</Text>
+            <Text style={[TextStyle.defaultBlack, styles.mainFont]}>{travelTime.toFixed(0)} 시간</Text>
+            <Text style={[TextStyle.defaultBlack, styles.mainFont]}>{travelRange.toFixed(3)} km</Text>
           </CarouselTextContainer>
           <Carousel />
         </CarouselContainer>
@@ -209,7 +211,7 @@ const Main = () => {
               <TouchableOpacity
                 onPress={() => navigation.navigate('ploggingstart')}
                 style={[ButtonStyle.largeButton, ButtonStyle.lightGreenColor]}>
-                <Text style={styles.goToPloggingText}>플로깅 하러가기</Text>
+                <Text style={[TextStyle.defaultBlack, styles.goToPloggingText]}>플로깅 하러가기</Text>
               </TouchableOpacity>
             </View>
           ) : (

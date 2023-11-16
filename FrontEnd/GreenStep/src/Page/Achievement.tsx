@@ -69,19 +69,18 @@ const Achievement = () => {
 
   return (
     <ScrollView>
-      <ContainerBg source={require('../Image/Competition/bg.png')}>
+      {/* <ContainerBg source={require('../Image/Competition/bg.png')}> */}
         <View style={[Box.flexRowBox,{justifyContent:'space-evenly', marginTop:20}]}>
           {Type.map((atom, idx) => (
             <AchievementButton key={idx} atom={atom} onPress={changeAchieveType(idx)} />
       ))}
         </View>      
-            <Text></Text>
         <View style={{alignItems:'center'}}>
           {achieveList?.map((achievement, idx) => (
             <AchievementList atom={achievement} achievetype={achieveType} key={idx} />
           ))}
         </View>
-      </ContainerBg>
+      {/* </ContainerBg> */}
     </ScrollView>
   );
 };

@@ -10,6 +10,8 @@ import move from '../Image/Profile/move.png'
 import profile from '../Image/Footer/profile.png'
 import trash from '../Image/PloggingStart/trash_img.png'
 import styled from "styled-components/native";
+import TextStyle from "../Style/Text";
+import withimg from '../Image/Board/with.png'
 
 const ContainerBg = styled.ImageBackground`
   width: 100%;
@@ -17,7 +19,7 @@ const ContainerBg = styled.ImageBackground`
 `;
 
 const Menu = () => {
-    const pictures = [map, badge, trash, profile, badge ]
+    const pictures = [map, badge, trash, profile, withimg ]
     const names = [ 'GreenStep 홈페이지', '업적', 'Plogging Event', '회원 정보 수정', 'Crew with GreenStep']
     const navigation = useNavigation();
     //추후 페이지 만들고 나서 수정
@@ -47,13 +49,13 @@ const Menu = () => {
     return(
         <View>
             <ContainerBg source={require('../Image/Competition/bg.png')}>
-                <Text style={{marginBottom: 50}}></Text>
+                <Text style={[TextStyle.defaultBlack, {marginBottom: 50}]}></Text>
                 <View style={{alignItems: 'center', justifyContent: 'center'}}>
                     {names.map((name, idx) =>(
                         <TouchableOpacity key={idx} onPress={()=> moveToCategory(idx)}
                                         style={[Box.cardBox, { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20}]}>
                             <Image source={pictures[idx]} style={ImageStyle.tinyImage}></Image>
-                            <Text style={{justifyContent:'center', alignItems:'center', fontSize: 20, fontWeight:'bold', fontFamily: 'SUITE-Bold'}}>{name}</Text>
+                            <Text style={[TextStyle.defaultBlack, {justifyContent:'center', alignItems:'center', fontSize: 20, fontWeight:'bold', fontFamily: 'SUITE-Bold'}]}>{name}</Text>
                             <Image source={move} style={{width:20, height: 20, marginLeft: 20, marginTop:5}}></Image>
                         </TouchableOpacity>
                     ))}

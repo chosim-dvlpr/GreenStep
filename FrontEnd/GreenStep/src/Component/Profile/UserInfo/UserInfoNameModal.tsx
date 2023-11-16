@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import { View, Modal, Text, TouchableWithoutFeedback, TextInput,
          TouchableOpacity, StyleSheet} from "react-native";
 import Box from '../../../Style/Box';
+import TextStyle from '../../../Style/Text';
+
 interface ModalProps {
     onClose: () => void;
     checkAble: (newName:string) => void;
@@ -26,10 +28,12 @@ const UserInfoNameModal = (props: ModalProps) => {
            <TouchableWithoutFeedback>
                 <View style={[styles.modalView, {justifyContent:'center', alignItems:'center'}]}>
                     
-                    <Text style={{fontSize: 16, marginBottom: 15,}}>닉네임 변경</Text>
+                    <Text style={[TextStyle.defaultBlack, {fontSize: 16, marginBottom: 15}]}>닉네임 변경</Text>
                     <View style={Box.flexRowBox}>
                         <TextInput style={styles.input} value={changeName} onChangeText={setChangeName}></TextInput>
-                        <TouchableOpacity style={styles.checkButton} onPress={() => props.checkAble(changeName)}><Text>중복 확인</Text></TouchableOpacity>
+                        <TouchableOpacity style={styles.checkButton} onPress={() => props.checkAble(changeName)}>
+                            <Text style={TextStyle.defaultBlack}>중복 확인</Text>
+                        </TouchableOpacity>
                     </View> 
 
                         <View style={Box.flexRowBox}>
@@ -37,9 +41,11 @@ const UserInfoNameModal = (props: ModalProps) => {
                             style={[styles.checkButton, !props.changeAble && styles.disabledButton]} 
                             onPress={() => props.PatchUserName(changeName)} 
                             disabled={!props.changeAble}>
-                            <Text>변경</Text>
+                            <Text style={TextStyle.defaultBlack}>변경</Text>
                         </TouchableOpacity>
-                            <TouchableOpacity style={styles.cancelButton} onPress={props.onClose}><Text>취소</Text></TouchableOpacity>
+                            <TouchableOpacity style={styles.cancelButton} onPress={props.onClose}>
+                                <Text style={TextStyle.defaultBlack}>취소</Text>
+                            </TouchableOpacity>
                         </View>
 
                 </View>

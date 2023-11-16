@@ -4,7 +4,7 @@ import { View, Modal, Text, TouchableWithoutFeedback,
 import LottieView from 'lottie-react-native';
 import treasureBox from '../../Image/PloggingFinish/treasureBox.json'
 import confetti from '../../Image/PloggingFinish/confetti.json'
-
+import TextStyle from '../../Style/Text';
 interface ModalProps {
   onClose: () => void;
   visible: boolean;
@@ -69,7 +69,7 @@ const VictoryGetAvatarModal : React.FC<ModalProps> = ({ onClose, winnerAvatar })
                         style={styles.avatarImage}
                         />
                       </Animated.View>
-                      <Text style={styles.bottomText}>{winnerAvatar?.avatarName} 획득!</Text>
+                      <Text style={[styles.bottomText,TextStyle.defaultBlack]}>{winnerAvatar?.avatarName} 획득!</Text>
                    </TouchableOpacity>
                 </View>
               : <View style={styles.treasureBoxContainer}>
@@ -77,15 +77,15 @@ const VictoryGetAvatarModal : React.FC<ModalProps> = ({ onClose, winnerAvatar })
                   onPress={handleIsOpened}
                   disabled={isOpened}
                   >
-                    <Text style={styles.levelUpText}>경쟁 승리!</Text>
+                    <Text style={[styles.levelUpText,TextStyle.defaultBlack]}>경쟁 승리!</Text>
                     <LottieView 
                     source={treasureBox}
                     autoPlay
                     loop
                     style={styles.treasureBoxImage}
                     />
-                    <Text style={styles.treasureBoxText}>상자를 획득했습니다.</Text>
-                    <Text style={styles.treasureBoxText}>상자를 눌러 열어주세요.</Text>
+                    <Text style={[styles.treasureBoxText,TextStyle.defaultBlack]}>상자를 획득했습니다.</Text>
+                    <Text style={[styles.treasureBoxText,TextStyle.defaultBlack]}>상자를 눌러 열어주세요.</Text>
                   </TouchableOpacity>
                   </View>
             }
