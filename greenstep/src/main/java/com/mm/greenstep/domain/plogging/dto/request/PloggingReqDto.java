@@ -14,7 +14,7 @@ public class PloggingReqDto {
     private Double travelRange;
     private Integer AITrashAmount; // AI 찍은 쓰레기 수
     private Integer trashAmount; // 쓰레기수
-    private LocalDateTime now;
+//    private LocalDateTime now;
 
     // 플로깅 종료까지의 이동거리 위도, 경도 리스트
     private List<PloggingCoorDto> coorList;
