@@ -69,11 +69,13 @@ public class PloggingService {
         User user = userRepository.findByUserId(user_pk);
 
         // 대한민국 시간대로 현재 시간을 설정
-        LocalDateTime endTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+//        LocalDateTime endTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+        LocalDateTime endTime = dto.getNow();
+
 
         // dto.getTravelTime()이 초 단위로 시간을 반환한다고 가정
         Long travelTimeInSeconds = dto.getTravelTime();
-        LocalDateTime startTime = endTime.minusSeconds(travelTimeInSeconds);
+        LocalDateTime startTime = dto.getNow().minusSeconds(travelTimeInSeconds);
 
 
         // 현재 시간 얻어오기
