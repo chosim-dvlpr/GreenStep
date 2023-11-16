@@ -22,4 +22,16 @@ public interface AvatarRepository extends JpaRepository<Avatar, Long> {
         }
         return null; // 또는 기본 아바타 반환
     }
+
+    @Query("SELECT a FROM Avatar a WHERE a.avatarType = 1 ORDER BY RAND()")
+    List<Avatar> findAllAvatarsWithTypeOneOrderByRandom(Pageable pageable);
+
+    default Avatar findRandomAvatarWithTypeOne() {
+        List<Avatar> avatars = findAllAvatarsWithTypeOneOrderByRandom(PageRequest.of(0, 1));
+        if (!avatars.isEmpty()) {
+            return avatars.get(0);
+        }
+        return null; // 또는 기본 아바타 반환
+    }
+
 }

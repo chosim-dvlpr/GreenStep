@@ -3,9 +3,14 @@ package com.mm.greenstep.domain.alarm.service;
 import com.mm.greenstep.domain.alarm.dto.response.AlarmResDto;
 import com.mm.greenstep.domain.alarm.entity.Alarm;
 import com.mm.greenstep.domain.alarm.repository.AlarmRepository;
+import com.mm.greenstep.domain.avatar.entity.Avatar;
+import com.mm.greenstep.domain.avatar.entity.UserAvatar;
+import com.mm.greenstep.domain.avatar.repository.AvatarRepository;
+import com.mm.greenstep.domain.avatar.repository.UserAvatarRepository;
 import com.mm.greenstep.domain.common.util.SecurityUtil;
 import com.mm.greenstep.domain.compete.entity.Victory;
 import com.mm.greenstep.domain.compete.repository.VictoryRepository;
+import com.mm.greenstep.domain.plogging.dto.response.getAvatar;
 import com.mm.greenstep.domain.user.entity.Team;
 import com.mm.greenstep.domain.user.entity.User;
 import com.mm.greenstep.domain.user.repository.UserRepository;
@@ -25,6 +30,8 @@ public class AlarmService {
     private final UserRepository userRepository;
     private final VictoryRepository victoryRepository;
     private final AlarmRepository alarmRepository;
+    private final AvatarRepository avatarRepository;
+    private final UserAvatarRepository userAvatarRepository;
 
     /**
      * 경쟁 종료시 모든 유저에게 보내는 알람 생성
@@ -84,17 +91,39 @@ public class AlarmService {
     }
 
     public ResponseEntity<?> updateIsConfirmAlarm(Long alarmId){
+        User user = SecurityUtil.getCurrentUser();
         Alarm alarm = alarmRepository.findById(alarmId).orElseThrow();
+
+        getAvatar g = null;
 
         // 랜덤박스 보상인 경우
         if (alarm.getIsReward()){
+            Avatar randomAvatar = avatarRepository.findRandomAvatarWithTypeOne();
 
+            // 뽑은 아바타 넘겨주기
+            g = getAvatar.builder()
+                    .avatarImg(randomAvatar.getAvatarImg())
+                    .avatarName(randomAvatar.getAvatarName())
+                    .build();
+
+            // randomAvatar가 해당 user의 userAvatar에 없을 때
+            UserAvatar checkUserAvatar = userAvatarRepository.findByUserAndAvatar(user, randomAvatar);
+            if(checkUserAvatar == null) {
+                // 선택된 랜덤 아바타를 `user_avatar` 테이블에 추가
+                UserAvatar userAvatar = UserAvatar.builder()
+                        .user(user)
+                        .avatar(randomAvatar)
+                        .isSelected(false)
+                        .build();
+
+                userAvatarRepository.save(userAvatar);
+            }
         }
 
         alarm.updateConfirmAlarm();
         alarmRepository.save(alarm);
 
-        return new ResponseEntity<>(true, HttpStatus.OK);
+        return new ResponseEntity<>(g, HttpStatus.OK);
     }
 
 }
