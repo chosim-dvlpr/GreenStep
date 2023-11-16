@@ -38,8 +38,6 @@
 - MariaDB : 3306:3306
 - Redis : 6379:6379
 
-[AI](AI/)
-<br><br>
-[AWS_S3](AWS_S3/)
-<br><br>
-[Infra](Infra/)
+- [🤖 AI](AI/)
+- [🌐 AWS S3](AWS_S3/)
+- [🔧 Infra](Infra/)
