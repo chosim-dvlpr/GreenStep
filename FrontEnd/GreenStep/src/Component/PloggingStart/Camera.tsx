@@ -14,8 +14,6 @@ import {trashTypeMapping2} from './TrashType';
 import {useTrashItem} from './Hook/useTrashItem';
 import {useDispatch} from 'react-redux';
 import {increment} from '../../Store/aiCountSlice';
-import cameraButton from '../../Image/PloggingStart/ai_camera.png'
-
 const AiCamera = ({onClose}) => {
   const dispatch = useDispatch();
   const camera = useRef<Camera>(null);
@@ -107,11 +105,10 @@ const AiCamera = ({onClose}) => {
           />
           <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={takePhoto} style={styles.button}>
-              {/* <Text style={styles.buttonText}>사진 촬영</Text> */}
-              <Image
-              source={cameraButton}
-              style={{width: '80%', height: '80%'}}
-              />
+              {/* <Image
+                source={require('../../Image/PloggingStart/record.png')}
+                style={{width: 50, height: 50}} // 원하는 스타일 지정
+              /> */}
             </TouchableOpacity>
           </View>
         </>
@@ -120,7 +117,10 @@ const AiCamera = ({onClose}) => {
         <View style={{flex: 1}}>
           <Image source={{uri: `file://${imageSource}`}} style={styles.image} />
           <TouchableOpacity onPress={handleClose} style={styles.closeButton}>
-            <Text style={styles.closeButtonText}>닫기</Text>
+            <Image
+              source={require('../../Image/PloggingStart/close.png')}
+              style={{width: 50, height: 50}} // 원하는 스타일 지정
+            />
           </TouchableOpacity>
         </View>
       )}
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 20,
     right: 20,
-    backgroundColor: 'gray',
+
     padding: 10,
     borderRadius: 5,
   },

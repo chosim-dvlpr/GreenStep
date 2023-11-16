@@ -51,6 +51,8 @@ const FooterContainer = styled.View`
   position: absolute;
   justify-content: center;
   align-items: center;
+
+  heigt: 150x;
   z-index: 10;
   width: 100%;
   bottom: 10px;
@@ -59,6 +61,7 @@ const FooterContainer = styled.View`
 const Footer = styled.View`
   z-index: 10;
   width: 90%;
+  height: 100%;
   margin: 10px;
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.66);

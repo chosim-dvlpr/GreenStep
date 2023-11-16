@@ -14,7 +14,7 @@ import {reset} from '../../Store/aiCountSlice';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import bg from '../../Image/Competition/bg.png'
+import bg from '../../Image/Competition/bg.png';
 
 type PloggingInfoProps = {
   isTracking: boolean;
@@ -185,10 +185,12 @@ export default PloggingInfo;
 
 // Styled components
 const Con = styled.View`
+  position: absolute;
   width: 100%;
   height: 25%;
   justify-content: center;
   align-items: center;
+  background-color: transparent;
   z-index: 10;
   /* background-image: url("../../Image/Competition/bg.png"); // 배경 이미지 경로를 설정합니다. */
   /* background-size: cover; // 배경 이미지가 컨테이너에 맞게 확대/축소되도록 설정합니다.
@@ -201,6 +203,7 @@ const Container = styled.View`
   border-radius: 40px;
   justify-content: center;
   align-items: center;
+  background: rgba(255, 255, 255, 0.66);
   padding: 10px;
 `;
 const InfoSection = styled.View`

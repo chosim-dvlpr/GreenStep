@@ -1,12 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {Marker, Polyline} from 'react-native-maps';
 import MapView from 'react-native-map-clustering';
-import {TouchableOpacity, Text, StyleSheet, ActivityIndicator} from 'react-native';
+import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Image} from 'react-native';
-import trashBin from '../../Image/PloggingStart/trashBin.png'
-
 interface ILocation {
   latitude: number;
   longitude: number;
@@ -29,14 +27,43 @@ const PloggingMap: React.FC<PloggingMapProps> = ({locations, isTracking}) => {
   const getImageForTrashType = (type: number) => {
     switch (type) {
       case 0:
-        return require('../../Image/PloggingStart/trash.png');
+        return require('../../Image/PloggingStart/trashcan.png');
       case 1:
-        return require('../../Image/PloggingStart/pet.png');
+        return require('../../Image/PloggingStart/recycletrashcan.png');
       // 다른 타입에 대한 이미지 추가
       default:
         return require('../../Image/PloggingStart/pet.png'); // 기본 이미지
     }
   };
+
+  const [imageUri, setImageUri] = useState(null);
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        const token = await AsyncStorage.getItem('accessToken');
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`, // Bearer 스키마를 사용한 토큰 전달
+            'Content-Type': 'application/json', // JSON 형식의 컨텐츠 타입 명시
+          },
+        };
+        const res = await axios.get(
+          'https://k9b303.p.ssafy.io/api/plogging/myAvatar',
+          config,
+        );
+        console.log(res);
+        setImageUri(res.data);
+      } catch (error) {
+        console.error('Error fetching image:', error);
+      }
+    };
+
+    fetchImage();
+  }, []);
+
+  // 이미지 사용
+
   useEffect(() => {
     const fetchTrashBins = async () => {
       try {
@@ -59,10 +86,8 @@ const PloggingMap: React.FC<PloggingMapProps> = ({locations, isTracking}) => {
         }));
         console.log(bins);
         setTrashBins(bins);
-        setIsLoading(false);
       } catch (error) {
         console.error('Error fetching trash bins:', error);
-        setIsLoading(false);
       }
     };
 
@@ -73,18 +98,8 @@ const PloggingMap: React.FC<PloggingMapProps> = ({locations, isTracking}) => {
     setShowTrashBins(!showTrashBins);
   };
 
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
   return (
     <>
-    {isLoading ? ( // 데이터 로딩 중일 때 ActivityIndicator 표시
-        <ActivityIndicator
-          style={styles.loadingIndicator}
-          size="large"
-          color="#52A447"
-        />
-      ) : 
-      <>
       <MapView
         style={{width: '100%', height: '100%'}}
         initialRegion={{
@@ -100,10 +115,7 @@ const PloggingMap: React.FC<PloggingMapProps> = ({locations, isTracking}) => {
               latitude: locations[locations.length - 1].latitude,
               longitude: locations[locations.length - 1].longitude,
             }}>
-            <Image
-              source={require('../../Image/PloggingStart/can.png')}
-              style={{width: 50, height: 50}} // 원하는 스타일 지정
-            />
+            <Image source={{uri: imageUri}} style={{width: 50, height: 50}} />
           </Marker>
         )}
         {showTrashBins &&
@@ -125,16 +137,12 @@ const PloggingMap: React.FC<PloggingMapProps> = ({locations, isTracking}) => {
           />
         )}
       </MapView>
-      
-      <TouchableOpacity onPress={toggleTrashBins} style={styles.trashBinImageContainer}>
-        {/* <Text>쓰레기통 위치 토글</Text> */}
+      <TouchableOpacity onPress={toggleTrashBins} style={styles.button}>
         <Image
-        style={styles.trashBinImage}
-        source={trashBin}
+          source={require('../../Image/PloggingStart/trashcanimg.png')}
+          style={{width: 50, height: 50}} // 원하는 스타일 지정
         />
       </TouchableOpacity>
-      </>
-      }
     </>
   );
 };
@@ -142,21 +150,12 @@ const PloggingMap: React.FC<PloggingMapProps> = ({locations, isTracking}) => {
 export default PloggingMap;
 
 const styles = StyleSheet.create({
-  trashBinImageContainer: {
+  button: {
     position: 'absolute',
     top: 200,
     left: 10,
-    width: 40,
-    height: 40,
-  },
-  trashBinImage: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'contain',
-  },
-  loadingIndicator: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
+    width: 50, // TouchableOpacity의 크기를 이미지 크기에 맞게 조정
+    height: 50,
+    borderRadius: 5,
   },
 });

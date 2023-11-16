@@ -78,7 +78,11 @@ const PloggingStart = () => {
       />
 
       {state.locations.length > 0 && (
-        <PloggingMap locations={state.locations} isTracking={isTracking} />
+        <PloggingMap
+          style={styles.ploggingMap}
+          locations={state.locations}
+          isTracking={isTracking}
+        />
       )}
 
       <PloggingFooter openModal={openModal} isTracking={isTracking} />
@@ -103,6 +107,19 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     backgroundColor: 'black',
+  },
+  ploggingInfo: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0, // This ensures it covers the whole screen
+    height: 800,
+    zIndex: 1, // Higher index to stay on top
+  },
+  ploggingMap: {
+    flex: 1, // Take up all available space
+    zIndex: 0, // Lower index to stay behind
   },
 });
 
