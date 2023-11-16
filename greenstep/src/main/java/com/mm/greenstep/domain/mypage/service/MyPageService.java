@@ -52,7 +52,7 @@ public class MyPageService {
         // 플로깅 도메인 구현 후 진행
         Integer trashAmount = 0; // 나의 총 쓰레기 량
         Double travelRange = 0.0; // 나의 총 이동거리
-        Double travelTime = 0.0; // 나의 총 이동시간
+        Long travelTime = 0L; // 나의 총 이동시간
 
         for (Plogging p : plogging) {
             if(p.getTrashAmount() != null) trashAmount += p.getTrashAmount();

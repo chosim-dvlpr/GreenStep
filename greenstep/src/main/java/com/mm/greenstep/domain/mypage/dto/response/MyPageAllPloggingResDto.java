@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 public class MyPageAllPloggingResDto {
     private Double travelRange;
-    private Double travelTime;
+    private Long travelTime;
     private Integer trashAmount;
     private Integer completedAchieveCount;
 }
