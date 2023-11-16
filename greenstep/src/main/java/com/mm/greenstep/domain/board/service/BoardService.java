@@ -60,13 +60,14 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<BoardResDto> getAllMyBoards() {
-        User user= SecurityUtil.getCurrentUser();
+        User user = SecurityUtil.getCurrentUser();
         UserAvatar userAvatar = userAvatarRepository.findByUserAndIsSelected(user, true);
 
         List<Board> userBoardList = boardRepository.findAllByUserAndIsDeletedFalse(user);
+
         List<BoardResDto> list = new ArrayList<>();
         for(Board board : userBoardList){
-            Attend attend = attendRepository.findByUserAndBoard(user,board);
+            Attend attend = attendRepository.findByUserAndBoard(user, board);
             BoardResDto dto = BoardResDto.builder()
                     .nickname(board.getUser().getNickName()) // 사용자 닉네임 설정
                     .boardId(board.getBoardId())
