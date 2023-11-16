@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: "Bobby_Rough_Soft_Outline";
+  font-weight: normal;
+  src: url("./fonts/Bobby_Rough_Soft_Outline.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Bobby_Rough_Soft";
+  font-weight: normal;
+  src: url("./fonts/Bobby_Rough_Soft.ttf") format("truetype");
+}
