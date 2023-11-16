@@ -10,6 +10,7 @@ import { useIsFocused } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { baseURL } from '../../../Api/tokenHttp';
+import TextStyle from '../../../Style/Text';
 interface PloggingData {
     createdAt: string | null;
     getExp: number;
@@ -73,9 +74,9 @@ const MyPloggingList = () => {
                               ):(<Image source={noImage} style={ImageStyle.mediumImage} resizeMode="stretch"></Image>)
                               }
                                 <View style={[styles.overlayText, styles.noWrapRow]}>
-                                    <Text style={styles.textStyle}>{data.trashAmount} 개</Text>
-                                    <Text style={styles.textStyle}>{roundedTravelRange(data.travelRange)} KM</Text>
-                                    <Text style={styles.textStyle}>{msToHM(data.travelTime)}</Text>
+                                    <Text style={[TextStyle.defaultBlack,styles.textStyle]}>{data.trashAmount} 개</Text>
+                                    <Text style={[TextStyle.defaultBlack,styles.textStyle]}>{roundedTravelRange(data.travelRange)} KM</Text>
+                                    <Text style={[TextStyle.defaultBlack,styles.textStyle]}>{msToHM(data.travelTime)}</Text>
                             </View>
                             </View>
                         </TouchableOpacity>

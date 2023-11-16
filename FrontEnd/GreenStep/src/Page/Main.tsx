@@ -7,10 +7,26 @@ import ButtonStyle from '../Style/ButtonStyle';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {MainAPI} from '../Api/basicHttp';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import {baseURL} from '../Api/tokenHttp';
+import VictortyModal from '../Component/Main/VictoryModal';
+import VictoryGetAvatarModal from '../Component/Main/VitoryGetAvatarModal';
 
 export interface EmailLoginDataType {
   email: string;
   password: string;
+}
+
+interface VictoryProps{
+  alarmId :number;
+  title: string;
+  content: string;
+  createdAt : string;
+  isReward : boolean;
+}
+interface WinnerAvatarProps{
+  avatarImg : string;
+  avatarName : string;
 }
 
 const MainTextContainer = styled.View`
@@ -85,65 +101,73 @@ const Main = () => {
     };
   }, [isFocused,]);
 
-  // // 임시 로그인
-  // const [email, setEmail] = useState<string>('');
-  // const [password, setPassword] = useState<string>('');
+    // 경쟁 승리여부 불러오기
+    const [userVictory, setUserVictory] = useState<VictoryProps[]>([])
+    const [modalToggle, setModalToggle] = useState(false)
+    const [rewardModalToggle, setRewardModalToggle] = useState(false)
+    const [winnerAvatar, setWinnerAvatar] = useState<WinnerAvatarProps>()
+    const getUserWinInfo = async () => {
+      try {
+        const token = await AsyncStorage.getItem('accessToken');
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`, // Bearer 스키마를 사용한 토큰 전달
+            'Content-Type': 'application/json', // JSON 형식의 컨텐츠 타입 명시
+          },
+        };
+        const res = await axios.get(`${baseURL}/alarm/victory`, config);
+        console.log('경쟁 승리~!',res);
+        setUserVictory(res.data)
 
-  // const onChangeEmail = (e: string) => {
-  //   setEmail(e)
-  // }
-  // const onChangePassword = (e: string) => {
-  //   setPassword(e)
-  // }
+      } catch (err) {
+        console.log('승리 여부 조회 error', err);
+      }
+    };
+    const getWinnerAvatar = async (alarmId : number) => {
+      try {
+        const token = await AsyncStorage.getItem('accessToken');
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`, // Bearer 스키마를 사용한 토큰 전달
+            'Content-Type': 'application/json', // JSON 형식의 컨텐츠 타입 명시
+          },
+        };
+        const res = await axios.get(`${baseURL}/alarm/confirm/${alarmId}`, config);
+        console.log(res);
+        setWinnerAvatar(res.data)
 
-  /** 이메일 버튼 클릭 시 axios 요청 */
-  // const emailLogin = async () => {
-  //   const data: EmailLoginDataType = await {
-  //     email: email,
-  //     password: password
-  //   }
-  //   LoginAPI.getEmailLoginAxios(data)
-  //   .then(res => {
-  //     console.log('이메일 로그인 axios 성공 : ', res)
-  //     const response = res.data;
-  //     if (response.state === 200) {
-  //       setIsLogin(true);
-  //       AsyncStorage.setItem('accessToken', response.data.accessToken)
-  //       AsyncStorage.setItem('refreshToken', response.data.refreshToken)
-  //       // AsyncStorage.setItem('refreshTokenExpirationTime', response.data.refreshTokenExpirationTime)
-  //     } else if (response.status === 400) {
-  //       console.log(response.message)
-  //     }
-  //   })
-  //   .catch(err => console.log('이메일 로그인 실패 : ', err))
-  // }
-
-  const logout = async () => {
-    try {
-      const accessToken = await AsyncStorage.getItem('accessToken');
-      const refreshToken = await AsyncStorage.getItem('refreshToken');
-
-      const data = {
-        accessToken: accessToken,
-        refreshToken: refreshToken,
-      };
-      AsyncStorage.removeItem('accessToken');
-      AsyncStorage.removeItem('refreshToken');
-      AsyncStorage.removeItem('testToken');
-      console.log('logout 실행');
-      setIsLogin(false);
-      //   tokenHttp.post('/user/logout', data)
-      //     .then(res => {
-      //       AsyncStorage.removeItem('accessToken');
-      //       AsyncStorage.removeItem('refreshToken');
-      //       setIsLogin(false);
-      //     })
-      //     .catch(err => console.log('로그아웃 실패 : ', err));
-    } catch (error) {
-      console.error('로그아웃 중 오류 발생:', error);
+      } catch (err) {
+        console.log('승리 여부 조회 error', err);
+      }
+    };
+  const closeModal = () => {
+    setModalToggle(false)
+    setRewardModalToggle(true)
+  }
+  const closeAvatarModal = () => {
+    setRewardModalToggle(false)
+  }
+  
+  useEffect(() => {
+    if (isFocused) {
+      getUserWinInfo()
     }
-  };
+  }, [isFocused]);
 
+  useEffect(() => {
+    const hasReward = userVictory.some(victory => victory.isReward);
+      if (hasReward) {
+        setModalToggle(true);
+    }
+  }, [userVictory]);
+
+  useEffect(() => {
+    const rewardVictory = userVictory.find(victory => victory.isReward);
+    if (rewardVictory) {
+      getWinnerAvatar(rewardVictory.alarmId);
+      setModalToggle(true);
+    }
+  }, [userVictory]);
   return (
     <View>
       <ContainerBg source={require('../Image/Competition/bg.png')}>
@@ -169,6 +193,9 @@ const Main = () => {
               {/* <TouchableOpacity onPress={logout}>
                 <Text>로그아웃</Text>
               </TouchableOpacity> */}
+              
+              {modalToggle && <VictortyModal userVictory={userVictory} onClose={closeModal} visible={modalToggle}/>}
+              {rewardModalToggle && <VictoryGetAvatarModal onClose={closeAvatarModal} winnerAvatar={winnerAvatar} visible={rewardModalToggle}  /> }
               <TouchableOpacity
                 onPress={() => navigation.navigate('ploggingstart')}
                 style={[ButtonStyle.largeButton, ButtonStyle.lightGreenColor]}>
@@ -205,3 +232,62 @@ const styles = StyleSheet.create({
 })
 
 export default Main;
+
+  // // 임시 로그인
+  // const [email, setEmail] = useState<string>('');
+  // const [password, setPassword] = useState<string>('');
+
+  // const onChangeEmail = (e: string) => {
+  //   setEmail(e)
+  // }
+  // const onChangePassword = (e: string) => {
+  //   setPassword(e)
+  // }
+
+  /** 이메일 버튼 클릭 시 axios 요청 */
+  // const emailLogin = async () => {
+  //   const data: EmailLoginDataType = await {
+  //     email: email,
+  //     password: password
+  //   }
+  //   LoginAPI.getEmailLoginAxios(data)
+  //   .then(res => {
+  //     console.log('이메일 로그인 axios 성공 : ', res)
+  //     const response = res.data;
+  //     if (response.state === 200) {
+  //       setIsLogin(true);
+  //       AsyncStorage.setItem('accessToken', response.data.accessToken)
+  //       AsyncStorage.setItem('refreshToken', response.data.refreshToken)
+  //       // AsyncStorage.setItem('refreshTokenExpirationTime', response.data.refreshTokenExpirationTime)
+  //     } else if (response.status === 400) {
+  //       console.log(response.message)
+  //     }
+  //   })
+  //   .catch(err => console.log('이메일 로그인 실패 : ', err))
+  // }
+
+    // const logout = async () => {
+  //   try {
+  //     const accessToken = await AsyncStorage.getItem('accessToken');
+  //     const refreshToken = await AsyncStorage.getItem('refreshToken');
+
+  //     const data = {
+  //       accessToken: accessToken,
+  //       refreshToken: refreshToken,
+  //     };
+  //     AsyncStorage.removeItem('accessToken');
+  //     AsyncStorage.removeItem('refreshToken');
+  //     AsyncStorage.removeItem('testToken');
+  //     console.log('logout 실행');
+  //     setIsLogin(false);
+  //     //   tokenHttp.post('/user/logout', data)
+  //     //     .then(res => {
+  //     //       AsyncStorage.removeItem('accessToken');
+  //     //       AsyncStorage.removeItem('refreshToken');
+  //     //       setIsLogin(false);
+  //     //     })
+  //     //     .catch(err => console.log('로그아웃 실패 : ', err));
+  //   } catch (error) {
+  //     console.error('로그아웃 중 오류 발생:', error);
+  //   }
+  // };
