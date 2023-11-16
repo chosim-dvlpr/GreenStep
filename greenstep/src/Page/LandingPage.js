@@ -25,7 +25,7 @@ export default function LandingPage() {
       </video>
       <div className="overlay-text1 overlay-text-top" style={{ top: "63.5%" }}><img className='imagesize' src="/icon/time.gif" alt="time"/></div>
       <div className="overlay-text1 overlay-text">{data.travelTime ? (data.travelTime.toString().length > 3 ? 
-                                                    data.travelTime.toLocaleString() : data.travelTime) : 'Loading...'}</div>
+                                                    Number(data.travelTime.toFixed(0)).toLocaleString()  : data.travelTime.toFixed(0)) : 'Loading...'}</div>
       <div className="overlay-text1 overlay-text-sub">
         <div className='inlineBlock point'>Hour</div>
         <div className='inlineBlock'>&nbsp;of </div>
