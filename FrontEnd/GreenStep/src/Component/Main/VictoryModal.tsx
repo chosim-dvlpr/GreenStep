@@ -1,6 +1,6 @@
 import { View, Modal, Text, TouchableWithoutFeedback,
     TouchableOpacity, StyleSheet, ScrollView, Image } from "react-native";
-
+import TextStyle from "../../Style/Text";
 interface ModalProps {
     onClose: () => void;
     userVictory : VictoryProps[];
@@ -25,12 +25,12 @@ const VictortyModal: React.FC<ModalProps> = ({ onClose, userVictory}) => {
                 <View style={[styles.modalView, {justifyContent:'center', alignItems:'center'}]}>
                     {userVictory.map((victory, index) => (
                         <View key={index} style={{ justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={{ marginBottom: 10, fontWeight: 'bold', fontSize: 20 }}>{victory.title}</Text>
-                            <Text style={{ marginBottom: 10, fontWeight: 'bold', fontSize: 20 }}>{victory.content}</Text>
+                            <Text style={[TextStyle.defaultBlack, { marginBottom: 10, fontWeight: 'bold', fontSize: 20 }]}>{victory.title}</Text>
+                            <Text style={[TextStyle.defaultBlack, { marginBottom: 10, fontWeight: 'bold', fontSize: 20 }]}>{victory.content}</Text>
                         </View>
                     ))}
                     <TouchableOpacity onPress={onClose}>
-                        <Text>확인</Text>
+                        <Text style={TextStyle.defaultBlack}>확인</Text>
                     </TouchableOpacity>
                 </View>
             </View>

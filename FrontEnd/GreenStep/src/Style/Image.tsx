@@ -52,9 +52,9 @@ const ImageStyle = StyleSheet.create({
   },
     /** 프로깅 조회 상세 이미지 */
     PloggingModalImage: {
-      width: '100%',
+      width: '95%',
       aspectRatio: 1,
-      resizeMode: 'contain',
+      resizeMode: 'cover',
       borderRadius: 10,
     },
 })

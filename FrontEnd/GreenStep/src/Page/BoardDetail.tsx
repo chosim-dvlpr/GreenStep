@@ -11,6 +11,7 @@ import BoardInfoParticipationList from '../Component/Board/BoardInfoParticipatio
 
 import ButtonStyle from "../Style/ButtonStyle";
 import { baseURL } from '../Api/tokenHttp';
+import TextStyle from '../Style/Text';
 
 interface BoardProps {
   avatarImg: string;
@@ -166,7 +167,7 @@ const BoardDetail= () => {
       {/* 여기에 배경 이미지 관련 코드가 있으면 추가해주세요. */}
       <View style={{ alignItems: 'center' }}>
         <View style={{ alignItems: 'center', justifyContent: 'center', margin: 20 }}>
-          <Text style={{ fontSize: 22, fontWeight: 'bold' }}>Green Step</Text>
+          <Text style={[TextStyle.defaultBlack, { fontSize: 22, fontWeight: 'bold' }]}>Green Step</Text>
         </View>
 
         {boardDetail && <DetailBoard boardDetail={boardDetail} />}
@@ -176,24 +177,24 @@ const BoardDetail= () => {
         {myJoined ? (
           <TouchableOpacity style={[ButtonStyle.largeButton, ButtonStyle.achievementButton, { marginBottom: 20 }]}
                             onPress={() => getAttendPloggingLeave(boardId)}>
-            <Text style={{ color: 'white', fontSize: 20 }}>탈퇴하기</Text>
+            <Text style={[TextStyle.defaultBlack, { fontSize: 20 }]}>탈퇴하기</Text>
           </TouchableOpacity>
         ) : (
           joinCount === boardDetail?.maxParticipants ? (
             <TouchableOpacity style={[ButtonStyle.largeButton, ButtonStyle.achievementButton, { marginBottom: 20 }]}>
-              <Text style={{ color: 'white', fontSize: 20 }}>모집 완료</Text>
+              <Text style={[TextStyle.defaultBlack, { fontSize: 20 }]}>모집 완료</Text>
             </TouchableOpacity>
           ) : (
             <TouchableOpacity style={[ButtonStyle.largeButton, ButtonStyle.achievementButton, { marginBottom: 20 }]}
                               onPress={() => getAttendPlogging(boardId)}>
-              <Text style={{ color: 'white', fontSize: 20 }}>참여하기</Text>
+              <Text style={[TextStyle.defaultBlack, { fontSize: 20 }]}>참여하기</Text>
             </TouchableOpacity>
           )
         )}
         {myNickname === boardDetail?.nickname &&
           <TouchableOpacity style={[ButtonStyle.largeButton, ButtonStyle.RedColor, { marginBottom: 20 }]}
                             onPress={() => patchBoard(boardId)}>
-            <Text style={{ color: 'white', fontSize: 20 }}>삭제하기</Text>
+            <Text style={[TextStyle.defaultBlack, { fontSize: 20 }]}>삭제하기</Text>
           </TouchableOpacity>
         }
       </View>

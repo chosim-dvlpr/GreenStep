@@ -2,7 +2,7 @@ import React from 'react';
 import {Text} from 'react-native';
 import styled from 'styled-components/native';
 import PloggingDivision from './PloggingDivision';
-
+import TextStyle from '../../Style/Text';
 interface PloggingFooterProps {
   openModal: () => void;
   isTracking: boolean;
@@ -21,7 +21,7 @@ const PloggingFooter: React.FC<PloggingFooterProps> = ({
             size="small"
             isTracking={isTracking}
           />
-          <Text style={{fontFamily: 'SUITE-Bold', marginTop: 4,}}>AI쓰레기 인식</Text>
+          <Text style={[TextStyle.defaultBlack, {fontFamily: 'SUITE-Bold', marginTop: 4}]}>AI쓰레기 인식</Text>
         </PloggingDivisionContainer>
         <PloggingDivisionContainer>
           <PloggingDivision
@@ -29,7 +29,7 @@ const PloggingFooter: React.FC<PloggingFooterProps> = ({
             size="small"
             isTracking={isTracking}
           />
-          <Text style={{fontFamily: 'SUITE-Bold', marginTop: 4,}}>일반 쓰레기</Text>
+          <Text style={[TextStyle.defaultBlack, {fontFamily: 'SUITE-Bold', marginTop: 4}]}>일반 쓰레기</Text>
         </PloggingDivisionContainer>
         <PloggingDivisionContainer>
           <PloggingDivision
@@ -38,7 +38,7 @@ const PloggingFooter: React.FC<PloggingFooterProps> = ({
             size="small"
             isTracking={isTracking}
           />
-          <Text style={{fontFamily: 'SUITE-Bold', marginTop: 4,}}>재활용품</Text>
+          <Text style={[TextStyle.defaultBlack, {fontFamily: 'SUITE-Bold', marginTop: 4}]}>재활용품</Text>
         </PloggingDivisionContainer>
       </Footer>
     </FooterContainer>

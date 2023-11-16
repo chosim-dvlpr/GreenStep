@@ -3,7 +3,7 @@ import Box from "../../Style/Box";
 import { Calendar, DateData } from "react-native-calendars";
 import plus from '../../Image/Board/plus.png'
 import minus from '../../Image/Board/minus.png'
-
+import TextStyle from "../../Style/Text";
 interface CreateInfoProps {
     day? : string;
     location? : string;
@@ -22,20 +22,10 @@ const BoardCRUDInfo = (props: CreateInfoProps) => {
         <ScrollView style={{marginBottom: 30}}>
             <View style={{justifyContent:'center', alignItems:'center'}}>
         <View style={[Box.cardBox, {display:'flex'}]}>
-            <Text style={{marginBottom: 10, fontSize:20}}>Information</Text>
-            <View style={[Box.flexRowBox,{marginBottom: 10, justifyContent:'space-between' }]}>
-                <Text style={{fontSize: 16}}>모집인원</Text>
-                <TouchableOpacity onPress={props.handleJoinMinus}>
-                    <Image source={minus}></Image>
-                </TouchableOpacity>
-                <Text style={{fontSize: 16}}>{props.join}</Text>
-                <TouchableOpacity onPress={props.handleJoinPlus}>
-                    <Image source={plus}></Image>
-                </TouchableOpacity>
-            </View>
+            <Text style={[TextStyle.defaultBlack, {marginBottom: 10, fontSize:20}]}>Information</Text>
 
                 <View style={[Box.flexRowBox,{marginBottom: 10, justifyContent:'space-between' }]}>
-                    <Text style={{fontSize: 20}}>지역</Text>
+                    <Text style={[TextStyle.defaultBlack,{fontSize: 20}]}>지역</Text>
                     <SafeAreaView>
                         <TextInput style={styles.input} placeholder="지역을 입력하세요"
                                 onChangeText={props.onLocateChange} value={props.location} />
@@ -43,20 +33,20 @@ const BoardCRUDInfo = (props: CreateInfoProps) => {
                 </View>
                 
                 <View style={[Box.flexRowBox,{marginBottom: 10, justifyContent:'space-between' }]}>
-                    <Text style={{fontSize: 20}}>모집인원</Text>
+                    <Text style={[TextStyle.defaultBlack,{fontSize: 20}]}>모집인원</Text>
                     <TouchableOpacity onPress={props.handleJoinMinus}>
                         <Image source={minus}></Image>
                     </TouchableOpacity>
-                    <Text style={{fontSize: 25}}>{props.join}</Text>
+                    <Text style={[TextStyle.defaultBlack,{fontSize: 25}]}>{props.join}</Text>
                     <TouchableOpacity onPress={props.handleJoinPlus}>
                         <Image source={plus}></Image>
                     </TouchableOpacity>
                 </View>
 
                 <View style={[Box.flexRowBox,{marginBottom: 10, justifyContent:'space-between' }]}>
-                    <Text style={{fontSize: 20}}>활동날짜</Text>
+                    <Text style={[TextStyle.defaultBlack,{fontSize: 20}]}>활동날짜</Text>
                     <TouchableOpacity onPress={props.handleShow}>
-                        <Text style={{fontSize: 20}}>{props.day}</Text>
+                        <Text style={[TextStyle.defaultBlack,{fontSize: 20}]}>{props.day}</Text>
                     </TouchableOpacity>
                 </View>
 

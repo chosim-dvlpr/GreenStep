@@ -16,7 +16,7 @@ const ProfileHeader = ({name}:any) => {
 const styles = StyleSheet.create({
   profileHeaderText: {
     paddingLeft: 5,
-    fontSize: 45,
+    fontSize: 35,
     fontWeight: 'bold',
     marginTop: 25,
     marginBottom: 40,
