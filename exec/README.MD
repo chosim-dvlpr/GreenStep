@@ -38,8 +38,8 @@
 - MariaDB : 3306:3306
 - Redis : 6379:6379
 
-[AI](AI/)
+[AI 세팅 GO](AI/)
 <br><br>
-[AWS_S3](AWS_S3/)
+[AWS_S3 세팅 GO](AWS_S3/)
 <br><br>
-[Infra](Infra/)
+[Infra 세팅 GO](Infra/)
