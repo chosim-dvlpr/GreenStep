@@ -14,4 +14,6 @@ public interface AttendRepository extends JpaRepository<Attend, Long> {
     Attend findByUserAndBoard(User currentUser, Board board);
 
     List<Attend> findAllByUser(User currentUser);
+
+    List<Attend> findAllByBoardAndBoard_IsDeletedFalse(Board board);
 }

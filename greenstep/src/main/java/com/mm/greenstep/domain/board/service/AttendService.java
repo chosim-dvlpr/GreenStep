@@ -64,7 +64,7 @@ public class AttendService {
 
     public ResponseEntity<?> getAllAttend(Long boardId){
         Board board = boardRepository.findByBoardId(boardId);
-        List<Attend> attendList = attendRepository.findAllByBoard(board);
+        List<Attend> attendList = attendRepository.findAllByBoardAndBoard_IsDeletedFalse(board);
         List<AttendResDto> result = new ArrayList<>();
         if(!attendList.isEmpty()){
             for(Attend attend : attendList){
