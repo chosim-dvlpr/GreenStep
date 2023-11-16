@@ -1,5 +1,6 @@
 package com.mm.greenstep.domain.board.service;
 
+import com.mm.greenstep.domain.avatar.repository.UserAvatarRepository;
 import com.mm.greenstep.domain.board.dto.response.AttendResDto;
 import com.mm.greenstep.domain.board.entity.Board;
 import com.mm.greenstep.domain.board.entity.Attend;
@@ -22,9 +23,10 @@ import java.util.List;
 public class AttendService {
     private final AttendRepository attendRepository;
     private final BoardRepository boardRepository;
+    private final UserAvatarRepository userAvatarRepository;
 
     @Transactional
-    public ResponseEntity<?> createattend(Long boardId){
+    public ResponseEntity<?> createAttend(Long boardId){
         Board board = boardRepository.findByBoardId(boardId);
         List<Attend> attendList = attendRepository.findAllByBoard(board);
 
@@ -43,7 +45,7 @@ public class AttendService {
 
 
     @Transactional
-    public ResponseEntity<?> deleteattend(Long boardId){
+    public ResponseEntity<?> deleteAttend(Long boardId){
         Board board = boardRepository.findByBoardId(boardId);
         Attend attend = attendRepository.findByUserAndBoard(SecurityUtil.getCurrentUser(), board);
 
@@ -56,24 +58,23 @@ public class AttendService {
     }
 
 
-    public ResponseEntity<?> getAllattend(Long boardId){
+    public ResponseEntity<?> getAllAttend(Long boardId){
         Board board = boardRepository.findByBoardId(boardId);
         List<Attend> attendList = attendRepository.findAllByBoard(board);
+        System.out.println(attendList.size());
+        List<AttendResDto> result = new ArrayList<>();
         if(!attendList.isEmpty()){
-            List<AttendResDto> result = new ArrayList<>();
-
             for(Attend attend : attendList){
                 AttendResDto attendResDto = AttendResDto.builder()
                         .nickname(attend.getUser().getNickName())
                         .userId(attend.getUser().getUserId())
+                        .avatarImg(userAvatarRepository.findByUserAndIsSelected(attend.getUser(), true).getAvatar().getAvatarImg())
                         .build();
                 result.add(attendResDto);
             }
             return new ResponseEntity<>(result,HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(false,HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(result,HttpStatus.BAD_REQUEST);
         }
-
     }
-
 }

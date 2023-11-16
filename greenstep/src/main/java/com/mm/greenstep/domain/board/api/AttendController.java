@@ -15,18 +15,18 @@ public class AttendController {
     private final AttendService attendService;
 
     @GetMapping("/{boardId}")
-    public ResponseEntity<?> createattend(@PathVariable Long boardId){
-        return attendService.createattend(boardId);
+    public ResponseEntity<?> createAttend(@PathVariable Long boardId){
+        return attendService.createAttend(boardId);
     }
 
     @GetMapping("/leave/{boardId}")
-    public ResponseEntity<?> deleteattend(@PathVariable Long boardId){
-        return attendService.deleteattend(boardId);
+    public ResponseEntity<?> deleteAttend(@PathVariable Long boardId){
+        return attendService.deleteAttend(boardId);
     }
 
     @GetMapping("/attendList/{boardId}")
-    public ResponseEntity<?> getAllattend(@PathVariable Long boardId){
-        return attendService.getAllattend(boardId);
+    public ResponseEntity<?> getAllAttend(@PathVariable Long boardId){
+        return attendService.getAllAttend(boardId);
     }
 
 }
