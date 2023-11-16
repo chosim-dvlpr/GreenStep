@@ -33,8 +33,8 @@
 
 - SpringBoot - api : 8080:8080
 - Python - AI : 8000:80
-- react : 3000:3000
-- jenkins : 9090:8080
+- React : 3000:3000
+- Jenkins : 9090:8080
 - MariaDB : 3306:3306
 - Redis : 6379:6379
 
