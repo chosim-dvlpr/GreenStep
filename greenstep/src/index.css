@@ -23,3 +23,9 @@ code {
   font-weight: normal;
   src: url("./fonts/Bobby_Rough_Soft.ttf") format("truetype");
 }
+
+@font-face {
+  font-family: "Pretendard";
+  font-weight: normal;
+  src: url("./fonts/PretendardVariable.ttf") format("truetype");
+}
