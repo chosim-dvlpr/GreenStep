@@ -183,10 +183,12 @@ export default PloggingInfo;
 
 // Styled components
 const Con = styled.View`
+  position: absolute;
   width: 100%;
   height: 25%;
   justify-content: center;
   align-items: center;
+  background-color: transparent;
   z-index: 10;
 `;
 const Container = styled.View`
@@ -196,6 +198,7 @@ const Container = styled.View`
   border-radius: 40px;
   justify-content: center;
   align-items: center;
+  background: rgba(255, 255, 255, 0.66);
 `;
 const InfoSection = styled.View`
   flex: 1;

@@ -64,7 +64,7 @@ const PloggingEndMap: React.FC<PloggingEndMapProps> = ({locations}) => {
               longitude: locations[0].longitude,
             }}>
             <Image
-              source={require('../../Image/PloggingStart/startpoint.png')} // 시작점 마커 이미지
+              source={require('../../Image/PloggingStart/startpoint2.png')} // 시작점 마커 이미지
               style={{width: 50, height: 50}}
             />
           </Marker>

@@ -35,6 +35,35 @@ const PloggingMap: React.FC<PloggingMapProps> = ({locations, isTracking}) => {
         return require('../../Image/PloggingStart/pet.png'); // 기본 이미지
     }
   };
+
+  const [imageUri, setImageUri] = useState(null);
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        const token = await AsyncStorage.getItem('accessToken');
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`, // Bearer 스키마를 사용한 토큰 전달
+            'Content-Type': 'application/json', // JSON 형식의 컨텐츠 타입 명시
+          },
+        };
+        const res = await axios.get(
+          'https://k9b303.p.ssafy.io/api/plogging/myAvatar',
+          config,
+        );
+        console.log(res);
+        setImageUri(res.data);
+      } catch (error) {
+        console.error('Error fetching image:', error);
+      }
+    };
+
+    fetchImage();
+  }, []);
+
+  // 이미지 사용
+
   useEffect(() => {
     const fetchTrashBins = async () => {
       try {
@@ -86,10 +115,7 @@ const PloggingMap: React.FC<PloggingMapProps> = ({locations, isTracking}) => {
               latitude: locations[locations.length - 1].latitude,
               longitude: locations[locations.length - 1].longitude,
             }}>
-            <Image
-              source={require('../../Image/PloggingStart/can.png')}
-              style={{width: 50, height: 50}} // 원하는 스타일 지정
-            />
+            <Image source={{uri: imageUri}} style={{width: 50, height: 50}} />
           </Marker>
         )}
         {showTrashBins &&
