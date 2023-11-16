@@ -30,6 +30,11 @@ public class AttendService {
         Board board = boardRepository.findByBoardId(boardId);
         List<Attend> attendList = attendRepository.findAllByBoard(board);
 
+        if(attendRepository.findByUserAndBoard(SecurityUtil.getCurrentUser(), board) != null){
+            log.error("이미 들어가 있습니다.");
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
+
         if(attendList.size() < board.getMaxParticipants()){
             Attend attend = Attend.builder()
                             .user(SecurityUtil.getCurrentUser())
