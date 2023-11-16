@@ -8,7 +8,7 @@ export default function LandingPage() {
         <source src="/plogging1.mp4" type="video/mp4"/>
         Your browser does not support the video tag.
       </video>
-      <div className="overlay-text">GreenStep</div>
+      <div className="overlay-text">Green   Step</div>
     </div>
   );
 }
