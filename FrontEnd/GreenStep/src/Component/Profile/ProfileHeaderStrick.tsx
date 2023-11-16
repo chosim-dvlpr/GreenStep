@@ -7,6 +7,8 @@ import { useIsFocused } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { baseURL } from "../../Api/tokenHttp";
+import TextStyle
+ from "../../Style/Text";
 const ProfileHeaderStrick = () => {
     const isFocused = useIsFocused();
     const date = new Date();
@@ -95,7 +97,7 @@ const ProfileHeaderStrick = () => {
             <TouchableOpacity onPress={handleYearMinus} style={{paddingLeft: 10, paddingRight: 10}}>
                     <Image source={left} style={{marginTop:10}}></Image>
                 </TouchableOpacity>
-            <Text style={{fontSize: 20, marginHorizontal: 30}}>{year}</Text>
+            <Text style={[TextStyle.defaultBlack, {fontSize: 20, marginHorizontal: 30}]}>{year}</Text>
             <TouchableOpacity onPress={handleYearPlus} style={{paddingLeft: 10, paddingRight: 10}}>
                     <Image source={right} style={{marginTop:10}}></Image>
                 </TouchableOpacity>
@@ -107,20 +109,20 @@ const ProfileHeaderStrick = () => {
                 <TouchableOpacity key={index} onPress={() => handleBoxPress(index)}>
 
                   <View>
-                    <Text style={{fontSize:12, fontWeight:'bold'}}>{getMonthLabel(index)}</Text>
+                    <Text style={[TextStyle.defaultBlack, {fontSize:12, fontWeight:'bold'}]}>{getMonthLabel(index)}</Text>
 
                       {selectedBoxIndex === index && (
                         <View style={{alignItems:'center'}}>
-                          <Text style={{fontSize:10, fontWeight:'bold'}}>{index+1}주</Text>
+                          <Text style={[TextStyle.defaultBlack, {fontSize:10, fontWeight:'bold'}]}>{index+1}주</Text>
                         </View>
                           )}
 
                     <View key={index} style={getWeekBoxStyle(index)}>
-                      <Text style={{fontSize:8}}></Text>
+                      <Text style={[TextStyle.defaultBlack, {fontSize:8}]}></Text>
                     </View>
                     {selectedBoxIndex === index && (
                         <View style={{alignItems:'center'}}>
-                          <Text style={{fontSize:10, fontWeight:'bold'}}>{ploggingWeek[index]}회</Text>
+                          <Text style={[TextStyle.defaultBlack, {fontSize:10, fontWeight:'bold'}]}>{ploggingWeek[index]}회</Text>
                         </View>
                           )}
 
@@ -131,11 +133,11 @@ const ProfileHeaderStrick = () => {
 
             <View style={[Box.flexRowBox,{justifyContent:'space-around'}]}>
               <View style={[Box.weekBox, {backgroundColor: '#ACD8A7', marginLeft: 13}]}></View>
-              <Text style={{fontSize: 10, fontWeight:'bold', marginTop: 2}}>1~3</Text>
+              <Text style={[TextStyle.defaultBlack, {fontSize: 10, fontWeight:'bold', marginTop: 2}]}>1~3</Text>
               <View style={[Box.weekBox, {backgroundColor: '#52A447', marginLeft: 13}]}></View>
-              <Text style={{fontSize: 10, fontWeight:'bold', marginTop: 2}}>4~7</Text>
+              <Text style={[TextStyle.defaultBlack, {fontSize: 10, fontWeight:'bold', marginTop: 2}]}>4~7</Text>
               <View style={[Box.weekBox, {backgroundColor: '#276221', marginLeft: 13}]}></View>
-              <Text style={{fontSize: 10, fontWeight:'bold', marginTop: 2}}>7~</Text>
+              <Text style={[TextStyle.defaultBlack, {fontSize: 10, fontWeight:'bold', marginTop: 2}]}>7~</Text>
             </View>
         </View>
     )

@@ -4,7 +4,6 @@ import ImageStyle from "../../Style/Image";
 import {useState, useEffect} from 'react';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import ProfileAvatarModal from "./ProfileAvatarModal";
-import { AvatarAPI } from "../../Api/avatarApi";
 import { useIsFocused } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';

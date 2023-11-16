@@ -6,6 +6,8 @@ import { formatDate, roundedTravelRange, msToHMS } from '../../../Function/Plogg
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { baseURL } from '../../../Api/tokenHttp';
+import TextStyle from '../../../Style/Text';
+
 interface PloggingData {
     createdAt: string | null;
     getExp: number;
@@ -57,37 +59,37 @@ const MyPloggingDetail = ({ onClose, index }:any) => {
                             <View style={[styles.noWrapRow]}>
                                 <View style={styles.center}>
                                     <Text style={{fontWeight:'bold', fontSize: 18, color: '#52A447'}}>{types[3]}</Text>
-                                    <Text style={{fontSize: 18}}>
+                                    <Text style={[TextStyle.defaultBlack,{fontSize: 18}]}>
                                       {detail?.createdAt ? formatDate(detail.createdAt).datePart : null}
                                     </Text>
-                                    <Text style={{fontSize: 18}}>
+                                    <Text style={[TextStyle.defaultBlack,{fontSize: 18}]}>
                                       {detail?.createdAt ? formatDate(detail.createdAt).timePart : null}
                                     </Text>
                                 </View>
                                 <View style={styles.center}>
                                     <Text style={{fontWeight:'bold', fontSize: 18, color: '#52A447'}}>{types[4]}</Text>
-                                    <Text style={{fontSize: 18}}>{detail?.getExp}</Text>
+                                    <Text style={[TextStyle.defaultBlack,{fontSize: 18}]}>{detail?.getExp}</Text>
                                 </View>
                             </View>
                             <View style={styles.noWrapRow}>
                                 <View style={styles.center}>
                                     <Text style={{fontWeight:'bold', fontSize: 18, color: '#52A447'}}>{types[0]}</Text>
-                                    <Text style={{fontSize: 18}}>{detail?.trashAmount} 개</Text>
+                                    <Text style={[TextStyle.defaultBlack,{fontSize: 18}]}>{detail?.trashAmount} 개</Text>
                                 </View>
                                 <View style={styles.center}>
                                     <Text style={{fontWeight:'bold', fontSize: 18, color: '#52A447'}}>{types[1]}</Text>
-                                    <Text style={{fontSize: 18}}>{roundedTravelRange(detail?.travelRange)} KM</Text>
+                                    <Text style={[TextStyle.defaultBlack,{fontSize: 18}]}>{roundedTravelRange(detail?.travelRange)} KM</Text>
                                 </View>
                                 <View style={styles.center}>
                                     <Text style={{fontWeight:'bold', fontSize: 18, color: '#52A447'}}>{types[2]}</Text>
-                                    <Text style={{fontSize: 18}}>{detail ? msToHMS(detail.travelTime) : "00:00:00"}</Text>
+                                    <Text style={[TextStyle.defaultBlack,{fontSize: 18}]}>{detail ? msToHMS(detail.travelTime) : "00:00:00"}</Text>
                                 </View>
                             </View>
                         </View>
                         <View style={{justifyContent:'center', alignItems:'center'}}>
                         {detail?.travelPicture?( 
                             <Image source={{uri: detail?.travelPicture}} style={ImageStyle.PloggingModalImage}></Image>
-                        ):(<Text style={{fontSize: 18, marginTop: 75}}>등록된 사진이 없습니다.</Text>)
+                        ):(<Text style={[TextStyle.defaultBlack, {fontSize: 18, marginTop: 75}]}>등록된 사진이 없습니다.</Text>)
                         }
                         </View>
                     </View>

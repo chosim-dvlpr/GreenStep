@@ -9,6 +9,7 @@ import badge from '../../Image/Achievement/badge.png'
 import styled from 'styled-components/native';
 import { useNavigation } from "@react-navigation/native";
 import { roundedTravelRange, msToHM } from "../../Function/Plogging/funcPlogging";
+import TextStyle from "../../Style/Text";
 
 const ImageContainer = styled.View`
   width: 50%;
@@ -25,24 +26,24 @@ const ProfilePloggingDataInfo = ({timeInfo, distanceInfo, trashInfo, acheiveInfo
           <ImageContainer>
             <Image source={time} style={ImageStyle.tinyImage}></Image>
           </ImageContainer>
-          <Text style={{fontSize: 13, fontWeight:'bold', marginTop: 5, marginBottom: 2}} numberOfLines={1}>{timeInfo ? msToHM(timeInfo) : "00:00:00"}</Text>
-          <Text style={{fontSize: 13}} numberOfLines={1}>함께한 시간</Text>
+          <Text style={[TextStyle.defaultBlack, {fontSize: 13, fontWeight:'bold', marginTop: 5, marginBottom: 2}]} numberOfLines={1}>{timeInfo ? msToHM(timeInfo) : "00:00:00"}</Text>
+          <Text style={[TextStyle.defaultBlack, {fontSize: 13}]} numberOfLines={1}>함께한 시간</Text>
         </View>
         
         <View style={[Box.ploggingDataInfoBox, {alignItems:'center', marginRight: 5, justifyContent: 'center', paddingTop: 10,}]}>
           <ImageContainer>
             <Image source={distance} style={ImageStyle.tinyImage}></Image>
           </ImageContainer>
-          <Text style={{fontSize: 13, fontWeight:'bold', marginTop: 5, marginBottom: 2}} numberOfLines={1}>{roundedTravelRange(distanceInfo)} KM</Text>
-          <Text style={{fontSize: 13}} numberOfLines={1}>깨끗해진 거리</Text>
+          <Text style={[TextStyle.defaultBlack, {fontSize: 13, fontWeight:'bold', marginTop: 5, marginBottom: 2}]} numberOfLines={1}>{roundedTravelRange(distanceInfo)} KM</Text>
+          <Text style={[TextStyle.defaultBlack, {fontSize: 13}]} numberOfLines={1}>깨끗해진 거리</Text>
         </View>
         
         <View style={[Box.ploggingDataInfoBox, {alignItems:'center', marginRight: 5, justifyContent: 'center', paddingTop: 10,}]}>
           <ImageContainer>
             <Image source={trash} style={ImageStyle.tinyImage}></Image>
           </ImageContainer>
-          <Text style={{fontSize: 13, fontWeight:'bold', marginTop: 5, marginBottom: 2}} numberOfLines={1}>{trashInfo ? trashInfo : 0} 개</Text>
-          <Text style={{fontSize: 13}} numberOfLines={1}>모은 쓰레기</Text>
+          <Text style={[TextStyle.defaultBlack, {fontSize: 13, fontWeight:'bold', marginTop: 5, marginBottom: 2}]} numberOfLines={1}>{trashInfo ? trashInfo : 0} 개</Text>
+          <Text style={[TextStyle.defaultBlack, {fontSize: 13}]} numberOfLines={1}>모은 쓰레기</Text>
         </View>
         {
           isProfile &&
@@ -51,8 +52,8 @@ const ProfilePloggingDataInfo = ({timeInfo, distanceInfo, trashInfo, acheiveInfo
               <ImageContainer>
                 <Image source={badge} style={ImageStyle.tinyImage}></Image>
               </ImageContainer>
-              <Text style={{fontSize: 13, fontWeight:'bold', alignSelf: 'center', marginTop: 5, marginBottom: 2}} numberOfLines={1}>{acheiveInfo ? acheiveInfo : 0} 개</Text>
-              <Text style={{fontSize: 13}} numberOfLines={1}>달성 업적</Text>
+              <Text style={[TextStyle.defaultBlack, {fontSize: 13, fontWeight:'bold', alignSelf: 'center', marginTop: 5, marginBottom: 2}]} numberOfLines={1}>{acheiveInfo ? acheiveInfo : 0} 개</Text>
+              <Text style={[TextStyle.defaultBlack, {fontSize: 13}]} numberOfLines={1}>달성 업적</Text>
             </TouchableOpacity>
           </View>
         }
