@@ -66,7 +66,6 @@ public class AttendService {
     public ResponseEntity<?> getAllAttend(Long boardId){
         Board board = boardRepository.findByBoardId(boardId);
         List<Attend> attendList = attendRepository.findAllByBoard(board);
-        System.out.println(attendList.size());
         List<AttendResDto> result = new ArrayList<>();
         if(!attendList.isEmpty()){
             for(Attend attend : attendList){
@@ -77,9 +76,7 @@ public class AttendService {
                         .build();
                 result.add(attendResDto);
             }
-            return new ResponseEntity<>(result,HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(result,HttpStatus.BAD_REQUEST);
         }
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
