@@ -71,15 +71,16 @@ useEffect(() => {
     });
 }, []);
   useEffect(() => {
-    if (map) {
-      const heatmapData = markersData.map(
-        (point) => new window.google.maps.LatLng(point.position.lat, point.position.lng)
-      );
-  
-      const heatmap = new window.google.maps.visualization.HeatmapLayer({
-        data: heatmapData,
-        map: map,
-      });
+    if (map && markersData.length > 0) {
+    const heatmapData = markersData.map(
+      (point) => new window.google.maps.LatLng(point.position.lat, point.position.lng)
+    );
+
+    const heatmap = new window.google.maps.visualization.HeatmapLayer({
+      data: heatmapData,
+      map: map,
+    });
+
 
       // 히트맵 설정
       heatmap.set('gradient', [
@@ -95,7 +96,7 @@ useEffect(() => {
       // 지도 스타일 설정
       map.setOptions({ styles: modifiedDarkStyle });
     }
-  }, [map]);
+  }, [map, markersData]);
 
   if (loadError) {
     return <div>Map cannot be loaded right now, sorry.</div>;

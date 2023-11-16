@@ -13,16 +13,33 @@
     /* filter: blur(4px); */
     filter: brightness(70%);
   }
-  
-  .overlay-text {
-    position: absolute;
-    top: 50%;
+
+.overlay-text{
+  position: absolute;
+  top: 60%;
+  transform: translate(-50%, -50%);
+  color: rgb(255, 255, 255);
+  font-size: 4rem; /* 글씨 크기 조정 */
+  font-weight: bolder;
+  font-family: Bobby_Rough_Soft;
+}
+.overlay-text-sub{
+  position: absolute;
+  top: 75%;
+  transform: translate(-50%, -50%);
+  color: rgb(255, 255, 255);
+  font-size: 4rem; /* 글씨 크기 조정 */
+  font-weight: bolder;
+  font-family: Bobby_Rough_Soft;
+}
+
+  .overlay-text1 {
+    left: 30%;
+  }
+  .overlay-text2 {
     left: 50%;
-    transform: translate(-50%, -50%);
-    color: rgb(19, 159, 19);
-    font-size: 7rem; /* 글씨 크기 조정 */
-    font-weight: bolder;
-    text-align: center;
-    font-family: Bobby_Rough_Soft;
+  }
+  .overlay-text3 {
+    left: 70%;
   }
   
