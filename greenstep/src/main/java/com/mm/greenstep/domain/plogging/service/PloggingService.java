@@ -75,7 +75,7 @@ public class PloggingService {
 
         // dto.getTravelTime()이 초 단위로 시간을 반환한다고 가정
         Long travelTimeInSeconds = dto.getTravelTime();
-        LocalDateTime startTime = dto.getNow().minusSeconds(travelTimeInSeconds);
+        LocalDateTime startTime = endTime.minusSeconds(travelTimeInSeconds);
 
 
         // 현재 시간 얻어오기
