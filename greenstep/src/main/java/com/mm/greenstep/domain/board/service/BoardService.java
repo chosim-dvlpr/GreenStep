@@ -144,6 +144,7 @@ public class BoardService {
         List<Board> boardList = new ArrayList<>();
 
         for(Attend attend : attendList){
+            if(attend.getBoard().getIsDeleted()) continue;
             boardList.add(attend.getBoard());
         }
 
