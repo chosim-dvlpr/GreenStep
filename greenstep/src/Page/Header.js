@@ -20,7 +20,7 @@ function Header() {
           <div className='headerIcon' id='map'>
             <Link to="/mappage">
               <img src="/icon/map.gif" alt="map"/>
-              <div className='iconName'>Map</div>
+              <div className='iconName'>Data Map</div>
             </Link>
           </div>
       </nav>
