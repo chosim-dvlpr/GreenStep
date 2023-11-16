@@ -6,11 +6,23 @@ function Header() {
   return (
     <header>
       <nav>
-
-          <li><Link to="/">홈</Link></li>
-          <li><Link to="/downloadpage">다운로드</Link></li>
-          <li><Link to="/mappage">지도</Link></li>
-
+          <div id='logo'>
+            <Link to="/">
+                <img src="/icon/greenstep.png" alt="home"/>
+              </Link>
+          </div>
+          <div className='headerIcon' id='download'>
+            <Link to="/downloadpage">
+              <img src="/icon/download.gif" alt="download"/>
+              <div className='iconName'>Download</div>
+            </Link>
+          </div>
+          <div className='headerIcon' id='map'>
+            <Link to="/mappage">
+              <img src="/icon/map.gif" alt="map"/>
+              <div className='iconName'>Map</div>
+            </Link>
+          </div>
       </nav>
     </header>
   );

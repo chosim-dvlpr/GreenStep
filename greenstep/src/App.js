@@ -8,10 +8,10 @@ import Header from './Page/Header';
 function App() {
   return (
     <BrowserRouter>
-    <div className="App">
+      <div className="App">
       <Header/>
       <Routes>
-   
+  
         <Route path="/" element={<LandingPage />} />
         <Route path="/downloadpage" element={<DownLoadPage />} />
         <Route path="/mappage" element={<MapPage />} />
