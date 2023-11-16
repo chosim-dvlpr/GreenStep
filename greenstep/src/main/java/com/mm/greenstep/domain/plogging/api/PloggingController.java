@@ -80,6 +80,7 @@ public class PloggingController {
     }
 
     // 데이터 지도
+    @CrossOrigin
     @GetMapping("/map")
     public ResponseEntity<?> getAllTrashData() {
         List<TrashDataAllResDto> dtoList = ploggingService.getAllTrashData();
