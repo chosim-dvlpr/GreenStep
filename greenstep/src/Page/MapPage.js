@@ -53,23 +53,23 @@ const modifiedDarkStyle = [
 // 마커 데이터를 가져오는 함수
 const [markersData, setMarkersData] = useState([]); // 마커 데이터 상태
 useEffect(() => {
-    axios.get('https://k9b303.p.ssafy.io/api/plogging/map') // API endpoint URL
-      .then(response => {
-        // API response extraction and state update
-        console.log(response.data);
-        setMarkersData(response.data.map(marker => ({
-          ...marker,
-          position: {
-            lat: parseFloat(marker.latitude), // Convert string latitude to float
-            lng: parseFloat(marker.longitude), // Convert string longitude to float
-          },
-     
-        })));
-      })
-      .catch(error => {
-        console.error('Error fetching marker data:', error);
-      });
-  }, []);
+  axios.get('https://k9b303.p.ssafy.io/api/plogging/map') // API endpoint URL
+    .then(response => {
+      // API response extraction and state update
+      console.log(response.data);
+      setMarkersData(response.data.map(marker => ({
+        ...marker,
+        position: {
+          lat: parseFloat(marker.latitude), // Convert string latitude to float
+          lng: parseFloat(marker.longitude), // Convert string longitude to float
+        },
+        trashType: marker.trashType // Keeping the trashType as part of the marker data
+      })));
+    })
+    .catch(error => {
+      console.error('Error fetching marker data:', error);
+    });
+}, []);
   useEffect(() => {
     if (map) {
       const heatmapData = markersData.map(
