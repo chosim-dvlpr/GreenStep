@@ -1,5 +1,6 @@
 package com.mm.greenstep.domain.compete.service;
 
+import com.mm.greenstep.domain.alarm.service.AlarmService;
 import com.mm.greenstep.domain.compete.entity.Compete;
 import com.mm.greenstep.domain.compete.entity.Victory;
 import com.mm.greenstep.domain.compete.repository.CompeteRepository;
@@ -25,6 +26,8 @@ public class SchedulerService {
     private final VictoryRepository victoryRepository;
     private final CompeteRepository competeRepository;
     private final TeamRepository teamRepository;
+
+    private final AlarmService alarmService;
 
     // 요일 상관 없이, 매월, 1일, 00시, 1분, 0초 실행
     // cron = 초 분 시간 일 월 요일(0:일, 1:월, --- , 6:토), 연도 설정 안됨
@@ -52,7 +55,11 @@ public class SchedulerService {
         log.info("created Compete1 : "+ team1Compete.getCompeteId());
         log.info("created Compete2 : "+ team2Compete.getCompeteId());
 
+        // 경쟁 종료
         completeVictory();
+
+        // 경쟁 종료 알림 생성
+        alarmService.createVictoryCompleteAlarm();
     }
 
     public void completeVictory(){
