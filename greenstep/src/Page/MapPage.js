@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleMap, useLoadScript } from '@react-google-maps/api';
-
+import axios from 'axios';
 const containerStyle = {
   width: '100%',
   height: '100vh',
@@ -11,20 +11,20 @@ const center = {
   lat: 36.3504,
   lng: 127.3845,
 };
+const mapApiKey = process.env.REACT_APP_MAP_API_KEY;
 
-// 대전 주변에 마커 생성
-const markersData = Array.from({ length: 103 }, (_, i) => ({
-  id: i + 1,
-  name: `장소 ${i + 1}`,
-  position: {
-    lat: center.lat + Math.random() * 0.1 - 0.05,
-    lng: center.lng + Math.random() * 0.1 - 0.05,
-  },
-}));
+// const markersData = Array.from({ length: 103 }, (_, i) => ({
+//   id: i + 1,
+//   name: `장소 ${i + 1}`,
+//   position: {
+//     lat: center.lat + Math.random() * 0.1 - 0.05,
+//     lng: center.lng + Math.random() * 0.1 - 0.05,
+//   },
+// }));
 
 function MapPage() {
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "여기에_당신의_API_키",
+    googleMapsApiKey: mapApiKey,
     libraries: ['visualization'],
   });
 
@@ -49,8 +49,26 @@ const modifiedDarkStyle = [
     // 기타 스타일 규칙을 추가할 수 있습니다.
   ];
   
-  // useEffect 내부의 지도 스타일 설정 부분을 변경
  
+// 마커 데이터를 가져오는 함수
+const [markersData, setMarkersData] = useState([]); // 마커 데이터 상태
+useEffect(() => {
+    axios.get('https://k9b303.p.ssafy.io/api/plogging/map/') // API 엔드포인트 URL 입력
+      .then(response => {
+        // API 응답에서 마커 데이터 추출 및 상태 업데이트
+        console.log(response);
+        setMarkersData(response.data.map(marker => ({
+          ...marker,
+          position: {
+            lat: parseFloat(marker.lat), // 문자열로 된 위도를 실수로 변환
+            lng: parseFloat(marker.lng), // 문자열로 된 경도를 실수로 변환
+          }
+        })));
+      })
+      .catch(error => {
+        console.error('Error fetching marker data:', error);
+      });
+  }, []);
 
   useEffect(() => {
     if (map) {
@@ -87,8 +105,9 @@ const modifiedDarkStyle = [
     <GoogleMap
       mapContainerStyle={containerStyle}
       center={center}
-      zoom={10}
+      zoom={13}
       onLoad={map => setMap(map)}
+      options={{disableDefaultUI: true}}
     />
   ) : <div>Loading...</div>;
 }
