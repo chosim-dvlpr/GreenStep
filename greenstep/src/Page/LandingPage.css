@@ -9,8 +9,8 @@
     width: 100%;
     height: 100%;
     object-fit: cover; /* 비디오가 컨테이너를 꽉 채우도록 설정 */
-    filter: blur(4px);
-    /* filter: brightness(70%); */
+    /* filter: blur(4px); */
+    filter: brightness(70%);
   }
   
   .overlay-text {
