@@ -48,7 +48,7 @@ const BoardList = () => {
 
     return(
         <View>
-        <Text style={{ fontSize: 20, fontWeight: 'bold', paddingLeft: 20, marginBottom: 20}}>최신</Text>
+        <Text style={{ fontSize: 20, fontWeight: 'bold', paddingLeft: 20, marginBottom: 20}}>전체</Text>
                 <ScrollView >
                     {allBoardList.map((list, idx) =>(
                         <BoardListDetail key={idx} {...list}/>

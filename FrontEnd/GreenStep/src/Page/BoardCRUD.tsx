@@ -86,6 +86,13 @@ const BoardCRUD = () => {
     location;
     setLocation(text);
   };
+  useEffect(()=>{
+    setTitle('')
+    setContent('')
+    setLocation('')
+    setDay('날짜 선택하기')
+    setJoin(0)
+  },[])
 
   return(
     <ScrollView>
