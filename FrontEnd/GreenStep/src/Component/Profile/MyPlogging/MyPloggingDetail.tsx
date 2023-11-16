@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Modal, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import ImageStyle from '../../../Style/Image';
-import { ProfileAPI } from '../../../Api/profileApi';
 import { Double } from 'react-native/Libraries/Types/CodegenTypes';
 import { formatDate, roundedTravelRange, msToHMS } from '../../../Function/Plogging/funcPlogging';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -40,21 +39,6 @@ const MyPloggingDetail = ({ onClose, index }:any) => {
           console.log('사용자 플로깅 List 조회 error', err)
         } 
     }
-
-
-
-
-
-    // // 플로깅 상세 이력 불러오기
-    // const getMyploggingDetail = () => {
-    //     ProfileAPI.getPloggingDetailAxios(index)
-    //     .then((res) =>{
-    //     console.log(res)
-    //     setDetail(res.data)
-    //     } 
-    //     )
-    //     .catch(err => console.log('플로깅 상세 이력 axios 에러 : ', err))
-    // }
 
     useEffect(() => {
         getMyploggingDetail(index);
@@ -102,7 +86,7 @@ const MyPloggingDetail = ({ onClose, index }:any) => {
                         </View>
                         <View style={{justifyContent:'center', alignItems:'center'}}>
                         {detail?.travelPicture?( 
-                            <Image source={{uri: detail?.travelPicture}} style={ImageStyle.largeImage}></Image>
+                            <Image source={{uri: detail?.travelPicture}} style={ImageStyle.PloggingModalImage}></Image>
                         ):(<Text style={{fontSize: 18, marginTop: 75}}>등록된 사진이 없습니다.</Text>)
                         }
                         </View>

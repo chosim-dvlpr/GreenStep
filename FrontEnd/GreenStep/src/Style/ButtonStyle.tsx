@@ -73,6 +73,11 @@ const ButtonStyle = StyleSheet.create({
     backgroundColor: 'white',
     elevation: 5, // 그림자
   },
+  /** 버튼 색 - 빨간색 */
+  RedColor: {
+    backgroundColor: 'red',
+    elevation: 5, // 그림자
+  },
 })
 
 export default ButtonStyle;

@@ -17,19 +17,21 @@ const ContainerBg = styled.ImageBackground`
 `;
 
 const Menu = () => {
-    const pictures = [badge, trash, profile, map]
-    const names = ['업적', '플로깅 이벤트', '회원 정보 수정', 'GreenStep 발자취']
+    const pictures = [map, badge, trash, profile, badge ]
+    const names = [ 'GreenStep 홈페이지', '업적', 'Plogging Event', '회원 정보 수정', 'Crew with GreenStep']
     const navigation = useNavigation();
     //추후 페이지 만들고 나서 수정
     const moveToCategory = (idx : number) => {
         if (idx === 0) {
-            navigation.navigate('achievement')
+            openURL()
         }else if(idx === 1){
-            navigation.navigate('event')
+            navigation.navigate('achievement')
         }else if(idx === 2){
+            navigation.navigate('event')
+        }else if(idx === 3){
             navigation.navigate('userinfo')
         }else{
-            openURL()
+            navigation.navigate('myjoinedplogginglist')
         }
     }
 

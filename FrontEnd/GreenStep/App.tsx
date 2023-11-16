@@ -22,6 +22,8 @@ import MyPlogging from './src/Page/MyPlogging';
 import Menu from './src/Page/Menu';
 import UserInfo from './src/Page/UserInfo';
 import Event from './src/Page/Event';
+import MyJoinedPloggingList from './src/Page/MyJoinedPloggingList';
+
 //style
 import ImageStyle from './src/Style/Image';
 //Image
@@ -162,6 +164,15 @@ const App = () => {
               options={{
                 headerShown: true,
                 title: `${month}월 플로깅 이벤트`,
+                headerTitleAlign: 'center',
+              }}
+            />
+            <Stack.Screen
+              name="myjoinedplogginglist"
+              component={MyJoinedPloggingList}
+              options={{
+                headerShown: true,
+                title: '참여 플로깅 목록',
                 headerTitleAlign: 'center',
               }}
             />

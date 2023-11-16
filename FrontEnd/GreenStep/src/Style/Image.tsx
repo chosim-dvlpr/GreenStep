@@ -49,7 +49,14 @@ const ImageStyle = StyleSheet.create({
     width: 100, 
     height: 100,
     zIndex: 1,
-  }
+  },
+    /** 프로깅 조회 상세 이미지 */
+    PloggingModalImage: {
+      width: '100%',
+      aspectRatio: 1,
+      resizeMode: 'contain',
+      borderRadius: 10,
+    },
 })
 
 export default ImageStyle;
