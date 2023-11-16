@@ -6,6 +6,7 @@ import axios from 'axios';
 import {baseURL} from '../Api/tokenHttp';
 import Box from "../Style/Box";
 import styled from "styled-components/native";
+import TextStyle from "../Style/Text";
 
 interface eventListProps{
     festivalName: string;
@@ -67,7 +68,7 @@ const Event = () => {
                         onPress={() => openURL(event.festivalUrl)}
                         style={{padding: 10}}
                         >
-                            <Text style={{fontSize: 20, fontFamily: 'SUITE-Bold'}} ellipsizeMode="tail" numberOfLines={1}>{event.festivalName}</Text>
+                            <Text style={[TextStyle.defaultBlack,{fontSize: 20, fontFamily: 'SUITE-Bold'}]} ellipsizeMode="tail" numberOfLines={1}>{event.festivalName}</Text>
                         </TouchableOpacity>
                         </View>
                     ))}

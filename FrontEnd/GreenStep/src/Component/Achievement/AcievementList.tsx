@@ -1,6 +1,6 @@
 import { View, Text, Image } from "react-native";
 import badge from '../../Image/Achievement/badge.png';
-import notBadge from '../../Image/Achievement/notCompletedBadge.png';
+import notBadge from '../../Image/Achievement/notYetbadge.png';
 import ImageStyle from "../../Style/Image";
 import Box from "../../Style/Box";
 import React, { useEffect, useState } from "react";

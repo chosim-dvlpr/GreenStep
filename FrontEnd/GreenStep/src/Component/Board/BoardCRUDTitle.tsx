@@ -12,6 +12,7 @@ const BoardCRUDTitle = (props:titleProps) => {
         <TextInput 
         style={styles.input} 
         placeholder="제목"
+        placeholderTextColor="black"
         onChangeText={props.onChangeText} 
         value={props.title} />
       </SafeAreaView>

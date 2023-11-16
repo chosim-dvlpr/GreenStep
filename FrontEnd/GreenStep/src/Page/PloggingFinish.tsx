@@ -33,8 +33,8 @@ export interface getAvatarListType {
 
 interface PloggingFinishType {
   // props로 반드시 넘겨줘야 할 항목
-  travelTime: Double; // string인지 확인 필요 => Double로 변경
-  travelRange: number;
+  travelTime: number; // string인지 확인 필요 => Double로 변경 => number로 변경
+  travelRange: Double;
   trashAmount: number;
   // acheiveInfo: number,
   ploggingId: number;
@@ -61,6 +61,7 @@ const PloggingFinish = () => {
     getAvatarList,
     trashAmount,
   } = route.params as PloggingFinishType;
+  console.log('플로깅 종료하고 travelTime 찍기',travelTime)
   const navigation = useNavigation();
 
   // 지도 로직

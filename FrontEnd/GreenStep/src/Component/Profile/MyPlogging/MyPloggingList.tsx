@@ -17,7 +17,7 @@ interface PloggingData {
     ploggingId: number;
     trashAmount: number;
     travelRange: Double;
-    travelTime: Double;
+    travelTime: number;
     travelPicture : string | null;
   }
 

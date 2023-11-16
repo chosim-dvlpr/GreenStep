@@ -91,6 +91,8 @@ const MyTeamDashBoardTitle = styled.Text`
   font-size: 20px;
   margin-top: 17px;
   margin-left: 30px;
+  color: black;
+
 `;
 
 const TeamCountBox = styled.View`
@@ -108,11 +110,15 @@ const TeamCountBox = styled.View`
 const TeamText = styled.Text`
   font-size: 15px;
   font-family: 'SUITE-Bold';
+  color: black;
+
 `;
 
 const TeamNum = styled.Text`
   font-size: 30px;
   font-family: 'SUITE-Bold';
+  color: black;
+
 `;
 
 const styles = StyleSheet.create({
