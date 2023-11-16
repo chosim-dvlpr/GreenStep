@@ -13,13 +13,6 @@ export interface EmailLoginDataType {
   password: string;
 }
 
-const MainText = styled.Text`
-  font-size: 30;
-  font-weight: bold;
-  color: black;
-  font-family: 'SUITE-Bold';
-`;
-
 const MainTextContainer = styled.View`
   margin-top: 15%;
   margin-left: 30;
@@ -156,22 +149,19 @@ const Main = () => {
       <ContainerBg source={require('../Image/Competition/bg.png')}>
       
         <MainTextContainer>
-          <MainText>자연을 지키는</MainText>
-          <MainText>당신과 우리의 발자국</MainText>
-          <MainText>그린스텝</MainText>
+          <Text style={styles.mainText}>자연을 지키는</Text>
+          <Text style={styles.mainText}>당신과 우리의 발자국</Text>
+          <Text style={styles.mainText}>그린스텝</Text>
         </MainTextContainer>
 
-      <CarouselContainer>
-        <CarouselTextContainer>
-          <Text
-          style={{fontSize: 24, fontWeight: 'bold', fontFamily: 'SUITE-Bold'}}
-          >자연을 지킨{'\n'}
-          {travelTime} 시간{'\n'}
-          {travelRange.toFixed(3)} km
-          </Text>
-        </CarouselTextContainer>
-        <Carousel />
-      </CarouselContainer>
+        <CarouselContainer>
+          <CarouselTextContainer>
+            <Text style={styles.mainFont}>자연을 지킨</Text>
+            <Text style={styles.mainFont}>{travelTime} 시간</Text>
+            <Text style={styles.mainFont}>{travelRange.toFixed(3)} km</Text>
+          </CarouselTextContainer>
+          <Carousel />
+        </CarouselContainer>
 
         <LoginContainer>
           {isLogin ? (
@@ -205,7 +195,12 @@ const styles = StyleSheet.create({
     fontFamily: 'SUITE-Bold', 
     color: 'lightgray', 
     marginBottom: 4, 
-    fontWeight: 'bold'
+  },
+  mainText: {
+    fontSize: 32,
+    color: 'black',
+    fontFamily: 'SUITE-Bold',
+    marginBottom: 4,
   }
 })
 

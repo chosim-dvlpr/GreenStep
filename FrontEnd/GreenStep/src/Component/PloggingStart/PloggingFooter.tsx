@@ -5,23 +5,40 @@ import PloggingDivision from './PloggingDivision';
 
 interface PloggingFooterProps {
   openModal: () => void;
+  isTracking: boolean;
 }
 
-const PloggingFooter: React.FC<PloggingFooterProps> = ({openModal}) => {
+const PloggingFooter: React.FC<PloggingFooterProps> = ({
+  openModal,
+  isTracking,
+}) => {
   return (
     <FooterContainer>
       <Footer>
         <PloggingDivisionContainer>
-          <PloggingDivision name="AI 쓰레기 인식" size="small" />
-          <Text>AI쓰레기 인식</Text>
+          <PloggingDivision
+            name="AI 쓰레기 인식"
+            size="small"
+            isTracking={isTracking}
+          />
+          <Text style={{fontFamily: 'SUITE-Bold', marginTop: 4,}}>AI쓰레기 인식</Text>
         </PloggingDivisionContainer>
         <PloggingDivisionContainer>
-          <PloggingDivision name="일반쓰레기" size="small" />
-          <Text>일반 쓰레기</Text>
+          <PloggingDivision
+            name="일반쓰레기"
+            size="small"
+            isTracking={isTracking}
+          />
+          <Text style={{fontFamily: 'SUITE-Bold', marginTop: 4,}}>일반 쓰레기</Text>
         </PloggingDivisionContainer>
         <PloggingDivisionContainer>
-          <PloggingDivision name="재활용품" onPress={openModal} size="small" />
-          <Text>재활용품</Text>
+          <PloggingDivision
+            name="재활용품"
+            onPress={openModal}
+            size="small"
+            isTracking={isTracking}
+          />
+          <Text style={{fontFamily: 'SUITE-Bold', marginTop: 4,}}>재활용품</Text>
         </PloggingDivisionContainer>
       </Footer>
     </FooterContainer>
@@ -51,6 +68,7 @@ const Footer = styled.View`
   justify-content: center;
   align-items: center;
   flex-direction: row;
+  padding: 10px;
 `;
 
 const PloggingDivisionContainer = styled.View`

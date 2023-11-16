@@ -14,7 +14,9 @@ import {trashTypeMapping2} from './TrashType';
 import {useTrashItem} from './Hook/useTrashItem';
 import {useDispatch} from 'react-redux';
 import {increment} from '../../Store/aiCountSlice';
-const AiCamera = () => {
+import cameraButton from '../../Image/PloggingStart/ai_camera.png'
+
+const AiCamera = ({onClose}) => {
   const dispatch = useDispatch();
   const camera = useRef<Camera>(null);
   const device = useCameraDevice('back');
@@ -33,7 +35,11 @@ const AiCamera = () => {
     const cameraPermission = await Camera.requestCameraPermission();
     setPermission(cameraPermission === 'granted');
   };
-
+  const handleClose = () => {
+    if (onClose) {
+      onClose();
+    }
+  };
   const sendPhotoToServer = async (photoPath: string) => {
     try {
       const token = await AsyncStorage.getItem('accessToken');
@@ -101,13 +107,22 @@ const AiCamera = () => {
           />
           <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={takePhoto} style={styles.button}>
-              <Text style={styles.buttonText}>사진 촬영</Text>
+              {/* <Text style={styles.buttonText}>사진 촬영</Text> */}
+              <Image
+              source={cameraButton}
+              style={{width: '80%', height: '80%'}}
+              />
             </TouchableOpacity>
           </View>
         </>
       )}
       {!showCamera && imageSource && (
-        <Image source={{uri: `file://${imageSource}`}} style={styles.image} />
+        <View style={{flex: 1}}>
+          <Image source={{uri: `file://${imageSource}`}} style={styles.image} />
+          <TouchableOpacity onPress={handleClose} style={styles.closeButton}>
+            <Text style={styles.closeButtonText}>닫기</Text>
+          </TouchableOpacity>
+        </View>
       )}
     </View>
   );
@@ -141,6 +156,18 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     resizeMode: 'contain',
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    backgroundColor: 'gray',
+    padding: 10,
+    borderRadius: 5,
+  },
+  closeButtonText: {
+    color: 'white',
+    fontSize: 16,
   },
 });
 

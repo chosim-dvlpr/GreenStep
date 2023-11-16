@@ -13,9 +13,14 @@ import {RootState} from '../../Store/store';
 interface PloggingModalProps {
   onClose: () => void;
   visible: boolean;
+  isTracking: boolean;
 }
 
-const PloggingModal: React.FC<PloggingModalProps> = ({onClose, visible}) => {
+const PloggingModal: React.FC<PloggingModalProps> = ({
+  onClose,
+  visible,
+  isTracking,
+}) => {
   const counts = useSelector((state: RootState) => state.plogging.counts);
   return (
     <Modal
@@ -29,21 +34,37 @@ const PloggingModal: React.FC<PloggingModalProps> = ({onClose, visible}) => {
             <ModalContainer>
               <PloggingDivisionContainer>
                 <StyledImageBackground>
-                  <PloggingDivision name="페트병" size="medium" />
+                  <PloggingDivision
+                    name="페트병"
+                    size="medium"
+                    isTracking={isTracking}
+                  />
                   <CountText>{counts.페트병}</CountText>
                 </StyledImageBackground>
                 <StyledImageBackground>
-                  <PloggingDivision name="플라스틱" size="medium" />
+                  <PloggingDivision
+                    name="플라스틱"
+                    size="medium"
+                    isTracking={isTracking}
+                  />
                   <CountText>{counts.플라스틱}</CountText>
                 </StyledImageBackground>
               </PloggingDivisionContainer>
               <PloggingDivisionContainer>
                 <StyledImageBackground>
-                  <PloggingDivision name="병" size="medium" />
+                  <PloggingDivision
+                    name="병"
+                    size="medium"
+                    isTracking={isTracking}
+                  />
                   <CountText>{counts.병}</CountText>
                 </StyledImageBackground>
                 <StyledImageBackground>
-                  <PloggingDivision name="캔" size="medium" />
+                  <PloggingDivision
+                    name="캔"
+                    size="medium"
+                    isTracking={isTracking}
+                  />
                   <CountText>{counts.캔}</CountText>
                 </StyledImageBackground>
               </PloggingDivisionContainer>

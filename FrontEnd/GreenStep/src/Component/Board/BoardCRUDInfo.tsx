@@ -19,10 +19,20 @@ interface CreateInfoProps {
 const BoardCRUDInfo = (props: CreateInfoProps) => {
     
     return(
-        <ScrollView style={{marginBottom: 20}}>
-        <View style={{justifyContent:'center', alignItems:'center'}}>
-            <View style={[Box.cardBox, {display:'flex'}]}>
-                <Text style={{marginBottom: 10, fontSize:20}}>Information</Text>
+        <ScrollView style={{marginBottom: 30}}>
+            <View style={{justifyContent:'center', alignItems:'center'}}>
+        <View style={[Box.cardBox, {display:'flex'}]}>
+            <Text style={{marginBottom: 10, fontSize:20}}>Information</Text>
+            <View style={[Box.flexRowBox,{marginBottom: 10, justifyContent:'space-between' }]}>
+                <Text style={{fontSize: 16}}>모집인원</Text>
+                <TouchableOpacity onPress={props.handleJoinMinus}>
+                    <Image source={minus}></Image>
+                </TouchableOpacity>
+                <Text style={{fontSize: 16}}>{props.join}</Text>
+                <TouchableOpacity onPress={props.handleJoinPlus}>
+                    <Image source={plus}></Image>
+                </TouchableOpacity>
+            </View>
 
                 <View style={[Box.flexRowBox,{marginBottom: 10, justifyContent:'space-between' }]}>
                     <Text style={{fontSize: 20}}>지역</Text>

@@ -14,11 +14,14 @@ import {reset} from '../../Store/aiCountSlice';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import bg from '../../Image/Competition/bg.png'
+
 type PloggingInfoProps = {
   isTracking: boolean;
-  setIsTracking: React.Dispatch<React.SetStateAction<boolean>>;
+  handlestart: React.Dispatch<React.SetStateAction<boolean>>;
   distance: number;
   locations: any;
+  setIsTracking: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 interface PloggingDataProps {
@@ -42,9 +45,10 @@ interface trashListProps {
 
 const PloggingInfo: React.FC<PloggingInfoProps> = ({
   isTracking,
-  setIsTracking,
+  handlestart,
   distance,
   locations,
+  setIsTracking,
 }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -58,7 +62,7 @@ const PloggingInfo: React.FC<PloggingInfoProps> = ({
 
   const handleToggleTracking = () => {
     if (!isTracking) {
-      setIsTracking(true);
+      handlestart(true);
       setResetStopwatch(false);
     }
   };
@@ -67,6 +71,7 @@ const PloggingInfo: React.FC<PloggingInfoProps> = ({
   }, [isTracking]);
   const handleLongPress = () => {
     setResetStopwatch(true);
+    handlestart(false);
     setIsTracking(false);
 
     const travelRange = distance;
@@ -154,7 +159,7 @@ const PloggingInfo: React.FC<PloggingInfoProps> = ({
         </InfoSection>
         <ButtonSection>
           {!isTracking ? (
-            <StartStopButton onPress={handleToggleTracking}>
+            <StartStopButton onLongPress={handleToggleTracking}>
               <Image source={startImage} style={{width: 50, height: 50}} />
             </StartStopButton>
           ) : (
@@ -185,6 +190,9 @@ const Con = styled.View`
   justify-content: center;
   align-items: center;
   z-index: 10;
+  /* background-image: url("../../Image/Competition/bg.png"); // 배경 이미지 경로를 설정합니다. */
+  /* background-size: cover; // 배경 이미지가 컨테이너에 맞게 확대/축소되도록 설정합니다.
+  background-repeat: no-repeat; */
 `;
 const Container = styled.View`
   width: 90%;
@@ -193,6 +201,7 @@ const Container = styled.View`
   border-radius: 40px;
   justify-content: center;
   align-items: center;
+  padding: 10px;
 `;
 const InfoSection = styled.View`
   flex: 1;
@@ -208,13 +217,16 @@ const InfoContentContainer = styled.View`
 `;
 
 const InfoText = styled.Text`
-  font-size: 25px;
+  font-size: 20px;
   color: #333;
+  font-family: 'SUITE-Bold';
+  margin-bottom: 10;
 `;
 
 const Label = styled.Text`
-  font-size: 10px;
+  font-size: 12px;
   color: #666;
+  font-family: 'SUITE-Bold';
 `;
 const ButtonSection = styled.View`
   flex: 1;

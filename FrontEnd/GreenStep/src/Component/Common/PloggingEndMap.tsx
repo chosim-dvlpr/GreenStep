@@ -84,7 +84,7 @@ const PloggingEndMap: React.FC<PloggingEndMapProps> = ({locations}) => {
           <Polyline
             coordinates={locations}
             strokeColor="#00FF00"
-            strokeWidth={3}
+            strokeWidth={6}
           />
         )}
       </MapView>

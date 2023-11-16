@@ -58,7 +58,7 @@ const CompetitionGraphic = ({
   );
 
   return (
-    <Graphic>
+    <Graphic style={styles.container}>
       {renderProgressSection(
         myTeamProgress,
         30,
@@ -118,6 +118,16 @@ const styles = StyleSheet.create({
     width: 90,
     height: 80,
   },
+  container: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  }
 });
 const ProgressBarContainer = styled.View`
   top: 58px;
