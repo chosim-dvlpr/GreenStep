@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Builder
 @Getter
 public class PloggingAllLogResDto {
-    private Double travelTime;
+    private Long travelTime;
     private Double travelRange;
     private Integer trashAmount;
 }

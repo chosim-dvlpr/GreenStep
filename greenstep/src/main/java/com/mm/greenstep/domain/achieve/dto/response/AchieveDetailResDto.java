@@ -16,6 +16,6 @@ public class AchieveDetailResDto {
     private Integer achievePloggingCount; // 해당 업적 플로깅 횟수
     private Integer myTrashAmount; // 나의 총 쓰레기 량
     private Double myTravelRange; // 나의 총 이동거리
-    private Double myTravelTime; // 나의 총 이동시간
+    private Long myTravelTime; // 나의 총 이동시간
     private Integer myPloggingCount; // 해당 업적 플로깅 횟수
 }

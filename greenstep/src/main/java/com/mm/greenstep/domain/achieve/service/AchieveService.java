@@ -41,7 +41,7 @@ public class AchieveService {
         List<Plogging> plogging = ploggingRepository.findAllByUser(user);
         Integer myTrashAmount = 0; // 나의 총 쓰레기 량
         Double myTravelRange = 0.0; // 나의 총 이동거리
-        Double myTravelTime = 0.0; // 나의 총 이동시간
+        Long myTravelTime = 0L; // 나의 총 이동시간
 
         switch (achieveType) {
             // 거리
