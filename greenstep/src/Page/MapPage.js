@@ -8,8 +8,8 @@ const containerStyle = {
 
 // 대전 지역의 중심 좌표
 const center = {
-  lat: 36.3504,
-  lng: 127.3845,
+  lat: 36.3554,
+  lng: 127.2984,
 };
 const mapApiKey = process.env.REACT_APP_MAP_API_KEY;
 

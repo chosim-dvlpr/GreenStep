@@ -60,7 +60,14 @@ header {
 
   .headerIcon{
     padding-right: 20px;
+  }
 
+  .iconName{
+    font-size: 0.8rem;
+  }
+
+  header {
+    width: 91%;
   }
 
 }
