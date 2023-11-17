@@ -62,7 +62,7 @@ const MyPloggingList = () => {
     }, [isFocused]);
 
   return(
-        <View style={{alignItems: 'center', justifyContent: 'center'}}>
+        <View style={{alignItems: 'center', justifyContent: 'center', marginBottom: 30,}}>
             <ScrollView horizontal={false}>
                 <View style={styles.wrapRow}>
                     {dataList.map((data, index) => (
@@ -70,8 +70,8 @@ const MyPloggingList = () => {
                         key={index} onPress={() => handleAvatarId(data.ploggingId)}>
                             <View style={{justifyContent:'center', alignItems:'center', marginLeft: 3, marginBottom: 3}}>
                               {data?.travelPicture?( 
-                              <Image source={{uri: data?.travelPicture}} style={ImageStyle.mediumImage} resizeMode="stretch"></Image>
-                              ):(<Image source={noImage} style={ImageStyle.mediumImage} resizeMode="stretch"></Image>)
+                              <Image source={{uri: data?.travelPicture}} style={ImageStyle.mediumImage} resizeMode="cover"></Image>
+                              ):(<Image source={noImage} style={ImageStyle.mediumImage} resizeMode="cover"></Image>)
                               }
                                 <View style={[styles.overlayText, styles.noWrapRow]}>
                                     <Text style={[TextStyle.defaultBlack,styles.textStyle]}>{data.trashAmount} 개</Text>

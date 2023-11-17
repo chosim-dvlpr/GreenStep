@@ -13,7 +13,7 @@ interface AchievementButtonProps {
             <TouchableOpacity
                     style={[ButtonStyle.smallButton, ButtonStyle.achievementButton]}
                     onPress={onPress}>
-                <Text style={[TextStyle, {fontSize: 16, fontWeight:'bold', fontFamily: 'SUITE-Bold'}]}>{atom}</Text>
+                <Text style={[TextStyle.defaultBlack, {fontSize: 16, fontWeight:'bold', fontFamily: 'SUITE-Bold'}]}>{atom}</Text>
             </TouchableOpacity>
     )
 }
