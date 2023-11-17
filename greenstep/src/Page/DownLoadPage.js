@@ -8,7 +8,7 @@ export default function DownLoadPage() {
   }
 
   const handleAPKDownload = () => {
-    window.location.href = 'https://3mm.s3.ap-northeast-2.amazonaws.com/app.apk';
+    window.location.href = 'https://3mm.s3.ap-northeast-2.amazonaws.com/GreenStep.apk';
   }
 
   return (
