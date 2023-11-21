@@ -5,7 +5,7 @@ import {useIsFocused} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {baseURL} from '../../Api/tokenHttp';
-
+import TextStyle from "../../Style/Text";
 interface BoardProps{
     avatarImg : string;
     nickname : string;
@@ -19,7 +19,7 @@ interface BoardProps{
     isAttended: boolean;
   }
 
-const BoardMyPost = ({navigation}:any) => {
+const BoardMyPost = () => {
 
     const isFocused = useIsFocused();
     const [myBoardList, setMyBoardList] = useState<BoardProps[]>([]);
@@ -49,7 +49,7 @@ const BoardMyPost = ({navigation}:any) => {
 
     return(
         <View>
-            <Text style={{ fontSize: 20, fontWeight: 'bold', paddingLeft: 20, marginBottom: 20}}>내 글</Text>
+            <Text style={[TextStyle.defaultBlack, { fontSize: 20, fontWeight: 'bold', paddingLeft: 20, marginBottom: 20}]}>내 글</Text>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{marginBottom: 30}}>
                 {myBoardList.map((list, idx) =>(
                     <BoardMyPostCard key={idx} {...list}/>

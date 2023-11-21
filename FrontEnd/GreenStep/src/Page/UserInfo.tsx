@@ -9,7 +9,7 @@ import Box from "../Style/Box";
 import move from '../Image/Profile/move.png'
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
-
+import TextStyle from "../Style/Text";
 
 const ContainerBg = styled.ImageBackground`
   width: 100%;
@@ -119,31 +119,18 @@ const UserInfo = () => {
         <ContainerBg source={require('../Image/Competition/bg.png')}>
             <View style={{alignItems: 'center', justifyContent: 'center'}}>
                     <View style={[Box.cardBox, Box.flexRowBox, {justifyContent:'space-between', marginVertical: 20}]}>
-                        <Text style={{fontSize:20}}>닉네임 : {name}</Text>
+                        <Text style={[TextStyle.defaultBlack, {fontSize:20}]}>닉네임 : {name}</Text>
                         <TouchableOpacity style={{alignItems:'center', justifyContent:'center'}} onPress={handleToggle}>
                             <Text style={{fontSize:16, color: '#52A447'}}>변경하기</Text>
                         </TouchableOpacity>
-                    </View>
-                    
-                    {/* <View style={[Box.cardBox,{marginBottom: 20}]}>
-                    <Text style={{fontSize:20}}>LV : {level}</Text>
-                    </View>
-
-                    <View style={[Box.cardBox,{marginBottom: 20}]}>
-                    <Text style={{fontSize:20}}>경험치 : {percentage}</Text>
-                    </View> */}
-                    
+                    </View>                   
                     
                     <TouchableOpacity style={[Box.cardBox, { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20}]}
                                     onPress={logout}>
-                        <Text style={{fontSize:20}}>로그아웃</Text>
+                        <Text style={[TextStyle.defaultBlack, {fontSize:20}]}>로그아웃</Text>
                         <Image source={move} style={{width:25, height: 25, marginLeft: 20, marginTop:5}}></Image>
                     </TouchableOpacity>
-                    
-                    <TouchableOpacity style={[Box.cardBox, { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20}]}>
-                        <Text style={{fontSize:20}}>회원 탈퇴</Text>
-                        <Image source={move} style={{width:20, height: 20, marginLeft: 20, marginTop:5}}></Image>
-                    </TouchableOpacity>
+
                 {toggle && 
                     <UserInfoNameModal name={name} changeAble={changeAble} 
                     checkAble={GetUserName} onNameChange={onNameChange}

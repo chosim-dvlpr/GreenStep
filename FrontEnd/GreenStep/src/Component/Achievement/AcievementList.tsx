@@ -1,13 +1,13 @@
 import { View, Text, Image } from "react-native";
 import badge from '../../Image/Achievement/badge.png';
-import notBadge from '../../Image/Achievement/notCompletedBadge.png';
+import notBadge from '../../Image/Achievement/notYetbadge.png';
 import ImageStyle from "../../Style/Image";
 import Box from "../../Style/Box";
 import React, { useEffect, useState } from "react";
 import * as Progress from 'react-native-progress';
 import { useIsFocused } from '@react-navigation/native';
 import { msToHM } from "../../Function/Plogging/funcPlogging";
-
+import TextStyle from "../../Style/Text";
 interface AchievementListProps{
     atom : achieveProps;
     achievetype : number;
@@ -41,7 +41,6 @@ const AchievementList = ({ atom, achievetype }: AchievementListProps) => {
     const handleTime = (achievetype: number): string | number => {
         let change: string | number = reAtom.goal;
         if (achievetype === 1) {
-            // msToHM 함수가 시간과 분을 문자열로 반환한다고 가정합니다.
             change = msToHM(reAtom.goal);
         }
         return change;
@@ -91,10 +90,10 @@ const AchievementList = ({ atom, achievetype }: AchievementListProps) => {
                         marginBottom: 30,
                         }]}>
                 <View>
-                    <Text style={{fontWeight:'bold', fontSize: 20, marginBottom: 20}}>{reAtom.achieveName}</Text>
-                    <Text style={{fontWeight:'bold', fontSize: 20, marginBottom: 10}}>목표 : {handleTime(achievetype)} {getUnit(achievetype)}</Text>
+                    <Text style={[TextStyle.defaultBlack, {fontWeight:'bold', fontSize: 20, marginBottom: 20}]}>{reAtom.achieveName}</Text>
+                    <Text style={[TextStyle.defaultBlack, {fontWeight:'bold', fontSize: 20, marginBottom: 10}]}>목표 : {handleTime(achievetype)} {getUnit(achievetype)}</Text>
                     <View>
-                        <Text style={{fontWeight:'bold', marginBottom: 3}}>진행률 : {reAtom.my/reAtom.goal >=1? 100 : Math.round((reAtom.my/reAtom.goal) * 100)} % </Text>
+                        <Text style={[TextStyle.defaultBlack, {fontWeight:'bold', marginBottom: 3}]}>진행률 : {reAtom.my/reAtom.goal >=1? 100 : Math.round((reAtom.my/reAtom.goal) * 100)} % </Text>
                         <Progress.Bar
                         progress={reAtom.my / reAtom.goal}
                         width={null}
@@ -103,7 +102,7 @@ const AchievementList = ({ atom, achievetype }: AchievementListProps) => {
                         style={{marginBottom:5}}
                         />
                     </View>
-                    <Text style={{fontWeight:'bold'}}>달성 날짜 : {reAtom.createdAt}</Text>
+                    <Text style={[TextStyle.defaultBlack, {fontWeight:'bold'}]}>달성 날짜 : {reAtom.createdAt}</Text>
                 </View>
                 <View>
                     {reAtom.my / reAtom.goal >= 1 ?

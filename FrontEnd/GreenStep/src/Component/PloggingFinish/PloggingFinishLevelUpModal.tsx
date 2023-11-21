@@ -5,7 +5,7 @@ import LottieView from 'lottie-react-native';
 import treasureBox from '../../Image/PloggingFinish/treasureBox.json'
 import confetti from '../../Image/PloggingFinish/confetti.json'
 import { getAvatarListType } from '../../Page/PloggingFinish';
-
+import TextStyle from '../../Style/Text';
 interface ModalProps {
   onClose: () => void;
   visible: boolean;
@@ -63,7 +63,7 @@ const PloggingFinishLevelUpModal : React.FC<ModalProps> = ({ onClose, getAvatarL
                     <TouchableOpacity 
                     key={idx} 
                     style={styles.avatarContainer}>
-                      <Text style={styles.levelUpText}>{avatar.avatarName}</Text>
+                      <Text style={[styles.levelUpText, TextStyle.defaultBlack]}>{avatar.avatarName}</Text>
                       <LottieView
                       source={confetti}
                       autoPlay
@@ -78,7 +78,7 @@ const PloggingFinishLevelUpModal : React.FC<ModalProps> = ({ onClose, getAvatarL
                         style={styles.avatarImage}
                         />
                       </Animated.View>
-                      <Text style={styles.bottomText}>{avatar.avatarName} 획득!</Text>
+                      <Text style={[styles.bottomText, TextStyle.defaultBlack]}>{avatar.avatarName} 획득!</Text>
                     </TouchableOpacity>
                   ))
                 }
@@ -88,15 +88,15 @@ const PloggingFinishLevelUpModal : React.FC<ModalProps> = ({ onClose, getAvatarL
                   onPress={handleIsOpened}
                   disabled={isOpened}
                   >
-                    <Text style={styles.levelUpText}>레벨 업!</Text>
+                    <Text style={[styles.levelUpText, TextStyle.defaultBlack]}>레벨 업!</Text>
                     <LottieView 
                     source={treasureBox}
                     autoPlay
                     loop
                     style={styles.treasureBoxImage}
                     />
-                    <Text style={styles.treasureBoxText}>상자를 획득했습니다.</Text>
-                    <Text style={styles.treasureBoxText}>상자를 눌러 열어주세요.</Text>
+                    <Text style={[styles.treasureBoxText, TextStyle.defaultBlack]}>상자를 획득했습니다.</Text>
+                    <Text style={[styles.treasureBoxText, TextStyle.defaultBlack]}>상자를 눌러 열어주세요.</Text>
                   </TouchableOpacity>
                   </View>
             }

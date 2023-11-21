@@ -24,6 +24,7 @@ import PloggingEndMap from '../Component/Common/PloggingEndMap';
 import {plogginghistory} from '../Component/PloggingStart/api/ploggingService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import { Double } from 'react-native/Libraries/Types/CodegenTypes';
 
 export interface getAvatarListType {
   avatarName: string | null;
@@ -32,8 +33,8 @@ export interface getAvatarListType {
 
 interface PloggingFinishType {
   // props로 반드시 넘겨줘야 할 항목
-  travelTime: string; // string인지 확인 필요
-  travelRange: number;
+  travelTime: number; // string인지 확인 필요 => Double로 변경 => number로 변경
+  travelRange: Double;
   trashAmount: number;
   // acheiveInfo: number,
   ploggingId: number;
@@ -60,6 +61,7 @@ const PloggingFinish = () => {
     getAvatarList,
     trashAmount,
   } = route.params as PloggingFinishType;
+  console.log('플로깅 종료하고 travelTime 찍기',travelTime)
   const navigation = useNavigation();
 
   // 지도 로직

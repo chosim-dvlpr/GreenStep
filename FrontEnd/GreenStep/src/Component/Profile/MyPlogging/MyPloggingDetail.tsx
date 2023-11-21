@@ -14,7 +14,7 @@ interface PloggingData {
     ploggingId: number;
     trashAmount: number;
     travelRange: Double;
-    travelTime: Double;
+    travelTime: number;
     travelPicture : string | null;
   }
 
@@ -55,7 +55,7 @@ const MyPloggingDetail = ({ onClose, index }:any) => {
             <View style={styles.modalOverlay}>
                 <TouchableOpacity onPress={onClose}>
                     <View style={styles.modalView}>
-                        <View style={{marginBottom: 30}}>
+                        <View style={{marginBottom: 15}}>
                             <View style={[styles.noWrapRow]}>
                                 <View style={styles.center}>
                                     <Text style={{fontWeight:'bold', fontSize: 18, color: '#52A447'}}>{types[3]}</Text>

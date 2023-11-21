@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Modal, Text, TouchableWithoutFeedback,
          TouchableOpacity, StyleSheet, ScrollView, Image } from "react-native";
 import ImageStyle from '../../Style/Image';
+import TextStyle from '../../Style/Text';
 
 interface ModalProps {
     onClose: () => void;
@@ -29,7 +30,7 @@ const ProfileAvatarModal : React.FC<ModalProps> = ({ onSelectAvatar, onClose, av
             <View style={styles.modalOverlay}>
            <TouchableWithoutFeedback>
                 <View style={[styles.modalView, {justifyContent:'center', alignItems:'center'}]}>
-                    <Text style={{marginBottom: 10, fontWeight:'bold', fontSize: 20}}>캐릭터 선택</Text>
+                    <Text style={[TextStyle.defaultBlack, {marginBottom: 10, fontWeight:'bold', fontSize: 20}]}>캐릭터 선택</Text>
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                         {avatars?.map((char, idx) => (
                             <TouchableOpacity key={idx} onPress={() => onSelectAvatar(char.avatarId)}>

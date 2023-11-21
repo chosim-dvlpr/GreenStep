@@ -1,7 +1,7 @@
 import {Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 import ButtonStyle from '../../Style/ButtonStyle';
-
+import TextStyle from '../../Style/Text';
 interface AchievementButtonProps {
     atom: string;
     onPress: () => void; 
@@ -13,7 +13,7 @@ interface AchievementButtonProps {
             <TouchableOpacity
                     style={[ButtonStyle.smallButton, ButtonStyle.achievementButton]}
                     onPress={onPress}>
-                <Text style={{fontSize: 16, fontWeight:'bold', fontFamily: 'SUITE-Bold'}}>{atom}</Text>
+                <Text style={[TextStyle.defaultBlack, {fontSize: 16, fontWeight:'bold', fontFamily: 'SUITE-Bold'}]}>{atom}</Text>
             </TouchableOpacity>
     )
 }

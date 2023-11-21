@@ -15,6 +15,7 @@ import BoardCRUDInfo from "../Component/Board/BoardCRUDInfo";
 //style
 import ButtonStyle from "../Style/ButtonStyle";
 import Box from "../Style/Box";
+import TextStyle from "../Style/Text";
 //Image
 import pencil from '../Image/Board/pencil.png'
 
@@ -97,19 +98,17 @@ const BoardCRUD = () => {
   return(
     <ScrollView>
       <ContainerBg source={require('../Image/Competition/bg.png')}>
-      {/* <Text style={{alignItems:"center", fontSize: 20, justifyContent:"center", marginBottom: 10}}>글 쓰기</Text> */}
       <BoardCRUDTitle onChangeText={onTitleChange}/>
       <BoardCRUDContent onChangeText={onContentChange}/>
       <BoardCRUDInfo day={day} location={location} join={join} showCalendar={showCalendar}
                      handleJoinMinus={handleJoinMinus} handleJoinPlus={handleJoinPlus}
                      onLocateChange={onLocateChange} handleDay={handleDay} handleShow={handleShow} />
-      {/* <View style={{justifyContent:'center', alignItems:'center' }}> */}
       <View style={{justifyContent:'center', alignItems:'center' }}>
         <TouchableOpacity style={[ButtonStyle.largeButton, ButtonStyle.achievementButton]}
                           onPress={postBoardCreate}>
           <View style={[Box.flexRowBox,{justifyContent:'center', alignItems:'center' }]}>
             <Image source={pencil}></Image>
-            <Text style={{fontSize:20, color:'white', fontWeight:'bold', marginLeft: 20}}>글 쓰기</Text>
+            <Text style={[TextStyle.defaultBlack, {fontSize:20, color:'white', fontWeight:'bold', marginLeft: 20}]}>글 쓰기</Text>
           </View>
         </TouchableOpacity>
       </View>

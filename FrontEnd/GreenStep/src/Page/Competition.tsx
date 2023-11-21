@@ -6,6 +6,7 @@ import CompetitionDashBoard from '../Component/Competition/CompetitionDashBoard'
 import {CompetitionAPI} from '../Api/competitionApi';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 interface CompetitionData {
   myTeamScore: number;
   goalScore: number;
@@ -91,6 +92,7 @@ const GraphicText = styled.Text`
   font-size: 20px;
   margin-left: 30px;
   margin-bottom: 15px;
+  color: black;
 `;
 const ContainerBg = styled.ImageBackground`
   width: 100%;
@@ -107,4 +109,5 @@ const CalendarWrap = styled.View`
 const Title = styled.Text`
   font-family: 'SUITE-Bold';
   font-size: 25px;
+  color: black;
 `;

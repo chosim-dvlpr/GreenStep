@@ -1,10 +1,8 @@
 //상세페이지 - 참여하기 이미지 컴포넌트
 import React, {useState} from 'react'
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import Box from "../../Style/Box";
 import ImageStyle from "../../Style/Image";
-import avatar from '../../Image/Avatar/panda.png';
-
+import TextStyle from '../../Style/Text';
 interface BoardInfoParticipationDetailProps {
   member: attendListProps;
 }
@@ -27,7 +25,7 @@ const BoardInfoParticipationDetail = ({ member }: BoardInfoParticipationDetailPr
                 <Image source={{uri: member.avatarImg}} style={[ImageStyle.smallImage]}></Image>
                 {showNickname && (
                     <View style={{ position: 'absolute', bottom: 0, backgroundColor: 'rgba(0, 0, 0, 0.5)', width: '100%' }}>
-                        <Text style={{ color: 'white', textAlign: 'center' }}>{member.nickname}</Text>
+                        <Text style={[TextStyle.defaultBlack, { color: 'white', textAlign: 'center' }]}>{member.nickname}</Text>
                     </View>
                 )}
             </View>

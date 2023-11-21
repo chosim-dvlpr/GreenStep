@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import { View, Modal, Text, TouchableWithoutFeedback, TextInput,
          TouchableOpacity, StyleSheet} from "react-native";
 import Box from '../../../Style/Box';
+import TextStyle from '../../../Style/Text';
+
 interface ModalProps {
     onClose: () => void;
     checkAble: (newName:string) => void;
@@ -24,24 +26,26 @@ const UserInfoNameModal = (props: ModalProps) => {
         <TouchableWithoutFeedback onPress={props.onClose}>
             <View style={styles.modalOverlay}>
            <TouchableWithoutFeedback>
-                <View style={[styles.modalView, {justifyContent:'center', alignItems:'center'}]}>
-                    
-                    <Text style={{fontSize: 16, marginBottom: 15,}}>닉네임 변경</Text>
+                <View style={[styles.modalView, {justifyContent:'center', alignItems:'center'}]}>       
+                    <Text style={[TextStyle.defaultBlack, {fontSize: 24, marginBottom: 15}]}>닉네임 변경</Text>
                     <View style={Box.flexRowBox}>
                         <TextInput style={styles.input} value={changeName} onChangeText={setChangeName}></TextInput>
-                        <TouchableOpacity style={styles.checkButton} onPress={() => props.checkAble(changeName)}><Text>중복 확인</Text></TouchableOpacity>
+                        <TouchableOpacity style={styles.checkButton} onPress={() => props.checkAble(changeName)}>
+                            <Text style={TextStyle.defaultBlack}>중복 확인</Text>
+                        </TouchableOpacity>
                     </View> 
 
-                        <View style={Box.flexRowBox}>
+                    <View style={Box.flexRowBox}>
                         <TouchableOpacity 
                             style={[styles.checkButton, !props.changeAble && styles.disabledButton]} 
                             onPress={() => props.PatchUserName(changeName)} 
                             disabled={!props.changeAble}>
-                            <Text>변경</Text>
+                            <Text style={TextStyle.defaultBlack}>변경</Text>
                         </TouchableOpacity>
-                            <TouchableOpacity style={styles.cancelButton} onPress={props.onClose}><Text>취소</Text></TouchableOpacity>
-                        </View>
-
+                        <TouchableOpacity style={styles.cancelButton} onPress={props.onClose}>
+                            <Text style={TextStyle.defaultBlack}>취소</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </TouchableWithoutFeedback>
             </View>
@@ -88,12 +92,13 @@ const styles = StyleSheet.create({
     },
     input: {
         height: 40,
-        width: 120,
+        width: 180,
         marginHorizontal: 10,
         marginBottom: 5,
         borderWidth: 1,
         padding: 10,
         borderRadius: 10,
+        color: 'black'
       },
       disabledButton: {
         backgroundColor: '#ACD8A7',

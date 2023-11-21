@@ -5,7 +5,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {baseURL} from '../Api/tokenHttp';
 import BoardListDetail from "../Component/Board/BoardListDetail";
-
+import TextStyle
+ from "../Style/Text";
 interface BoardProps{
     avatarImg : string;
     nickname : string;
@@ -50,8 +51,7 @@ const MyJoinedPloggingList = () =>{
 
     return(
         <View>
-            <View style={{justifyContent:'center', alignItems:'center'}}>
-                <Text style={{ fontSize: 30, fontWeight: 'bold', paddingLeft: 20, marginBottom: 20}}> Crew With Plogging</Text>
+            <View style={{justifyContent:'center', alignItems:'center', marginBottom: 20}}>
             </View>
             <ScrollView >
                 {myJoinList.map((list, idx) =>(
