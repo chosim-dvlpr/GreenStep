@@ -1,0 +1,73 @@
+header {
+  position: fixed;
+  width: 96%;
+  z-index: 5;
+  margin: 20px 30px;
+  text-align: center;
+}
+
+  nav {
+    height: 30px;
+    color: aliceblue; 
+  }
+
+  nav div{
+    display: inline-block;
+    line-height: 100px;
+  }
+
+  #logo{
+    float: left;
+  }
+
+  .headerIcon{
+    display: inline-block;
+    line-height: 100px;
+    padding-right: 35px;
+    float: right;
+  }
+
+  nav div img{
+    width: 45px; /* 이미지의 너비 */
+    height: auto; /* 이미지의 높이를 비율에 맞게 조정 */
+  }
+
+  #logo img{
+    width: 190px; /* 이미지의 너비 */
+    height: auto; /* 이미지의 높이를 비율에 맞게 조정 */
+  }
+
+  .iconName{
+    display: inline-block;
+    height: 50px;
+    color: white;
+    font-family: Bobby_Rough_Soft;
+  }
+
+
+  /* 화면 너비가 768픽셀 이하일 때 적용될 스타일 */
+@media screen and (max-width: 768px) {
+  
+  #logo img{
+    width: 100px; /* 이미지의 너비 */
+    height: auto; /* 이미지의 높이를 비율에 맞게 조정 */
+  }
+
+  nav div img{
+    width: 30px; /* 이미지의 너비 */
+    height: auto; /* 이미지의 높이를 비율에 맞게 조정 */
+  }
+
+  .headerIcon{
+    padding-right: 20px;
+  }
+
+  .iconName{
+    font-size: 0.8rem;
+  }
+
+  header {
+    width: 91%;
+  }
+
+}
