@@ -1,6 +1,6 @@
 import {useDispatch} from 'react-redux';
 import {incrementCount} from '../../../Store/ploggingSlice';
-import {getLocation} from '../getLocation';
+import {getLocation} from './useLocationTracker';
 import {trashTypeMapping} from '../TrashType';
 
 // 커스텀 훅 사용 예시

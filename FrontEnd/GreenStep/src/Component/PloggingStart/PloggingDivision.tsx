@@ -1,13 +1,19 @@
-import {View, Text, TouchableOpacity, Image, Modal} from 'react-native';
+import {TouchableOpacity, Image, Modal} from 'react-native';
 import React, {useState} from 'react';
+//스타일
 import styled from 'styled-components/native';
 import ImageStyle from '../../Style/Image';
-import PloggingModal from './PloggingModal';
+
+//상태관리
 import {useDispatch} from 'react-redux';
 import {incrementCount} from '../../Store/ploggingSlice';
-import {getLocation} from './getLocation';
+
+//훅
+import {getLocation} from './Hook/useLocationTracker';
 import {TrashItem} from '../../Store/ploggingSlice';
 import {trashTypeMapping} from './TrashType';
+
+// 컴포넌트
 import AiCamera from './Camera';
 interface PloggingDivisionProps {
   name: string;

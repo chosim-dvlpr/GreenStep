@@ -1,20 +1,25 @@
 import React, {useEffect, useState} from 'react';
-import {View, TouchableOpacity, Image} from 'react-native';
+import {Image} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {Double} from 'react-native/Libraries/Types/CodegenTypes';
+
+//컴포넌트
 import StopWatch from './StopWatch';
+
+//스타일
 import styled from 'styled-components/native';
 import startImage from '../../Image/PloggingStart/play.png';
 import stopImage from '../../Image/PloggingStart/stop.png';
+
+//상태관리
 import {useSelector} from 'react-redux';
 import {RootState} from '../../Store/store';
-import {PloggingAPI} from '../../Api/ploggingApi';
-import {Double} from 'react-native/Libraries/Types/CodegenTypes';
 import {useDispatch} from 'react-redux';
 import {resetCounts} from '../../Store/ploggingSlice';
 import {reset} from '../../Store/aiCountSlice';
-import {useNavigation} from '@react-navigation/native';
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import bg from '../../Image/Competition/bg.png';
+
+//api
+import {ploggingdata} from './api/ploggingService';
 
 type PloggingInfoProps = {
   isTracking: boolean;
@@ -66,16 +71,17 @@ const PloggingInfo: React.FC<PloggingInfoProps> = ({
       setResetStopwatch(false);
     }
   };
+
   useEffect(() => {
     console.log(`isTracking 상태: ${isTracking}`);
   }, [isTracking]);
-  const handleLongPress = () => {
+
+  const handleLongPress = async () => {
     setResetStopwatch(true);
     handlestart(false);
     setIsTracking(false);
 
     const travelRange = distance;
-
     const ploggingDataInfo = {
       travelTime: elapsedTime,
       travelRange: travelRange,
@@ -84,50 +90,16 @@ const PloggingInfo: React.FC<PloggingInfoProps> = ({
       coorList: locations,
       trashList: trashListProps,
     };
-
-    console.log(`isTracking을 false로 설정함`);
-    const ploggingdata = async (ploggingDataInfo: PloggingDataProps) => {
-      try {
-        const token = await AsyncStorage.getItem('accessToken');
-        const config = {
-          headers: {
-            Authorization: `Bearer ${token}`, // Bearer 스키마를 사용한 토큰 전달
-            'Content-Type': 'application/json', // JSON 형식의 컨텐츠 타입 명시
-          },
-        };
-
-        // axios를 사용해 API 호출
-        const res = await axios.post(
-          'https://k9b303.p.ssafy.io/api/plogging/end',
-          ploggingDataInfo,
-          config,
-        );
-        const ploggingFinishData = {
-          // API 응답에서 직접 가져온 데이터
-          ploggingId: res.data.ploggingId,
-          getExp: res.data.getExp,
-          isLevelUp: res.data.isLevelUp,
-          getAvatarList: res.data.getAvatarList, //api에 이거 객체로전달
-          // travelTime: res.data.travelTime.toString(), // 여행 시간을 문자열로 변환
-          travelTime: res.data.travelTime, // 여행 시간을 문자열로 변환
-          travelRange: res.data.travelRange,
-          trashAmount: res.data.trashAmount,
-
-          acheiveInfo: 0, // 달성 정보 (실제 사용 시에는 적절한 값으로 변경)
-        };
-
-        // PloggingFinish 컴포넌트로 네비게이션
-        console.log(`isTracking 상태: ${isTracking}`);
-        console.log('데이터 Info에서 넘어가는지 확인', ploggingFinishData)
-        navigation.navigate('ploggingfinish', ploggingFinishData);
-      } catch (err) {
-        console.log('error', err);
-      }
-    };
-    ploggingdata(ploggingDataInfo);
+    try {
+      const responseData = await ploggingdata(ploggingDataInfo);
+      // 응답 데이터 처리
+      console.log(responseData);
+      navigation.navigate('ploggingfinish', responseData);
+    } catch (error) {
+      console.error('Error during plogging data submission', error);
+    }
     dispatch(resetCounts());
     dispatch(reset());
-    console.log(aiCount);
   };
 
   const trashListProps = useSelector(
@@ -168,14 +140,6 @@ const PloggingInfo: React.FC<PloggingInfoProps> = ({
               <Image source={stopImage} style={{width: 50, height: 50}} />
             </StartStopButton>
           )}
-          {/* <StartStopButton
-            onPress={handleToggleTracking}
-            onLongPress={handleLongPress}>
-            <Image
-              source={isTracking ? stopImage : startImage}
-              style={{width: 50, height: 50}}
-            />
-          </StartStopButton> */}
         </ButtonSection>
       </Container>
     </Con>
@@ -193,9 +157,6 @@ const Con = styled.View`
   align-items: center;
   background-color: transparent;
   z-index: 10;
-  /* background-image: url("../../Image/Competition/bg.png"); // 배경 이미지 경로를 설정합니다. */
-  /* background-size: cover; // 배경 이미지가 컨테이너에 맞게 확대/축소되도록 설정합니다.
-  background-repeat: no-repeat; */
 `;
 const Container = styled.View`
   width: 90%;

@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Modal,
-  Text,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  ImageBackground,
-} from 'react-native';
+import {Modal, TouchableWithoutFeedback} from 'react-native';
 import styled from 'styled-components/native';
 import PloggingDivision from './PloggingDivision';
 import {useSelector} from 'react-redux';
