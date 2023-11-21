@@ -10,7 +10,7 @@
    삼성 청년 SW 아카데미</b><br><br>
   2023.10.10 ~ 2023.11.06
   <br>
-  <a href="https://youtu.be/DxseVqu3nDE"> 
+  <a href="https://www.youtube.com/watch?v=kDpEdFLvfbg"> 
     <img src="Image/youtube1.png" width="100px"><br>
     UCC 보러가기
   </a>
