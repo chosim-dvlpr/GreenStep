@@ -6,7 +6,7 @@ import BackgroundTimer from 'react-native-background-timer';
 type StopWatchProps = {
   isRunning: boolean;
   reset: boolean;
-  onTimeUpdate: (time: number) => void; // 새로운 prop 추가
+  onTimeUpdate: (time: number) => void;
 };
 
 const StopWatch: React.FC<
