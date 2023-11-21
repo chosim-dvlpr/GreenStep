@@ -107,13 +107,14 @@
 <br>
 
 # 🪓 시스템 아키텍처
-  ## GreenStep
-  <img src="Image/System.png" width="700px">
+<img src="Image/System.png" width="700px">
+<br>
 <br>
 
 # 📚 ERD
-### GreenStep (Main Service)
-<img src = "Image/GreenStep_ERD.png" width="700px"><br>
+<img src = "Image/GreenStep_ERD.png" width="700px">
+<br>
+<br>
 
 # 💻 기능 소개
 
