@@ -1,6 +1,6 @@
 <div align="center">
   <br />
-  <img src="Image/logo.png" width="200px"/>
+  <img src="Image/icon.png" width="200px"/>
   <br />
 </div>
 <div align="center">
@@ -30,7 +30,7 @@
         <td height="140px" align="center"> <a href="https://github.com/ejuun">
             <img src="Image/lju.png" width="140px" /> <br><br> 🌞 이주언 <br>(Front-End) </a> <br></td>
         <td height="140px" align="center"> <a href="https://github.com/c0mmedes">
-            <img src="Image/ldg.jpg" width="140px" /> <br><br> 👻 이대경 <br>(Back-End) </a> <br></td>
+            <img src="Image/ldg.png" width="140px" /> <br><br> 👻 이대경 <br>(Back-End) </a> <br></td>
         <td height="140px" align="center"> <a href="https://github.com/LeeSW-k">
             <img src="Image/lsw.png" width="140px" /> <br><br> 🌙 이상욱 <br>(Back-End) </a> <br></td>
     </tr>
@@ -39,7 +39,7 @@
 <br>
 
 # ⚙️ 아키텍쳐 및 기술 소개
-<img src="" />
+
 <div align=left>
 <table>
     <tr>
