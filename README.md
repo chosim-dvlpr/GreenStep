@@ -8,7 +8,7 @@
   플로깅 활동 기록, 쓰레기 데이터 & 쓰레기 배출 장소 제공, 경쟁과 업적을  <br>
   통한 동기부여를 통해 환경보호 활동을 장려하는 서비스<br>
    삼성 청년 SW 아카데미</b><br><br>
-  2023.10.10 ~ 2023.11.06
+  2023.10.10 ~ 2023.11.17
   <br>
   <a href="https://www.youtube.com/watch?v=kDpEdFLvfbg"> 
     <img src="Image/youtube1.png" width="100px"><br>
