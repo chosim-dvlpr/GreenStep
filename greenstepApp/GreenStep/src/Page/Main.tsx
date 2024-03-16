@@ -190,10 +190,6 @@ const Main = () => {
         <LoginContainer>
           {isLogin ? (
             <View style={{width: '100%', alignItems: 'center'}}>
-              {/* <TouchableOpacity onPress={logout}>
-                <Text>로그아웃</Text>
-              </TouchableOpacity> */}
-
               {modalToggle && (
                 <VictortyModal
                   userVictory={userVictory}
@@ -244,62 +240,3 @@ const styles = StyleSheet.create({
 });
 
 export default Main;
-
-// // 임시 로그인
-// const [email, setEmail] = useState<string>('');
-// const [password, setPassword] = useState<string>('');
-
-// const onChangeEmail = (e: string) => {
-//   setEmail(e)
-// }
-// const onChangePassword = (e: string) => {
-//   setPassword(e)
-// }
-
-/** 이메일 버튼 클릭 시 axios 요청 */
-// const emailLogin = async () => {
-//   const data: EmailLoginDataType = await {
-//     email: email,
-//     password: password
-//   }
-//   LoginAPI.getEmailLoginAxios(data)
-//   .then(res => {
-//     console.log('이메일 로그인 axios 성공 : ', res)
-//     const response = res.data;
-//     if (response.state === 200) {
-//       setIsLogin(true);
-//       AsyncStorage.setItem('accessToken', response.data.accessToken)
-//       AsyncStorage.setItem('refreshToken', response.data.refreshToken)
-//       // AsyncStorage.setItem('refreshTokenExpirationTime', response.data.refreshTokenExpirationTime)
-//     } else if (response.status === 400) {
-//       console.log(response.message)
-//     }
-//   })
-//   .catch(err => console.log('이메일 로그인 실패 : ', err))
-// }
-
-// const logout = async () => {
-//   try {
-//     const accessToken = await AsyncStorage.getItem('accessToken');
-//     const refreshToken = await AsyncStorage.getItem('refreshToken');
-
-//     const data = {
-//       accessToken: accessToken,
-//       refreshToken: refreshToken,
-//     };
-//     AsyncStorage.removeItem('accessToken');
-//     AsyncStorage.removeItem('refreshToken');
-//     AsyncStorage.removeItem('testToken');
-//     console.log('logout 실행');
-//     setIsLogin(false);
-//     //   tokenHttp.post('/user/logout', data)
-//     //     .then(res => {
-//     //       AsyncStorage.removeItem('accessToken');
-//     //       AsyncStorage.removeItem('refreshToken');
-//     //       setIsLogin(false);
-//     //     })
-//     //     .catch(err => console.log('로그아웃 실패 : ', err));
-//   } catch (error) {
-//     console.error('로그아웃 중 오류 발생:', error);
-//   }
-// };
